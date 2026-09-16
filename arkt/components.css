@@ -423,9 +423,9 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 28px;
+  padding: 16px 10px;
   background: #0F0F0D;
-  width: 240px;
+  width: 180px;
 }
 
 .iphone-frame {
