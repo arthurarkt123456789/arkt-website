@@ -1,7 +1,6 @@
 /* ARKT — application racine + Tweaks */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "mechanic": "rail",
   "accent": "#F2533F",
   "halo": 1,
   "displayScale": 1,
@@ -9,7 +8,6 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "motion": 4
 }/*EDITMODE-END*/;
 
-const MECH_LABELS = { rail: "Rail libre", steps: "Panneaux", pinned: "Pinned scroll" };
 const ACCENTS = ["#F2533F", "#FF6A00", "#E8482E", "#D8452B"];
 
 function applyGlobals(t) {
@@ -48,7 +46,7 @@ function App() {
         <SocialProof />
         <Approche />
         <Offre />
-        <Projects mechanic={t.mechanic} />
+        <Projects />
         <Testimonials />
         <Team />
         <Contact />
@@ -56,13 +54,6 @@ function App() {
       <Footer />
 
       <TweaksPanel>
-        <TweakSection label="Projets — coups de cœur" />
-        <TweakRadio label="Mécanique" value={t.mechanic}
-          options={["rail", "steps", "pinned"]}
-          format={(v) => MECH_LABELS[v]}
-          onChange={(v) => setTweak("mechanic", v)} />
-        <p className="twk-note">Rail : glissez / flèches. Panneaux : un à la fois. Pinned : le scroll vertical fait défiler le cas.</p>
-
         <TweakSection label="Atmosphère" />
         <TweakColor label="Accent corail" value={t.accent} options={ACCENTS}
           onChange={(v) => setTweak("accent", v)} />

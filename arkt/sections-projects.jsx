@@ -1,250 +1,152 @@
-/* ARKT — Projets : coups de cœur (3 mécaniques) + grille accordéon */
+/* ARKT — Projets : grille unifiée + détail 30/70 */
 
-/* ---------- rendu d'un panneau de coup de cœur ---------- */
-function Panel({ p }) {
-  if (p.kind === "intro") {
-    return (
-      <div className="panel panel-intro">
-        <div className="panel-halo halo" />
-        <p className="eyebrow"><span className="dot" />{p.label}</p>
-        <h3 className="panel-intro-title display">{p.title}</h3>
-        <p className="panel-intro-sub dim">{p.sub}</p>
-      </div>
-    );
-  }
-  if (p.kind === "text") {
-    return (
-      <div className="panel panel-text">
-        <p className="eyebrow">{p.head}</p>
-        <p className="panel-body">{p.body}</p>
-      </div>
-    );
-  }
-  if (p.kind === "media") {
-    return (
-      <div className="panel panel-media">
-        {p.src
-          ? <img src={p.src} alt={p.caption} loading="lazy"
-              style={{ width: "100%", flex: 1, minHeight: 0, objectFit: "cover", display: "block", borderRadius: 12 }} />
-          : <Placeholder ratio={p.phr} label={"VISUEL · " + (p.phr).replace("/", ":")} className="panel-media-ph" />
-        }
-      </div>
-    );
-  }
-  if (p.kind === "result") {
-    return (
-      <div className="panel panel-result">
-        <div className="panel-halo halo" />
-        <p className="eyebrow">Résultat</p>
-        <div className="panel-metric">
-          <span className="grad-text">{p.metric}</span>
-          <span className="panel-unit">{p.unit}</span>
-        </div>
-        <p className="panel-result-line">{p.line}</p>
-      </div>
-    );
-  }
-  if (p.kind === "list") {
-    return (
-      <div className="panel panel-list">
-        <p className="eyebrow">{p.head}</p>
-        <ul className="panel-list-ul">
-          {p.items.map((item, i) => (
-            <li key={i} className="panel-list-li">{item}</li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-  if (p.kind === "proofs") {
-    return (
-      <div className="panel panel-proofs">
-        <p className="eyebrow">En chiffres</p>
-        <div className="proofs-list">
-          {p.items.map((item, i) => (
-            <div key={i} className="proof-item">
-              <span className="proof-item-metric grad-text">{item.metric}</span>
-              <span className="proof-item-label">{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-  if (p.kind === "gallery") {
-    return (
-      <div className="panel panel-gallery">
-        <p className="eyebrow">Galerie</p>
-        <div className="gallery-grid">
-          {p.srcs.map((src, i) => (
-            <img key={i} src={src} alt={"Photo " + (i + 1)} loading="lazy" />
-          ))}
-        </div>
-      </div>
-    );
-  }
-  return null;
+/* Adapte les deux formats de données (featured/grid) en format commun */
+function normalizeProject(p) {
+  if (p.photos) return p;
+  const photos = p.panels
+    .filter(x => x.kind === "media" && x.src)
+    .map(x => x.src);
+  return {
+    id: p.id, name: p.name, year: p.year,
+    short: p.tag,
+    logo: photos[0] || null,
+    photos,
+    tags: [],
+    body: p.claim,
+  };
 }
 
-/* ---------- un coup de cœur (3 mécaniques) ---------- */
-function FeaturedCase({ data, idx, mechanic }) {
-  const stripRef = useRef(null);
-  const railRef = useRef(null);
-  const pinWrapRef = useRef(null);
-  const [prog, setProg] = useState(0);
-  const [step, setStep] = useState(0);
-  // drop the intro panel — its title is already shown in the head above
-  const panels = data.panels.filter((p) => p.kind !== "intro");
-  const n = panels.length;
+/* ---------- Détail projet : 30% info fixe + 70% slider immersif ---------- */
+function ProjectDetail({ proj, onClose }) {
+  const [idx, setIdx] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const sliderRef = useRef(null);
+  const photos = proj.photos || [];
+  const n = photos.length;
 
-  /* RAIL — progress + drag */
+  useEffect(() => { setIdx(0); }, [proj.id]);
+
+  /* animation d'ouverture */
   useEffect(() => {
-    if (mechanic !== "rail") return;
-    const el = railRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const max = el.scrollWidth - el.clientWidth;
-      setProg(max > 0 ? el.scrollLeft / max : 0);
-    };
-    onScroll();
-    el.addEventListener("scroll", onScroll, { passive: true });
-    let down = false, sx = 0, sl = 0, moved = false;
-    const md = (e) => { down = true; moved = false; sx = e.clientX; sl = el.scrollLeft; el.classList.add("grabbing"); };
-    const mm = (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; el.scrollLeft = sl - dx; };
-    const up = () => { down = false; el.classList.remove("grabbing"); };
-    const click = (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } };
-    el.addEventListener("pointerdown", md);
-    window.addEventListener("pointermove", mm);
-    window.addEventListener("pointerup", up);
-    el.addEventListener("click", click, true);
-    return () => {
-      el.removeEventListener("scroll", onScroll);
-      el.removeEventListener("pointerdown", md);
-      window.removeEventListener("pointermove", mm);
-      window.removeEventListener("pointerup", up);
-      el.removeEventListener("click", click, true);
-    };
-  }, [mechanic]);
+    const raf = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
-  /* PINNED — vertical scroll → horizontal translate */
+  /* navigation clavier */
   useEffect(() => {
-    if (mechanic !== "pinned") return;
-    const wrap = pinWrapRef.current;
-    const strip = stripRef.current;
-    if (!wrap || !strip) return;
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const rect = wrap.getBoundingClientRect();
-        const total = wrap.offsetHeight - window.innerHeight;
-        const p = Math.min(1, Math.max(0, -rect.top / (total || 1)));
-        setProg(p);
-        const dist = strip.scrollWidth - strip.parentElement.clientWidth;
-        strip.style.transform = "translate3d(" + (-p * dist) + "px,0,0)";
-      });
+    const handler = (e) => {
+      if (e.key === "ArrowRight") setIdx(i => Math.min(n - 1, i + 1));
+      if (e.key === "ArrowLeft")  setIdx(i => Math.max(0, i - 1));
+      if (e.key === "Escape")     onClose();
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
-  }, [mechanic]);
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [n, onClose]);
 
-  const railScroll = (dir) => {
-    const el = railRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * Math.min(el.clientWidth * 0.8, 560), behavior: "smooth" });
-  };
+  /* swipe / drag sur le slider */
+  useEffect(() => {
+    const el = sliderRef.current;
+    if (!el || n <= 1) return;
+    let sx = 0, active = false;
+    const start = (e) => { sx = e.touches ? e.touches[0].clientX : e.clientX; active = true; };
+    const end = (e) => {
+      if (!active) return;
+      active = false;
+      const ex = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+      const dx = sx - ex;
+      if (Math.abs(dx) > 40) {
+        if (dx > 0) setIdx(i => Math.min(n - 1, i + 1));
+        else         setIdx(i => Math.max(0, i - 1));
+      }
+    };
+    el.addEventListener("pointerdown", start);
+    el.addEventListener("pointerup", end);
+    return () => { el.removeEventListener("pointerdown", start); el.removeEventListener("pointerup", end); };
+  }, [n]);
 
-  const head = (
-    <div className="feat-head">
-      <div className="feat-head-l">
-        <span className="feat-num mono">COUP DE CŒUR · 0{idx + 1}</span>
-        <h3 className="feat-name display">{data.name}</h3>
-        <div className="feat-meta">
-          <span className="feat-year">{data.year}</span>
-          <span className="feat-dotsep" />
-          <span className="dim">{data.tag}</span>
+  return (
+    <div className="pdetail" style={{ maxHeight: visible ? "1200px" : "0" }}>
+      <div className="pdetail-in">
+
+        {/* ─── gauche 30% : informations ─── */}
+        <div className="pinfo">
+          {proj.logo && (
+            <img src={proj.logo} alt={proj.name} className="pinfo-logo" />
+          )}
+          <div className="pinfo-header">
+            <h4 className="pinfo-name display">{proj.name}</h4>
+            <p className="pinfo-meta mono dim">
+              {proj.year}{proj.short ? " · " + proj.short : ""}
+            </p>
+          </div>
+          {proj.tags && proj.tags.length > 0 && (
+            <div className="pinfo-tags">
+              {proj.tags.map(t => <span key={t} className="tag">{t}</span>)}
+            </div>
+          )}
+          <p className="pinfo-body">{proj.body}</p>
+          <div className="pinfo-foot">
+            {n > 1 && (
+              <div className="pinfo-dots">
+                {photos.map((_, i) => (
+                  <button key={i}
+                    className={"pd-dot" + (i === idx ? " on" : "")}
+                    onClick={() => setIdx(i)}
+                    aria-label={"Photo " + (i + 1)} />
+                ))}
+              </div>
+            )}
+            <button className="pdetail-close" onClick={onClose}>
+              Fermer <span>×</span>
+            </button>
+          </div>
         </div>
+
+        {/* ─── droite 70% : slider immersif ─── */}
+        <div className="pslider" ref={sliderRef}>
+          {n > 0 ? (
+            <div className="pslider-track"
+              style={{ transform: "translateX(" + (-idx * 100) + "%)" }}>
+              {photos.map((src, i) => (
+                <div key={i} className="pslide">
+                  <img src={src} alt={proj.name + " · " + (i + 1)}
+                    loading={i === 0 ? "eager" : "lazy"} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Placeholder ratio="4/3" label="VISUELS" style={{ height: "100%", borderRadius: 0 }} />
+          )}
+          {n > 1 && (
+            <div className="pslider-nav">
+              <button className="pcarr pcarr-inv"
+                onClick={() => setIdx(i => Math.max(0, i - 1))}
+                disabled={idx === 0} aria-label="Précédent">
+                <Arrow size={14} style={{ transform: "rotate(180deg)" }} />
+              </button>
+              <span className="mono pslider-count">{idx + 1} / {n}</span>
+              <button className="pcarr pcarr-inv"
+                onClick={() => setIdx(i => Math.min(n - 1, i + 1))}
+                disabled={idx === n - 1} aria-label="Suivant">
+                <Arrow size={14} />
+              </button>
+            </div>
+          )}
+        </div>
+
       </div>
-      <p className="feat-claim">{data.claim}</p>
     </div>
   );
-
-  /* ----- RAIL ----- */
-  if (mechanic === "rail") {
-    return (
-      <Reveal className="feat" as="article">
-        {head}
-        <div className="feat-rail-wrap">
-          <div className="feat-rail no-bar" ref={railRef}>
-            {panels.map((p, i) => (<Panel key={i} p={p} />))}
-            <div className="feat-railpad" />
-          </div>
-        </div>
-        <div className="feat-controls">
-          <div className="feat-progress"><span style={{ transform: "scaleX(" + Math.max(0.06, prog) + ")" }} /></div>
-          <div className="feat-nav">
-            <button onClick={() => railScroll(-1)} aria-label="Précédent" disabled={prog <= 0.01}><Arrow size={16} style={{ transform: "rotate(180deg)" }} /></button>
-            <button onClick={() => railScroll(1)} aria-label="Suivant" disabled={prog >= 0.99}><Arrow size={16} /></button>
-          </div>
-        </div>
-      </Reveal>
-    );
-  }
-
-  /* ----- STEPS ----- */
-  if (mechanic === "steps") {
-    return (
-      <Reveal className="feat feat--steps" as="article">
-        {head}
-        <div className="steps-stage">
-          <div className="steps-track" style={{ transform: "translateX(" + (-step * 100) + "%)" }}>
-            {panels.map((p, i) => (
-              <div className="steps-cell" key={i} aria-hidden={i !== step}><Panel p={p} /></div>
-            ))}
-          </div>
-        </div>
-        <div className="feat-controls">
-          <div className="steps-dots">
-            {panels.map((_, i) => (
-              <button key={i} className={"dot-btn" + (i === step ? " on" : "")} onClick={() => setStep(i)} aria-label={"Panneau " + (i + 1)} />
-            ))}
-          </div>
-          <div className="feat-meta-count mono">{String(step + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}</div>
-          <div className="feat-nav">
-            <button onClick={() => setStep((s) => Math.max(0, s - 1))} aria-label="Précédent" disabled={step === 0}><Arrow size={16} style={{ transform: "rotate(180deg)" }} /></button>
-            <button onClick={() => setStep((s) => Math.min(n - 1, s + 1))} aria-label="Suivant" disabled={step === n - 1}><Arrow size={16} /></button>
-          </div>
-        </div>
-      </Reveal>
-    );
-  }
-
-  /* ----- PINNED ----- */
-  return (
-    <article className="feat feat--pinned" ref={pinWrapRef} style={{ height: "calc(100vh + " + (n * 46) + "vh)" }}>
-      <div className="pin-sticky">
-        {head}
-        <div className="pin-viewport">
-          <div className="pin-strip" ref={stripRef}>
-            {panels.map((p, i) => (<Panel key={i} p={p} />))}
-          </div>
-        </div>
-        <div className="feat-controls pin-controls">
-          <div className="feat-progress"><span style={{ transform: "scaleX(" + Math.max(0.06, prog) + ")" }} /></div>
-          <div className="mono dim">Défilez pour explorer →</div>
-        </div>
-      </div>
-    </article>
-  );
 }
 
-/* ---------- grille accordéon ---------- */
+/* ---------- Grille unifiée ---------- */
 function GridProjects() {
   const D = window.ARKT;
+  const allProjects = [...D.featured, ...D.grid].map(normalizeProject);
   const [openId, setOpenId] = useState(null);
   const [cols, setCols] = useState(3);
+  const gridRef = useRef(null);
+
   useEffect(() => {
     const calc = () => {
       const w = window.innerWidth;
@@ -255,22 +157,34 @@ function GridProjects() {
     return () => window.removeEventListener("resize", calc);
   }, []);
 
-  const openIdx = openId == null ? -1 : D.grid.findIndex((g) => g.id === openId);
+  const handleOpen = (id) => {
+    const next = id === openId ? null : id;
+    setOpenId(next);
+    if (next) {
+      setTimeout(() => {
+        const el = gridRef.current && gridRef.current.querySelector(".pdetail");
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 150);
+    }
+  };
+
+  const openIdx = openId == null ? -1 : allProjects.findIndex(g => g.id === openId);
   let insertAfter = -1;
   if (openIdx >= 0) {
     const rowEnd = (Math.floor(openIdx / cols) + 1) * cols - 1;
-    insertAfter = Math.min(rowEnd, D.grid.length - 1);
+    insertAfter = Math.min(rowEnd, allProjects.length - 1);
   }
-  const openProj = openIdx >= 0 ? D.grid[openIdx] : null;
+  const openProj = openIdx >= 0 ? allProjects[openIdx] : null;
 
   return (
-    <div className="pgrid" style={{ "--cols": cols }}>
-      {D.grid.map((g, i) => {
+    <div className="pgrid" style={{ "--cols": cols }} ref={gridRef}>
+      {allProjects.map((g, i) => {
         const isOpen = g.id === openId;
         return (
           <React.Fragment key={g.id}>
-            <Reveal as="button" delay={(i % cols) * 70} className={"ptile" + (isOpen ? " active" : "")}
-              onClick={() => setOpenId(isOpen ? null : g.id)} aria-expanded={isOpen}>
+            <Reveal as="button" delay={(i % cols) * 60}
+              className={"ptile" + (isOpen ? " active" : "")}
+              onClick={() => handleOpen(g.id)} aria-expanded={isOpen}>
               {g.logo
                 ? <img src={g.logo} alt={g.name} loading="lazy" className="ptile-media ptile-media-img" />
                 : <Placeholder ratio="1/1" label="VISUEL" className="ptile-media" />
@@ -281,7 +195,10 @@ function GridProjects() {
               </div>
               <span className="ptile-plus" aria-hidden="true"><i /><i /></span>
             </Reveal>
-            {insertAfter === i && openProj && <ProjectDetail proj={openProj} onClose={() => setOpenId(null)} />}
+            {insertAfter === i && openProj && (
+              <ProjectDetail key={"d-" + openProj.id}
+                proj={openProj} onClose={() => setOpenId(null)} />
+            )}
           </React.Fragment>
         );
       })}
@@ -289,75 +206,10 @@ function GridProjects() {
   );
 }
 
-function ProjectDetail({ proj, onClose }) {
-  const inner = useRef(null);
-  const [h, setH] = useState(0);
-  const [photoIdx, setPhotoIdx] = useState(0);
-  const photos = proj.photos || [];
-  const nph = photos.length;
-
-  useEffect(() => { setPhotoIdx(0); }, [proj.id]);
-
-  useEffect(() => {
-    const el = inner.current;
-    if (!el) return;
-    const measure = () => {
-      const s = getComputedStyle(el);
-      const mt = parseFloat(s.marginTop) || 0;
-      const mb = parseFloat(s.marginBottom) || 0;
-      setH(el.scrollHeight + mt + mb);
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    window.addEventListener("resize", measure);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-    return () => { ro.disconnect(); window.removeEventListener("resize", measure); };
-  }, [proj, photoIdx]);
-  return (
-    <div className="pdetail" style={{ maxHeight: h }}>
-      <div className="pdetail-in" ref={inner}>
-        <div className="pdetail-media">
-          {nph > 0 ? (
-            <div className="pdetail-carousel">
-              <div className="pdetail-carousel-img">
-                <img src={photos[photoIdx]} alt={proj.name} loading="lazy" />
-              </div>
-              {nph > 1 && (
-                <div className="pdetail-carousel-nav">
-                  <button className="pcarr" onClick={() => setPhotoIdx((i) => Math.max(0, i - 1))} disabled={photoIdx === 0} aria-label="Précédent">
-                    <Arrow size={14} style={{ transform: "rotate(180deg)" }} />
-                  </button>
-                  <span className="mono dim">{photoIdx + 1} / {nph}</span>
-                  <button className="pcarr" onClick={() => setPhotoIdx((i) => Math.min(nph - 1, i + 1))} disabled={photoIdx === nph - 1} aria-label="Suivant">
-                    <Arrow size={14} />
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <Placeholder ratio="1/1" label="VISUELS" />
-          )}
-          <div className="pdetail-tags">
-            {proj.tags.map((t) => (<span key={t} className="tag">{t}</span>))}
-          </div>
-        </div>
-        <div className="pdetail-body">
-          <div className="pdetail-top">
-            <h4 className="pdetail-name display">{proj.name}</h4>
-            <button className="pdetail-close" onClick={onClose} aria-label="Fermer">Fermer <span>×</span></button>
-          </div>
-          <div className="pdetail-meta mono dim">{proj.year} · {proj.short}</div>
-          <p className="pdetail-text">{proj.body}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ---------- section projets ---------- */
-function Projects({ mechanic }) {
+/* ---------- Section Projets ---------- */
+function Projects() {
   const D = window.ARKT;
+  const total = D.featured.length + D.grid.length;
   return (
     <section id="projets" className="section-pad projects">
       <div className="wrap">
@@ -367,14 +219,11 @@ function Projects({ mechanic }) {
             La preuve, <span className="dim">plutôt que les promesses.</span>
           </h2>
         </Reveal>
-      </div>
-      <div className="wrap feat-stack">
-        {D.featured.map((f, i) => (<FeaturedCase key={f.id} data={f} idx={i} mechanic={mechanic} />))}
-      </div>
-      <div className="wrap">
         <Reveal className="grid-head">
-          <h3 className="grid-title">Tous les projets <span className="dim">— {D.grid.length}</span></h3>
-          <p className="dim grid-sub">Cliquez une vignette pour déplier le cas.</p>
+          <h3 className="grid-title">
+            Tous les projets <span className="dim">— {total}</span>
+          </h3>
+          <p className="dim grid-sub">Cliquez une vignette pour découvrir le cas.</p>
         </Reveal>
         <GridProjects />
       </div>
@@ -382,4 +231,4 @@ function Projects({ mechanic }) {
   );
 }
 
-Object.assign(window, { Panel, FeaturedCase, GridProjects, ProjectDetail, Projects });
+Object.assign(window, { GridProjects, ProjectDetail, Projects });

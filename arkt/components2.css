@@ -198,7 +198,8 @@ html[data-light="0"] .team-photo, html[data-light="0"] .team-photo-ph { backgrou
   .offre-intro { position: static; }
   .team-grid { grid-template-columns: 1fr; }
   .contact-layout { grid-template-columns: 1fr; gap: 40px; }
-  .pdetail-in { grid-template-columns: 1fr; }
+  .pdetail-in { grid-template-columns: 1fr; height: auto; }
+  .pslider { height: clamp(280px, 50vw, 440px); }
   .feat-claim { text-align: left; max-width: 460px; }
   .feat-head { align-items: flex-start; }
 }
