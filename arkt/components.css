@@ -21,7 +21,7 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 
 .hdr-in { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 24px; }
 .hdr-logo { display: inline-flex; align-items: center; gap: 9px; }
-.hdr-logo-mark { height: 44px; width: auto; display: block; }
+.hdr-logo-mark { height: 58px; width: auto; display: block; mix-blend-mode: multiply; filter: contrast(1.05); }
 .hdr-nav { display: flex; gap: 34px; margin-left: auto; }
 .hdr-nav a { font-size: 14px; color: var(--dim); font-weight: 450; transition: color .25s; position: relative; }
 .hdr-nav a:hover { color: var(--white); }

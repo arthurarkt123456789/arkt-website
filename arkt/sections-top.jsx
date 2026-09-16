@@ -53,7 +53,7 @@ function TopBar() {
   return (
     <div className="topbar">
       <span className="topbar-dot" />
-      Agence de conseil en stratégie de marque&nbsp;&middot;&nbsp;Marseille / Paris
+      Cabinet de conseil en stratégie de marque&nbsp;&middot;&nbsp;Marseille / Paris
     </div>
   );
 }
@@ -81,7 +81,7 @@ function Header() {
           ))}
         </nav>
         <div className="hdr-right">
-          <a className="btn btn-primary hdr-cta" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>Échanger <Arrow /></a>
+          <a className="btn btn-primary hdr-cta" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>Démarrer un projet <Arrow /></a>
           <button className="hdr-burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
             <span style={{ transform: open ? "translateY(4px) rotate(45deg)" : "none" }} />
             <span style={{ opacity: open ? 0 : 1 }} />
@@ -93,7 +93,7 @@ function Header() {
         {D.nav.map((n) => (
           <a key={n.id} href={"#" + n.id} onClick={(e) => { e.preventDefault(); setOpen(false); scrollToId(n.id); }}>{n.label}</a>
         ))}
-        <a className="btn btn-primary" style={{ marginTop: 12 }} href="#contact" onClick={(e) => { e.preventDefault(); setOpen(false); scrollToId("contact"); }}>Nous écrire <Arrow /></a>
+        <a className="btn btn-primary" style={{ marginTop: 12 }} href="#contact" onClick={(e) => { e.preventDefault(); setOpen(false); scrollToId("contact"); }}>Prendre contact <Arrow /></a>
       </div>
     </header>
   );
@@ -107,12 +107,12 @@ function Hero() {
       <div className="hero-halo-br halo" />
 
       <div className="wrap hero-center">
-        <p className="hero-eyebrow">Agence de marque · Marseille / Paris</p>
+        <p className="hero-eyebrow">Cabinet de conseil · Marseille / Paris</p>
         <h1 className="hero-t1 display">De l'idée</h1>
         <p className="hero-t2 display" style={{ color: "var(--accent)" }}>à l'impact.</p>
         <div className="hero-cta">
           <button className="btn btn-primary" onClick={() => scrollToId("projets")}>Voir nos projets <Arrow /></button>
-          <a className="btn btn-ghost" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>Nous écrire</a>
+          <a className="btn btn-ghost" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>Découvrir l'approche</a>
         </div>
         <button className="hero-scroll" onClick={() => scrollToId("clients")} aria-label="Défiler">
           <span className="mono">SCROLLEZ</span>

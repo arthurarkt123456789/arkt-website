@@ -44,10 +44,10 @@ function App() {
       <main>
         <Hero />
         <SocialProof />
+        <Testimonials />
         <Approche />
         <Offre />
         <Projects />
-        <Testimonials />
         <Team />
         <Contact />
       </main>

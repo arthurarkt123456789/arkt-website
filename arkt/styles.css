@@ -36,7 +36,7 @@
   --dim-2: #A6A299;       /* tertiary / faded */
 
   /* --- type --- */
-  --sans: "Geist", "Helvetica Neue", "Inter", system-ui, Arial, sans-serif;
+  --sans: "Inter", "Helvetica Neue", system-ui, Arial, sans-serif;
 
   /* --- tweakables --- */
   --ds: 1;            /* display scale multiplier */
@@ -75,9 +75,9 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ---------------- type helpers ---------------- */
 .display {
-  font-family: "Big Shoulders Display", var(--sans);
+  font-family: var(--sans);
   font-weight: 800;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.03em;
   line-height: 0.92;
   text-transform: uppercase;
   text-wrap: balance;
@@ -191,7 +191,7 @@ section { position: relative; }
 
 /* mono caption (placeholders / tags) */
 .mono {
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 11px;
   letter-spacing: 0.04em;
 }

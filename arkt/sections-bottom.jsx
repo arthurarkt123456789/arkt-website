@@ -12,7 +12,7 @@ function Approche() {
             Une méthode en trois temps, <span className="dim">adaptée à chaque contexte.</span>
           </h2>
           <p className="appr-lead dim">
-            Chaque mission est adaptée au contexte du client. On part toujours d'une action concrète — un lancement, un repositionnement, une montée en gamme — jamais d'une théorie abstraite.
+            Chaque mission est adaptée au contexte du client. On part toujours d'une action concrète : un lancement, un repositionnement, une montée en gamme. Jamais d'une théorie abstraite.
           </p>
         </Reveal>
         <div className="appr-steps">
@@ -232,7 +232,7 @@ function ContactForm() {
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </span>
         <h3 className="cform-done-t">Message envoyé.</h3>
-        <p className="cform-done-d dim">Merci {f.name.split(" ")[0]} — on revient vers vous sous 48&nbsp;h. En attendant, continuez à explorer les projets.</p>
+        <p className="cform-done-d dim">Merci {f.name.split(" ")[0]}, on revient vers vous sous 48&nbsp;h. En attendant, continuez à explorer les projets.</p>
         <button type="button" className="btn btn-ghost" onClick={() => { setSent(false); setF({ name: "", email: "", subject: "", message: "" }); }}>Envoyer un autre message</button>
       </div>
     );
@@ -280,7 +280,7 @@ function Contact() {
               Parlons de <span className="grad-text">votre projet.</span>
             </h2>
             <p className="contact-sub">
-              <span className="dim">Un projet proche des nôtres&nbsp;?</span> Une idée à mettre en trajectoire&nbsp;? Écrivez-nous — on répond vite.
+              <span className="dim">Un projet proche des nôtres&nbsp;?</span> Une idée à mettre en trajectoire&nbsp;? Parlez-nous en, on répond vite.
             </p>
             <div className="contact-meta">
               <span>Marseille</span><span className="contact-sep" /><span>Paris</span><span className="contact-sep" /><span className="dim">Réponse sous 48 h</span>
@@ -303,13 +303,13 @@ function Footer() {
       <div className="wrap foot-in">
         <div className="foot-brand">
           <Logo h={52} />
-          <p className="foot-tag dim">L'arc narratif appliqué au marketing.<br />Conseil en stratégie de marque — Marseille / Paris.</p>
+          <p className="foot-tag dim">L'arc narratif appliqué au marketing.<br />Cabinet de conseil en stratégie de marque · Marseille / Paris.</p>
         </div>
         <nav className="foot-nav" aria-label="Pied de page">
           {D.nav.map((n) => (<a key={n.id} href={"#" + n.id} onClick={(e) => { e.preventDefault(); scrollToId(n.id); }}>{n.label}</a>))}
         </nav>
         <div className="foot-contact">
-          <a className="foot-mail alink" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>Nous écrire <Arrow /></a>
+          <a className="foot-mail alink" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>Démarrer un projet <Arrow /></a>
           <div className="foot-social">
             <a href="https://www.linkedin.com/company/arkt-conseil" target="_blank" rel="noopener">LinkedIn</a>
             <a href="https://www.instagram.com/arkt.conseil" target="_blank" rel="noopener">Instagram</a>
@@ -317,7 +317,7 @@ function Footer() {
         </div>
       </div>
       <div className="wrap foot-bottom">
-        <span className="dim mono">© {new Date().getFullYear()} ARKT — Tous droits réservés</span>
+        <span className="dim mono">© {new Date().getFullYear()} ARKT · Tous droits réservés</span>
         <span className="dim mono">Mentions légales · Confidentialité</span>
       </div>
     </footer>
