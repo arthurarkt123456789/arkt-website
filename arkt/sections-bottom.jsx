@@ -35,33 +35,56 @@ function Approche() {
 /* ---------------- Offre ---------------- */
 function Offre() {
   const D = window.ARKT;
+  const [openId, setOpenId] = useState(null);
   return (
     <section id="offre" className="section-pad offre">
       <div className="wrap">
-        <div className="offre-grid">
-          <Reveal className="offre-intro">
-            <p className="eyebrow"><span className="dot" />Offre</p>
-            <h2 className="display offre-title">
-              De l'idée à l'impact, <span className="dim">tout le spectre.</span>
-            </h2>
-            <p className="offre-lead dim">
-              Des projets variés, qui montrent l'étendue de notre savoir faire, de la stratégie jusqu'à l'activation.
-            </p>
-            <a className="alink offre-link" href={"#projets"} onClick={(e) => { e.preventDefault(); scrollToId("projets"); }}>
-              Voir cette étendue dans les projets <Arrow />
-            </a>
-          </Reveal>
-          <ul className="offre-list">
-            {D.offre.map((o, i) => (
-              <Reveal key={o.t} delay={i * 60} as="li" className="offre-item">
-                <span className="offre-idx mono">{String(i + 1).padStart(2, "0")}</span>
-                <div className="offre-item-body">
-                  <h3 className="offre-item-t">{o.t}</h3>
-                  <p className="offre-item-d dim">{o.d}</p>
+        <Reveal className="offre-intro">
+          <p className="eyebrow"><span className="dot" />Offre</p>
+          <h2 className="display offre-title">
+            De l'idée à l'impact, <span className="dim">tout le spectre.</span>
+          </h2>
+          <p className="offre-lead dim">{D.offreLead}</p>
+          <a className="alink offre-link" href={"#projets"} onClick={(e) => { e.preventDefault(); scrollToId("projets"); }}>
+            Voir cette étendue dans les projets <Arrow />
+          </a>
+        </Reveal>
+        <div className="offre-cols">
+          {D.offre.map((o, i) => {
+            const hasEx = !!(o.exemple && o.exemple.texte);
+            const isOpen = hasEx && openId === o.id;
+            return (
+              <Reveal key={o.id} delay={i * 90} as="article" className={"offre-col" + (isOpen ? " open" : "")}>
+                <div className="offre-col-num display">{i + 1}</div>
+                <h3 className="offre-col-t">{o.name}</h3>
+                <p className="offre-col-sub mono">{o.sub}</p>
+                <div className="offre-col-block">
+                  <p className="offre-col-k">Quand</p>
+                  <p className="offre-col-p">{o.quand}</p>
                 </div>
+                <div className="offre-col-block">
+                  <p className="offre-col-k">Ce que ça comprend</p>
+                  <ul className="offre-col-list">
+                    {o.contenu.map((c) => (<li key={c}>{c}</li>))}
+                  </ul>
+                </div>
+                <p className="offre-col-fin">{o.fin}</p>
+                {hasEx && (
+                  <div className="offre-col-exwrap">
+                    <button className="alink offre-col-btn" onClick={() => setOpenId(isOpen ? null : o.id)} aria-expanded={isOpen}>
+                      {isOpen ? "Fermer" : "Voir un exemple client"} <Arrow size={14} style={{ transform: isOpen ? "rotate(90deg)" : "none", transition: "transform .3s" }} />
+                    </button>
+                    <div className="offre-col-ex" aria-hidden={!isOpen}>
+                      <div className="offre-col-ex-in">
+                        <p className="offre-col-ex-client mono">{o.exemple.client}</p>
+                        <p className="offre-col-ex-t dim">{o.exemple.texte}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </Reveal>
-            ))}
-          </ul>
+            );
+          })}
         </div>
       </div>
     </section>

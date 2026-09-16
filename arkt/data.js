@@ -249,13 +249,28 @@ window.ARKT = {
     { k: "03", t: "Activation", d: "Mise en œuvre ciblée et cadrée, toujours alignée sur la stratégie. Là où la trajectoire prend vie.", opt: true },
   ],
 
-  /* ---------- offre ---------- */
+  /* ---------- offre ----------
+     3 offres affichées en colonnes. `exemple` est optionnel : tant qu'il vaut null,
+     la colonne est statique. Pour activer le bloc dépliable "Voir un exemple client" :
+       exemple: { client: "Nom du client", texte: "Ce qu'on a fait pour lui, en 2-3 lignes." }
+  */
+  offreLead: "Trois façons de travailler ensemble, selon où vous en êtes : clarifier la direction, piloter dans la durée, activer ce qui a été décidé.",
   offre: [
-    { t: "Stratégie", d: "Lancer, passer à l'échelle, optimiser la performance." },
-    { t: "Branding & positionnement", d: "Créer des marques engageantes et porteuses de sens." },
-    { t: "Communication & acquisition", d: "Messages percutants, prospects qualifiés, conversion." },
-    { t: "Contenu", d: "Formats éditoriaux et vidéo qui génèrent du désir." },
-    { t: "CRM & automatisation", d: "Fluidifier et structurer la gestion commerciale." },
+    { id: "clarifier", name: "Clarifier", sub: "One-shot stratégique",
+      quand: "Vous lancez un projet, repositionnez une marque, ou sentez que « ça part dans tous les sens ». Vous voulez arrêter de décider à l'instinct.",
+      contenu: ["Diagnostic", "Positionnement", "Messages clés", "Priorités", "Angles de communication"],
+      fin: "Une direction claire, et de quoi trancher.",
+      exemple: null },
+    { id: "piloter", name: "Piloter", sub: "Direction marketing externalisée",
+      quand: "Vous avez une équipe ou des prestataires, mais pas de cap clair ni de pilotage. Les actions s'enchaînent sans cohérence.",
+      contenu: ["Points mensuels de pilotage", "Arbitrages", "Validation des actions", "Cohérence globale", "Coordination des parties prenantes"],
+      fin: "Un cerveau stratégique externalisé : arbitrage, priorisation, décision.",
+      exemple: null },
+    { id: "activer", name: "Activer", sub: "Exécution cadrée",
+      quand: "Vous voulez un interlocuteur unique et éviter la dispersion entre prestataires.",
+      contenu: ["Contenu & community management", "Identité visuelle & charte graphique", "Site internet"],
+      fin: "Toujours dans le prolongement d'un cadrage stratégique.",
+      exemple: null },
   ],
 
   /* ---------- témoignages (verbatims réels) ---------- */
