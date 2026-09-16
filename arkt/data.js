@@ -102,7 +102,11 @@ window.ARKT = {
       body: "Lancement d'une salle de Pilates Reformer à Marseille. Naming, charte visuelle et direction artistique, création du site web, stratégie de positionnement et de communication, stratégie de contenu et de lancement digital." },
     { id: "nb1", name: "NB1", year: "2026", phr: "4/5", short: "Vidéos produit · campagne ads",
       logo: "arkt/images/nb1-logo.jpg",
-      photos: ["arkt/images/nb1-logo.jpg"],
+      photos: [
+        { video: "arkt/videos/nb1-driss.mp4", poster: "arkt/videos/nb1-driss.jpg" },
+        { video: "arkt/videos/nb1-suzane.mp4", poster: "arkt/videos/nb1-suzane.jpg" },
+        { video: "arkt/videos/nb1-karine.mp4", poster: "arkt/videos/nb1-karine.jpg" },
+      ],
       tags: ["Production vidéo", "Contenu ads", "Acquisition", "Communication"],
       body: "Production de contenus vidéo pour NB1 : tournages produit et création de formats publicitaires pour leur campagne de communication et d'acquisition." },
     { id: "palauma", name: "Palauma", year: "2026", phr: "4/5", short: "Outsider d'un immobilier standardisé",

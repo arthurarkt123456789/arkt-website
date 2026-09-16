@@ -418,6 +418,13 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   -webkit-user-drag: none; user-select: none;
 }
 
+/* slide vidéo : même logique que l'image, ratio 9/16 réservé avant chargement */
+.pslide-video video {
+  height: 100%; width: auto; aspect-ratio: 9 / 16;
+  max-width: 80vw; display: block; background: #000;
+  -webkit-user-drag: none; user-select: none;
+}
+
 /* slide texte */
 .pslide-text {
   width: clamp(260px, 30vw, 400px);

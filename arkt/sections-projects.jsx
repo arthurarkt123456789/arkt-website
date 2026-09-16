@@ -3,9 +3,12 @@
 /* Normalise les deux formats (featured/grid) en format commun avec slides */
 function normalizeProject(p) {
   if (p.photos) {
+    /* une entrée de photos est soit un chemin d'image, soit { video, poster } */
     return {
       ...p,
-      slides: p.photos.map(src => ({ kind: "media", src })),
+      slides: p.photos.map(x => (typeof x === "string"
+        ? { kind: "media", src: x }
+        : { kind: "video", src: x.video, poster: x.poster })),
     };
   }
   /* featured: panels sans l'intro deviennent les slides */
@@ -31,6 +34,13 @@ function Slide({ s, name, idx }) {
           ? <img src={s.src} alt={name} loading={idx === 0 ? "eager" : "lazy"} draggable="false" />
           : <Placeholder ratio="4/5" label="VISUEL" style={{ height: "100%", width: "240px" }} />
         }
+      </div>
+    );
+  }
+  if (s.kind === "video") {
+    return (
+      <div className="pslide pslide-video">
+        <video src={s.src} poster={s.poster} controls playsInline preload="metadata" draggable="false" />
       </div>
     );
   }
