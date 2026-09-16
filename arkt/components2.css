@@ -71,14 +71,34 @@ html[data-light="0"] .appr-track { background: var(--hairline); }
 }
 .offre-col-fin { font-size: 16px; line-height: 1.5; font-weight: 520; color: var(--accent-3); margin: 4px 0 0; max-width: 34ch; }
 
-/* bloc dépliable "exemple client" (affiché seulement si data.js fournit un exemple) */
-.offre-col-exwrap { margin-top: 22px; }
-.offre-col-btn { background: none; border: 0; border-bottom: 1px solid rgba(255,69,51,0.4); padding: 0; color: var(--accent); cursor: pointer; font: inherit; font-weight: 500; }
-.offre-col-ex { max-height: 0; overflow: hidden; transition: max-height .5s cubic-bezier(.22,1,.36,1); }
-.offre-col.open .offre-col-ex { max-height: 480px; }
-.offre-col-ex-in { padding: 18px 0 4px; }
-.offre-col-ex-client { color: var(--accent); margin: 0 0 8px; }
-.offre-col-ex-t { font-size: 15px; line-height: 1.55; margin: 0; }
+/* carte = bouton */
+.offre-col { text-align: left; cursor: pointer; font: inherit; color: var(--white); display: block; width: 100%; }
+.offre-col:hover, .offre-col.open { transform: translateY(-3px); }
+.offre-col-plus { top: 18px; right: 18px; background: rgba(19,19,17,0.55); }
+.offre-col:hover .offre-col-plus, .offre-col.open .offre-col-plus { background: var(--accent); border-color: var(--accent); }
+.offre-col.open .offre-col-plus i:nth-child(2) { transform: rotate(0deg); opacity: 0; }
+.offre-col-more { display: inline-flex; margin-top: 22px; color: var(--accent); font-size: 15px; border-bottom-color: rgba(255,69,51,0.4); }
+
+/* panneau détail sous les cartes */
+.offre-detail {
+  margin-top: clamp(20px, 2.6vw, 40px); padding: clamp(28px, 3.4vw, 48px) clamp(24px, 3.4vw, 48px);
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius);
+  box-shadow: 0 2px 4px rgba(19,19,17,0.03), 0 20px 46px -28px rgba(19,19,17,0.18);
+  animation: offreIn .5s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes offreIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.offre-detail-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: clamp(24px, 3vw, 38px); }
+.offre-detail-t { font-size: calc(clamp(30px, 3.4vw, 48px) * var(--ds)); margin: 0; }
+.offre-detail-grid { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: clamp(28px, 4vw, 64px); align-items: start; }
+.offre-detail-block .offre-col-k { margin-bottom: 14px; }
+.offre-detail-pains { list-style: none; margin: 0; padding: 0; }
+.offre-detail-pains li { font-size: 16px; line-height: 1.5; padding: 10px 0 10px 22px; position: relative; border-top: 1px solid var(--hairline-soft); }
+.offre-detail-pains li:first-child { border-top: 0; padding-top: 0; }
+.offre-detail-pains li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+.offre-detail-pains li:first-child::before { top: 0; }
+.offre-detail-p { font-size: 16px; line-height: 1.6; margin: 0; }
+.offre-detail-change { font-weight: 520; }
+.offre-detail-cta { margin-top: 26px; }
 
 /* =================== TÉMOIGNAGES =================== */
 .testi { overflow: hidden; }
@@ -218,6 +238,7 @@ html[data-light="0"] .team-photo, html[data-light="0"] .team-photo-ph { backgrou
 @media (max-width: 1040px) {
   .moment-grid { grid-template-columns: 1fr; }
   .offre-cols { grid-template-columns: 1fr; gap: 16px; }
+  .offre-detail-grid { grid-template-columns: 1fr; gap: 28px; }
   .offre-col { padding: 28px 24px 30px; }
   .team-grid { grid-template-columns: 1fr; }
   .contact-layout { grid-template-columns: 1fr; gap: 40px; }
@@ -304,4 +325,6 @@ html[data-light="0"] .team-photo, html[data-light="0"] .team-photo-ph { backgrou
   .pdetail-carousel-img { aspect-ratio: 4/3; }
   /* offre : titre colonne */
   .offre-col-t { font-size: clamp(22px, 6vw, 30px); }
+  .offre-detail { padding: 24px 20px 28px; }
+  .offre-detail-cta { width: 100%; justify-content: center; }
 }

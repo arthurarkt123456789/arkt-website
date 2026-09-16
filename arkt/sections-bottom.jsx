@@ -33,9 +33,50 @@ function Approche() {
 }
 
 /* ---------------- Offre ---------------- */
+function OffreDetail({ o, onClose }) {
+  const d = o.detail;
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    if (r.top < 90 || r.bottom > window.innerHeight) {
+      window.scrollTo({ top: r.top + window.scrollY - 96, behavior: "smooth" });
+    }
+  }, [o.id]);
+  return (
+    <div className="offre-detail" ref={ref} key={o.id}>
+      <div className="offre-detail-head">
+        <h4 className="offre-detail-t display">{o.name}</h4>
+        <button className="pdetail-close" onClick={onClose} aria-label="Fermer">Fermer <span>×</span></button>
+      </div>
+      <div className="offre-detail-grid">
+        <div className="offre-detail-block">
+          <p className="offre-col-k">Vous vous reconnaissez ?</p>
+          <ul className="offre-detail-pains">
+            {d.pains.map((t) => (<li key={t}>{t}</li>))}
+          </ul>
+        </div>
+        <div className="offre-detail-block">
+          <p className="offre-col-k">Ce qu'on fait, concrètement</p>
+          <p className="offre-detail-p">{d.faire}</p>
+        </div>
+        <div className="offre-detail-block">
+          <p className="offre-col-k">Ce que ça change pour vous</p>
+          <p className="offre-detail-p offre-detail-change">{d.change}</p>
+          <a className="btn btn-primary offre-detail-cta" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>
+            Échanger sur cette offre <Arrow />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Offre() {
   const D = window.ARKT;
   const [openId, setOpenId] = useState(null);
+  const openO = D.offre.find((o) => o.id === openId) || null;
   return (
     <section id="offre" className="section-pad offre">
       <div className="wrap">
@@ -51,10 +92,10 @@ function Offre() {
         </Reveal>
         <div className="offre-cols">
           {D.offre.map((o, i) => {
-            const hasEx = !!(o.exemple && o.exemple.texte);
-            const isOpen = hasEx && openId === o.id;
+            const isOpen = openId === o.id;
             return (
-              <Reveal key={o.id} delay={i * 90} as="article" className={"offre-col" + (isOpen ? " open" : "")}>
+              <Reveal key={o.id} delay={i * 90} as="button" type="button" className={"offre-col" + (isOpen ? " open" : "")}
+                onClick={() => setOpenId(isOpen ? null : o.id)} aria-expanded={isOpen}>
                 <div className="offre-col-num display">{i + 1}</div>
                 <h3 className="offre-col-t">{o.name}</h3>
                 <p className="offre-col-sub mono">{o.sub}</p>
@@ -69,23 +110,13 @@ function Offre() {
                   </ul>
                 </div>
                 <p className="offre-col-fin">{o.fin}</p>
-                {hasEx && (
-                  <div className="offre-col-exwrap">
-                    <button className="alink offre-col-btn" onClick={() => setOpenId(isOpen ? null : o.id)} aria-expanded={isOpen}>
-                      {isOpen ? "Fermer" : "Voir un exemple client"} <Arrow size={14} style={{ transform: isOpen ? "rotate(90deg)" : "none", transition: "transform .3s" }} />
-                    </button>
-                    <div className="offre-col-ex" aria-hidden={!isOpen}>
-                      <div className="offre-col-ex-in">
-                        <p className="offre-col-ex-client mono">{o.exemple.client}</p>
-                        <p className="offre-col-ex-t dim">{o.exemple.texte}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                <span className="offre-col-more alink">{isOpen ? "Fermer" : "En savoir plus"} <Arrow size={14} /></span>
+                <span className="ptile-plus offre-col-plus" aria-hidden="true"><i /><i /></span>
               </Reveal>
             );
           })}
         </div>
+        {openO && <OffreDetail o={openO} onClose={() => setOpenId(null)} />}
       </div>
     </section>
   );

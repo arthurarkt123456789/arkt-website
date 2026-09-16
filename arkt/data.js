@@ -250,9 +250,9 @@ window.ARKT = {
   ],
 
   /* ---------- offre ----------
-     3 offres affichées en colonnes. `exemple` est optionnel : tant qu'il vaut null,
-     la colonne est statique. Pour activer le bloc dépliable "Voir un exemple client" :
-       exemple: { client: "Nom du client", texte: "Ce qu'on a fait pour lui, en 2-3 lignes." }
+     3 offres en cartes. Un clic sur une carte ouvre un panneau `detail` sous les cartes :
+     pains (les galères du dirigeant, dans ses mots), faire (ce qu'on fait, sans jargon),
+     change (ce que ça change pour lui), puis un bouton vers le contact.
   */
   offreLead: "Trois façons de travailler ensemble, selon où vous en êtes : clarifier la direction, piloter dans la durée, activer ce qui a été décidé.",
   offre: [
@@ -260,17 +260,43 @@ window.ARKT = {
       quand: "Vous lancez un projet, repositionnez une marque, ou sentez que « ça part dans tous les sens ». Vous voulez arrêter de décider à l'instinct.",
       contenu: ["Diagnostic", "Positionnement", "Messages clés", "Priorités", "Angles de communication"],
       fin: "Une direction claire, et de quoi trancher.",
-      exemple: null },
+      detail: {
+        pains: [
+          "Vous lancez quelque chose et vous ne savez pas par où commencer.",
+          "Vous faites plein de choses, mais vous avez l'impression que rien n'avance vraiment.",
+          "Votre marque ne ressemble plus à ce que vous êtes devenu.",
+          "Vous décidez au feeling, et vous sentez que ça vous coûte.",
+        ],
+        faire: "On prend le temps de comprendre votre activité, vos clients, et ce qui vous rend différent. Puis on met des mots simples dessus : ce que vous proposez, à qui, et pourquoi on devrait vous choisir vous. On termine par une restitution, en direct, où tout devient clair.",
+        change: "Vous savez où vous allez. Vous pouvez dire non aux mauvaises idées. Et chaque euro que vous dépenserez ensuite en communication servira à quelque chose.",
+      } },
     { id: "piloter", name: "Piloter", sub: "Direction marketing externalisée",
       quand: "Vous avez une équipe ou des prestataires, mais pas de cap clair ni de pilotage. Les actions s'enchaînent sans cohérence.",
       contenu: ["Points mensuels de pilotage", "Arbitrages", "Validation des actions", "Cohérence globale", "Coordination des parties prenantes"],
       fin: "Un cerveau stratégique externalisé : arbitrage, priorisation, décision.",
-      exemple: null },
+      detail: {
+        pains: [
+          "Vous avez un freelance, une agence, un alternant… mais personne ne coordonne.",
+          "Vous passez vos soirées à valider des posts au lieu de diriger votre boîte.",
+          "Chaque prestataire tire dans sa direction, et vous au milieu.",
+          "Vous ne savez pas si ce que vous payez sert vraiment à quelque chose.",
+        ],
+        faire: "On devient votre directeur marketing, sans que vous ayez à en embaucher un. Chaque mois, on regarde ensemble ce qui a été fait, ce qui marche, et on décide de la suite. Entre deux, c'est nous qui parlons à vos prestataires, qui tranchons, et qui disons non à ce qui ne sert pas votre cap.",
+        change: "Vous retrouvez du temps. Il n'y a plus qu'une seule direction. Et vous arrêtez de payer pour des choses qui ne servent à rien.",
+      } },
     { id: "activer", name: "Activer", sub: "Exécution cadrée",
       quand: "Vous voulez un interlocuteur unique et éviter la dispersion entre prestataires.",
       contenu: ["Contenu & community management", "Identité visuelle & charte graphique", "Site internet"],
       fin: "Toujours dans le prolongement d'un cadrage stratégique.",
-      exemple: null },
+      detail: {
+        pains: [
+          "Vous voulez un site, des contenus, une identité… mais pas gérer trois prestataires.",
+          "Vous avez déjà eu un logo ou un site qui « ne ressemblait à rien », parce que personne n'avait de vision d'ensemble.",
+          "Vous voulez que ce soit fait, bien fait, sans y passer vos soirées.",
+        ],
+        faire: "On produit ce qui a été décidé, avec des gens qu'on connaît et qu'on pilote : contenus et réseaux sociaux, identité visuelle, site internet. Vous avez un seul interlocuteur, un planning clair, et un aller-retour pour ajuster. Et comme on connaît votre stratégie, tout est cohérent dès le départ.",
+        change: "C'est fait, c'est cohérent, et vous n'avez qu'un seul numéro à appeler.",
+      } },
   ],
 
   /* ---------- témoignages (verbatims réels) ---------- */
