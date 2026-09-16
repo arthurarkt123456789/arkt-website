@@ -39,13 +39,16 @@ html[data-light="0"] .appr-track { background: var(--hairline); }
 .offre-link { color: var(--accent); border-color: rgba(255,69,51,0.4); }
 
 /* 3 colonnes */
-.offre-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3.4vw, 56px); align-items: start; }
+.offre-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.6vw, 40px); align-items: stretch; }
 .offre-col {
-  position: relative; padding: clamp(26px, 3vw, 40px) 0 0;
-  border-top: 1px solid var(--hairline);
+  position: relative; padding: clamp(28px, 3vw, 40px) clamp(24px, 2.6vw, 36px) clamp(30px, 3vw, 42px);
+  background: var(--surface-2); border: 1px solid var(--hairline-soft); border-radius: var(--radius);
+  overflow: hidden; box-shadow: 0 2px 4px rgba(19,19,17,0.03), 0 16px 36px -26px rgba(19,19,17,0.14);
+  transition: border-color .35s, box-shadow .35s, transform .35s;
 }
+.offre-col:hover, .offre-col.open { border-color: rgba(19,19,17,0.18); box-shadow: 0 6px 12px rgba(19,19,17,0.04), 0 26px 50px -24px rgba(19,19,17,0.18); }
 .offre-col::before {
-  content: ""; position: absolute; left: 0; top: -1px; width: 100%; height: 1px;
+  content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 3px;
   background: var(--grad); transform: scaleX(0); transform-origin: left;
   transition: transform .5s cubic-bezier(.22,1,.36,1);
 }
@@ -214,9 +217,8 @@ html[data-light="0"] .team-photo, html[data-light="0"] .team-photo-ph { backgrou
 /* =================== RESPONSIVE =================== */
 @media (max-width: 1040px) {
   .moment-grid { grid-template-columns: 1fr; }
-  .offre-cols { grid-template-columns: 1fr; gap: 0; }
-  .offre-col { padding: 30px 0; }
-  .offre-col:last-child { border-bottom: 1px solid var(--hairline); }
+  .offre-cols { grid-template-columns: 1fr; gap: 16px; }
+  .offre-col { padding: 28px 24px 30px; }
   .team-grid { grid-template-columns: 1fr; }
   .contact-layout { grid-template-columns: 1fr; gap: 40px; }
   .pdetail-in { grid-template-columns: 1fr; height: auto; }
