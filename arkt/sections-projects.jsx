@@ -1,30 +1,68 @@
-/* ARKT — Projets : grille unifiée + détail 30/70 */
+/* ARKT — Projets : grille unifiée + détail 30/70 (rail continu) */
 
-/* Adapte les deux formats de données (featured/grid) en format commun */
+/* Normalise les deux formats (featured/grid) en format commun avec slides */
 function normalizeProject(p) {
-  if (p.photos) return p;
-  const photos = p.panels
-    .filter(x => x.kind === "media" && x.src)
-    .map(x => x.src);
+  if (p.photos) {
+    return {
+      ...p,
+      slides: p.photos.map(src => ({ kind: "media", src })),
+    };
+  }
+  /* featured: panels sans l'intro deviennent les slides */
+  const slides = p.panels.filter(x => x.kind !== "intro");
+  const firstImg = slides.find(x => x.kind === "media" && x.src);
   return {
     id: p.id, name: p.name, year: p.year,
     short: p.tag,
-    logo: photos[0] || null,
-    photos,
+    logo: firstImg ? firstImg.src : null,
+    photos: slides.filter(x => x.kind === "media" && x.src).map(x => x.src),
     tags: [],
     body: p.claim,
+    slides,
   };
 }
 
-/* ---------- Détail projet : 30% info fixe + 70% slider immersif ---------- */
-function ProjectDetail({ proj, onClose }) {
-  const [idx, setIdx] = useState(0);
-  const [visible, setVisible] = useState(false);
-  const sliderRef = useRef(null);
-  const photos = proj.photos || [];
-  const n = photos.length;
+/* ── Rendu d'un slide ── */
+function Slide({ s, name, idx }) {
+  if (s.kind === "media") {
+    return (
+      <div className="pslide pslide-img">
+        {s.src
+          ? <img src={s.src} alt={name} loading={idx === 0 ? "eager" : "lazy"} draggable="false" />
+          : <Placeholder ratio="4/5" label="VISUEL" style={{ height: "100%", width: "240px" }} />
+        }
+      </div>
+    );
+  }
+  if (s.kind === "text") {
+    return (
+      <div className="pslide pslide-text">
+        <p className="eyebrow pslide-head">{s.head}</p>
+        <p className="pslide-body">{s.body}</p>
+      </div>
+    );
+  }
+  if (s.kind === "result") {
+    return (
+      <div className="pslide pslide-result">
+        <p className="eyebrow pslide-head">Résultat</p>
+        <div className="pslide-metric">
+          <span className="grad-text">{s.metric}</span>
+          <span className="pslide-unit">{s.unit}</span>
+        </div>
+        <p className="pslide-result-line">{s.line}</p>
+      </div>
+    );
+  }
+  return null;
+}
 
-  useEffect(() => { setIdx(0); }, [proj.id]);
+/* ---------- Détail projet : 30% info + 70% rail continu ---------- */
+function ProjectDetail({ proj, onClose }) {
+  const [visible, setVisible] = useState(false);
+  const [prog, setProg] = useState(0);
+  const railRef = useRef(null);
+  const slides = proj.slides || [];
 
   /* animation d'ouverture */
   useEffect(() => {
@@ -32,37 +70,67 @@ function ProjectDetail({ proj, onClose }) {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  /* navigation clavier */
+  /* suivi de la progression du scroll */
+  useEffect(() => {
+    const el = railRef.current;
+    if (!el) return;
+    const update = () => {
+      const max = el.scrollWidth - el.clientWidth;
+      setProg(max > 0 ? el.scrollLeft / max : 0);
+    };
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    return () => el.removeEventListener("scroll", update);
+  }, [visible]);
+
+  /* drag souris */
+  useEffect(() => {
+    const el = railRef.current;
+    if (!el) return;
+    let down = false, sx = 0, sl = 0, moved = false;
+    const md = (e) => {
+      down = true; moved = false;
+      sx = e.clientX; sl = el.scrollLeft;
+      el.classList.add("grabbing");
+    };
+    const mm = (e) => {
+      if (!down) return;
+      const dx = e.clientX - sx;
+      if (Math.abs(dx) > 4) moved = true;
+      el.scrollLeft = sl - dx;
+    };
+    const mu = () => { down = false; el.classList.remove("grabbing"); };
+    const click = (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } };
+    el.addEventListener("pointerdown", md);
+    window.addEventListener("pointermove", mm);
+    window.addEventListener("pointerup", mu);
+    el.addEventListener("click", click, true);
+    return () => {
+      el.removeEventListener("pointerdown", md);
+      window.removeEventListener("pointermove", mm);
+      window.removeEventListener("pointerup", mu);
+      el.removeEventListener("click", click, true);
+    };
+  }, []);
+
+  /* clavier */
   useEffect(() => {
     const handler = (e) => {
-      if (e.key === "ArrowRight") setIdx(i => Math.min(n - 1, i + 1));
-      if (e.key === "ArrowLeft")  setIdx(i => Math.max(0, i - 1));
+      const el = railRef.current;
+      if (!el) return;
+      if (e.key === "ArrowRight") el.scrollBy({ left: el.clientWidth * 0.7, behavior: "smooth" });
+      if (e.key === "ArrowLeft")  el.scrollBy({ left: -el.clientWidth * 0.7, behavior: "smooth" });
       if (e.key === "Escape")     onClose();
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [n, onClose]);
+  }, [onClose]);
 
-  /* swipe / drag sur le slider */
-  useEffect(() => {
-    const el = sliderRef.current;
-    if (!el || n <= 1) return;
-    let sx = 0, active = false;
-    const start = (e) => { sx = e.touches ? e.touches[0].clientX : e.clientX; active = true; };
-    const end = (e) => {
-      if (!active) return;
-      active = false;
-      const ex = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
-      const dx = sx - ex;
-      if (Math.abs(dx) > 40) {
-        if (dx > 0) setIdx(i => Math.min(n - 1, i + 1));
-        else         setIdx(i => Math.max(0, i - 1));
-      }
-    };
-    el.addEventListener("pointerdown", start);
-    el.addEventListener("pointerup", end);
-    return () => { el.removeEventListener("pointerdown", start); el.removeEventListener("pointerup", end); };
-  }, [n]);
+  const scroll = (dir) => {
+    const el = railRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.72, behavior: "smooth" });
+  };
 
   return (
     <div className="pdetail" style={{ maxHeight: visible ? "1200px" : "0" }}>
@@ -70,9 +138,7 @@ function ProjectDetail({ proj, onClose }) {
 
         {/* ─── gauche 30% : informations ─── */}
         <div className="pinfo">
-          {proj.logo && (
-            <img src={proj.logo} alt={proj.name} className="pinfo-logo" />
-          )}
+          {proj.logo && <img src={proj.logo} alt={proj.name} className="pinfo-logo" />}
           <div className="pinfo-header">
             <h4 className="pinfo-name display">{proj.name}</h4>
             <p className="pinfo-meta mono dim">
@@ -86,52 +152,30 @@ function ProjectDetail({ proj, onClose }) {
           )}
           <p className="pinfo-body">{proj.body}</p>
           <div className="pinfo-foot">
-            {n > 1 && (
-              <div className="pinfo-dots">
-                {photos.map((_, i) => (
-                  <button key={i}
-                    className={"pd-dot" + (i === idx ? " on" : "")}
-                    onClick={() => setIdx(i)}
-                    aria-label={"Photo " + (i + 1)} />
-                ))}
-              </div>
-            )}
-            <button className="pdetail-close" onClick={onClose}>
-              Fermer <span>×</span>
-            </button>
-          </div>
-        </div>
-
-        {/* ─── droite 70% : slider immersif ─── */}
-        <div className="pslider" ref={sliderRef}>
-          {n > 0 ? (
-            <div className="pslider-track"
-              style={{ transform: "translateX(" + (-idx * 100) + "%)" }}>
-              {photos.map((src, i) => (
-                <div key={i} className="pslide">
-                  <img src={src} alt={proj.name + " · " + (i + 1)}
-                    loading={i === 0 ? "eager" : "lazy"} />
-                </div>
-              ))}
+            <div className="pinfo-progress">
+              <span style={{ transform: "scaleX(" + Math.max(0.04, prog) + ")" }} />
             </div>
-          ) : (
-            <Placeholder ratio="4/3" label="VISUELS" style={{ height: "100%", borderRadius: 0 }} />
-          )}
-          {n > 1 && (
-            <div className="pslider-nav">
-              <button className="pcarr pcarr-inv"
-                onClick={() => setIdx(i => Math.max(0, i - 1))}
-                disabled={idx === 0} aria-label="Précédent">
+            <div className="pinfo-nav">
+              <button className="pcarr" onClick={() => scroll(-1)}
+                disabled={prog <= 0.01} aria-label="Précédent">
                 <Arrow size={14} style={{ transform: "rotate(180deg)" }} />
               </button>
-              <span className="mono pslider-count">{idx + 1} / {n}</span>
-              <button className="pcarr pcarr-inv"
-                onClick={() => setIdx(i => Math.min(n - 1, i + 1))}
-                disabled={idx === n - 1} aria-label="Suivant">
+              <button className="pcarr" onClick={() => scroll(1)}
+                disabled={prog >= 0.99} aria-label="Suivant">
                 <Arrow size={14} />
               </button>
             </div>
-          )}
+            <button className="pdetail-close" onClick={onClose}>Fermer <span>×</span></button>
+          </div>
+        </div>
+
+        {/* ─── droite 70% : rail continu ─── */}
+        <div className="pslider no-bar" ref={railRef}>
+          {slides.length > 0
+            ? slides.map((s, i) => <Slide key={i} s={s} name={proj.name} idx={i} />)
+            : <Placeholder ratio="4/3" label="VISUELS" style={{ height: "100%", width: "100%", borderRadius: 0 }} />
+          }
+          <div className="pslider-pad" />
         </div>
 
       </div>
@@ -231,4 +275,4 @@ function Projects() {
   );
 }
 
-Object.assign(window, { GridProjects, ProjectDetail, Projects });
+Object.assign(window, { Slide, GridProjects, ProjectDetail, Projects });
