@@ -302,7 +302,7 @@ function Footer() {
     <footer className="foot">
       <div className="wrap foot-in">
         <div className="foot-brand">
-          <Logo h={26} />
+          <Logo h={52} />
           <p className="foot-tag dim">L'arc narratif appliqué au marketing.<br />Conseil en stratégie de marque — Marseille / Paris.</p>
         </div>
         <nav className="foot-nav" aria-label="Pied de page">

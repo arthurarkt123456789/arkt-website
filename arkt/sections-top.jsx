@@ -37,14 +37,9 @@ function Placeholder({ ratio = "4/5", label, style = {}, className = "" }) {
   );
 }
 
-function Logo({ h = 30, withWord = true, color }) {
+function Logo({ h = 48 }) {
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 11 }}>
-      <img src="arkt/logo-arkt.png" alt="ARKT" style={{ height: h, width: "auto" }} />
-      {withWord && (
-        <span style={{ fontWeight: 600, letterSpacing: "0.16em", fontSize: h * 0.46, color: color || "inherit" }}>ARKT</span>
-      )}
-    </span>
+    <img src="arkt/logo-arkt.png" alt="ARKT" style={{ height: h, width: "auto", display: "block" }} />
   );
 }
 
@@ -79,7 +74,6 @@ function Header() {
       <div className="wrap hdr-in">
         <a href="#top" className="hdr-logo" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} aria-label="ARKT — accueil">
           <img src="arkt/logo-mark.png" alt="" aria-hidden="true" className="hdr-logo-mark" />
-          <span className="hdr-wordmark">ARKT</span>
         </a>
         <nav className="hdr-nav" aria-label="Navigation principale">
           {D.nav.map((n) => (
