@@ -40,7 +40,9 @@ function Slide({ s, name, idx }) {
   if (s.kind === "video") {
     return (
       <div className="pslide pslide-video">
-        <video src={s.src} poster={s.poster} controls playsInline preload="metadata" draggable="false" />
+        <div className="iphone-frame">
+          <video src={s.src} poster={s.poster} autoPlay muted loop playsInline preload="auto" draggable="false" />
+        </div>
       </div>
     );
   }
