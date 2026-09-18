@@ -475,6 +475,10 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   font-weight: 420; margin: 0; text-wrap: pretty;
 }
 
+/* cartes du récit (Clarifier / Piloter / Activer) : plus de texte, police réduite */
+.pslide-story { width: clamp(300px, 34vw, 470px); justify-content: flex-start; gap: 16px; }
+.pslide-story .pslide-body { font-size: clamp(13.5px, 1.05vw, 15.5px); line-height: 1.5; font-weight: 440; }
+
 /* slide résultat */
 .pslide-result {
   width: clamp(260px, 30vw, 400px);

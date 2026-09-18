@@ -1,23 +1,44 @@
 /* ARKT — Projets : grille unifiée + détail 30/70 (rail continu) */
 
 /* Normalise les deux formats (featured/grid) en format commun avec slides */
+/* Intercale les 4 cartes du récit (Clarifier / Piloter / Activer / Résultat)
+   entre les médias : média, carte, média, carte, média, carte, médias restants, résultat. */
+function weaveStory(media, story, resultSlide) {
+  const cards = [
+    { kind: "text", story: true, head: "Clarifier", body: story.clarifier },
+    { kind: "text", story: true, head: "Piloter", body: story.piloter },
+    { kind: "text", story: true, head: "Activer", body: story.activer },
+  ];
+  const out = [];
+  media.forEach((m, i) => { out.push(m); if (i < cards.length) out.push(cards[i]); });
+  cards.slice(media.length).forEach(c => out.push(c));
+  out.push(resultSlide
+    ? { ...resultSlide, line: story.resultat }
+    : { kind: "text", story: true, head: "Résultat", body: story.resultat });
+  return out;
+}
+
 function normalizeProject(p) {
   if (p.photos) {
     /* une entrée de photos est soit un chemin d'image, soit { video, poster } */
-    return {
-      ...p,
-      slides: p.photos.map(x => (typeof x === "string"
-        ? { kind: "media", src: x }
-        : { kind: "video", src: x.video, poster: x.poster })),
-    };
+    const media = p.photos.map(x => (typeof x === "string"
+      ? { kind: "media", src: x }
+      : { kind: "video", src: x.video, poster: x.poster }));
+    return { ...p, slides: p.story ? weaveStory(media, p.story, null) : media };
   }
-  /* featured: panels sans l'intro deviennent les slides */
-  const slides = p.panels.filter(x => x.kind !== "intro");
+  /* featured : panels sans l'intro deviennent les slides ;
+     si un récit existe, il remplace les cartes texte d'origine */
+  let slides = p.panels.filter(x => x.kind !== "intro");
+  if (p.story) {
+    const media = slides.filter(x => x.kind === "media");
+    const result = slides.find(x => x.kind === "result") || null;
+    slides = weaveStory(media, p.story, result);
+  }
   const firstImg = slides.find(x => x.kind === "media" && x.src);
   return {
     id: p.id, name: p.name, year: p.year,
     short: p.tag,
-    logo: p.logo || (firstImg ? firstImg.src : null),
+    logo: firstImg ? firstImg.src : null,
     photos: slides.filter(x => x.kind === "media" && x.src).map(x => x.src),
     tags: [],
     body: p.claim,
@@ -48,7 +69,7 @@ function Slide({ s, name, idx }) {
   }
   if (s.kind === "text") {
     return (
-      <div className="pslide pslide-text">
+      <div className={"pslide pslide-text" + (s.story ? " pslide-story" : "")}>
         <p className="eyebrow pslide-head">{s.head}</p>
         <p className="pslide-body">{s.body}</p>
       </div>
