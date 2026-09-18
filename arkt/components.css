@@ -413,7 +413,7 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   display: flex; align-items: stretch;
   overflow-x: auto; overflow-y: hidden;
   scroll-snap-type: x proximity;
-  background: #0F0F0D;
+  background: #FF4533;
   cursor: grab; gap: 3px;
 }
 .pslider.grabbing { cursor: grabbing; scroll-snap-type: none; }
@@ -433,7 +433,7 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   align-items: center;
   justify-content: center;
   padding: 14px 14px;
-  background: #0F0F0D;
+  background: #FF4533;
   width: auto;
 }
 
