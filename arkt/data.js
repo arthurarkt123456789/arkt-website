@@ -81,6 +81,8 @@ window.ARKT = {
       logo: "arkt/images/meulerie-logo.png",
       panels: [
         { kind: "intro", label: "Coup de cœur", title: "La Meulerie", sub: "Le bon fromage, rendu désirable. Porté par l'énergie de Marseille." },
+        { kind: "video", src: "arkt/videos/meulerie-1.mp4", poster: "arkt/videos/meulerie-1.jpg" },
+        { kind: "video", src: "arkt/videos/meulerie-2.mp4", poster: "arkt/videos/meulerie-2.jpg" },
         { kind: "text", head: "Contexte", body: "Rendre le bon fromage accessible et désirable, sur un marché (la fromagerie) perçu comme traditionnel et figé. Tout réinventer : le ton, le lieu, la communauté." },
         { kind: "media", phr: "16/10", caption: "Duo fondateurs · scooter jaune", src: "arkt/images/meulerie-1.jpg" },
         { kind: "text", head: "Ce qu'on a fait", body: "Une marque forte et un univers coloré, inclusif, où tout le monde se sent bien. Un concept fédérateur : joie de vivre, partage, simplicité. Une communauté engagée, une communication digitale affirmée, des partenariats audacieux, un déploiement retail." },

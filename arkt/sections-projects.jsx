@@ -47,7 +47,7 @@ function normalizeProject(p) {
      si un récit existe, il remplace les cartes texte d'origine */
   let slides = p.panels.filter(x => x.kind !== "intro");
   if (p.story) {
-    const media = slides.filter(x => x.kind === "media");
+    const media = slides.filter(x => x.kind === "media" || x.kind === "video");
     const result = slides.find(x => x.kind === "result") || null;
     slides = weaveStory(media, p.story, result);
   }
