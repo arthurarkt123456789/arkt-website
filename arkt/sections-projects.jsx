@@ -18,13 +18,29 @@ function weaveStory(media, story, resultSlide) {
   return out;
 }
 
+/* Offres prises par le client : champ `offres` explicite dans data.js,
+   sinon les trois dès qu'un récit complet existe. */
+const OFFRES_ALL = ["Clarifier", "Piloter", "Activer"];
+function offresOf(p) {
+  if (Array.isArray(p.offres)) return p.offres;
+  return p.story ? OFFRES_ALL : [];
+}
+
 function normalizeProject(p) {
   if (p.photos) {
     /* une entrée de photos est soit un chemin d'image, soit { video, poster } */
     const media = p.photos.map(x => (typeof x === "string"
       ? { kind: "media", src: x }
       : { kind: "video", src: x.video, poster: x.poster }));
-    return { ...p, slides: p.story ? weaveStory(media, p.story, null) : media };
+    let slides;
+    if (p.story) slides = weaveStory(media, p.story, null);
+    else if (p.accroche && p.body) {
+      /* sans récit : la colonne affiche l'accroche, la description complète devient
+         une carte dans le rail, après le 1er média */
+      const card = { kind: "text", story: true, head: "Ce qu'on a fait", body: p.body };
+      slides = media.length ? [media[0], card, ...media.slice(1)] : [card];
+    } else slides = media;
+    return { ...p, offres: offresOf(p), slides, body: p.accroche || p.body };
   }
   /* featured : panels sans l'intro deviennent les slides ;
      si un récit existe, il remplace les cartes texte d'origine */
@@ -42,6 +58,7 @@ function normalizeProject(p) {
     photos: slides.filter(x => x.kind === "media" && x.src).map(x => x.src),
     tags: [],
     body: p.claim,
+    offres: offresOf(p),
     slides,
   };
 }
@@ -171,6 +188,7 @@ function ProjectDetail({ proj, onClose }) {
 
         {/* ─── gauche 30% : informations ─── */}
         <div className="pinfo">
+          <div className="pinfo-scroll">
           {proj.logo && <img src={proj.logo} alt={proj.name} className="pinfo-logo" />}
           <div className="pinfo-header">
             <h4 className="pinfo-name display">{proj.name}</h4>
@@ -184,6 +202,14 @@ function ProjectDetail({ proj, onClose }) {
             </div>
           )}
           <p className="pinfo-body">{proj.body}</p>
+          </div>
+          {proj.offres && proj.offres.length > 0 && (
+            <ol className="pinfo-offres">
+              {proj.offres.map((o, i) => (
+                <li key={o}><span className="mono">{String(i + 1).padStart(2, "0")}</span>{o}</li>
+              ))}
+            </ol>
+          )}
           <div className="pinfo-foot">
             <div className="pinfo-progress">
               <span style={{ transform: "scaleX(" + Math.max(0.04, prog) + ")" }} />
