@@ -4,11 +4,12 @@
 /* Intercale les 4 cartes du récit (Clarifier / Piloter / Activer / Résultat)
    entre les médias : média, carte, média, carte, média, carte, médias restants, résultat. */
 function weaveStory(media, story, resultSlide) {
+  /* une carte par étape présente dans le récit (Piloter absent = offres 1 + 3) */
   const cards = [
-    { kind: "text", story: true, head: "Clarifier", body: story.clarifier },
-    { kind: "text", story: true, head: "Piloter", body: story.piloter },
-    { kind: "text", story: true, head: "Activer", body: story.activer },
-  ];
+    story.clarifier && { kind: "text", story: true, head: "Clarifier", body: story.clarifier },
+    story.piloter && { kind: "text", story: true, head: "Piloter", body: story.piloter },
+    story.activer && { kind: "text", story: true, head: "Activer", body: story.activer },
+  ].filter(Boolean);
   const out = [];
   media.forEach((m, i) => { out.push(m); if (i < cards.length) out.push(cards[i]); });
   cards.slice(media.length).forEach(c => out.push(c));
@@ -205,8 +206,8 @@ function ProjectDetail({ proj, onClose }) {
           </div>
           {proj.offres && proj.offres.length > 0 && (
             <ol className="pinfo-offres">
-              {proj.offres.map((o, i) => (
-                <li key={o}><span className="mono">{String(i + 1).padStart(2, "0")}</span>{o}</li>
+              {proj.offres.map((o) => (
+                <li key={o}><span className="mono">{String(OFFRES_ALL.indexOf(o) + 1).padStart(2, "0")}</span>{o}</li>
               ))}
             </ol>
           )}
