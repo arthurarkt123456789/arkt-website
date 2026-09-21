@@ -192,7 +192,7 @@ function ProjectDetail({ proj, onClose }) {
           <div className="pinfo-scroll">
           <div className="pinfo-header">
             <h4 className="pinfo-name display">{proj.name}</h4>
-            <p className="pinfo-meta mono dim">
+            <p className="pinfo-meta dim">
               {proj.year}{proj.short ? " · " + proj.short : ""}
             </p>
           </div>
