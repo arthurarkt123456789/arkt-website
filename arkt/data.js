@@ -204,7 +204,7 @@ window.ARKT = {
         activer: "**Et on a créé l'ensemble de A à Z** : le nom, l'identité visuelle, le site, la stratégie éditoriale et la communication de chaque événement, avec les contenus, la direction artistique des shootings et l'animation des réseaux sociaux qui prolongent chaque événement ==bien au-delà du jour J==.",
         resultat: "une marque événementielle identifiée à Marseille et au-delà, **une scène pour les talents de la ville** et un projet qui ==continue de grandir avec nous==." },
       logo: "arkt/images/caparle-logo.jpg",
-      photos: ["arkt/images/caparle-1.jpg", "arkt/images/caparle-2.jpg", "arkt/images/caparle-3.jpg", "arkt/images/caparle-4.jpg", "arkt/images/caparle-5.jpg"],
+      photos: [{ video: "arkt/videos/caparle-1.mp4", poster: "arkt/videos/caparle-1.jpg" }, { video: "arkt/videos/caparle-2.mp4", poster: "arkt/videos/caparle-2.jpg" }, "arkt/images/caparle-1.jpg", "arkt/images/caparle-2.jpg", "arkt/images/caparle-3.jpg", "arkt/images/caparle-4.jpg", "arkt/images/caparle-5.jpg"],
       tags: ["Stratégie éditoriale", "Communication"],
       body: "Donner une scène aux talents de Marseille, ici et ailleurs." },
     { id: "capsule", name: "Capsule", year: "2025", phr: "4/5", short: "Salle de Pilates Reformer · Marseille",
