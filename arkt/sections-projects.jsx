@@ -238,7 +238,7 @@ function ProjectDetail({ proj, onClose, pinned = false }) {
                 <Arrow size={14} />
               </button>
             </div>
-            {!pinned && <button className="pdetail-close" onClick={onClose}>Fermer <span>×</span></button>}
+            <button className="pdetail-close" onClick={onClose}>Fermer <span>×</span></button>
           </div>
         </div>
 
@@ -264,8 +264,10 @@ function GridProjects() {
   const pinned = pinnedIds.map(id => allProjects.find(g => g.id === id)).filter(Boolean);
   const tiles = allProjects.filter(g => !pinnedIds.includes(g.id));
   const [openId, setOpenId] = useState(null);
+  const [closedPins, setClosedPins] = useState([]);   /* épinglés repliés par l'utilisateur */
   const [cols, setCols] = useState(3);
   const gridRef = useRef(null);
+  const togglePin = (id) => setClosedPins(c => c.includes(id) ? c.filter(x => x !== id) : [...c, id]);
 
   useEffect(() => {
     const calc = () => {
@@ -288,15 +290,31 @@ function GridProjects() {
     }
   };
 
-  /* blocs : [épinglé 1] [2 rangées] [épinglé 2] [2 rangées] … [reste des vignettes] */
+  /* Flux : l'épinglé n°k a sa place après k×2 rangées de vignettes. Ouvert, c'est
+     un panneau ; refermé, il redevient une vignette normale insérée dans le flux. */
   const per = cols * 2;
-  const blocks = [];
+  const flow = [];
   let cursor = 0;
   pinned.forEach((p, k) => {
-    blocks.push({ kind: "pinned", proj: p });
-    if (k < pinned.length - 1) { blocks.push({ kind: "tiles", items: tiles.slice(cursor, cursor + per) }); cursor += per; }
+    if (closedPins.includes(p.id)) flow.push(p);
+    if (k < pinned.length - 1) { flow.push(...tiles.slice(cursor, cursor + per)); cursor += per; }
   });
-  blocks.push({ kind: "tiles", items: tiles.slice(cursor) });
+  flow.push(...tiles.slice(cursor));
+  const slots = pinned.map((p, k) => ({ p, at: k * per, open: !closedPins.includes(p.id) }));
+  const blocks = [];
+  let cur = null, emitted = 0, si = 0;
+  const flushPins = () => {
+    while (si < slots.length && slots[si].at <= emitted) {
+      if (slots[si].open) { cur = null; blocks.push({ kind: "pinned", proj: slots[si].p }); }
+      si++;
+    }
+  };
+  flow.forEach((g) => {
+    flushPins();
+    if (!cur) { cur = { kind: "tiles", items: [] }; blocks.push(cur); }
+    cur.items.push(g); emitted++;
+  });
+  flushPins();
 
   const openProj = openId ? allProjects.find(g => g.id === openId) : null;
 
@@ -304,7 +322,7 @@ function GridProjects() {
     <div className="pgrid" style={{ "--cols": cols }} ref={gridRef}>
       {blocks.map((b, bi) => {
         if (b.kind === "pinned") {
-          return <ProjectDetail key={"pin-" + b.proj.id} proj={b.proj} pinned onClose={() => {}} />;
+          return <ProjectDetail key={"pin-" + b.proj.id} proj={b.proj} pinned onClose={() => togglePin(b.proj.id)} />;
         }
         /* le détail cliqué s'insère en fin de rangée, à l'intérieur du bloc */
         const j = openProj ? b.items.findIndex(g => g.id === openProj.id) : -1;
