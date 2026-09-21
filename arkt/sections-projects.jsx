@@ -190,7 +190,6 @@ function ProjectDetail({ proj, onClose }) {
         {/* ─── gauche 30% : informations ─── */}
         <div className="pinfo">
           <div className="pinfo-scroll">
-          {proj.logo && <img src={proj.logo} alt={proj.name} className="pinfo-logo" />}
           <div className="pinfo-header">
             <h4 className="pinfo-name display">{proj.name}</h4>
             <p className="pinfo-meta mono dim">
