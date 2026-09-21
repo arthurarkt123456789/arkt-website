@@ -335,6 +335,13 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   transition: max-height .65s cubic-bezier(.6,0,.2,1);
 }
 [data-motion="0"] .pdetail { transition: none; }
+/* épinglé : ouvert d'emblée, sans animation de dépliage, un peu plus haut pour loger le logo */
+.pdetail-pinned { transition: none; }
+.pdetail-pinned .pdetail-in { height: clamp(540px, 64vh, 660px); }
+/* logo sans cadre, centré dans l'espace libre au-dessus du texte ; le texte se cale en bas, juste au-dessus des offres */
+.pinfo-biglogo { flex: 1 1 auto; min-height: 150px; display: flex; align-items: center; justify-content: center; padding: 8px 0 14px; }
+.pinfo-biglogo img { max-width: 78%; max-height: 220px; width: auto; height: auto; object-fit: contain; display: block; }
+.pdetail-pinned .pinfo-scroll { overflow: visible; }
 
 .pdetail-in {
   display: grid;

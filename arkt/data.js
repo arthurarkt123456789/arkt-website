@@ -115,6 +115,10 @@ window.ARKT = {
     },
   ],
 
+  /* ---------- projets épinglés : ouverts en permanence dans "Tous les projets",
+     dans cet ordre, séparés par deux rangées de vignettes ---------- */
+  pinned: ["airbnb", "meulerie", "pernodricard", "palauma"],
+
   /* ---------- grille (déploiement au clic) ---------- */
   grid: [
     { id: "nb1", name: "NB1", year: "2026", phr: "4/5", short: "Vidéos produit · campagne ads",

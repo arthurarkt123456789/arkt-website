@@ -109,7 +109,7 @@ function Slide({ s, name, idx }) {
 }
 
 /* ---------- Détail projet : 30% info + 70% rail continu ---------- */
-function ProjectDetail({ proj, onClose }) {
+function ProjectDetail({ proj, onClose, pinned = false }) {
   const [visible, setVisible] = useState(false);
   const [prog, setProg] = useState(0);
   const railRef = useRef(null);
@@ -171,7 +171,7 @@ function ProjectDetail({ proj, onClose }) {
       if (!el) return;
       if (e.key === "ArrowRight") el.scrollBy({ left: el.clientWidth * 0.7, behavior: "smooth" });
       if (e.key === "ArrowLeft")  el.scrollBy({ left: -el.clientWidth * 0.7, behavior: "smooth" });
-      if (e.key === "Escape")     onClose();
+      if (e.key === "Escape" && !pinned) onClose();
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -184,12 +184,15 @@ function ProjectDetail({ proj, onClose }) {
   };
 
   return (
-    <div className="pdetail" style={{ maxHeight: visible ? "1200px" : "0" }}>
+    <div className={"pdetail " + (pinned ? "pdetail-pinned" : "pdetail-click")} style={{ maxHeight: visible ? "1200px" : "0" }}>
       <div className="pdetail-in">
 
         {/* ─── gauche 30% : informations ─── */}
         <div className="pinfo">
           <div className="pinfo-scroll">
+          {pinned && proj.logo && (
+            <div className="pinfo-biglogo"><img src={proj.logo.replace("-logo.jpg", "-logo-mark.png")} alt={proj.name} /></div>
+          )}
           <div className="pinfo-header">
             <h4 className="pinfo-name display">{proj.name}</h4>
             <p className="pinfo-meta dim">
@@ -224,7 +227,7 @@ function ProjectDetail({ proj, onClose }) {
                 <Arrow size={14} />
               </button>
             </div>
-            <button className="pdetail-close" onClick={onClose}>Fermer <span>×</span></button>
+            {!pinned && <button className="pdetail-close" onClick={onClose}>Fermer <span>×</span></button>}
           </div>
         </div>
 
@@ -246,6 +249,9 @@ function ProjectDetail({ proj, onClose }) {
 function GridProjects() {
   const D = window.ARKT;
   const allProjects = [...D.featured, ...D.grid].map(normalizeProject);
+  const pinnedIds = D.pinned || [];
+  const pinned = pinnedIds.map(id => allProjects.find(g => g.id === id)).filter(Boolean);
+  const tiles = allProjects.filter(g => !pinnedIds.includes(g.id));
   const [openId, setOpenId] = useState(null);
   const [cols, setCols] = useState(3);
   const gridRef = useRef(null);
@@ -265,45 +271,57 @@ function GridProjects() {
     setOpenId(next);
     if (next) {
       setTimeout(() => {
-        const el = gridRef.current && gridRef.current.querySelector(".pdetail");
+        const el = gridRef.current && gridRef.current.querySelector(".pdetail.pdetail-click");
         if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }, 150);
     }
   };
 
-  const openIdx = openId == null ? -1 : allProjects.findIndex(g => g.id === openId);
-  let insertAfter = -1;
-  if (openIdx >= 0) {
-    const rowEnd = (Math.floor(openIdx / cols) + 1) * cols - 1;
-    insertAfter = Math.min(rowEnd, allProjects.length - 1);
-  }
-  const openProj = openIdx >= 0 ? allProjects[openIdx] : null;
+  /* blocs : [épinglé 1] [2 rangées] [épinglé 2] [2 rangées] … [reste des vignettes] */
+  const per = cols * 2;
+  const blocks = [];
+  let cursor = 0;
+  pinned.forEach((p, k) => {
+    blocks.push({ kind: "pinned", proj: p });
+    if (k < pinned.length - 1) { blocks.push({ kind: "tiles", items: tiles.slice(cursor, cursor + per) }); cursor += per; }
+  });
+  blocks.push({ kind: "tiles", items: tiles.slice(cursor) });
+
+  const openProj = openId ? allProjects.find(g => g.id === openId) : null;
 
   return (
     <div className="pgrid" style={{ "--cols": cols }} ref={gridRef}>
-      {allProjects.map((g, i) => {
-        const isOpen = g.id === openId;
-        return (
-          <React.Fragment key={g.id}>
-            <Reveal as="button" delay={(i % cols) * 60}
-              className={"ptile" + (isOpen ? " active" : "")}
-              onClick={() => handleOpen(g.id)} aria-expanded={isOpen}>
-              {g.logo
-                ? <img src={g.logo} alt={g.name} loading="lazy" className="ptile-media ptile-media-img" />
-                : <Placeholder ratio="1/1" label="VISUEL" className="ptile-media" />
-              }
-              <div className="ptile-foot">
-                <div className="ptile-name">{g.name}</div>
-                <div className="ptile-year mono">{g.year}</div>
-              </div>
-              <span className="ptile-plus" aria-hidden="true"><i /><i /></span>
-            </Reveal>
-            {insertAfter === i && openProj && (
-              <ProjectDetail key={"d-" + openProj.id}
-                proj={openProj} onClose={() => setOpenId(null)} />
-            )}
-          </React.Fragment>
-        );
+      {blocks.map((b, bi) => {
+        if (b.kind === "pinned") {
+          return <ProjectDetail key={"pin-" + b.proj.id} proj={b.proj} pinned onClose={() => {}} />;
+        }
+        /* le détail cliqué s'insère en fin de rangée, à l'intérieur du bloc */
+        const j = openProj ? b.items.findIndex(g => g.id === openProj.id) : -1;
+        const insertAfter = j >= 0 ? Math.min((Math.floor(j / cols) + 1) * cols - 1, b.items.length - 1) : -1;
+        return b.items.map((g, i) => {
+          const isOpen = g.id === openId;
+          return (
+            <React.Fragment key={g.id}>
+              <Reveal as="button" delay={(i % cols) * 60}
+                className={"ptile" + (isOpen ? " active" : "")}
+                onClick={() => handleOpen(g.id)} aria-expanded={isOpen}>
+                {g.logo
+                  ? <img src={g.logo} alt={g.name} loading="lazy" className="ptile-media ptile-media-img" />
+                  : <Placeholder ratio="1/1" label="VISUEL" className="ptile-media" />
+                }
+                <div className="ptile-foot">
+                  <div className="ptile-name">{g.name}</div>
+                  <div className="ptile-year mono">{g.year}</div>
+                </div>
+                <span className="ptile-plus" aria-hidden="true"><i /><i /></span>
+              </Reveal>
+              {insertAfter === i && openProj && (
+                <ProjectDetail key={"d-" + openProj.id}
+                  proj={openProj} onClose={() => setOpenId(null)} />
+              )}
+            </React.Fragment>
+          );
+        });
       })}
     </div>
   );
