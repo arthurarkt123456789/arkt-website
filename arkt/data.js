@@ -31,7 +31,7 @@ window.ARKT = {
       tag: "Food studio · événementiel",
       claim: "Repenser le traiteur événementiel comme un studio de création.",
       accentName: "#FF5C00",
-      logo: "arkt/images/horsdoeuvre-logo-new.png",
+      logo: "arkt/images/horsdoeuvre-logo.jpg",
       panels: [
         { kind: "intro", label: "Coup de cœur", title: "HORS D'ŒUVRE – 2026", sub: "Food studio · événementiel" },
         { kind: "text", head: "Contexte", body: "Repenser le traiteur événementiel comme un studio de création. Ni traiteur classique, ni restaurant éphémère, ni agence : construire une marque food premium qui existe à la croisée de la gastronomie, de la direction artistique et de la scénographie, et qui peut se poser au même niveau que les studios de design ou les maisons créatives." },
@@ -56,7 +56,7 @@ window.ARKT = {
       tag: "Food & retail · Marseille",
       claim: "Faire naître à Marseille la première adresse entièrement dédiée au tiramisu et en faire un concept lifestyle à part entière.",
       accentName: "#E85A78",
-      logo: "arkt/images/ciaomisu-logo-new.png",
+      logo: "arkt/images/ciaomisu-logo.jpg",
       panels: [
         { kind: "intro", label: "Coup de cœur", title: "CIAOMISU! – 2026", sub: "Food & retail – Marseille" },
         { kind: "text", head: "Contexte", body: "Une recette familiale de tiramisu, une ambition claire : faire naître à Marseille la première adresse entièrement dédiée à ce dessert et en faire un concept lifestyle à part entière." },
@@ -78,7 +78,7 @@ window.ARKT = {
       tag: "Cofondé par ARKT",
       claim: "La preuve qu'ARKT ne fait pas que conseiller : le cabinet construit.",
       accentName: "#F2B705",
-      logo: "arkt/images/meulerie-logo.png",
+      logo: "arkt/images/meulerie-logo.jpg",
       panels: [
         { kind: "intro", label: "Coup de cœur", title: "La Meulerie", sub: "Le bon fromage, rendu désirable. Porté par l'énergie de Marseille." },
         { kind: "video", src: "arkt/videos/meulerie-1.mp4", poster: "arkt/videos/meulerie-1.jpg" },
@@ -102,7 +102,7 @@ window.ARKT = {
       tag: "Airbnb Experiences · Paris",
       claim: "Quand une marque mondiale confie à ARKT la projection de ses utilisateurs.",
       accentName: "#FF385C",
-      logo: "arkt/images/airbnb-logo.png",
+      logo: "arkt/images/airbnb-logo.jpg",
       panels: [
         { kind: "intro", label: "Coup de cœur", title: "Airbnb", sub: "Faire émerger le désir autour des Airbnb Experiences à Paris." },
         { kind: "text", head: "Contexte", body: "Faire naître le désir et la projection chez les utilisateurs autour des Airbnb Experiences à Paris, dans un environnement dominé par le format vidéo court." },

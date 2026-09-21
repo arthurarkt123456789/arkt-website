@@ -55,7 +55,7 @@ function normalizeProject(p) {
   return {
     id: p.id, name: p.name, year: p.year,
     short: p.tag,
-    logo: firstImg ? firstImg.src : null,
+    logo: p.logo || (firstImg ? firstImg.src : null),
     photos: slides.filter(x => x.kind === "media" && x.src).map(x => x.src),
     tags: [],
     body: p.claim,
