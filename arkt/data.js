@@ -144,7 +144,7 @@ window.ARKT = {
         activer: "Et on a créé **la stratégie éditoriale LinkedIn du groupe et de ses dirigeants**, les contenus qui la portent, la direction artistique et les shootings qui donnent un visage à la marque et l'animation des réseaux sociaux qui installe Palauma comme ==une voix reconnaissable== dans son secteur.",
         resultat: "==une marque que l'on connaît désormais==, ==une confiance== qui s'est installée auprès des partenaires comme des clients et **des projets qui s'enchaînent**. Palauma n'est plus interchangeable et son discours, les équipes peuvent le tenir partout, de la même façon." },
       logo: "arkt/images/palauma-logo.jpg",
-      photos: ["arkt/images/palauma-1.jpg", "arkt/images/palauma-2.jpg", "arkt/images/palauma-3.jpg", "arkt/images/palauma-4.jpg", "arkt/images/palauma-5.jpg"],
+      photos: [{ video: "arkt/videos/palauma-1.mp4", poster: "arkt/videos/palauma-1.jpg" }, { video: "arkt/videos/palauma-2.mp4", poster: "arkt/videos/palauma-2.jpg" }, "arkt/images/palauma-1.jpg", "arkt/images/palauma-2.jpg", "arkt/images/palauma-3.jpg", "arkt/images/palauma-4.jpg", "arkt/images/palauma-5.jpg"],
       tags: ["Positionnement", "Storytelling", "Éditorial LinkedIn"],
       body: "Donner à un groupe immobilier une voix d'outsider sur un marché standardisé." },
     { id: "crousty", name: "Crousty Crew", year: "2026", phr: "4/5", short: "Pour Taster · street food",
