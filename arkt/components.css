@@ -497,6 +497,10 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 .pslide-story { width: clamp(300px, 34vw, 470px); justify-content: flex-start; gap: 16px; }
 .pslide-story .pslide-body { font-size: clamp(13.5px, 1.05vw, 15.5px); line-height: 1.5; font-weight: 440; }
 
+/* texte enrichi dans les cartes */
+.pslide-body strong, .pslide-result-line strong { font-weight: 620; color: var(--white); }
+.pslide-body .hi, .pslide-result-line .hi { font-style: normal; font-weight: 620; color: var(--accent); }
+
 /* slide résultat */
 .pslide-result {
   width: clamp(260px, 30vw, 400px);

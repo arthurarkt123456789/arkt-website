@@ -64,6 +64,17 @@ function normalizeProject(p) {
   };
 }
 
+/* Texte enrichi des cartes : **gras** et ==mot en orange== */
+function rich(text) {
+  if (!text) return null;
+  const parts = String(text).split(/(\*\*[^*]+\*\*|==[^=]+==)/g);
+  return parts.map((seg, i) => {
+    if (seg.startsWith("**") && seg.endsWith("**")) return <strong key={i}>{rich(seg.slice(2, -2))}</strong>;
+    if (seg.startsWith("==") && seg.endsWith("==")) return <em key={i} className="hi">{seg.slice(2, -2)}</em>;
+    return seg;
+  });
+}
+
 /* ── Rendu d'un slide ── */
 function Slide({ s, name, idx }) {
   if (s.kind === "media") {
@@ -89,7 +100,7 @@ function Slide({ s, name, idx }) {
     return (
       <div className={"pslide pslide-text" + (s.story ? " pslide-story" : "")}>
         <p className="eyebrow pslide-head">{s.head}</p>
-        <p className="pslide-body">{s.body}</p>
+        <p className="pslide-body">{rich(s.body)}</p>
       </div>
     );
   }
@@ -101,7 +112,7 @@ function Slide({ s, name, idx }) {
           <span className="grad-text">{s.metric}</span>
           <span className="pslide-unit">{s.unit}</span>
         </div>
-        <p className="pslide-result-line">{s.line}</p>
+        <p className="pslide-result-line">{rich(s.line)}</p>
       </div>
     );
   }
