@@ -34,6 +34,7 @@ window.ARKT = {
       logo: "arkt/images/horsdoeuvre-logo.jpg",
       panels: [
         { kind: "intro", label: "Coup de cœur", title: "HORS D'ŒUVRE – 2026", sub: "Food studio · événementiel" },
+        { kind: "video", src: "arkt/videos/horsdoeuvre-1.mp4", poster: "arkt/videos/horsdoeuvre-1.jpg" },
         { kind: "text", head: "Contexte", body: "Repenser le traiteur événementiel comme un studio de création. Ni traiteur classique, ni restaurant éphémère, ni agence : construire une marque food premium qui existe à la croisée de la gastronomie, de la direction artistique et de la scénographie, et qui peut se poser au même niveau que les studios de design ou les maisons créatives." },
         { kind: "media", phr: "4/5", caption: "Hors d'Œuvre · identité", src: "arkt/images/horsdoeuvre-1.jpg" },
         { kind: "media", phr: "4/5", caption: "Hors d'Œuvre · palette", src: "arkt/images/horsdoeuvre-4.jpg" },
