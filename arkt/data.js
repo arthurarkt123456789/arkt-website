@@ -220,7 +220,7 @@ window.ARKT = {
       offres: ["Piloter", "Activer"],
       story: { piloter: "Kube, c'est un bootcamp nouvelle génération à Marseille, avec une équipe qui produit beaucoup de contenus mais ==sans cap pour les tenir ensemble==. ==On a piloté la marque dans la durée== : définir le persona et le positionnement, arbitrer ce qui se dit et ce qui ne se dit pas, valider les contenus et superviser leur production **pour que tout ce qui sort ressemble à Kube et à personne d'autre**.", activer: "Et on a créé ce qui manquait pour que ce pilotage tienne : la charte de marque, l'identité visuelle, le ==ton of voice== et la stratégie réseaux sociaux qui donnent à l'équipe **un cadre clair pour produire seule**.", resultat: "une marque de bootcamp ==identifiable sur les réseaux==, une équipe qui produit avec un cadre et **une présence sociale cohérente semaine après semaine**." },
       logo: "arkt/images/kube-logo.jpg",
-      photos: ["arkt/images/kube-1.jpg", "arkt/images/kube-2.jpg", "arkt/images/kube-3.jpg", "arkt/images/kube-4.jpg", "arkt/images/kube-5.jpg", "arkt/images/kube-6.jpg"],
+      photos: [{ video: "arkt/videos/kube-1.mp4", poster: "arkt/videos/kube-1.jpg" }, "arkt/images/kube-1.jpg", "arkt/images/kube-2.jpg", "arkt/images/kube-3.jpg", "arkt/images/kube-4.jpg", "arkt/images/kube-5.jpg", "arkt/images/kube-6.jpg"],
       tags: ["Charte de marque", "Identité & ton", "Persona", "Stratégie social"],
       body: "Donner à un bootcamp nouvelle génération une marque, un ton et une présence sociale." },
     { id: "pattaxnike", name: "Patta × Nike", year: "2025", phr: "4/5", short: "Pop-up instore · scénographie",
