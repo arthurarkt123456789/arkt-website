@@ -186,7 +186,7 @@ window.ARKT = {
         activer: "Et on a créé la stratégie de contenu et d'image, la ligne éditoriale, **la direction artistique des shootings et l'animation des réseaux sociaux** qui ==font vivre cette marque au quotidien==.",
         resultat: "un médecin esthétique qui n'est plus « un cabinet parmi d'autres » mais **une marque avec un ton**, une audience qui s'élargit et ==une désirabilité qui précède désormais la consultation==." },
       logo: "arkt/images/estelletorossian-logo.jpg",
-      photos: ["arkt/images/estelletorossian-1.jpg", "arkt/images/estelletorossian-2.jpg", "arkt/images/estelletorossian-3.jpg", "arkt/images/estelletorossian-4.jpg", "arkt/images/estelletorossian-5.jpg"],
+      photos: [{ video: "arkt/videos/estelletorossian-1.mp4", poster: "arkt/videos/estelletorossian-1.jpg" }, "arkt/images/estelletorossian-1.jpg", "arkt/images/estelletorossian-2.jpg", "arkt/images/estelletorossian-3.jpg", "arkt/images/estelletorossian-4.jpg", "arkt/images/estelletorossian-5.jpg"],
       tags: ["Stratégie de contenu", "Image de marque", "Éditorial"],
       body: "Du cabinet médical à la marque culturelle." },
     { id: "egoz", name: "Egoz", year: "2026", phr: "4/5", short: "Marque · stratégie & identité",
