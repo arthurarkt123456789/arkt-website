@@ -133,6 +133,33 @@
 .offre-detail-change { font-weight: 520; }
 .offre-detail-cta { margin-top: 26px; }
 
+/* ── gains strip (fond sombre, sous les cartes offre) ── */
+.offre-gains {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #131311;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: clamp(32px, 5vh, 56px);
+}
+.offre-gain {
+  padding: clamp(28px, 2.8vw, 40px) clamp(24px, 2.4vw, 36px);
+  border-right: 1px solid rgba(243,241,234,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.offre-gain:last-child { border-right: none; }
+.offre-gain-bar { display: block; width: 28px; height: 2px; background: var(--accent); flex-shrink: 0; }
+.offre-gain-t {
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  color: #F3F1EA;
+  margin: 0;
+}
+
 /* =================== TÉMOIGNAGES =================== */
 .testi { overflow: hidden; }
 .testi-halo { width: 44vw; height: 44vw; max-width: 600px; max-height: 600px; left: -8%; top: 15%; background: radial-gradient(circle, rgba(255,69,51,0.35), transparent 68%); opacity: calc(var(--halo) * 0.35); }
@@ -356,6 +383,10 @@ html[data-light="0"] .team-photo, html[data-light="0"] .team-photo-ph { backgrou
   /* témoignages : grille → carousel */
   .testi-grid { display: none; }
   .testi-carousel { display: block; }
+  /* offre gains strip : 3 col → 1 col */
+  .offre-gains { grid-template-columns: 1fr; }
+  .offre-gain { border-right: none; border-bottom: 1px solid rgba(243,241,234,0.07); }
+  .offre-gain:last-child { border-bottom: none; }
   /* parcours : 2 col → 1 col + border gauche */
   .parcours-steps {
     grid-template-columns: 1fr;

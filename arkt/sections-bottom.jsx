@@ -38,39 +38,6 @@ function Parcours() {
   );
 }
 
-/* ---------------- Approche (fond sombre) ---------------- */
-function Approche() {
-  const D = ARKT;
-  return (
-    <section id="approche" className="section-pad approche">
-      <div className="wrap">
-        <Reveal className="appr-head">
-          <SectionKicker num="III" label="APPROCHE" />
-          <p className="eyebrow"><span className="dot" />Approche</p>
-          <h2 className="display appr-title">
-            Ce qui change tout, <span className="dim">c'est la clarté avant l'action.</span>
-          </h2>
-          <p className="appr-lead dim">
-            Beaucoup d'agences passent directement à l'exécution. Nous commençons toujours par comprendre votre marché, vos vraies contraintes et ce qui vous rend différent — avant de proposer quoi que ce soit.
-          </p>
-        </Reveal>
-        <div className="appr-steps">
-          {D.approche.map((s, i) => (
-            <Reveal key={s.k} delay={i * 110} className={"appr-step" + (s.opt ? " live" : "")} as="article">
-              <div className="appr-step-top">
-                <span className="appr-k">{s.k}</span>
-              </div>
-              <h3 className="appr-step-t">{s.t}</h3>
-              <p className="appr-step-d dim">{s.d}</p>
-            </Reveal>
-          ))}
-          <div className="appr-track" aria-hidden="true"><span /></div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ---------------- Offre ---------------- */
 function OffreDetail({ o, onClose }) {
   const d = o.detail;
@@ -120,7 +87,7 @@ function Offre() {
     <section id="offre" className="section-pad offre">
       <div className="wrap">
         <Reveal className="offre-intro">
-          <SectionKicker num="IV" label="OFFRE" />
+          <SectionKicker num="III" label="OFFRE" />
           <p className="eyebrow"><span className="dot" />Offre</p>
           <h2 className="display offre-title">
             De l'idée à l'impact, <span className="dim">tout le spectre.</span>
@@ -157,6 +124,16 @@ function Offre() {
           })}
         </div>
         {openO && <OffreDetail o={openO} onClose={() => setOpenId(null)} />}
+
+        {/* ─── strip gains (fond sombre) ─── */}
+        <Reveal className="offre-gains" as="div">
+          {D.approche.map((s) => (
+            <div key={s.k} className="offre-gain">
+              <span className="offre-gain-bar" aria-hidden="true" />
+              <p className="offre-gain-t">{s.t}</p>
+            </div>
+          ))}
+        </Reveal>
       </div>
     </section>
   );
@@ -234,7 +211,7 @@ function Team() {
     <section id="equipe" className="section-pad light-section on-light team">
       <div className="wrap">
         <Reveal className="team-head">
-          <SectionKicker num="VI" label="ÉQUIPE" />
+          <SectionKicker num="V" label="ÉQUIPE" />
           <p className="eyebrow"><span className="dot" />Équipe</p>
           <h2 className="display team-title">
             Des expertises réunies <span className="dim">autour d'une même trajectoire.</span>
@@ -386,7 +363,7 @@ function Contact() {
       <div className="wrap contact-in">
         <div className="contact-layout">
           <Reveal className="contact-card">
-            <SectionKicker num="VII" label="CONTACT" />
+            <SectionKicker num="VI" label="CONTACT" />
             <p className="eyebrow"><span className="dot" />Contact</p>
             <h2 className="display contact-title">
               Parlons de <span className="grad-text">votre projet.</span>
@@ -444,4 +421,4 @@ function Footer() {
   );
 }
 
-export { Parcours, Approche, Offre, Testimonials, Team, Contact, Footer };
+export { Parcours, Offre, Testimonials, Team, Contact, Footer };

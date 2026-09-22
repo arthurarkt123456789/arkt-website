@@ -4,7 +4,6 @@ const ARKT = {
 
   nav: [
     { id: "projets", label: "Projets" },
-    { id: "approche", label: "Approche" },
     { id: "offre", label: "Offre" },
     { id: "equipe", label: "Équipe" },
     { id: "contact", label: "Contact" },

@@ -1,7 +1,7 @@
 /* ARKT — application racine + Tweaks */
 import React, { useEffect } from 'react';
 import { Header, Hero, SocialProof, ReadingProgress } from './sections-top.jsx';
-import { Parcours, Testimonials, Approche, Offre, Team, Contact, Footer } from './sections-bottom.jsx';
+import { Parcours, Testimonials, Offre, Team, Contact, Footer } from './sections-bottom.jsx';
 import { Projects } from './sections-projects.jsx';
 import { useTweaks, TweaksPanel, TweakSection, TweakColor, TweakSlider } from './tweaks-panel.jsx';
 
@@ -53,7 +53,6 @@ function App() {
         <SocialProof />
         <Testimonials />
         <Parcours />
-        <Approche />
         <Offre />
         <Projects />
         <Team />

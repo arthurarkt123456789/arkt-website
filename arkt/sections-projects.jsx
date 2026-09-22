@@ -346,7 +346,7 @@ function Projects() {
     <section id="projets" className="section-pad projects">
       <div className="wrap">
         <Reveal className="proj-head">
-          <SectionKicker num="V" label="PROJETS" />
+          <SectionKicker num="IV" label="PROJETS" />
           <p className="eyebrow"><span className="dot" />Projets</p>
           <h2 className="display proj-title">
             La preuve, <span className="dim">plutôt que les promesses.</span>
