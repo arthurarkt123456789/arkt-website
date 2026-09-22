@@ -123,11 +123,10 @@ function AnimatedCounter({ target, suffix = "" }) {
   return <span className="hero-stat-num">{value}{suffix}</span>;
 }
 
-/* TODO Lot 1 — renseigner avec Arthur : années d'activité, marques accompagnées, projets livrés */
 const HERO_STATS = [
-  { num: null, suffix: "", label: "ans d'activité" },
-  { num: null, suffix: "+", label: "marques accompagnées" },
-  { num: null, suffix: "+", label: "projets livrés" },
+  { num: 15, suffix: "", label: "ans d'expertise" },
+  { num: 30, suffix: "+", label: "marques accompagnées" },
+  { num: 33, suffix: "", label: "projets livrés" },
 ];
 
 function Hero() {
