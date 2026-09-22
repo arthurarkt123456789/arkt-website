@@ -45,7 +45,7 @@ function Slide({ s, name, idx }) {
     return (
       <div className="pslide pslide-video">
         <div className="iphone-frame">
-          <video src={s.src} poster={s.poster} autoPlay muted loop playsInline preload="auto" draggable="false" />
+          <video src={s.src} poster={s.poster} autoPlay muted loop playsInline preload="metadata" draggable="false" />
         </div>
       </div>
     );
@@ -75,17 +75,26 @@ function Slide({ s, name, idx }) {
 
 /* ---------- Détail projet : 30% info + 70% rail continu ---------- */
 function ProjectDetail({ proj, onClose }) {
-  const [prog, setProg] = useState(0);
   const railRef = useRef(null);
+  const progFillRef = useRef(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
   const slides = proj.slides || [];
 
-  /* suivi de la progression du scroll */
+  /* suivi de la progression — DOM direct pour le fill, setState uniquement aux bornes */
   useEffect(() => {
     const el = railRef.current;
     if (!el) return;
+    let prevStart = true, prevEnd = false;
     const update = () => {
       const max = el.scrollWidth - el.clientWidth;
-      setProg(max > 0 ? el.scrollLeft / max : 0);
+      const p = max > 0 ? el.scrollLeft / max : 0;
+      if (progFillRef.current) progFillRef.current.style.transform = `scaleX(${Math.max(0.04, p)})`;
+      const nowStart = p <= 0.01, nowEnd = p >= 0.99;
+      if (nowStart !== prevStart || nowEnd !== prevEnd) {
+        prevStart = nowStart; prevEnd = nowEnd;
+        setAtStart(nowStart); setAtEnd(nowEnd);
+      }
     };
     update();
     el.addEventListener("scroll", update, { passive: true });
@@ -162,15 +171,15 @@ function ProjectDetail({ proj, onClose }) {
           <p className="pinfo-body">{proj.body}</p>
           <div className="pinfo-foot">
             <div className="pinfo-progress">
-              <span style={{ transform: "scaleX(" + Math.max(0.04, prog) + ")" }} />
+              <span ref={progFillRef} />
             </div>
             <div className="pinfo-nav">
               <button className="pcarr" onClick={() => scroll(-1)}
-                disabled={prog <= 0.01} aria-label="Précédent">
+                disabled={atStart} aria-label="Précédent">
                 <Arrow size={14} style={{ transform: "rotate(180deg)" }} />
               </button>
               <button className="pcarr" onClick={() => scroll(1)}
-                disabled={prog >= 0.99} aria-label="Suivant">
+                disabled={atEnd} aria-label="Suivant">
                 <Arrow size={14} />
               </button>
             </div>

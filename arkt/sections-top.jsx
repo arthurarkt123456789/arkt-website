@@ -48,11 +48,13 @@ function SectionKicker({ num, label }) {
 }
 
 function ReadingProgress() {
-  const [w, setW] = useState(0);
+  const fillRef = useRef(null);
   useEffect(() => {
+    const fill = fillRef.current;
+    if (!fill) return;
     const upd = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      setW(max > 0 ? window.scrollY / max : 0);
+      fill.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
     };
     upd();
     window.addEventListener("scroll", upd, { passive: true });
@@ -60,7 +62,7 @@ function ReadingProgress() {
   }, []);
   return (
     <div className="reading-bar" aria-hidden="true">
-      <div className="reading-bar-fill" style={{ transform: `scaleX(${w})` }} />
+      <div className="reading-bar-fill" ref={fillRef} />
     </div>
   );
 }
@@ -92,8 +94,12 @@ function Header() {
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState(null);
+  const solidRef = useRef(false);
   useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > 40);
+    const onScroll = () => {
+      const next = window.scrollY > 40;
+      if (next !== solidRef.current) { solidRef.current = next; setSolid(next); }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);

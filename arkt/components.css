@@ -56,7 +56,8 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 /* =================== HEADER =================== */
 .hdr {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  transition: background .4s, border-color .4s, backdrop-filter .4s;
+  transition: background .4s, border-color .4s;
+  will-change: transform;
   border-bottom: 1px solid transparent;
 }
 .hdr.solid {
@@ -176,7 +177,7 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 .proof { padding-top: clamp(30px, 6vh, 70px); padding-bottom: clamp(10px, 4vh, 40px); overflow: hidden; }
 .proof-label { margin-bottom: clamp(28px, 4vh, 48px); }
 .proof-marquee { position: relative; width: 100%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); }
-.proof-track { display: flex; gap: clamp(40px, 6vw, 96px); width: max-content; animation: marquee 42s linear infinite; padding-left: clamp(40px, 6vw, 96px); }
+.proof-track { display: flex; gap: clamp(40px, 6vw, 96px); width: max-content; animation: marquee 42s linear infinite; padding-left: clamp(40px, 6vw, 96px); will-change: transform; }
 .proof:hover .proof-track { animation-play-state: paused; }
 [data-motion="0"] .proof-track { animation: none; }
 @keyframes marquee { to { transform: translateX(-50%); } }
@@ -205,7 +206,7 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   background: var(--surface); border: 1px solid var(--hairline-soft);
   min-height: 280px; display: flex; flex-direction: column; overflow: hidden;
   box-shadow: 0 2px 4px rgba(19,19,17,0.03), 0 18px 40px -26px rgba(19,19,17,0.16);
-  transition: border-color .4s, transform .4s, background .4s, box-shadow .4s; cursor: default;
+  transition: border-color .4s, transform .4s, background .4s; cursor: default;
 }
 .moment-card::before {
   content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .5s;
@@ -376,7 +377,7 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   position: relative; text-align: left; background: var(--surface); border: 1px solid var(--hairline-soft);
   border-radius: var(--radius); padding: 0; overflow: hidden; color: var(--white);
   box-shadow: 0 2px 4px rgba(19,19,17,0.03), 0 16px 36px -26px rgba(19,19,17,0.18);
-  transition: border-color .35s, transform .35s, background .35s, box-shadow .35s; display: flex; flex-direction: column;
+  transition: border-color .35s, transform .35s, background .35s; display: flex; flex-direction: column;
 }
 .ptile:hover { transform: translateY(-4px); border-color: rgba(19,19,17,0.22); box-shadow: 0 6px 12px rgba(19,19,17,0.05), 0 26px 50px -24px rgba(19,19,17,0.22); }
 .ptile.active { border-color: rgba(242,83,63,0.5); }
@@ -387,7 +388,7 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 .ptile-year { color: var(--dim); }
 .ptile-plus {
   position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 50%;
-  background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); border: 1px solid var(--hairline);
+  background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.14);
   display: grid; place-items: center; transition: background .3s, transform .3s;
 }
 .ptile-plus i { position: absolute; width: 13px; height: 1.5px; background: #fff; transition: transform .35s, background .3s; }
@@ -467,7 +468,7 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 }
 .pinfo-progress > span {
   display: block; height: 100%; background: var(--grad);
-  transform-origin: left; transition: transform .15s linear;
+  transform-origin: left; transform: scaleX(0); transition: transform .15s linear;
 }
 .pinfo-nav { display: flex; gap: 8px; flex-shrink: 0; }
 
@@ -476,6 +477,8 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   display: flex; align-items: stretch;
   overflow-x: auto; overflow-y: hidden;
   scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   background: #0F0F0D;
   cursor: grab; gap: 3px;
 }
