@@ -101,6 +101,35 @@ function Header() {
 }
 
 /* ---------------- Hero ---------------- */
+
+function AnimatedCounter({ target, suffix = "" }) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (target == null) return;
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setValue(target);
+      return;
+    }
+    const duration = 1500;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      setValue(Math.round((1 - Math.pow(1 - p, 3)) * target));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [target]);
+  if (target == null) return <span className="hero-stat-num hero-stat-todo">—</span>;
+  return <span className="hero-stat-num">{value}{suffix}</span>;
+}
+
+/* TODO Lot 1 — renseigner avec Arthur : années d'activité, marques accompagnées, projets livrés */
+const HERO_STATS = [
+  { num: null, suffix: "", label: "ans d'activité" },
+  { num: null, suffix: "+", label: "marques accompagnées" },
+  { num: null, suffix: "+", label: "projets livrés" },
+];
+
 function Hero() {
   return (
     <section id="top" className="hero">
@@ -111,15 +140,28 @@ function Hero() {
         <p className="hero-eyebrow">Cabinet de conseil · Marseille / Paris</p>
         <h1 className="hero-t1 display">De l'idée</h1>
         <p className="hero-t2 display" style={{ color: "var(--accent)" }}>à l'impact.</p>
+        <p className="hero-positioning">
+          La stratégie de marque pour les fondateurs qui veulent transformer une idée en impact.
+        </p>
+        <p className="hero-sectors mono">RETAIL · FOOD · IMMOBILIER · SPORT · LIFESTYLE</p>
         <div className="hero-cta">
           <button className="btn btn-primary" onClick={() => scrollToId("projets")}>Voir nos projets <Arrow /></button>
-          <a className="btn btn-ghost" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>Découvrir l'approche</a>
+          <a className="btn btn-ghost" href="#approche" onClick={(e) => { e.preventDefault(); scrollToId("approche"); }}>Découvrir l'approche</a>
+        </div>
+        <div className="hero-stats">
+          {HERO_STATS.map((s, i) => (
+            <div key={i} className="hero-stat">
+              <AnimatedCounter target={s.num} suffix={s.suffix} />
+              <span className="hero-stat-label mono">{s.label}</span>
+            </div>
+          ))}
         </div>
         <button className="hero-scroll" onClick={() => scrollToId("clients")} aria-label="Défiler">
           <span className="mono">SCROLLEZ</span>
           <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><path d="M7 1V20M7 20L1 14M7 20L13 14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
       </div>
+      <span className="hero-edition mono">Édition 2026</span>
     </section>
   );
 }

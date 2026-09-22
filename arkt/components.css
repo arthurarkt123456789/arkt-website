@@ -114,6 +114,62 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 [data-motion="0"] .hero-scroll svg { animation: none; }
 
+/* hero — Lot 1 additions */
+.hero-positioning {
+  font-size: clamp(15px, 1.6vw, 20px);
+  line-height: 1.5;
+  color: var(--dim);
+  max-width: 500px;
+  margin: clamp(16px, 2.5vh, 28px) auto clamp(10px, 1.5vh, 16px);
+}
+.hero-sectors {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--dim-2);
+  margin: 0 0 clamp(20px, 3vh, 36px);
+}
+.hero-stats {
+  display: flex;
+  gap: clamp(28px, 5vw, 72px);
+  justify-content: center;
+  margin-top: clamp(36px, 5.5vh, 64px);
+}
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.hero-stat-num {
+  font-family: "Big Shoulders Display", var(--sans);
+  font-size: clamp(40px, 5.5vw, 64px);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+}
+.hero-stat-todo { color: var(--dim-2); }
+.hero-stat-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.hero-edition {
+  position: absolute;
+  bottom: clamp(18px, 2.5vh, 28px);
+  right: clamp(20px, 4vw, 56px);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--dim-2);
+  text-transform: uppercase;
+  z-index: 3;
+}
+@media (max-width: 600px) {
+  .hero-stats { gap: 20px; }
+  .hero-edition { display: none; }
+}
+[data-motion="0"] .hero-stat-num { transition: none; }
+
 /* =================== PREUVE SOCIALE =================== */
 .proof { padding-top: clamp(30px, 6vh, 70px); padding-bottom: clamp(10px, 4vh, 40px); overflow: hidden; }
 .proof-label { margin-bottom: clamp(28px, 4vh, 48px); }
