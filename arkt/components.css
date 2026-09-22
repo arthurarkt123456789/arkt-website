@@ -411,7 +411,7 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 .pdetail-in {
   display: grid;
   grid-template-columns: 30fr 70fr;
-  height: clamp(340px, 50vh, 560px);
+  height: clamp(300px, 42vh, 460px);
   background: var(--surface);
   border: 1px solid rgba(242,83,63,0.3);
   border-radius: var(--radius);

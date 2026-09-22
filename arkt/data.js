@@ -113,19 +113,19 @@ const ARKT = {
 
   /* ---------- grille (déploiement au clic) ---------- */
   grid: [
-    { id: "nb1", defaultOpen: true, name: "NB1", year: "2026", phr: "4/5", short: "Vidéos produit · campagne ads",
+    { id: "nb1", defaultOpen: true, name: "NB1", year: "2026", phr: "4/5", short: "Campagne META Ads · haute performance",
       logo: "arkt/images/nb1-logo.jpg",
       photos: [
-        { video: "arkt/videos/nb1-driss.mp4", poster: "arkt/videos/nb1-driss.jpg" },
         { video: "arkt/videos/nb1-suzane.mp4", poster: "arkt/videos/nb1-suzane.jpg" },
         { video: "arkt/videos/nb1-karine.mp4", poster: "arkt/videos/nb1-karine.jpg" },
         { video: "arkt/videos/nb1-jo-1.mp4" },
         { video: "arkt/videos/nb1-jo-4.mp4" },
+        { video: "arkt/videos/nb1-driss.mp4", poster: "arkt/videos/nb1-driss.jpg" },
         { video: "arkt/videos/nb1-suzane-1.mp4" },
         { video: "arkt/videos/nb1-karine-3.mp4" },
       ],
-      tags: ["Production vidéo", "Contenu ads", "Acquisition", "Communication"],
-      body: "Production de contenus vidéo pour NB1 : tournages produit et création de formats publicitaires pour leur campagne de communication et d'acquisition." },
+      tags: ["META Ads", "Production vidéo", "Media buying", "Acquisition"],
+      body: "Conception et production des campagnes META Ads de NB1 : tournages produit, création de formats haute performance (Reels, Stories, carrés), diffusion media sur des budgets mensuels de plusieurs dizaines de milliers d'euros. Des contenus pensés pour convertir dès la première impression, avec un ROI mesuré et optimisé en continu." },
     { id: "palauma", defaultOpen: true, name: "Palauma", year: "2026", phr: "4/5", short: "Outsider d'un immobilier standardisé",
       logo: "arkt/images/palauma-logo.jpg",
       photos: ["arkt/images/palauma-1.jpg", "arkt/images/palauma-2.jpg", "arkt/images/palauma-3.jpg", "arkt/images/palauma-4.jpg", "arkt/images/palauma-5.jpg"],
