@@ -1,6 +1,6 @@
 /* ARKT — Projets : grille unifiée + détail 30/70 (rail continu) */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Reveal, Arrow, Placeholder } from './sections-top.jsx';
+import { Reveal, Arrow, Placeholder, SectionKicker } from './sections-top.jsx';
 import ARKT from './data.js';
 
 /* Normalise les deux formats (featured/grid) en format commun avec slides */
@@ -74,16 +74,9 @@ function Slide({ s, name, idx }) {
 
 /* ---------- Détail projet : 30% info + 70% rail continu ---------- */
 function ProjectDetail({ proj, onClose }) {
-  const [visible, setVisible] = useState(false);
   const [prog, setProg] = useState(0);
   const railRef = useRef(null);
   const slides = proj.slides || [];
-
-  /* animation d'ouverture */
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(raf);
-  }, []);
 
   /* suivi de la progression du scroll */
   useEffect(() => {
@@ -96,7 +89,7 @@ function ProjectDetail({ proj, onClose }) {
     update();
     el.addEventListener("scroll", update, { passive: true });
     return () => el.removeEventListener("scroll", update);
-  }, [visible]);
+  }, []);
 
   /* drag souris */
   useEffect(() => {
@@ -148,7 +141,7 @@ function ProjectDetail({ proj, onClose }) {
   };
 
   return (
-    <div className="pdetail" style={{ maxHeight: visible ? "1200px" : "0" }}>
+    <div className="pdetail">
       <div className="pdetail-in">
 
         {/* ─── gauche 30% : informations ─── */}
@@ -198,81 +191,135 @@ function ProjectDetail({ proj, onClose }) {
   );
 }
 
-/* ---------- Grille unifiée ---------- */
+/* ---------- Grille unifiée — multiple open (un par rangée) + URL hash ---------- */
 function GridProjects() {
   const D = ARKT;
   const allProjects = [...D.featured, ...D.grid].map(normalizeProject);
-  const [openId, setOpenId] = useState(null);
+  /* openByRow: { [rowIdx]: projectId } — un seul ouvert par rangée */
+  const [openByRow, setOpenByRow] = useState({});
   const [cols, setCols] = useState(3);
   const gridRef = useRef(null);
 
+  const rowOf = useCallback((idx) => Math.floor(idx / cols), [cols]);
+
+  /* colonnes responsive */
   useEffect(() => {
     const calc = () => {
       const w = window.innerWidth;
-      setCols(w < 680 ? 2 : w < 1040 ? 3 : 4);
+      const next = w < 680 ? 2 : w < 1040 ? 3 : 4;
+      setCols(next);
+      setOpenByRow({}); /* ferme tout au resize pour éviter les décalages */
     };
     calc();
     window.addEventListener("resize", calc);
     return () => window.removeEventListener("resize", calc);
   }, []);
 
-  const scrollToDetail = useCallback(() => {
+  /* URL hash → état initial */
+  useEffect(() => {
+    const m = window.location.hash.match(/[#&]open=([^&]+)/);
+    if (!m) return;
+    const ids = m[1].split(",").filter(Boolean);
+    const init = {};
+    ids.forEach(id => {
+      const idx = allProjects.findIndex(p => p.id === id);
+      if (idx >= 0) init[Math.floor(idx / cols)] = id;
+    });
+    setOpenByRow(init);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  /* état → URL hash */
+  useEffect(() => {
+    const ids = Object.values(openByRow).filter(Boolean);
+    const hash = ids.length ? "#open=" + ids.join(",") : "";
+    window.history.replaceState(null, "", hash || window.location.pathname);
+  }, [openByRow]);
+
+  const scrollToPanel = useCallback((rowIdx) => {
     setTimeout(() => {
-      const el = gridRef.current && gridRef.current.querySelector(".pdetail");
+      const el = gridRef.current && gridRef.current.querySelector('[data-row="' + rowIdx + '"]');
       if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }, 200);
+    }, 220);
   }, []);
 
-  const handleOpen = (id) => {
-    const next = id === openId ? null : id;
-    setOpenId(next);
-    if (next) scrollToDetail();
-  };
+  const toggle = useCallback((id) => {
+    const idx = allProjects.findIndex(p => p.id === id);
+    const row = rowOf(idx);
+    setOpenByRow(prev => {
+      const next = { ...prev };
+      if (next[row] === id) delete next[row];
+      else { next[row] = id; scrollToPanel(row); }
+      return next;
+    });
+  }, [allProjects, rowOf, scrollToPanel]);
 
+  /* événement cross-composant (logos marquee) */
   useEffect(() => {
-    const handler = (e) => {
-      const { id } = e.detail;
-      setOpenId(id);
-      scrollToDetail();
+    const handler = ({ detail }) => {
+      const id = detail.id;
+      const idx = allProjects.findIndex(p => p.id === id);
+      if (idx < 0) return;
+      const row = rowOf(idx);
+      setOpenByRow(prev => ({ ...prev, [row]: id }));
+      scrollToPanel(row);
     };
     window.addEventListener("arkt:openProject", handler);
     return () => window.removeEventListener("arkt:openProject", handler);
-  }, [scrollToDetail]);
+  }, [allProjects, rowOf, scrollToPanel]);
 
-  const openIdx = openId == null ? -1 : allProjects.findIndex(g => g.id === openId);
-  let insertAfter = -1;
-  if (openIdx >= 0) {
-    const rowEnd = (Math.floor(openIdx / cols) + 1) * cols - 1;
-    insertAfter = Math.min(rowEnd, allProjects.length - 1);
+  /* calcul des rangées et points d'insertion */
+  const items = [];
+  let i = 0;
+  while (i < allProjects.length) {
+    const rowIdx = rowOf(i);
+    const rowItems = [];
+    while (i < allProjects.length && rowOf(i) === rowIdx) {
+      rowItems.push({ g: allProjects[i], i });
+      i++;
+    }
+    items.push({ rowIdx, rowItems });
   }
-  const openProj = openIdx >= 0 ? allProjects[openIdx] : null;
 
   return (
     <div className="pgrid" style={{ "--cols": cols }} ref={gridRef}>
-      {allProjects.map((g, i) => {
-        const isOpen = g.id === openId;
-        return (
-          <React.Fragment key={g.id}>
-            <Reveal as="button" delay={(i % cols) * 60}
-              className={"ptile" + (isOpen ? " active" : "")}
-              onClick={() => handleOpen(g.id)} aria-expanded={isOpen}>
-              {g.logo
-                ? <img src={g.logo} alt={g.name} loading="lazy" className="ptile-media ptile-media-img" />
-                : <Placeholder ratio="1/1" label="VISUEL" className="ptile-media" />
-              }
-              <div className="ptile-foot">
-                <div className="ptile-name">{g.name}</div>
-                <div className="ptile-year mono">{g.year}</div>
+      {items.map(({ rowIdx, rowItems }) => (
+        <React.Fragment key={"row-" + rowIdx}>
+          {rowItems.map(({ g, i: idx }) => {
+            const isOpen = openByRow[rowIdx] === g.id;
+            return (
+              <Reveal key={g.id} as="button" delay={(idx % cols) * 60}
+                className={"ptile" + (isOpen ? " active" : "")}
+                onClick={() => toggle(g.id)} aria-expanded={isOpen}>
+                {g.logo
+                  ? <img src={g.logo} alt={g.name} loading="lazy" className="ptile-media ptile-media-img" />
+                  : <Placeholder ratio="1/1" label="VISUEL" className="ptile-media" />
+                }
+                <div className="ptile-foot">
+                  <div className="ptile-name">{g.name}</div>
+                  <div className="ptile-year mono">{g.year}</div>
+                </div>
+                <span className="ptile-plus" aria-hidden="true"><i /><i /></span>
+                {g.body && <span className="visually-hidden">{g.body}</span>}
+              </Reveal>
+            );
+          })}
+          {/* panneau toujours dans le DOM pour le SEO, masqué par CSS quand fermé */}
+          {(() => {
+            const openId = openByRow[rowIdx];
+            const proj = openId ? allProjects.find(p => p.id === openId) : null;
+            return (
+              <div key={"panel-" + rowIdx} data-row={rowIdx}
+                className={"prow-panel" + (proj ? " open" : "")}>
+                {proj && (
+                  <ProjectDetail proj={proj} onClose={() => setOpenByRow(prev => {
+                    const next = { ...prev }; delete next[rowIdx]; return next;
+                  })} />
+                )}
               </div>
-              <span className="ptile-plus" aria-hidden="true"><i /><i /></span>
-            </Reveal>
-            {insertAfter === i && openProj && (
-              <ProjectDetail key={"d-" + openProj.id}
-                proj={openProj} onClose={() => setOpenId(null)} />
-            )}
-          </React.Fragment>
-        );
-      })}
+            );
+          })()}
+        </React.Fragment>
+      ))}
     </div>
   );
 }
@@ -285,6 +332,7 @@ function Projects() {
     <section id="projets" className="section-pad projects">
       <div className="wrap">
         <Reveal className="proj-head">
+          <SectionKicker num="V" label="PROJETS" />
           <p className="eyebrow"><span className="dot" />Projets</p>
           <h2 className="display proj-title">
             La preuve, <span className="dim">plutôt que les promesses.</span>

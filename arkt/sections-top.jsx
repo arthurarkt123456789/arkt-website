@@ -38,6 +38,33 @@ function Placeholder({ ratio = "4/5", label, style = {}, className = "" }) {
   );
 }
 
+function SectionKicker({ num, label }) {
+  return (
+    <p className="section-kicker mono" aria-hidden="true">
+      <span className="section-kicker-bar" />
+      {num}&thinsp;·&thinsp;{label}
+    </p>
+  );
+}
+
+function ReadingProgress() {
+  const [w, setW] = useState(0);
+  useEffect(() => {
+    const upd = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setW(max > 0 ? window.scrollY / max : 0);
+    };
+    upd();
+    window.addEventListener("scroll", upd, { passive: true });
+    return () => window.removeEventListener("scroll", upd);
+  }, []);
+  return (
+    <div className="reading-bar" aria-hidden="true">
+      <div className="reading-bar-fill" style={{ transform: `scaleX(${w})` }} />
+    </div>
+  );
+}
+
 function Logo({ h = 48 }) {
   return (
     <img src="arkt/logo-arkt.png" alt="ARKT" style={{ height: h, width: "auto", display: "block" }} />
@@ -64,11 +91,20 @@ function Header() {
   const D = ARKT;
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeId, setActiveId] = useState(null);
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) setActiveId(e.target.id); }),
+      { rootMargin: "-20% 0px -60% 0px", threshold: 0 }
+    );
+    D.nav.forEach(n => { const el = document.getElementById(n.id); if (el) io.observe(el); });
+    return () => io.disconnect();
   }, []);
   return (
     <header className={"hdr" + (solid ? " solid" : "")}>
@@ -78,7 +114,9 @@ function Header() {
         </a>
         <nav className="hdr-nav" aria-label="Navigation principale">
           {D.nav.map((n) => (
-            <a key={n.id} href={"#" + n.id} onClick={(e) => { e.preventDefault(); scrollToId(n.id); }}>{n.label}</a>
+            <a key={n.id} href={"#" + n.id}
+              className={activeId === n.id ? "active" : ""}
+              onClick={(e) => { e.preventDefault(); scrollToId(n.id); }}>{n.label}</a>
           ))}
         </nav>
         <div className="hdr-right">
@@ -224,4 +262,4 @@ function Moment() {
   );
 }
 
-export { Reveal, Arrow, Placeholder, Logo, scrollToId, TopBar, Header, Hero, SocialProof, Moment };
+export { Reveal, Arrow, Placeholder, SectionKicker, ReadingProgress, Logo, scrollToId, TopBar, Header, Hero, SocialProof, Moment };

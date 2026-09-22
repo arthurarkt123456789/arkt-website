@@ -1,15 +1,51 @@
 /* ARKT — sections basses : approche, offre, témoignages, équipe, contact, footer */
-import React, { useState, useEffect, useRef } from 'react';
-import { Reveal, Arrow, Placeholder, Logo, scrollToId } from './sections-top.jsx';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Reveal, Arrow, Placeholder, SectionKicker, Logo, scrollToId } from './sections-top.jsx';
 import ARKT from './data.js';
 
-/* ---------------- Approche (section claire) ---------------- */
+/* ---------------- Parcours (timeline Arthur) ---------------- */
+function Parcours() {
+  const D = ARKT;
+  return (
+    <section id="parcours" className="section-pad parcours">
+      <div className="wrap">
+        <Reveal className="parcours-head">
+          <SectionKicker num="II" label="PARCOURS" />
+          <h2 className="display parcours-title">
+            Terrain réel, <span className="dim">avant le conseil.</span>
+          </h2>
+          <p className="parcours-lead dim">
+            Chaque mission s'appuie sur une expérience opérationnelle directe : directions marketing dans des marques à forte croissance, puis co-fondation d'une enseigne retail.
+          </p>
+        </Reveal>
+        <div className="parcours-steps">
+          <div className="parcours-line" aria-hidden="true" />
+          {D.parcours.map((s, i) => (
+            <Reveal key={s.co} delay={i * 90} className="parcours-step" as="article">
+              <span className="parcours-dot" aria-hidden="true" />
+              <p className="parcours-year mono">{s.year}</p>
+              <h3 className="parcours-co">{s.co}</h3>
+              <p className="parcours-role mono dim">{s.role}</p>
+              <p className="parcours-desc dim">{s.desc}</p>
+            </Reveal>
+          ))}
+        </div>
+        {D.prises.length > 0 && (
+          <div className="parcours-prises">{/* TODO: grid prises de parole */}</div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Approche (fond sombre) ---------------- */
 function Approche() {
   const D = ARKT;
   return (
-    <section id="approche" className="section-pad light-section on-light approche">
+    <section id="approche" className="section-pad approche">
       <div className="wrap">
         <Reveal className="appr-head">
+          <SectionKicker num="III" label="APPROCHE" />
           <p className="eyebrow"><span className="dot" />Approche</p>
           <h2 className="display appr-title">
             Une méthode en trois temps, <span className="dim">adaptée à chaque contexte.</span>
@@ -84,6 +120,7 @@ function Offre() {
     <section id="offre" className="section-pad offre">
       <div className="wrap">
         <Reveal className="offre-intro">
+          <SectionKicker num="IV" label="OFFRE" />
           <p className="eyebrow"><span className="dot" />Offre</p>
           <h2 className="display offre-title">
             De l'idée à l'impact, <span className="dim">tout le spectre.</span>
@@ -126,64 +163,62 @@ function Offre() {
 }
 
 /* ---------------- Témoignages ---------------- */
-function highlightQuote(quote, hi) {
-  if (!hi || !hi.length) return quote;
-  let parts = [quote];
-  hi.forEach((h) => {
-    const next = [];
-    parts.forEach((seg) => {
-      if (typeof seg !== "string") { next.push(seg); return; }
-      const idx = seg.indexOf(h);
-      if (idx === -1) { next.push(seg); return; }
-      next.push(seg.slice(0, idx));
-      next.push(<em key={h} className="q-hi">{h}</em>);
-      next.push(seg.slice(idx + h.length));
-    });
-    parts = next;
-  });
-  return parts;
+function TestiCard({ t }) {
+  return (
+    <article className="testi-card">
+      <blockquote className="testi-card-q">{t.quote}</blockquote>
+      <div className="testi-card-author">
+        <div className="testi-card-avatar">
+          {t.img
+            ? <img src={t.img} alt={t.name} loading="lazy" />
+            : <span className="testi-card-ph">{t.name.split(" ").map(w => w[0]).join("")}</span>
+          }
+        </div>
+        <div>
+          <div className="testi-card-name">{t.name}</div>
+          <div className="testi-card-role dim">{t.role}</div>
+        </div>
+      </div>
+    </article>
+  );
 }
 
 function Testimonials() {
   const D = ARKT;
-  const [i, setI] = useState(0);
-  const t = D.testimonials[i];
-  const go = (d) => setI((p) => (p + d + D.testimonials.length) % D.testimonials.length);
+  const [idx, setIdx] = useState(0);
+  const go = (d) => setIdx(p => (p + d + D.testimonials.length) % D.testimonials.length);
+
   return (
     <section className="section-pad testi">
       <div className="testi-halo halo" />
-      <div className="wrap testi-layout">
+      <div className="wrap">
 
-        {/* Gauche : titre */}
-        <Reveal className="testi-left">
+        <Reveal className="testi-head">
+          <SectionKicker num="I" label="MANIFESTE" />
           <p className="eyebrow testi-eyebrow"><span className="dot" />Témoignages</p>
-          <h2 className="testi-bigtitle display">Ce que<br />nos clients<br />disent.</h2>
+          <h2 className="testi-bigtitle display">Ce que nos clients disent.</h2>
         </Reveal>
 
-        {/* Droite : citation */}
-        <Reveal className="testi-right">
-          <blockquote className="testi-quote" key={i}>{highlightQuote(t.quote, t.hi)}</blockquote>
-          <div className="testi-author">
-            <div className="testi-avatar">
-              {t.img ? <img src={t.img} alt={t.name} loading="lazy" /> : <span className="testi-avatar-ph">{t.name.split(" ").map((w) => w[0]).join("")}</span>}
-            </div>
-            <div>
-              <div className="testi-name">{t.name}</div>
-              <div className="testi-role dim">{t.role}</div>
-            </div>
+        {/* Desktop : grille statique 2 × 2 */}
+        <div className="testi-grid" aria-label="Témoignages clients">
+          {D.testimonials.map((t, i) => (
+            <Reveal key={i} delay={i * 60}><TestiCard t={t} /></Reveal>
+          ))}
+        </div>
+
+        {/* Mobile : carousel */}
+        <div className="testi-carousel" aria-live="polite">
+          <TestiCard t={D.testimonials[idx]} />
+          <div className="testi-carousel-nav">
+            <button className="pcarr" onClick={() => go(-1)} aria-label="Précédent">
+              <Arrow size={14} style={{ transform: "rotate(180deg)" }} />
+            </button>
+            <span className="testi-carousel-count mono dim">{idx + 1} / {D.testimonials.length}</span>
+            <button className="pcarr" onClick={() => go(1)} aria-label="Suivant">
+              <Arrow size={14} />
+            </button>
           </div>
-          <div className="testi-foot">
-            <div className="testi-dots">
-              {D.testimonials.map((_, k) => (
-                <button key={k} className={"dot-btn" + (k === i ? " on" : "")} onClick={() => setI(k)} aria-label={"Témoignage " + (k + 1)} />
-              ))}
-            </div>
-            <div className="feat-nav">
-              <button onClick={() => go(-1)} aria-label="Précédent"><Arrow size={16} style={{ transform: "rotate(180deg)" }} /></button>
-              <button onClick={() => go(1)} aria-label="Suivant"><Arrow size={16} /></button>
-            </div>
-          </div>
-        </Reveal>
+        </div>
 
       </div>
     </section>
@@ -199,6 +234,7 @@ function Team() {
     <section id="equipe" className="section-pad light-section on-light team">
       <div className="wrap">
         <Reveal className="team-head">
+          <SectionKicker num="VI" label="ÉQUIPE" />
           <p className="eyebrow"><span className="dot" />Équipe</p>
           <h2 className="display team-title">
             Des expertises réunies <span className="dim">autour d'une même trajectoire.</span>
@@ -237,10 +273,14 @@ function Team() {
 
 /* ---------------- Contact ---------------- */
 function ContactForm() {
+  const D = ARKT;
   const [f, setF] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState({});
-  const [sent, setSent] = useState(false);
-  const set = (k) => (e) => { setF((p) => ({ ...p, [k]: e.target.value })); setErrors((p) => ({ ...p, [k]: undefined })); };
+  const [status, setStatus] = useState("idle"); /* idle | sending | sent | error */
+  const set = useCallback((k) => (e) => {
+    setF(p => ({ ...p, [k]: e.target.value }));
+    setErrors(p => ({ ...p, [k]: undefined }));
+  }, []);
 
   const validate = () => {
     const er = {};
@@ -252,14 +292,26 @@ function ContactForm() {
     return er;
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     const er = validate();
     setErrors(er);
-    if (Object.keys(er).length === 0) setSent(true);
+    if (Object.keys(er).length > 0) return;
+    setStatus("sending");
+    try {
+      const body = new URLSearchParams({ "form-name": "contact", ...f }).toString();
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+      });
+      setStatus(res.ok ? "sent" : "error");
+    } catch {
+      setStatus("error");
+    }
   };
 
-  if (sent) {
+  if (status === "sent") {
     return (
       <div className="cform cform-done" role="status">
         <span className="cform-check" aria-hidden="true">
@@ -267,7 +319,26 @@ function ContactForm() {
         </span>
         <h3 className="cform-done-t">Message envoyé.</h3>
         <p className="cform-done-d dim">Merci {f.name.split(" ")[0]}, on revient vers vous sous 48&nbsp;h. En attendant, continuez à explorer les projets.</p>
-        <button type="button" className="btn btn-ghost" onClick={() => { setSent(false); setF({ name: "", email: "", subject: "", message: "" }); }}>Envoyer un autre message</button>
+        <button type="button" className="btn btn-ghost"
+          onClick={() => { setStatus("idle"); setF({ name: "", email: "", subject: "", message: "" }); }}>
+          Envoyer un autre message
+        </button>
+      </div>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <div className="cform cform-done cform-error" role="alert">
+        <span className="cform-check" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </span>
+        <h3 className="cform-done-t">Erreur d'envoi.</h3>
+        <p className="cform-done-d dim">
+          Une erreur est survenue. Écrivez-nous directement à&nbsp;
+          <a href={"mailto:" + D.email} className="alink">{D.email}</a>.
+        </p>
+        <button type="button" className="btn btn-ghost" onClick={() => setStatus("idle")}>Réessayer</button>
       </div>
     );
   }
@@ -277,12 +348,14 @@ function ContactForm() {
       <span className="cfield-label">{label}</span>
       <input className="cfield-input" type={type || "text"} value={f[k]} onChange={set(k)}
         placeholder={label} autoComplete={k === "name" ? "name" : k === "email" ? "email" : "off"} />
-      {errors[k] && <span className="cfield-err">{errors[k]}</span>}
+      {errors[k] && <span className="cfield-err" role="alert">{errors[k]}</span>}
     </label>
   );
 
   return (
-    <form className="cform" onSubmit={submit} noValidate>
+    <form className="cform" onSubmit={submit} noValidate
+      data-netlify="true" name="contact">
+      <input type="hidden" name="form-name" value="contact" />
       <div className="cform-row">
         {field("name", "Nom")}
         {field("email", "Email", "email")}
@@ -290,11 +363,14 @@ function ContactForm() {
       {field("subject", "Sujet / projet")}
       <label className={"cfield" + (errors.message ? " err" : "")}>
         <span className="cfield-label">Message</span>
-        <textarea className="cfield-input cfield-area" rows={5} value={f.message} onChange={set("message")} placeholder="Parlez-nous de votre projet, votre moment, vos objectifs…" />
-        {errors.message && <span className="cfield-err">{errors.message}</span>}
+        <textarea className="cfield-input cfield-area" rows={5} value={f.message} onChange={set("message")}
+          placeholder="Parlez-nous de votre projet, votre moment, vos objectifs…" />
+        {errors.message && <span className="cfield-err" role="alert">{errors.message}</span>}
       </label>
       <div className="cform-foot">
-        <button type="submit" className="btn btn-primary cform-btn">Envoyer le message <Arrow /></button>
+        <button type="submit" className="btn btn-primary cform-btn" disabled={status === "sending"}>
+          {status === "sending" ? "Envoi…" : "Envoyer le message"} <Arrow />
+        </button>
         <span className="dim cform-note">Réponse sous 48&nbsp;h · Marseille / Paris</span>
       </div>
     </form>
@@ -302,6 +378,7 @@ function ContactForm() {
 }
 
 function Contact() {
+  const D = ARKT;
   return (
     <section id="contact" className="contact">
       <div className="contact-grad" />
@@ -309,6 +386,7 @@ function Contact() {
       <div className="wrap contact-in">
         <div className="contact-layout">
           <Reveal className="contact-card">
+            <SectionKicker num="VII" label="CONTACT" />
             <p className="eyebrow"><span className="dot" />Contact</p>
             <h2 className="display contact-title">
               Parlons de <span className="grad-text">votre projet.</span>
@@ -316,6 +394,14 @@ function Contact() {
             <p className="contact-sub">
               <span className="dim">Un projet proche des nôtres&nbsp;?</span> Une idée à mettre en trajectoire&nbsp;? Parlez-nous en, on répond vite.
             </p>
+            <div className="contact-channels">
+              <a href={"mailto:" + D.email} className="contact-channel alink">
+                {D.email} <Arrow size={13} />
+              </a>
+              <a href="https://www.linkedin.com/company/arkt-conseil" target="_blank" rel="noopener" className="contact-channel alink">
+                LinkedIn <Arrow size={13} />
+              </a>
+            </div>
             <div className="contact-meta">
               <span>Marseille</span><span className="contact-sep" /><span>Paris</span><span className="contact-sep" /><span className="dim">Réponse sous 48 h</span>
             </div>
@@ -358,4 +444,4 @@ function Footer() {
   );
 }
 
-export { Approche, Offre, Testimonials, Team, Contact, Footer };
+export { Parcours, Approche, Offre, Testimonials, Team, Contact, Footer };

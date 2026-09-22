@@ -274,6 +274,15 @@ const ARKT = {
     { k: "03", t: "Activation", d: "Mise en œuvre ciblée et cadrée, toujours alignée sur la stratégie. Là où la trajectoire prend vie.", opt: true },
   ],
 
+  /* ---------- parcours Arthur ---------- */
+  parcours: [
+    { year: "2017", co: "Vestiaire Collective", role: "TODO", desc: "TODO" },
+    { year: "2019", co: "Selency", role: "Direction Marketing & Commercial", desc: "Construction du pôle Pro, devenu levier de croissance de la marque. Arthur y passe de la stratégie à l'exécution." },
+    { year: "2021", co: "La Meulerie", role: "Cofondateur", desc: "Concept fromagerie premium à Marseille. 4 boutiques en 3 ans. La preuve qu'ARKT construit, pas seulement conseille." },
+    { year: "TODO", co: "ARKT Conseil", role: "Fondateur & CEO", desc: "Cabinet de conseil en stratégie de marque · Marseille / Paris." },
+  ],
+  prises: [], /* TODO : interventions presse, conférences, podcasts */
+
   /* ---------- offre ----------
      3 offres en cartes. Un clic sur une carte ouvre un panneau `detail` sous les cartes :
      pains (les galères du dirigeant, dans ses mots), faire (ce qu'on fait, sans jargon),
