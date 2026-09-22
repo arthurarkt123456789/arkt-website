@@ -48,10 +48,10 @@ function Approche() {
           <SectionKicker num="III" label="APPROCHE" />
           <p className="eyebrow"><span className="dot" />Approche</p>
           <h2 className="display appr-title">
-            Une méthode en trois temps, <span className="dim">adaptée à chaque contexte.</span>
+            Ce qui change tout, <span className="dim">c'est la clarté avant l'action.</span>
           </h2>
           <p className="appr-lead dim">
-            Chaque mission est adaptée au contexte du client. On part toujours d'une action concrète : un lancement, un repositionnement, une montée en gamme. Jamais d'une théorie abstraite.
+            Beaucoup d'agences passent directement à l'exécution. Nous commençons toujours par comprendre votre marché, vos vraies contraintes et ce qui vous rend différent — avant de proposer quoi que ce soit.
           </p>
         </Reveal>
         <div className="appr-steps">

@@ -25,6 +25,7 @@ function normalizeProject(p) {
     tags: [],
     body: p.claim,
     slides,
+    ...(p.defaultOpen && { defaultOpen: true }),
   };
 }
 
@@ -226,6 +227,19 @@ function GridProjects() {
       if (idx >= 0) init[Math.floor(idx / cols)] = id;
     });
     setOpenByRow(init);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  /* defaultOpen → ouverture automatique au chargement (sauf si hash déjà présent) */
+  useEffect(() => {
+    if (window.location.hash.match(/[#&]open=([^&]+)/)) return;
+    const init = {};
+    allProjects.forEach((p, idx) => {
+      if (p.defaultOpen) {
+        const row = Math.floor(idx / cols);
+        if (!init[row]) init[row] = p.id;
+      }
+    });
+    if (Object.keys(init).length > 0) setOpenByRow(init);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   /* état → URL hash */

@@ -74,6 +74,7 @@ const ARKT = {
     },
     {
       id: "meulerie",
+      defaultOpen: true,
       name: "La Meulerie",
       year: "2021",
       tag: "Cofondé par ARKT",
@@ -112,7 +113,7 @@ const ARKT = {
 
   /* ---------- grille (déploiement au clic) ---------- */
   grid: [
-    { id: "nb1", name: "NB1", year: "2026", phr: "4/5", short: "Vidéos produit · campagne ads",
+    { id: "nb1", defaultOpen: true, name: "NB1", year: "2026", phr: "4/5", short: "Vidéos produit · campagne ads",
       logo: "arkt/images/nb1-logo.jpg",
       photos: [
         { video: "arkt/videos/nb1-driss.mp4", poster: "arkt/videos/nb1-driss.jpg" },
@@ -125,7 +126,7 @@ const ARKT = {
       ],
       tags: ["Production vidéo", "Contenu ads", "Acquisition", "Communication"],
       body: "Production de contenus vidéo pour NB1 : tournages produit et création de formats publicitaires pour leur campagne de communication et d'acquisition." },
-    { id: "palauma", name: "Palauma", year: "2026", phr: "4/5", short: "Outsider d'un immobilier standardisé",
+    { id: "palauma", defaultOpen: true, name: "Palauma", year: "2026", phr: "4/5", short: "Outsider d'un immobilier standardisé",
       logo: "arkt/images/palauma-logo.jpg",
       photos: ["arkt/images/palauma-1.jpg", "arkt/images/palauma-2.jpg", "arkt/images/palauma-3.jpg", "arkt/images/palauma-4.jpg", "arkt/images/palauma-5.jpg"],
       tags: ["Positionnement", "Storytelling", "Éditorial LinkedIn"],
@@ -269,9 +270,9 @@ const ARKT = {
 
   /* ---------- approche ---------- */
   approche: [
-    { k: "01", t: "Analyse & diagnostic", d: "Comprendre le contexte, les enjeux, les objectifs, les contraintes. Avant tout, écouter." },
-    { k: "02", t: "Structuration stratégique", d: "Positionnement, messages clés, angles de prise de parole, priorités. Donner une direction claire." },
-    { k: "03", t: "Activation", d: "Mise en œuvre ciblée et cadrée, toujours alignée sur la stratégie. Là où la trajectoire prend vie.", opt: true },
+    { k: "01", t: "Vous arrêtez de décider à l'instinct", d: "On part toujours du réel : votre marché, vos clients, vos vraies contraintes. Pas des frameworks. Ce que vous pensez être compte moins que ce que vos clients perçoivent." },
+    { k: "02", t: "Vous avez une direction que tout le monde comprend", d: "Positionnement, messages clés, priorités d'action. On transforme la complexité de votre situation en une ligne directrice simple — que vous pouvez défendre, expliquer, et utiliser pour dire non." },
+    { k: "03", t: "Chaque euro dépensé en communication sert vraiment", d: "Rien n'est produit pour le principe. Chaque action s'inscrit dans un cap défini ensemble, ce qui évite la dispersion et garantit que ce qu'on déclenche renforce votre position.", opt: true },
   ],
 
   /* ---------- parcours Arthur ---------- */
@@ -320,16 +321,16 @@ const ARKT = {
       } },
     { id: "activer", name: "Activer", sub: "Exécution cadrée",
       quand: "Vous voulez un interlocuteur unique et éviter la dispersion entre prestataires.",
-      contenu: ["Contenu & community management", "Identité visuelle & charte graphique", "Site internet"],
+      contenu: ["Réseaux sociaux & stratégie éditoriale", "Création de contenu vidéo", "Identité visuelle & charte graphique", "Site internet & landing pages", "Scénographie événementielle & physique", "Activation retail & pop-up", "Campagnes de communication"],
       fin: "Toujours dans le prolongement d'un cadrage stratégique.",
       detail: {
         pains: [
-          "Vous voulez un site, des contenus, une identité… mais pas gérer trois prestataires.",
-          "Vous avez déjà eu un logo ou un site qui « ne ressemblait à rien », parce que personne n'avait de vision d'ensemble.",
-          "Vous voulez que ce soit fait, bien fait, sans y passer vos soirées.",
+          "Vous voulez des contenus, une identité, un site… mais pas gérer cinq prestataires différents.",
+          "Vous avez déjà payé pour quelque chose qui « ne ressemblait à rien » parce que personne n'avait de vision d'ensemble.",
+          "Vous avez besoin de présence physique — un événement, un pop-up, une scénographie — sans savoir à qui confier ça.",
         ],
-        faire: "On produit ce qui a été décidé, avec des gens qu'on connaît et qu'on pilote : contenus et réseaux sociaux, identité visuelle, site internet. Vous avez un seul interlocuteur, un planning clair, et un aller-retour pour ajuster. Et comme on connaît votre stratégie, tout est cohérent dès le départ.",
-        change: "C'est fait, c'est cohérent, et vous n'avez qu'un seul numéro à appeler.",
+        faire: "On produit ce qui a été décidé, avec des gens qu'on connaît et qu'on pilote : réseaux sociaux, contenus vidéo, identité visuelle, site internet, scénographie physique, activations retail. Vous avez un seul interlocuteur, un planning clair, et un aller-retour pour ajuster. Comme on connaît votre stratégie, tout est cohérent dès le départ.",
+        change: "C'est fait, c'est cohérent — en ligne comme en physique — et vous n'avez qu'un seul numéro à appeler.",
       } },
   ],
 
