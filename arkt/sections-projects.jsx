@@ -216,16 +216,28 @@ function GridProjects() {
     return () => window.removeEventListener("resize", calc);
   }, []);
 
+  const scrollToDetail = useCallback(() => {
+    setTimeout(() => {
+      const el = gridRef.current && gridRef.current.querySelector(".pdetail");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 200);
+  }, []);
+
   const handleOpen = (id) => {
     const next = id === openId ? null : id;
     setOpenId(next);
-    if (next) {
-      setTimeout(() => {
-        const el = gridRef.current && gridRef.current.querySelector(".pdetail");
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }, 150);
-    }
+    if (next) scrollToDetail();
   };
+
+  useEffect(() => {
+    const handler = (e) => {
+      const { id } = e.detail;
+      setOpenId(id);
+      scrollToDetail();
+    };
+    window.addEventListener("arkt:openProject", handler);
+    return () => window.removeEventListener("arkt:openProject", handler);
+  }, [scrollToDetail]);
 
   const openIdx = openId == null ? -1 : allProjects.findIndex(g => g.id === openId);
   let insertAfter = -1;

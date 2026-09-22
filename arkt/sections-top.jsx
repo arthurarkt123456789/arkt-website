@@ -169,14 +169,24 @@ function Hero() {
 function SocialProof() {
   const D = ARKT;
   const row = [...D.clients, ...D.clients];
+
+  const handleLogoClick = (client) => {
+    window.dispatchEvent(new CustomEvent("arkt:openProject", { detail: { id: client.project } }));
+  };
+
   return (
     <section id="clients" className="proof">
       <div className="wrap">
         <p className="proof-label eyebrow reveal"><span className="dot" />Ils nous ont fait confiance</p>
       </div>
-      <div className="proof-marquee" aria-hidden="false">
+      <div className="proof-marquee">
         <div className="proof-track">
-          {row.map((c, i) => (<span key={i} className="proof-logo">{c}</span>))}
+          {row.map((c, i) => (
+            <button key={i} className="proof-logo" onClick={() => handleLogoClick(c)}
+              aria-label={"Voir le projet " + c.name}>
+              <img src={c.logo} alt={c.name} loading="lazy" className="proof-logo-img" />
+            </button>
+          ))}
         </div>
       </div>
       <div className="wrap"><hr className="rule" style={{ marginTop: "clamp(48px,7vh,90px)" }} /></div>

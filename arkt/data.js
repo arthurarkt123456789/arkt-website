@@ -10,7 +10,20 @@ const ARKT = {
     { id: "contact", label: "Contact" },
   ],
 
-  clients: ["Nike", "Puma", "Airbnb", "Pernod Ricard", "Patta", "Taster", "Selency", "Twicy", "Capsule", "Spilow", "KUBE", "La Meulerie"],
+  clients: [
+    { name: "Nike",          logo: "arkt/images/nike-logo.jpg",          project: "nike" },
+    { name: "Puma",          logo: "arkt/images/puma-logo.jpg",          project: "puma" },
+    { name: "Airbnb",        logo: "arkt/images/airbnb-logo.png",        project: "airbnb" },
+    { name: "Pernod Ricard", logo: "arkt/images/pernodricard-logo.jpg",  project: "pernodricard" },
+    { name: "Patta",         logo: "arkt/images/pattaxnike-logo.jpg",    project: "pattaxnike" },
+    { name: "Taster",        logo: "arkt/images/crousty-logo.jpg",       project: "crousty" },
+    { name: "Selency",       logo: "arkt/images/selency-logo.jpg",       project: "selency" },
+    { name: "Twicy",         logo: "arkt/images/twicy-logo.jpg",         project: "twicy" },
+    { name: "Capsule",       logo: "arkt/images/capsule-logo.jpg",       project: "capsule" },
+    { name: "Spilow",        logo: "arkt/images/spilow-logo.jpg",        project: "spilow" },
+    { name: "KUBE",          logo: "arkt/images/kube-logo.jpg",          project: "kube" },
+    { name: "La Meulerie",   logo: "arkt/images/meulerie-logo.png",      project: "meulerie" },
+  ],
 
   moments: [
     { k: "01", t: "Je lance", d: "Un concept, un lieu, une marque. Donner le bon cap dès le premier jour." },
