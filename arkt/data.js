@@ -1,5 +1,5 @@
 /* ARKT — contenu (données projets, équipe, témoignages, offre) */
-window.ARKT = {
+const ARKT = {
   email: "hello@arkt-conseil.com",
 
   nav: [
@@ -339,3 +339,4 @@ window.ARKT = {
       bio: "Veille pop culture, direction créative." },
   ],
 };
+export default ARKT;

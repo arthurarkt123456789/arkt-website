@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#131311"/>
+  <!-- Accent line -->
+  <rect x="0" y="0" width="6" height="630" fill="#F2533F"/>
+  <!-- ARKT wordmark -->
+  <text x="80" y="220" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-weight="900" font-size="140" fill="#F2533F" letter-spacing="-5">ARKT</text>
+  <!-- Tagline -->
+  <text x="80" y="310" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-weight="700" font-size="46" fill="#F3F1EA" letter-spacing="3">DE L'IDÉE À L'IMPACT.</text>
+  <!-- Description line 1 -->
+  <text x="80" y="390" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-weight="400" font-size="26" fill="#6E6A5F">Cabinet de conseil en stratégie de marque</text>
+  <!-- Description line 2 -->
+  <text x="80" y="428" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-weight="400" font-size="26" fill="#6E6A5F">Marseille / Paris</text>
+  <!-- Divider -->
+  <rect x="80" y="500" width="80" height="2" fill="#F2533F"/>
+  <!-- URL -->
+  <text x="80" y="552" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-weight="400" font-size="20" fill="#6E6A5F" letter-spacing="1">arkt-conseil.com</text>
+</svg>

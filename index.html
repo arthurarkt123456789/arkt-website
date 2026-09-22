@@ -1,31 +1,101 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ARKT — De l'idée à l'impact</title>
-<meta name="description" content="ARKT — cabinet de conseil en stratégie de marque et marketing. Marseille / Paris. De l'idée à l'impact." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+  <!-- Titre & description -->
+  <title>ARKT — De l'idée à l'impact</title>
+  <meta name="description" content="Cabinet de conseil en stratégie de marque à Marseille et Paris. Clarifier, piloter, activer : ARKT transforme vos idées en marques qui ont de l'impact." />
 
-<link rel="stylesheet" href="arkt/styles.css?v=19" />
-<link rel="stylesheet" href="arkt/components.css?v=19" />
-<link rel="stylesheet" href="arkt/components2.css?v=19" />
+  <!-- Canonical -->
+  <link rel="canonical" href="https://arkt-conseil.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://arkt-conseil.com/" />
+  <meta property="og:title" content="ARKT — De l'idée à l'impact" />
+  <meta property="og:description" content="Cabinet de conseil en stratégie de marque. Clarifier, piloter, activer. Marseille / Paris." />
+  <meta property="og:image" content="https://arkt-conseil.com/og-image.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="ARKT Conseil" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ARKT — De l'idée à l'impact" />
+  <meta name="twitter:description" content="Cabinet de conseil en stratégie de marque. Clarifier, piloter, activer. Marseille / Paris." />
+  <meta name="twitter:image" content="https://arkt-conseil.com/og-image.svg" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://arkt-conseil.com/#organization",
+        "name": "ARKT Conseil",
+        "description": "Cabinet de conseil en stratégie de marque. Clarifier, piloter, activer. Marseille / Paris.",
+        "url": "https://arkt-conseil.com",
+        "email": "hello@arkt-conseil.com",
+        "address": [
+          { "@type": "PostalAddress", "addressLocality": "Marseille", "addressCountry": "FR" },
+          { "@type": "PostalAddress", "addressLocality": "Paris", "addressCountry": "FR" }
+        ],
+        "founder": { "@id": "https://arkt-conseil.com/#arthur-barret" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://arkt-conseil.com/#arthur-barret",
+        "name": "Arthur Barret",
+        "jobTitle": "Founder & CEO",
+        "worksFor": { "@id": "https://arkt-conseil.com/#organization" }
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://arkt-conseil.com/#projets",
+        "name": "Projets ARKT",
+        "numberOfItems": 33,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Hors d'Oeuvre",
+            "description": "Food studio evenementiel — Identite visuelle premium, palette et systeme de declinaisons."
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "CiaoMisu!",
+            "description": "Food & retail Marseille — Concept tiramisu, branding complet, +3K abonnes a l'ouverture."
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "La Meulerie",
+            "description": "Fromagerie cofondee par ARKT — 4 boutiques en moins de 3 ans a Marseille."
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Airbnb",
+            "description": "Airbnb Experiences Paris — Strategie de contenu video court pour generer desir et projection."
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet" />
 </head>
 <body>
-<div id="root"></div>
-
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
-<script src="arkt/data.js?v=31"></script>
-<script type="text/babel" src="arkt/tweaks-panel.jsx?v=31"></script>
-<script type="text/babel" src="arkt/sections-top.jsx?v=31"></script>
-<script type="text/babel" src="arkt/sections-projects.jsx?v=31"></script>
-<script type="text/babel" src="arkt/sections-bottom.jsx?v=31"></script>
-<script type="text/babel" src="arkt/app.jsx?v=31"></script>
+  <div id="root"></div>
+  <script type="module" src="/arkt/main-client.jsx"></script>
 </body>
 </html>

@@ -1,4 +1,7 @@
 /* ARKT — Projets : grille unifiée + détail 30/70 (rail continu) */
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Reveal, Arrow, Placeholder } from './sections-top.jsx';
+import ARKT from './data.js';
 
 /* Normalise les deux formats (featured/grid) en format commun avec slides */
 function normalizeProject(p) {
@@ -197,7 +200,7 @@ function ProjectDetail({ proj, onClose }) {
 
 /* ---------- Grille unifiée ---------- */
 function GridProjects() {
-  const D = window.ARKT;
+  const D = ARKT;
   const allProjects = [...D.featured, ...D.grid].map(normalizeProject);
   const [openId, setOpenId] = useState(null);
   const [cols, setCols] = useState(3);
@@ -264,7 +267,7 @@ function GridProjects() {
 
 /* ---------- Section Projets ---------- */
 function Projects() {
-  const D = window.ARKT;
+  const D = ARKT;
   const total = D.featured.length + D.grid.length;
   return (
     <section id="projets" className="section-pad projects">
@@ -287,4 +290,4 @@ function Projects() {
   );
 }
 
-Object.assign(window, { Slide, GridProjects, ProjectDetail, Projects });
+export { Slide, GridProjects, ProjectDetail, Projects };

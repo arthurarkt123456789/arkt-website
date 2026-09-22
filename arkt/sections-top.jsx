@@ -1,5 +1,6 @@
 /* ARKT — helpers + sections hautes (header, hero, preuve sociale, votre moment) */
-const { useState, useEffect, useRef, useCallback } = React;
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import ARKT from './data.js';
 
 /* ---------------- shared helpers ---------------- */
 function Reveal({ as = "div", delay = 0, className = "", style = {}, children, ...rest }) {
@@ -60,7 +61,7 @@ function TopBar() {
 
 /* ---------------- Header ---------------- */
 function Header() {
-  const D = window.ARKT;
+  const D = ARKT;
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -125,7 +126,7 @@ function Hero() {
 
 /* ---------------- Preuve sociale ---------------- */
 function SocialProof() {
-  const D = window.ARKT;
+  const D = ARKT;
   const row = [...D.clients, ...D.clients];
   return (
     <section id="clients" className="proof">
@@ -144,7 +145,7 @@ function SocialProof() {
 
 /* ---------------- Votre moment ---------------- */
 function Moment() {
-  const D = window.ARKT;
+  const D = ARKT;
   const [active, setActive] = useState(null);
   return (
     <section className="section-pad moment">
@@ -172,4 +173,4 @@ function Moment() {
   );
 }
 
-Object.assign(window, { Reveal, Arrow, Placeholder, Logo, scrollToId, TopBar, Header, Hero, SocialProof, Moment });
+export { Reveal, Arrow, Placeholder, Logo, scrollToId, TopBar, Header, Hero, SocialProof, Moment };

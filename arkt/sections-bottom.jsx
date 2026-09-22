@@ -1,8 +1,11 @@
 /* ARKT — sections basses : approche, offre, témoignages, équipe, contact, footer */
+import React, { useState, useEffect, useRef } from 'react';
+import { Reveal, Arrow, Placeholder, Logo, scrollToId } from './sections-top.jsx';
+import ARKT from './data.js';
 
 /* ---------------- Approche (section claire) ---------------- */
 function Approche() {
-  const D = window.ARKT;
+  const D = ARKT;
   return (
     <section id="approche" className="section-pad light-section on-light approche">
       <div className="wrap">
@@ -74,7 +77,7 @@ function OffreDetail({ o, onClose }) {
 }
 
 function Offre() {
-  const D = window.ARKT;
+  const D = ARKT;
   const [openId, setOpenId] = useState(null);
   const openO = D.offre.find((o) => o.id === openId) || null;
   return (
@@ -142,7 +145,7 @@ function highlightQuote(quote, hi) {
 }
 
 function Testimonials() {
-  const D = window.ARKT;
+  const D = ARKT;
   const [i, setI] = useState(0);
   const t = D.testimonials[i];
   const go = (d) => setI((p) => (p + d + D.testimonials.length) % D.testimonials.length);
@@ -189,7 +192,7 @@ function Testimonials() {
 
 /* ---------------- Équipe ---------------- */
 function Team() {
-  const D = window.ARKT;
+  const D = ARKT;
   const lead = D.team[0];
   const rest = D.team.slice(1);
   return (
@@ -328,7 +331,7 @@ function Contact() {
 
 /* ---------------- Footer ---------------- */
 function Footer() {
-  const D = window.ARKT;
+  const D = ARKT;
   return (
     <footer className="foot">
       <div className="wrap foot-in">
@@ -355,4 +358,4 @@ function Footer() {
   );
 }
 
-Object.assign(window, { Approche, Offre, Testimonials, Team, Contact, Footer });
+export { Approche, Offre, Testimonials, Team, Contact, Footer };
