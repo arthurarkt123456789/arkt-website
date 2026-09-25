@@ -38,15 +38,6 @@ function Placeholder({ ratio = "4/5", label, style = {}, className = "" }) {
   );
 }
 
-function SectionKicker({ num, label }) {
-  return (
-    <p className="section-kicker mono" aria-hidden="true">
-      <span className="section-kicker-bar" />
-      {num}&thinsp;·&thinsp;{label}
-    </p>
-  );
-}
-
 function ReadingProgress() {
   const fillRef = useRef(null);
   useEffect(() => {
@@ -146,33 +137,6 @@ function Header() {
 
 /* ---------------- Hero ---------------- */
 
-function AnimatedCounter({ target, suffix = "" }) {
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    if (target == null) return;
-    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setValue(target);
-      return;
-    }
-    const duration = 1500;
-    const start = performance.now();
-    const tick = (now) => {
-      const p = Math.min((now - start) / duration, 1);
-      setValue(Math.round((1 - Math.pow(1 - p, 3)) * target));
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, [target]);
-  if (target == null) return <span className="hero-stat-num hero-stat-todo">—</span>;
-  return <span className="hero-stat-num">{value}{suffix}</span>;
-}
-
-const HERO_STATS = [
-  { num: 15, suffix: "", label: "ans d'expertise" },
-  { num: 30, suffix: "+", label: "marques accompagnées" },
-  { num: 33, suffix: "", label: "projets livrés" },
-];
-
 function Hero() {
   return (
     <section id="top" className="hero">
@@ -191,49 +155,11 @@ function Hero() {
           <button className="btn btn-primary" onClick={() => scrollToId("projets")}>Voir nos projets <Arrow /></button>
           <a className="btn btn-ghost" href="#approche" onClick={(e) => { e.preventDefault(); scrollToId("approche"); }}>Découvrir l'approche</a>
         </div>
-        <div className="hero-stats">
-          {HERO_STATS.map((s, i) => (
-            <div key={i} className="hero-stat">
-              <AnimatedCounter target={s.num} suffix={s.suffix} />
-              <span className="hero-stat-label mono">{s.label}</span>
-            </div>
-          ))}
-        </div>
-        <button className="hero-scroll" onClick={() => scrollToId("clients")} aria-label="Défiler">
+        <button className="hero-scroll" onClick={() => scrollToId("offre")} aria-label="Défiler">
           <span className="mono">SCROLLEZ</span>
           <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><path d="M7 1V20M7 20L1 14M7 20L13 14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
       </div>
-      <span className="hero-edition mono">Édition 2026</span>
-    </section>
-  );
-}
-
-/* ---------------- Preuve sociale ---------------- */
-function SocialProof() {
-  const D = ARKT;
-  const row = [...D.clients, ...D.clients];
-
-  const handleLogoClick = (client) => {
-    window.dispatchEvent(new CustomEvent("arkt:openProject", { detail: { id: client.project } }));
-  };
-
-  return (
-    <section id="clients" className="proof">
-      <div className="wrap">
-        <p className="proof-label eyebrow reveal"><span className="dot" />Ils nous ont fait confiance</p>
-      </div>
-      <div className="proof-marquee">
-        <div className="proof-track">
-          {row.map((c, i) => (
-            <button key={i} className="proof-logo" onClick={() => handleLogoClick(c)}
-              aria-label={"Voir le projet " + c.name}>
-              <img src={c.logo} alt={c.name} loading="lazy" className="proof-logo-img" />
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="wrap"><hr className="rule" style={{ marginTop: "clamp(48px,7vh,90px)" }} /></div>
     </section>
   );
 }
@@ -268,4 +194,4 @@ function Moment() {
   );
 }
 
-export { Reveal, Arrow, Placeholder, SectionKicker, ReadingProgress, Logo, scrollToId, TopBar, Header, Hero, SocialProof, Moment };
+export { Reveal, Arrow, Placeholder, ReadingProgress, Logo, scrollToId, TopBar, Header, Hero, Moment };

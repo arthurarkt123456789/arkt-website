@@ -131,71 +131,6 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   color: var(--dim-2);
   margin: 0 0 clamp(20px, 3vh, 36px);
 }
-.hero-stats {
-  display: flex;
-  gap: clamp(28px, 5vw, 72px);
-  justify-content: center;
-  margin-top: clamp(36px, 5.5vh, 64px);
-}
-.hero-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-.hero-stat-num {
-  font-family: "Big Shoulders Display", var(--sans);
-  font-size: clamp(40px, 5.5vw, 64px);
-  font-weight: 800;
-  line-height: 1;
-  color: var(--accent);
-}
-.hero-stat-todo { color: var(--dim-2); }
-.hero-stat-label {
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-.hero-edition {
-  position: absolute;
-  bottom: clamp(18px, 2.5vh, 28px);
-  right: clamp(20px, 4vw, 56px);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: var(--dim-2);
-  text-transform: uppercase;
-  z-index: 3;
-}
-@media (max-width: 600px) {
-  .hero-stats { gap: 20px; }
-  .hero-edition { display: none; }
-}
-[data-motion="0"] .hero-stat-num { transition: none; }
-
-/* =================== PREUVE SOCIALE =================== */
-.proof { padding-top: clamp(30px, 6vh, 70px); padding-bottom: clamp(10px, 4vh, 40px); overflow: hidden; }
-.proof-label { margin-bottom: clamp(28px, 4vh, 48px); }
-.proof-marquee { position: relative; width: 100%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); }
-.proof-track { display: flex; gap: clamp(40px, 6vw, 96px); width: max-content; animation: marquee 42s linear infinite; padding-left: clamp(40px, 6vw, 96px); will-change: transform; }
-.proof:hover .proof-track { animation-play-state: paused; }
-[data-motion="0"] .proof-track { animation: none; }
-@keyframes marquee { to { transform: translateX(-50%); } }
-.proof-logo {
-  background: transparent; border: 0; padding: 0;
-  cursor: pointer; display: flex; align-items: center; flex-shrink: 0;
-}
-.proof-logo-img {
-  height: clamp(20px, 2.2vw, 30px);
-  width: auto; max-width: 130px;
-  object-fit: contain; display: block;
-  filter: grayscale(1);
-  opacity: 0.6;
-  transition: opacity 0.28s;
-}
-.proof-logo:hover .proof-logo-img,
-.proof-logo:focus-visible .proof-logo-img { opacity: 1; }
-
 /* =================== VOTRE MOMENT =================== */
 .moment-head { margin-bottom: clamp(46px, 7vh, 84px); }
 .moment-head .eyebrow { margin-bottom: 22px; }
@@ -397,12 +332,15 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 .ptile.active .ptile-plus { background: var(--accent); border-color: var(--accent); }
 .ptile.active .ptile-plus i:nth-child(2) { transform: rotate(0deg); opacity: 0; }
 
-/* =================== panneau rangée (conteneur CSS-hidden) =================== */
+/* =================== panneau rangée (conteneur CSS-hidden) ===================
+   grid-template-rows 0fr → 1fr : s'adapte à n'importe quelle hauteur de contenu,
+   contrairement à un max-height en pixels qui coupe dès que le texte dépasse. */
 .prow-panel {
-  grid-column: 1 / -1; max-height: 0; overflow: hidden;
-  transition: max-height .65s cubic-bezier(.6,0,.2,1);
+  grid-column: 1 / -1; display: grid; grid-template-rows: 0fr; overflow: hidden;
+  transition: grid-template-rows .65s cubic-bezier(.6,0,.2,1);
 }
-.prow-panel.open { max-height: 1200px; }
+.prow-panel.open { grid-template-rows: 1fr; }
+.prow-panel > .pdetail { overflow: hidden; min-height: 0; }
 [data-motion="0"] .prow-panel { transition: none; }
 
 /* =================== détail projet (30/70) =================== */
@@ -412,7 +350,8 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 .pdetail-in {
   display: grid;
   grid-template-columns: 30fr 70fr;
-  height: clamp(300px, 42vh, 460px);
+  /* hauteur plancher ; agrandie via JS (style inline) si le texte de gauche a besoin de plus de place */
+  height: clamp(340px, 44vh, 460px);
   background: var(--surface);
   border: 1px solid rgba(242,83,63,0.3);
   border-radius: var(--radius);
@@ -424,11 +363,15 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 /* ── panneau gauche : informations ── */
 .pinfo {
   display: flex; flex-direction: column; gap: 18px;
-  padding: clamp(28px, 3vw, 44px);
+  padding: clamp(34px, 3vw, 44px);
   border-right: 1px solid var(--hairline-soft);
   background: linear-gradient(160deg, #FFFFFF, #F4F1E9);
-  overflow-y: auto; overflow-x: hidden;
+  overflow: visible; /* règle : jamais de scroll dans la colonne gauche */
 }
+.pinfo-top { display: flex; flex-direction: column; gap: 18px; flex-shrink: 0; }
+/* règle : le pitch est centré verticalement dans l'espace restant, entre le haut et le pied —
+   margin:auto (pas flex-grow) pour que sa propre hauteur reste intacte, mesurable par le JS anti-scroll */
+.pinfo-mid { display: flex; flex-direction: column; gap: 14px; flex-shrink: 0; margin: auto 0; }
 .pinfo-logo {
   width: 56px; height: 56px; border-radius: 10px;
   object-fit: cover; flex-shrink: 0;
@@ -443,12 +386,32 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 .pinfo-tags { display: flex; flex-wrap: wrap; gap: 7px; }
 .pinfo-body {
   font-size: clamp(14px, 1.3vw, 16px); line-height: 1.65;
-  color: #2C2B25; margin: 0; text-wrap: pretty; flex: 1;
+  color: #2C2B25; margin: 0; text-wrap: pretty; flex: 0 0 auto;
+}
+/* pitch : doit sauter aux yeux, distinct du reste du texte */
+.pinfo-pitch {
+  margin: 0;
+  /* même famille que le reste du texte de la colonne (Inter), juste plus grand */
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: #17160F;
+  text-wrap: balance;
+}
+/* seule la portion clé de la phrase porte le dégradé accent */
+.pinfo-pitch-accent {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 .pinfo-foot {
   display: flex; align-items: center;
   justify-content: space-between; gap: 12px;
-  margin-top: auto; padding-top: 14px;
+  flex-shrink: 0; padding-top: 14px;
   border-top: 1px solid var(--hairline-soft);
   flex-wrap: wrap;
 }
@@ -480,33 +443,40 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   background: #0F0F0D;
-  cursor: grab; gap: 3px;
+  cursor: grab; gap: 0; /* pas d'espacement entre les blocs : évite les bandes noires (fond du rail) entre eux */
 }
 .pslider.grabbing { cursor: grabbing; scroll-snap-type: none; }
 
 /* slide image : hauteur 100%, largeur auto sur le ratio naturel */
 .pslide { flex: 0 0 auto; height: 100%; scroll-snap-align: start; }
 .pslide-img img {
-  height: 100%; width: auto;
-  max-width: 80vw;           /* évite les paysages ultra-larges */
+  height: 100%; width: auto;   /* largeur libre selon le ratio naturel : jamais rognée, jamais déformée */
   display: block;
   -webkit-user-drag: none; user-select: none;
 }
 
-/* slide vidéo : phone frame centré dans le slide */
+/* slide vidéo : phone frame centré dans le slide, mis à l'échelle sur la hauteur réelle du rail */
 .pslide-video {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 10px;
+  padding: 24px 14px;
   background: #0F0F0D;
-  width: 180px;
+  width: auto;
 }
+/* variante fond clair, pour les sections sur fond blanc/crème (ex: La Meulerie) — mockup agrandi */
+.pslide-video-light {
+  background: var(--surface);
+  padding: 34px 8px;
+}
+.pslide-video-light .iphone-frame { border-width: 10px; }
 
 .iphone-frame {
   position: relative;
-  width: 148px;
-  height: 288px;
+  height: 100%;
+  width: auto;
+  max-width: 220px;
+  aspect-ratio: 148 / 288;
   border-radius: 34px;
   border: 8px solid #1C1C20;
   background: #000;
@@ -521,8 +491,8 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 .iphone-frame::before {
   content: "";
   position: absolute;
-  top: 10px; left: 50%; transform: translateX(-50%);
-  width: 54px; height: 14px;
+  top: 3.5%; left: 50%; transform: translateX(-50%);
+  width: 36%; height: 4.8%;
   background: #1C1C20;
   border-radius: 20px;
   z-index: 3;
@@ -536,26 +506,43 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 
 /* slide texte */
 .pslide-text {
-  width: clamp(260px, 30vw, 400px);
+  /* assez large pour une longueur de ligne lisible sur 2-3 paragraphes,
+     pas juste une courte légende — c'est ce qui manquait avant */
+  width: clamp(320px, 34vw, 480px);
   background: var(--surface);
   border-left: 1px solid var(--hairline-soft);
-  padding: clamp(28px, 3vw, 44px);
+  padding: clamp(34px, 3vw, 48px);
   display: flex; flex-direction: column;
-  justify-content: center; gap: 20px;
+  justify-content: center; gap: 18px;
 }
 .pslide-head { color: var(--accent); margin: 0; }
 .pslide-body {
-  font-size: clamp(15px, 1.5vw, 20px); line-height: 1.5;
-  letter-spacing: -0.015em; color: var(--white);
+  font-size: clamp(14px, 1.15vw, 17px); line-height: 1.6;
+  letter-spacing: -0.01em; color: var(--white);
   font-weight: 420; margin: 0; text-wrap: pretty;
+}
+.pslide-quote {
+  margin: 0; padding: 2px 0 2px 16px;
+  border-left: 2px solid var(--accent);
+  font-size: clamp(13.5px, 1.1vw, 16px); line-height: 1.55;
+  font-style: italic; color: var(--white); font-weight: 420;
+}
+.pslide-list { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.pslide-list li {
+  font-size: clamp(13.5px, 1.1vw, 15px); color: var(--white);
+  font-weight: 420; padding-left: 18px; position: relative;
+}
+.pslide-list li::before {
+  content: ""; position: absolute; left: 0; top: 9px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
 }
 
 /* slide résultat */
 .pslide-result {
-  width: clamp(260px, 30vw, 400px);
+  width: clamp(320px, 34vw, 480px);
   background: linear-gradient(150deg, rgba(242,83,63,0.08), var(--surface) 60%);
   border-left: 1px solid rgba(242,83,63,0.2);
-  padding: clamp(28px, 3vw, 44px);
+  padding: clamp(34px, 3vw, 48px);
   display: flex; flex-direction: column;
   justify-content: center; gap: 18px;
 }
@@ -573,7 +560,33 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
   color: var(--dim); margin: 0; max-width: 32ch;
 }
 
-.pslider-pad { flex: 0 0 24px; }
+/* résultat en prose : même famille que .pslide-result (fond teinté accent),
+   avec une phrase d'ouverture en gros titre pour marquer le point d'arrivée */
+.pslide-result-text {
+  width: clamp(320px, 34vw, 480px);
+  background: var(--surface);
+  border-left: 1px solid rgba(242,83,63,0.25);
+  padding: clamp(34px, 3vw, 48px);
+  display: flex; flex-direction: column;
+  justify-content: center; gap: 16px;
+}
+.pslide-result-headline {
+  font-family: "Big Shoulders Display", var(--sans);
+  font-weight: 700;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--white); margin: 0; text-wrap: balance;
+}
+.pslide-result-accent {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.pslider-pad { flex: 0 0 0; } /* pas de fond propre : laissait apparaître une bande noire en fin de scroll */
 
 .pcarr {
   width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--hairline);
@@ -610,11 +623,3 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   transform: scaleX(0); will-change: transform;
 }
 
-/* =================== SECTION KICKER =================== */
-.section-kicker {
-  display: flex; align-items: center; gap: 12px; margin: 0 0 20px;
-  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim);
-}
-.section-kicker-bar {
-  display: block; width: 24px; height: 1px; background: var(--accent); flex-shrink: 0;
-}

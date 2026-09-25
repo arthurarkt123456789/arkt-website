@@ -1,7 +1,7 @@
 /* ARKT — application racine + Tweaks */
 import React, { useEffect } from 'react';
-import { Header, Hero, SocialProof, ReadingProgress } from './sections-top.jsx';
-import { Parcours, Testimonials, Offre, Team, Contact, Footer } from './sections-bottom.jsx';
+import { Header, Hero, ReadingProgress } from './sections-top.jsx';
+import { Testimonials, Offre, Team, Contact, Footer } from './sections-bottom.jsx';
 import { Projects } from './sections-projects.jsx';
 import { useTweaks, TweaksPanel, TweakSection, TweakColor, TweakSlider } from './tweaks-panel.jsx';
 
@@ -50,9 +50,7 @@ function App() {
       <ReadingProgress />
       <main id="main-content">
         <Hero />
-        <SocialProof />
         <Testimonials />
-        <Parcours />
         <Offre />
         <Projects />
         <Team />

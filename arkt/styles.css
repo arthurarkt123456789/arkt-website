@@ -44,7 +44,7 @@
 
   /* --- layout --- */
   --maxw: 1380px;
-  --gutter: clamp(20px, 5vw, 80px);
+  --gutter: clamp(24px, 6vw, 96px);
   --radius: 18px;
 }
 

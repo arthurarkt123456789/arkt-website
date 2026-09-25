@@ -1,45 +1,10 @@
 /* ARKT — sections basses : approche, offre, témoignages, équipe, contact, footer */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Reveal, Arrow, Placeholder, SectionKicker, Logo, scrollToId } from './sections-top.jsx';
+import { Reveal, Arrow, Logo, scrollToId } from './sections-top.jsx';
 import ARKT from './data.js';
 
-/* ---------------- Parcours (timeline Arthur) ---------------- */
-function Parcours() {
-  const D = ARKT;
-  return (
-    <section id="parcours" className="section-pad parcours">
-      <div className="wrap">
-        <Reveal className="parcours-head">
-          <SectionKicker num="II" label="PARCOURS" />
-          <h2 className="display parcours-title">
-            Terrain réel, <span className="dim">avant le conseil.</span>
-          </h2>
-          <p className="parcours-lead dim">
-            Chaque mission s'appuie sur une expérience opérationnelle directe : directions marketing dans des marques à forte croissance, puis co-fondation d'une enseigne retail.
-          </p>
-        </Reveal>
-        <div className="parcours-steps">
-          <div className="parcours-line" aria-hidden="true" />
-          {D.parcours.map((s, i) => (
-            <Reveal key={s.co} delay={i * 90} className="parcours-step" as="article">
-              <span className="parcours-dot" aria-hidden="true" />
-              <p className="parcours-year mono">{s.year}</p>
-              <h3 className="parcours-co">{s.co}</h3>
-              <p className="parcours-role mono dim">{s.role}</p>
-              <p className="parcours-desc dim">{s.desc}</p>
-            </Reveal>
-          ))}
-        </div>
-        {D.prises.length > 0 && (
-          <div className="parcours-prises">{/* TODO: grid prises de parole */}</div>
-        )}
-      </div>
-    </section>
-  );
-}
-
 /* ---------------- Offre ---------------- */
-function OffreDetail({ o, onClose }) {
+function OffreDetail({ o }) {
   const d = o.detail;
   const ref = useRef(null);
   useEffect(() => {
@@ -52,26 +17,22 @@ function OffreDetail({ o, onClose }) {
   }, [o.id]);
   return (
     <div className="offre-detail" ref={ref} key={o.id}>
-      <div className="offre-detail-head">
-        <h4 className="offre-detail-t display">{o.name}</h4>
-        <button className="pdetail-close" onClick={onClose} aria-label="Fermer">Fermer <span>×</span></button>
-      </div>
       <div className="offre-detail-grid">
         <div className="offre-detail-block">
-          <p className="offre-col-k">Vous vous reconnaissez ?</p>
-          <ul className="offre-detail-pains">
-            {d.pains.map((t) => (<li key={t}>{t}</li>))}
-          </ul>
-        </div>
-        <div className="offre-detail-block">
-          <p className="offre-col-k">Ce qu'on fait, concrètement</p>
+          <p className="offre-col-k">Ce qu'on fait</p>
           <p className="offre-detail-p">{d.faire}</p>
         </div>
         <div className="offre-detail-block">
-          <p className="offre-col-k">Ce que ça change pour vous</p>
+          <p className="offre-col-k">{o.contenuLabel}</p>
+          <ul className="offre-col-list">
+            {o.contenu.map((c) => (<li key={c}>{c}</li>))}
+          </ul>
+        </div>
+        <div className="offre-detail-block">
           <p className="offre-detail-p offre-detail-change">{d.change}</p>
+          {o.fin && <p className="offre-col-fin">{o.fin}</p>}
           <a className="btn btn-primary offre-detail-cta" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>
-            Échanger sur cette offre <Arrow />
+            {o.cta} <Arrow />
           </a>
         </div>
       </div>
@@ -83,11 +44,29 @@ function Offre() {
   const D = ARKT;
   const [openId, setOpenId] = useState(null);
   const openO = D.offre.find((o) => o.id === openId) || null;
+
+  /* nb de colonnes de la grille (doit suivre le même seuil que le CSS .offre-cols)
+     → sert à savoir après quelle carte insérer le détail déplié */
+  const [cols, setCols] = useState(3);
+  useEffect(() => {
+    const calc = () => setCols(window.innerWidth <= 1040 ? 1 : 3);
+    calc();
+    window.addEventListener("resize", calc);
+    return () => window.removeEventListener("resize", calc);
+  }, []);
+  const rowOf = (idx) => Math.floor(idx / cols);
+  const openIdx = openO ? D.offre.findIndex((o) => o.id === openO.id) : -1;
+  const openRow = openIdx >= 0 ? rowOf(openIdx) : -1;
+
+  const rows = [];
+  for (let i = 0; i < D.offre.length; i += cols) {
+    rows.push({ rowIdx: rowOf(i), items: D.offre.slice(i, i + cols).map((o, k) => ({ o, i: i + k })) });
+  }
+
   return (
     <section id="offre" className="section-pad offre">
       <div className="wrap">
         <Reveal className="offre-intro">
-          <SectionKicker num="III" label="OFFRE" />
           <p className="eyebrow"><span className="dot" />Offre</p>
           <h2 className="display offre-title">
             De l'idée à l'impact, <span className="dim">tout le spectre.</span>
@@ -98,32 +77,33 @@ function Offre() {
           </a>
         </Reveal>
         <div className="offre-cols">
-          {D.offre.map((o, i) => {
-            const isOpen = openId === o.id;
-            return (
-              <Reveal key={o.id} delay={i * 90} as="button" type="button" className={"offre-col" + (isOpen ? " open" : "")}
-                onClick={() => setOpenId(isOpen ? null : o.id)} aria-expanded={isOpen}>
-                <div className="offre-col-num display">{i + 1}</div>
-                <h3 className="offre-col-t">{o.name}</h3>
-                <p className="offre-col-sub mono">{o.sub}</p>
-                <div className="offre-col-block">
-                  <p className="offre-col-k">Quand</p>
-                  <p className="offre-col-p">{o.quand}</p>
+          {rows.map(({ rowIdx, items }) => (
+            <React.Fragment key={"row-" + rowIdx}>
+              {items.map(({ o, i }) => {
+                const isOpen = openId === o.id;
+                return (
+                  <Reveal key={o.id} delay={i * 90} as="button" type="button" className={"offre-col" + (isOpen ? " open" : "")}
+                    onClick={() => setOpenId(isOpen ? null : o.id)} aria-expanded={isOpen}>
+                    <div className="offre-col-num display">{i + 1}</div>
+                    <h3 className="offre-col-t">{o.name}</h3>
+                    <p className="offre-col-sub mono">{o.sub}</p>
+                    <div className="offre-col-block">
+                      <p className="offre-col-k">C'est pour vous si</p>
+                      <p className="offre-col-p">{o.quand}</p>
+                    </div>
+                    <span className="offre-col-more alink">{isOpen ? "Fermer" : "En savoir plus"} <Arrow size={14} /></span>
+                    <span className="ptile-plus offre-col-plus" aria-hidden="true"><i /><i /></span>
+                  </Reveal>
+                );
+              })}
+              {rowIdx === openRow && openO && (
+                <div className="offre-detail-slot">
+                  <OffreDetail o={openO} />
                 </div>
-                <div className="offre-col-block">
-                  <p className="offre-col-k">Ce que ça comprend</p>
-                  <ul className="offre-col-list">
-                    {o.contenu.map((c) => (<li key={c}>{c}</li>))}
-                  </ul>
-                </div>
-                <p className="offre-col-fin">{o.fin}</p>
-                <span className="offre-col-more alink">{isOpen ? "Fermer" : "En savoir plus"} <Arrow size={14} /></span>
-                <span className="ptile-plus offre-col-plus" aria-hidden="true"><i /><i /></span>
-              </Reveal>
-            );
-          })}
+              )}
+            </React.Fragment>
+          ))}
         </div>
-        {openO && <OffreDetail o={openO} onClose={() => setOpenId(null)} />}
 
         {/* ─── strip gains (fond sombre) ─── */}
         <Reveal className="offre-gains" as="div">
@@ -140,10 +120,21 @@ function Offre() {
 }
 
 /* ---------------- Témoignages ---------------- */
+function highlightQuote(quote, hi) {
+  if (!hi || !hi.length) return quote;
+  const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`(${hi.map(esc).join("|")})`, "g");
+  return quote.split(re).map((part, i) =>
+    hi.includes(part) ? <strong key={i} className="testi-hi">{part}</strong> : part
+  );
+}
+
 function TestiCard({ t }) {
   return (
     <article className="testi-card">
-      <blockquote className="testi-card-q">{t.quote}</blockquote>
+      <span className="testi-mark" aria-hidden="true">“</span>
+      <blockquote className="testi-card-q">{highlightQuote(t.quote, t.hi)}</blockquote>
+      <span className="testi-divider" aria-hidden="true" />
       <div className="testi-card-author">
         <div className="testi-card-avatar">
           {t.img
@@ -151,7 +142,7 @@ function TestiCard({ t }) {
             : <span className="testi-card-ph">{t.name.split(" ").map(w => w[0]).join("")}</span>
           }
         </div>
-        <div>
+        <div className="testi-card-id">
           <div className="testi-card-name">{t.name}</div>
           <div className="testi-card-role dim">{t.role}</div>
         </div>
@@ -160,10 +151,28 @@ function TestiCard({ t }) {
   );
 }
 
+function Chevron({ dir = "right" }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d={dir === "left" ? "M12.5 4.5L6 10L12.5 15.5" : "M7.5 4.5L14 10L7.5 15.5"}
+        stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function Testimonials() {
   const D = ARKT;
   const [idx, setIdx] = useState(0);
   const go = (d) => setIdx(p => (p + d + D.testimonials.length) % D.testimonials.length);
+
+  const dragX = useRef(null);
+  const onDragStart = (e) => { dragX.current = e.clientX; };
+  const onDragEnd = (e) => {
+    if (dragX.current == null) return;
+    const dx = e.clientX - dragX.current;
+    dragX.current = null;
+    if (Math.abs(dx) > 40) go(dx > 0 ? -1 : 1);
+  };
 
   return (
     <section className="section-pad testi">
@@ -171,30 +180,31 @@ function Testimonials() {
       <div className="wrap">
 
         <Reveal className="testi-head">
-          <SectionKicker num="I" label="MANIFESTE" />
           <p className="eyebrow testi-eyebrow"><span className="dot" />Témoignages</p>
           <h2 className="testi-bigtitle display">Ce que nos clients disent.</h2>
         </Reveal>
 
-        {/* Desktop : grille statique 2 × 2 */}
-        <div className="testi-grid" aria-label="Témoignages clients">
-          {D.testimonials.map((t, i) => (
-            <Reveal key={i} delay={i * 60}><TestiCard t={t} /></Reveal>
-          ))}
-        </div>
-
-        {/* Mobile : carousel */}
         <div className="testi-carousel" aria-live="polite">
-          <TestiCard t={D.testimonials[idx]} />
-          <div className="testi-carousel-nav">
-            <button className="pcarr" onClick={() => go(-1)} aria-label="Précédent">
-              <Arrow size={14} style={{ transform: "rotate(180deg)" }} />
-            </button>
-            <span className="testi-carousel-count mono dim">{idx + 1} / {D.testimonials.length}</span>
-            <button className="pcarr" onClick={() => go(1)} aria-label="Suivant">
-              <Arrow size={14} />
-            </button>
+          <button className="testi-arrow" onClick={() => go(-1)} aria-label="Précédent">
+            <Chevron dir="left" />
+          </button>
+          <div className="testi-stage" onPointerDown={onDragStart} onPointerUp={onDragEnd}>
+            {D.testimonials.map((t, i) => {
+              const n = D.testimonials.length;
+              let diff = i - idx;
+              if (diff > n / 2) diff -= n;
+              if (diff < -n / 2) diff += n;
+              return (
+                <div key={i} className={"testi-slide" + (i === idx ? " is-active" : "")}
+                  style={{ transform: `translateX(${diff * 100}%)` }} aria-hidden={i !== idx}>
+                  <TestiCard t={t} />
+                </div>
+              );
+            })}
           </div>
+          <button className="testi-arrow" onClick={() => go(1)} aria-label="Suivant">
+            <Chevron dir="right" />
+          </button>
         </div>
 
       </div>
@@ -205,43 +215,27 @@ function Testimonials() {
 /* ---------------- Équipe ---------------- */
 function Team() {
   const D = ARKT;
-  const lead = D.team[0];
-  const rest = D.team.slice(1);
   return (
     <section id="equipe" className="section-pad light-section on-light team">
       <div className="wrap">
         <Reveal className="team-head">
-          <SectionKicker num="V" label="ÉQUIPE" />
           <p className="eyebrow"><span className="dot" />Équipe</p>
           <h2 className="display team-title">
             Des expertises réunies <span className="dim">autour d'une même trajectoire.</span>
           </h2>
           <p className="team-lead dim">Stratégie, contenu, direction artistique et culture de marque : une équipe agile, impliquée, orientée impact.</p>
         </Reveal>
-        <div className="team-grid">
-          <Reveal className="team-lead-card" as="article">
-            <div className="team-lead-photo">
-              {lead.img ? <img src={lead.img} alt={lead.name} loading="lazy" /> : <Placeholder ratio="4/5" label="PORTRAIT" />}
-            </div>
-            <div className="team-lead-info">
-              <span className="team-lead-tag mono">FONDATEUR</span>
-              <h3 className="team-lead-name display">{lead.name}</h3>
-              <div className="team-lead-role">{lead.role}</div>
-              <p className="team-lead-bio dim">{lead.bio}</p>
-            </div>
-          </Reveal>
-          <div className="team-rest">
-            {rest.map((m, i) => (
-              <Reveal key={m.name} delay={i * 70} className="team-card" as="article">
-                <div className="team-photo">
-                  {m.img ? <img src={m.img} alt={m.name} loading="lazy" /> : <div className="team-photo-ph"><span className="mono">{m.name.split(" ").map((w) => w[0]).join("")}</span></div>}
-                </div>
-                <h3 className="team-name">{m.name}</h3>
-                <div className="team-role dim">{m.role}</div>
-                <p className="team-bio dim">{m.bio}</p>
-              </Reveal>
-            ))}
-          </div>
+        <div className="team-bubbles">
+          {D.team.map((m, i) => (
+            <Reveal key={m.name} delay={i * 70} className="team-bubble" as="article">
+              <div className="team-bubble-photo">
+                {m.img ? <img src={m.img} alt={m.name} loading="lazy" /> : <div className="team-photo-ph"><span className="mono">{m.name.split(" ").map((w) => w[0]).join("")}</span></div>}
+              </div>
+              <h3 className="team-bubble-name">{m.name}</h3>
+              <div className="team-bubble-role dim">{m.role}</div>
+              <p className="team-bubble-bio dim">{m.bio}</p>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -363,7 +357,6 @@ function Contact() {
       <div className="wrap contact-in">
         <div className="contact-layout">
           <Reveal className="contact-card">
-            <SectionKicker num="VI" label="CONTACT" />
             <p className="eyebrow"><span className="dot" />Contact</p>
             <h2 className="display contact-title">
               Parlons de <span className="grad-text">votre projet.</span>
@@ -421,4 +414,4 @@ function Footer() {
   );
 }
 
-export { Parcours, Offre, Testimonials, Team, Contact, Footer };
+export { Offre, Testimonials, Team, Contact, Footer };
