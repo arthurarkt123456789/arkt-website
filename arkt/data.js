@@ -33,6 +33,41 @@ const ARKT = {
   /* ---------- coups de cœur (grand format, scroll horizontal) ---------- */
   featured: [
     {
+      id: "meulerie",
+      defaultOpen: true,
+      name: "La Meulerie",
+      year: "2021",
+      tag: "Cofondé par ARKT",
+      claim: "La fromagerie **nouvelle génération** qu'ARKT a cofondée.",
+      accentName: "#F2B705",
+      logo: "arkt/images/meulerie-logo.png",
+      flushRail: true,
+      panels: [
+        { kind: "intro", label: "Coup de cœur", title: "La Meulerie", sub: "Le bon fromage, rendu désirable. Porté par l'énergie de Marseille." },
+        { kind: "video", light: true, src: "arkt/videos/meulerie-video-1.mp4", poster: "arkt/videos/meulerie-video-1.jpg" },
+        { kind: "text", head: "Contexte", body: [
+          "Le fromage restait piégé dans une image trop traditionnelle, coincé entre la fromagerie de quartier et le rayon supermarché.",
+          "Sur un marché du snacking déjà saturé, tout l'enjeu était d'inventer un territoire de marque assez fort pour transformer un produit de terroir en concept jeune, urbain et désirable.",
+        ] },
+        { kind: "media", phr: "1/1", caption: "Devanture « FROMAGERIE La Meulerie »", src: "arkt/images/meulerie-5.jpg" },
+        { kind: "video", light: true, src: "arkt/videos/meulerie-video-2.mp4", poster: "arkt/videos/meulerie-video-2.jpg" },
+        { kind: "text", head: "Ce qu'on a fait", body: [
+          "Création intégrale du projet, du concept à la boutique.",
+          "Fromagerie et snacking réunis dans une direction artistique solaire et décalée, portée par un positionnement simple : faire du fromage un produit accessible dans un univers où tout le monde se sent bien.",
+        ] },
+        { kind: "media", phr: "2/3", caption: "Collab' La Meulerie x American Vintage", src: "arkt/images/meulerie-6.jpg" },
+        { kind: "result-text", head: "Résultat", body: [
+          "**4 boutiques** ouvertes à Marseille (Davso, République, Malmousque, Endoume), un restaurant éphémère, 3 franchises en cours de lancement.",
+          "Des collaborations remarquées avec Asics, American Vintage ou Sauces Martin, et une marque qui s'est imposée comme une référence marseillaise du snacking.",
+        ] },
+        { kind: "media", phr: "2/3", caption: "Dunk fromage · activation streetball", src: "arkt/images/meulerie-7.jpg" },
+        { kind: "media", phr: "3/4", caption: "Devanture « FROMAGERIE » · terrasse", src: "arkt/images/meulerie-8.jpg" },
+        { kind: "media", phr: "2/3", caption: "Plateau fromages · shooting plage", src: "arkt/images/meulerie-9.jpg" },
+        { kind: "media", phr: "2/3", caption: "Livraison en Vespa · bord de mer", src: "arkt/images/meulerie-10.jpg" },
+        { kind: "media", phr: "2/3", caption: "Sandwich fondant · La Meulerie", src: "arkt/images/meulerie-11.jpg" },
+      ],
+    },
+    {
       id: "horsdoeuvre",
       name: "Hors d'Œuvre",
       year: "2026",
@@ -91,40 +126,6 @@ const ARKT = {
           "Un lieu qui a trouvé son public dans le 8ᵉ, une presse locale qui s'est intéressée au projet d'elle-même (Toutma, L'Essentiel, Marseille Secrète) et une communauté qui s'est structurée sur Instagram et TikTok (+3K abonnés).",
         ] },
         { kind: "media", phr: "3/4", caption: "Vitrine Ciaomisu!", src: "arkt/images/ciaomisu-4.jpg" },
-      ],
-    },
-    {
-      id: "meulerie",
-      defaultOpen: true,
-      alwaysOpen: true,
-      name: "La Meulerie",
-      year: "2021",
-      tag: "Cofondé par ARKT",
-      claim: "La fromagerie **nouvelle génération** qu'ARKT a cofondée.",
-      accentName: "#F2B705",
-      logo: "arkt/images/meulerie-logo.png",
-      flushRail: true,
-      panels: [
-        { kind: "intro", label: "Coup de cœur", title: "La Meulerie", sub: "Le bon fromage, rendu désirable. Porté par l'énergie de Marseille." },
-        { kind: "video", light: true, src: "arkt/videos/meulerie-video-1.mp4", poster: "arkt/videos/meulerie-video-1.jpg" },
-        { kind: "text", head: "Contexte", body: [
-          "Le fromage restait piégé dans une image trop traditionnelle, coincé entre la fromagerie de quartier et le rayon supermarché.",
-          "Sur un marché du snacking déjà saturé, tout l'enjeu était d'inventer un territoire de marque assez fort pour transformer un produit de terroir en concept jeune, urbain et désirable.",
-        ] },
-        { kind: "media", phr: "1/1", caption: "Devanture « FROMAGERIE La Meulerie »", src: "arkt/images/meulerie-5.jpg" },
-        { kind: "video", light: true, src: "arkt/videos/meulerie-video-2.mp4", poster: "arkt/videos/meulerie-video-2.jpg" },
-        { kind: "text", head: "Ce qu'on a fait", body: [
-          "Création intégrale du projet, du concept à la boutique.",
-          "Fromagerie et snacking réunis dans une direction artistique solaire et décalée, portée par un positionnement simple : faire du fromage un produit accessible dans un univers où tout le monde se sent bien.",
-        ] },
-        { kind: "media", phr: "2/3", caption: "Collab' La Meulerie x American Vintage", src: "arkt/images/meulerie-6.jpg" },
-        { kind: "result-text", head: "Résultat", body: [
-          "**4 boutiques** ouvertes à Marseille (Davso, République, Malmousque, Endoume), un restaurant éphémère, 3 franchises en cours de lancement.",
-          "Des collaborations remarquées avec Asics, American Vintage ou Sauces Martin, et une marque qui s'est imposée comme une référence marseillaise du snacking.",
-        ] },
-        { kind: "media", phr: "3/4", caption: "Devanture jaune « FROMAGERIE »", src: "arkt/images/meulerie-2.jpg" },
-        { kind: "media", phr: "3/4", caption: "Néon « Say Cheese »", src: "arkt/images/meulerie-3.jpg" },
-        { kind: "media", phr: "2/3", caption: "Apéro impromptu · capot de voiture", src: "arkt/images/meulerie-4.jpg" },
       ],
     },
     {
@@ -579,17 +580,18 @@ const ARKT = {
       panels: [
         { kind: "intro", label: "Coup de cœur", title: "Vé – 2024", sub: "Glacier végétal · Marseille" },
         { kind: "media", phr: "4/5", caption: "Vé", src: "arkt/images/ve-1.jpg" },
+        { kind: "media", phr: "3/4", caption: "Devanture Vé", src: "arkt/images/ve-10.jpg" },
         { kind: "text", head: "Contexte", body: [
           "Un glacier 100 % végétal à Marseille, avec une conviction forte sur le produit et une idée très nette de ce que le fondateur ne voulait surtout pas.",
           "Pas d'adresse militante, pas d'excuse permanente à être végétal.",
           "L'enjeu : construire une marque qui parle à tous, avec les codes d'un vrai glacier de la ville plutôt que d'un concept alternatif.",
         ] },
-        { kind: "media", phr: "4/5", caption: "Vé", src: "arkt/images/ve-2.jpg" },
+        { kind: "media", phr: "4/5", caption: "Vé", src: "arkt/images/ve-8.jpg" },
         { kind: "text", head: "Ce qu'on a fait", body: [
           "Naming Vé (court, populaire, local, qui claque comme une expression du coin), charte visuelle, positionnement et communication de lancement.",
           "Pilotage pour que le nom, le lieu, le visuel et la prise de parole arrivent ensemble et cohérents, puis contenus, shootings et animation des réseaux pour installer Vé dans le paysage marseillais.",
         ] },
-        { kind: "media", phr: "4/5", caption: "Vé", src: "arkt/images/ve-3.jpg" },
+        { kind: "media", phr: "4/3", caption: "Vé", src: "arkt/images/ve-9.jpg" },
         { kind: "result-text", head: "Résultat", body: [
           "**Une success story marseillaise**.",
           "Vé s'est installée comme une vraie adresse locale, avec aujourd'hui deux points de vente ouverts. Un glacier végétal qui n'a jamais joué la carte de la niche et qui a trouvé son public bien au-delà des consommateurs déjà convaincus.",

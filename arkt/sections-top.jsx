@@ -60,13 +60,14 @@ function ReadingProgress() {
 
 function Logo({ h = 48 }) {
   return (
-    <img src="arkt/logo-arkt.png" alt="ARKT" style={{ height: h, width: "auto", display: "block" }} />
+    <img src="/arkt/logo-arkt.png" alt="ARKT" style={{ height: h, width: "auto", display: "block" }} />
   );
 }
 
 function scrollToId(id) {
   const el = document.getElementById(id);
   if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: "smooth" });
+  else window.location.href = "/#" + id; /* hors de l'accueil (pages légales) */
 }
 
 /* ---------------- TopBar ---------------- */
@@ -106,8 +107,8 @@ function Header() {
   return (
     <header className={"hdr" + (solid ? " solid" : "")}>
       <div className="wrap hdr-in">
-        <a href="#top" className="hdr-logo" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} aria-label="ARKT — accueil">
-          <img src="arkt/logo-mark.png" alt="" aria-hidden="true" className="hdr-logo-mark" />
+        <a href="/" className="hdr-logo" onClick={(e) => { if (!document.getElementById("top")) return; e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} aria-label="ARKT — accueil">
+          <img src="/arkt/logo-mark.png" alt="" aria-hidden="true" className="hdr-logo-mark" />
         </a>
         <nav className="hdr-nav" aria-label="Navigation principale">
           {D.nav.map((n) => (
@@ -118,10 +119,11 @@ function Header() {
         </nav>
         <div className="hdr-right">
           <a className="btn btn-primary hdr-cta" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>Démarrer un projet <Arrow /></a>
-          <button className="hdr-burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
-            <span style={{ transform: open ? "translateY(4px) rotate(45deg)" : "none" }} />
-            <span style={{ opacity: open ? 0 : 1 }} />
-            <span style={{ transform: open ? "translateY(-4px) rotate(-45deg)" : "none" }} />
+          <button className={"hdr-burger" + (open ? " open" : "")} aria-label="Menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <line x1="3" y1="10" x2="17" y2="10" />
+              <line x1="3" y1="10" x2="17" y2="10" />
+            </svg>
           </button>
         </div>
       </div>
@@ -153,7 +155,7 @@ function Hero() {
         <p className="hero-sectors mono">RETAIL · FOOD · IMMOBILIER · SPORT · LIFESTYLE</p>
         <div className="hero-cta">
           <button className="btn btn-primary" onClick={() => scrollToId("projets")}>Voir nos projets <Arrow /></button>
-          <a className="btn btn-ghost" href="#approche" onClick={(e) => { e.preventDefault(); scrollToId("approche"); }}>Découvrir l'approche</a>
+          <a className="btn btn-ghost" href="#offre" onClick={(e) => { e.preventDefault(); scrollToId("offre"); }}>Découvrir l'approche</a>
         </div>
         <button className="hero-scroll" onClick={() => scrollToId("offre")} aria-label="Défiler">
           <span className="mono">SCROLLEZ</span>

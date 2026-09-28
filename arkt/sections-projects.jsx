@@ -317,26 +317,15 @@ function GridProjects() {
     return () => window.removeEventListener("resize", calc);
   }, []);
 
-  /* URL hash → état initial */
+  /* ouverture initiale : ancien lien #open=… sinon projet defaultOpen ; l'URL reste propre */
   useEffect(() => {
     const m = window.location.hash.match(/[#&]open=([^&]+)/);
-    if (!m) return;
-    const id = m[1].split(",").filter(Boolean)[0];
-    if (id && allProjects.some((p) => p.id === id)) setOpenId(id);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  /* defaultOpen → ouverture automatique au chargement (sauf si hash déjà présent) */
-  useEffect(() => {
-    if (window.location.hash.match(/[#&]open=([^&]+)/)) return;
+    const id = m && m[1].split(",").filter(Boolean)[0];
+    if (m) window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    if (id && allProjects.some((p) => p.id === id)) { setOpenId(id); return; }
     const def = allProjects.find((p) => p.defaultOpen);
     if (def) setOpenId(def.id);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  /* état → URL hash */
-  useEffect(() => {
-    const hash = openId ? "#open=" + openId : "";
-    window.history.replaceState(null, "", hash || window.location.pathname);
-  }, [openId]);
 
   const scrollToPanel = useCallback((rowIdx) => {
     setTimeout(() => {

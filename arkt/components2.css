@@ -131,6 +131,7 @@
 
 /* =================== TÉMOIGNAGES =================== */
 .testi { overflow: hidden; }
+.section-pad.testi { padding-top: clamp(36px, 5vh, 64px); }
 .testi-halo { width: 44vw; height: 44vw; max-width: 600px; max-height: 600px; left: -8%; top: 15%; background: radial-gradient(circle, rgba(255,69,51,0.35), transparent 68%); opacity: calc(var(--halo) * 0.35); }
 .testi-head { max-width: 720px; margin-bottom: clamp(44px, 7vh, 80px); }
 .testi-eyebrow { margin-bottom: 20px; }
@@ -140,11 +141,10 @@
 }
 
 .testi-card {
-  background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: var(--radius);
-  padding: clamp(20px, 2.2vw, 32px) clamp(32px, 4vw, 56px);
+  background: transparent;
+  padding: clamp(20px, 2.2vw, 32px) clamp(12px, 1.5vw, 22px);
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   text-align: center; width: 100%;
-  box-shadow: 0 0 32px rgba(19,19,17,0.10);
 }
 .testi-mark {
   font-family: "Big Shoulders Display", var(--sans); font-weight: 800;
@@ -152,7 +152,7 @@
   opacity: 0.4; margin-bottom: -4px;
 }
 .testi-card-q {
-  font-size: clamp(14px, 1.3vw, 17px); line-height: 1.6; font-weight: 440;
+  font-size: 19px; line-height: 1.6; font-weight: 440;   /* taille fixe : jamais dépendante de la longueur de l'avis */
   color: var(--dim); margin: 0; text-wrap: pretty;
   letter-spacing: -0.01em; max-width: 58ch;
 }
@@ -170,27 +170,29 @@
 .testi-card-name { font-size: 15px; font-weight: 560; letter-spacing: -0.01em; }
 .testi-card-role { font-size: 13px; }
 
-.testi-carousel { display: flex; align-items: center; justify-content: center; gap: clamp(20px, 4vw, 48px); max-width: 1300px; margin: 0 auto; }
-.testi-stage {
-  position: relative; display: grid; flex: 1 1 auto; min-width: 0;
-  cursor: grab; touch-action: pan-y;
-  overflow-x: hidden;
-  padding: clamp(18px, 2.5vw, 30px);
-}
-.testi-stage:active { cursor: grabbing; }
-.testi-slide {
-  grid-area: 1 / 1; width: 100%;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: transform .5s cubic-bezier(.22,.8,.32,1), opacity .4s ease;
-}
-.testi-slide.is-active { opacity: 1; pointer-events: auto; }
-[data-motion="0"] .testi-slide { transition: none; }
+.testi-carousel { position: relative; width: 100%; margin: 0 auto; }
 .testi-arrow {
-  flex: 0 0 auto; background: transparent; border: 0; padding: 4px; cursor: pointer;
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  background: transparent; border: 0; padding: 6px; cursor: pointer;
   color: var(--dim-2); transition: color .25s;
 }
 .testi-arrow:hover { color: var(--dim); }
+.testi-arrow-l { left: 0; }
+.testi-arrow-r { right: 0; }
+.testi-stage {
+  position: relative; display: flex; width: 100%;
+  overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  cursor: grab; touch-action: pan-y;
+  padding: clamp(18px, 2.5vw, 30px) 0;
+}
+.testi-stage.grabbing { cursor: grabbing; scroll-snap-type: none; }
+.testi-slide {
+  flex: 0 0 88%; width: 88%; scroll-snap-align: center;
+  display: flex; align-items: center; justify-content: center;
+}
 
 /* =================== ÉQUIPE =================== */
 .team-head { max-width: 720px; margin-bottom: clamp(44px, 6vh, 80px); }
@@ -284,6 +286,30 @@ html[data-light="0"] .team-bubble-photo { border-color: var(--hairline); }
 .foot-social a { font-size: 15px; color: var(--dim); transition: color .25s; }
 .foot-social a:hover { color: var(--accent); }
 .foot-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 30px; border-top: 1px solid var(--hairline-soft); }
+.foot-bottom a { transition: color .25s; }
+.foot-bottom a:hover { color: var(--accent); }
+
+/* =================== PAGES LÉGALES =================== */
+.legal { padding: clamp(130px, 18vh, 190px) 0 clamp(64px, 10vh, 120px); }
+.legal-in { max-width: calc(760px + 2 * var(--gutter)); }
+.legal .eyebrow { margin: 0 0 18px; }
+.legal h1 { font-size: calc(clamp(40px, 7vw, 84px) * var(--ds)); margin: 0 0 clamp(32px, 6vh, 56px); }
+.legal h2 { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; margin: 40px 0 12px; }
+.legal h2 span { color: var(--accent); margin-right: 8px; }
+.legal h3 { font-size: 16px; font-weight: 600; margin: 22px 0 8px; }
+.legal p, .legal li { font-size: 16px; line-height: 1.65; color: #2C2B25; }
+.legal p { margin: 0 0 12px; }
+.legal ul { margin: 0 0 12px; padding-left: 20px; }
+.legal li { margin-bottom: 4px; }
+.legal li::marker { color: var(--accent); }
+.legal a { text-decoration: underline; text-underline-offset: 3px; }
+.legal a:hover { color: var(--accent); }
+.legal p.legal-updated { color: var(--dim); font-size: 14px; margin: -24px 0 32px; }
+.legal-card {
+  background: var(--surface); border-radius: var(--radius); padding: 22px 24px; margin: 0 0 12px;
+  box-shadow: 0 1px 2px rgba(19,19,17,0.04), 0 12px 28px -18px rgba(19,19,17,0.22);
+}
+.legal-card p { margin: 0; }
 
 /* =================== TWEAKS note =================== */
 .twk-note { font-size: 10.5px; line-height: 1.45; color: rgba(41,38,27,0.55); margin: -2px 0 2px; }
@@ -340,19 +366,37 @@ html[data-light="0"] .team-bubble-photo { border-color: var(--hairline); }
 @media (max-width: 700px) {
   .topbar { display: none; }
   .hdr { top: 0; }
-  .hero { padding-top: 76px; }
+  /* plein écran, contenu centré dans la zone visible sous le header fixe (78px) */
+  .hero { min-height: 100svh; padding-top: calc(78px + 20px); padding-bottom: 20px; }
   .hero-card { max-width: 100%; }
-  .hero-t1, .hero-t2 { font-size: calc(clamp(64px, 15vw, 178px) * var(--ds)); }
-  /* témoignages : moins d'air autour de la pilule pour laisser la place au texte */
-  .testi-carousel { gap: 12px; }
-  .testi-stage { padding: 10px; }
-  .testi-card { padding: clamp(20px, 5vw, 28px) 22px; }
-  .testi-mark { font-size: 30px; }
+  .hero-t1, .hero-t2 { font-size: calc(clamp(74px, 18vw, 178px) * var(--ds)); }
+  /* témoignages : les flèches remplacent l'aperçu du suivant → un seul avis visible à la fois */
+  .testi-head { margin-bottom: 28px; }
+  /* rythme vertical unique entre sections (référence : projets → équipe) */
+  .section-pad, .section-pad.testi { padding-top: 64px; padding-bottom: 44px; }
+  .contact { padding: 64px 0 44px; }
+  /* compensations des marges internes propres à certaines sections */
+  .section-pad.testi { padding-bottom: 38px; }
+  .section-pad.offre { padding-bottom: 34px; }
+  .foot { padding-top: 68px; }
+  .testi-stage { padding-top: 6px; padding-bottom: 6px; gap: 40px; }
+  .testi-slide { flex-basis: 100%; width: 100%; }
+  .testi-card { padding: clamp(20px, 5vw, 28px) 16px; gap: 8px; }
+  .testi-mark { font-size: 30px; margin-bottom: -2px; }
+  .testi-card-q { font-size: 17px; }
+  .testi-card-avatar { width: 38px; height: 38px; }
+  .testi-arrow { padding: 10px; }
 }
 /* ---- mobile : panels rail ---- */
 @media (max-width: 600px) {
   /* capsule projet : encore plus d'air, typo réduite */
-  .pinfo { padding: 26px; gap: 20px; }
+  .pinfo { padding: 20px; gap: 14px; }
+  .pinfo-top { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 14px; row-gap: 12px; }
+  .pinfo-logo { width: 44px; height: 44px; }
+  .pinfo-tags { grid-column: 1 / -1; }
+  .pinfo-mid { gap: 10px; }
+  .pinfo-foot { padding-top: 12px; }
+  .pslider { height: clamp(300px, 46vh, 380px); min-height: 0; max-height: none; }
   .pinfo-name { font-size: 24px; }
   .pinfo-pitch { font-size: 16px; line-height: 1.2; }
   .pinfo-body { font-size: 14px; }
@@ -372,13 +416,42 @@ html[data-light="0"] .team-bubble-photo { border-color: var(--hairline); }
   .feat-rail > .panel,
   .feat-rail > .panel-media { height: clamp(280px, 52vh, 420px); }
   .steps-cell > .panel { height: clamp(280px, 56vh, 480px); }
+  /* équipe : liste une personne par ligne, photo à gauche, texte aligné à gauche pleine largeur */
+  .team-bubbles { flex-direction: column; flex-wrap: nowrap; gap: 12px; }
+  .team-bubble {
+    width: 100%; display: grid; grid-template-columns: 64px 1fr; column-gap: 16px;
+    align-items: start; text-align: left; padding: 18px;
+    background: linear-gradient(160deg, #FFFFFF, #F7F5EF); border-radius: 18px;
+    box-shadow: 0 1px 2px rgba(19,19,17,0.04), 0 12px 28px -18px rgba(19,19,17,0.22);
+  }
+  /* ligne 1 : photo + nom/fonction centrés verticalement sur la photo ; bio dessous, pleine largeur */
+  .team-bubble-photo { width: 64px; margin: 0; grid-row: 1 / span 2; align-self: center; }
+  .team-bubble-name { margin: 0 0 2px; font-size: 16px; align-self: end; }
+  .team-bubble.on-light .team-bubble-role, .on-light .team-bubble-role.dim { color: var(--accent); margin: 0; align-self: start; }
+  .team-bubble-bio { grid-column: 1 / -1; max-width: none; font-size: 14px; margin-top: 14px; }
   /* contact meta : empilage vertical */
   .contact-meta { flex-wrap: wrap; gap: 8px; }
   .contact-sep { display: none; }
   /* form : bouton pleine largeur */
   .cform-btn { width: 100%; justify-content: center; }
   /* offre : numéro plus discret */
-  .offre-col-num { font-size: 40px; margin-bottom: 16px; }
+  .offre-col-num { font-size: 34px; margin-bottom: 12px; }
+  .offre-cols { gap: 14px; }
+  .offre-col { padding: 22px 20px 22px; }
+  .offre-col-plus { top: 16px; right: 16px; }
+  .offre-col-t { font-size: 22px; margin-bottom: 6px; }
+  .offre-col-sub { font-size: 11px; margin-bottom: 20px; }
+  .offre-col-k { font-size: 10.5px; }
+  .offre-col-block { margin-bottom: 16px; }
+  .offre-col-p, .offre-col-list li, .offre-detail-p, .offre-col-fin { font-size: 15px; }
+  .offre-col-more { margin-top: 12px; font-size: 14px; }
+  .offre-detail { margin-top: 14px; padding: 22px 20px 24px; }
+  .offre-detail-grid { gap: 22px; }
+  .offre-detail-block .offre-col-k { margin-bottom: 10px; }
+  .offre-detail-cta { margin-top: 20px; }
+  .offre-gains { margin-top: 28px; }
+  .offre-gain { padding: 22px 20px; gap: 12px; }
+  .offre-gain-t { font-size: 15px; }
 }
 @media (max-width: 680px) {
   /* offre gains strip : 3 col → 1 col */
@@ -394,20 +467,19 @@ html[data-light="0"] .team-bubble-photo { border-color: var(--hairline); }
   .feat-controls { gap: 12px; margin-top: 16px; }
   .feat-nav button { width: 42px; height: 42px; }
   .gallery-grid { grid-template-columns: 1fr; }
-  .offre-col-t { font-size: clamp(22px, 6vw, 30px); }
-  .offre-detail { padding: 24px 20px 28px; }
   .offre-detail-cta { width: 100%; justify-content: center; }
   /* témoignages : encore plus compact en très petit écran */
-  .testi-carousel { gap: 6px; }
-  .testi-stage { padding: 6px; }
-  .testi-card { padding: 20px 16px; gap: 8px; }
-  .testi-card-q { max-width: 42ch; }
+  .testi-card { padding: 18px 12px; gap: 6px; }
+  .testi-mark { font-size: 26px; }
+  .testi-card-q { font-size: 14.5px; max-width: 42ch; }
+  .testi-card-avatar { width: 34px; height: 34px; }
+  .testi-card-name { font-size: 14px; }
+  .testi-card-role { font-size: 12px; }
+  .testi-arrow { padding: 8px; }
   /* 375px : garantir pas de débordement horizontal */
-  .pdetail-in { height: auto; min-height: 300px; }
-  .pslider { min-height: 200px; }
-  .pinfo { padding: 22px; gap: 18px; }
+  .pdetail-in { height: auto; }
   .pinfo-pitch { font-size: 15px; }
-  .pslide-text, .pslide-result { width: 84vw; padding: 22px; }
+  .pslide-text, .pslide-result { width: 84vw; padding: 20px; }
   .pslide-body, .pslide-quote, .pslide-list li { font-size: 14.5px; }
   .contact-channels { gap: 8px; }
 }

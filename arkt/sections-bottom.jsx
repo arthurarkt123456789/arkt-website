@@ -129,6 +129,15 @@ function highlightQuote(quote, hi) {
   );
 }
 
+function Chevron({ dir = "right" }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d={dir === "left" ? "M12.5 4.5L6 10L12.5 15.5" : "M7.5 4.5L14 10L7.5 15.5"}
+        stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function TestiCard({ t }) {
   return (
     <article className="testi-card">
@@ -151,27 +160,64 @@ function TestiCard({ t }) {
   );
 }
 
-function Chevron({ dir = "right" }) {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d={dir === "left" ? "M12.5 4.5L6 10L12.5 15.5" : "M7.5 4.5L14 10L7.5 15.5"}
-        stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 function Testimonials() {
   const D = ARKT;
-  const [idx, setIdx] = useState(0);
-  const go = (d) => setIdx(p => (p + d + D.testimonials.length) % D.testimonials.length);
+  const stageRef = useRef(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
-  const dragX = useRef(null);
-  const onDragStart = (e) => { dragX.current = e.clientX; };
-  const onDragEnd = (e) => {
-    if (dragX.current == null) return;
-    const dx = e.clientX - dragX.current;
-    dragX.current = null;
-    if (Math.abs(dx) > 40) go(dx > 0 ? -1 : 1);
+  /* rail natif : la molette/trackpad et le tactile font défiler sans avoir à saisir la pilule */
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    let prevStart = true, prevEnd = D.testimonials.length <= 1;
+    const update = () => {
+      const max = el.scrollWidth - el.clientWidth;
+      const p = max > 0 ? el.scrollLeft / max : 0;
+      const nowStart = p <= 0.01, nowEnd = p >= 0.99;
+      if (nowStart !== prevStart || nowEnd !== prevEnd) {
+        prevStart = nowStart; prevEnd = nowEnd;
+        setAtStart(nowStart); setAtEnd(nowEnd);
+      }
+    };
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => { el.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
+  }, [D.testimonials.length]);
+
+  /* drag souris, comme le rail projets */
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    let down = false, sx = 0, sl = 0, moved = false;
+    const md = (e) => { down = true; moved = false; sx = e.clientX; sl = el.scrollLeft; el.classList.add("grabbing"); };
+    const mm = (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; el.scrollLeft = sl - dx; };
+    const mu = () => { down = false; el.classList.remove("grabbing"); };
+    const click = (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } };
+    el.addEventListener("pointerdown", md);
+    window.addEventListener("pointermove", mm);
+    window.addEventListener("pointerup", mu);
+    el.addEventListener("click", click, true);
+    return () => {
+      el.removeEventListener("pointerdown", md);
+      window.removeEventListener("pointermove", mm);
+      window.removeEventListener("pointerup", mu);
+      el.removeEventListener("click", click, true);
+    };
+  }, []);
+
+  /* flou uniquement du côté où il reste du contenu à découvrir */
+  const maskLeft = atStart ? "#000 0%" : "transparent 0%, #000 4%";
+  const maskRight = atEnd ? "#000 100%" : "#000 96%, transparent 100%";
+  const mask = `linear-gradient(90deg, ${maskLeft}, ${maskRight})`;
+
+  const scrollByOne = (dir) => {
+    const el = stageRef.current;
+    if (!el) return;
+    const slide = el.firstElementChild;
+    const step = slide ? slide.offsetWidth + (parseFloat(getComputedStyle(el).columnGap) || 0) : el.clientWidth * 0.88;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
   };
 
   return (
@@ -185,26 +231,23 @@ function Testimonials() {
         </Reveal>
 
         <div className="testi-carousel" aria-live="polite">
-          <button className="testi-arrow" onClick={() => go(-1)} aria-label="Précédent">
-            <Chevron dir="left" />
-          </button>
-          <div className="testi-stage" onPointerDown={onDragStart} onPointerUp={onDragEnd}>
-            {D.testimonials.map((t, i) => {
-              const n = D.testimonials.length;
-              let diff = i - idx;
-              if (diff > n / 2) diff -= n;
-              if (diff < -n / 2) diff += n;
-              return (
-                <div key={i} className={"testi-slide" + (i === idx ? " is-active" : "")}
-                  style={{ transform: `translateX(${diff * 100}%)` }} aria-hidden={i !== idx}>
-                  <TestiCard t={t} />
-                </div>
-              );
-            })}
+          {!atStart && (
+            <button className="testi-arrow testi-arrow-l" onClick={() => scrollByOne(-1)} aria-label="Précédent">
+              <Chevron dir="left" />
+            </button>
+          )}
+          <div className="testi-stage no-bar" ref={stageRef} style={{ WebkitMaskImage: mask, maskImage: mask }}>
+            {D.testimonials.map((t, i) => (
+              <div key={i} className="testi-slide">
+                <TestiCard t={t} />
+              </div>
+            ))}
           </div>
-          <button className="testi-arrow" onClick={() => go(1)} aria-label="Suivant">
-            <Chevron dir="right" />
-          </button>
+          {!atEnd && (
+            <button className="testi-arrow testi-arrow-r" onClick={() => scrollByOne(1)} aria-label="Suivant">
+              <Chevron dir="right" />
+            </button>
+          )}
         </div>
 
       </div>
@@ -365,10 +408,7 @@ function Contact() {
               <span className="dim">Un projet proche des nôtres&nbsp;?</span> Une idée à mettre en trajectoire&nbsp;? Parlez-nous en, on répond vite.
             </p>
             <div className="contact-channels">
-              <a href={"mailto:" + D.email} className="contact-channel alink">
-                {D.email} <Arrow size={13} />
-              </a>
-              <a href="https://www.linkedin.com/company/arkt-conseil" target="_blank" rel="noopener" className="contact-channel alink">
+              <a href="https://www.linkedin.com/company/arktconseil/posts/?feedView=all" target="_blank" rel="noopener" className="contact-channel alink">
                 LinkedIn <Arrow size={13} />
               </a>
             </div>
@@ -401,14 +441,14 @@ function Footer() {
         <div className="foot-contact">
           <a className="foot-mail alink" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>Démarrer un projet <Arrow /></a>
           <div className="foot-social">
-            <a href="https://www.linkedin.com/company/arkt-conseil" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://www.instagram.com/arkt.conseil" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.linkedin.com/company/arktconseil/posts/?feedView=all" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://www.instagram.com/arkt.branding/" target="_blank" rel="noopener">Instagram</a>
           </div>
         </div>
       </div>
       <div className="wrap foot-bottom">
         <span className="dim mono">© {new Date().getFullYear()} ARKT · Tous droits réservés</span>
-        <span className="dim mono">Mentions légales · Confidentialité</span>
+        <span className="dim mono"><a href="/mentions-legales/">Mentions légales</a> · <a href="/politique-de-confidentialite/">Confidentialité</a></span>
       </div>
     </footer>
   );

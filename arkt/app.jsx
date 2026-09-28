@@ -1,6 +1,7 @@
 /* ARKT — application racine + Tweaks */
 import React, { useEffect } from 'react';
-import { Header, Hero, ReadingProgress } from './sections-top.jsx';
+import { Header, Hero, ReadingProgress, scrollToId } from './sections-top.jsx';
+import { LegalPage, legalPageFor } from './legal.jsx';
 import { Testimonials, Offre, Team, Contact, Footer } from './sections-bottom.jsx';
 import { Projects } from './sections-projects.jsx';
 import { useTweaks, TweaksPanel, TweakSection, TweakColor, TweakSlider } from './tweaks-panel.jsx';
@@ -37,11 +38,21 @@ function shade(hex, amt) {
   return "#" + c(r) + c(g) + c(b);
 }
 
-function App() {
+function App({ path }) {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const legal = legalPageFor(path || (typeof window !== "undefined" ? window.location.pathname : "/"));
 
   useEffect(() => { applyGlobals(t); }, [t.accent, t.halo, t.displayScale, t.motion, t.lightSections]);
   if (typeof window !== "undefined" && !window.__arktInit) { window.__arktInit = true; applyGlobals(t); }
+
+  /* arrivée depuis une page légale via /#section : on défile jusqu'à la section puis on nettoie l'URL */
+  useEffect(() => {
+    if (legal) return;
+    const id = window.location.hash.slice(1);
+    if (!id || id.includes("=") || !document.getElementById(id)) return;
+    window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    setTimeout(() => scrollToId(id), 350);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>
@@ -49,12 +60,16 @@ function App() {
       <Header />
       <ReadingProgress />
       <main id="main-content">
-        <Hero />
-        <Testimonials />
-        <Offre />
-        <Projects />
-        <Team />
-        <Contact />
+        {legal ? <LegalPage path={legal} /> : (
+          <React.Fragment>
+            <Hero />
+            <Testimonials />
+            <Offre />
+            <Projects />
+            <Team />
+            <Contact />
+          </React.Fragment>
+        )}
       </main>
       <Footer />
 
