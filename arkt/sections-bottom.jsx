@@ -361,7 +361,7 @@ function ContactForm() {
   const field = (k, label, type) => (
     <label className={"cfield" + (errors[k] ? " err" : "")}>
       <span className="cfield-label">{label}</span>
-      <input className="cfield-input" type={type || "text"} value={f[k]} onChange={set(k)}
+      <input className="cfield-input" type={type || "text"} name={k} value={f[k]} onChange={set(k)}
         placeholder={label} autoComplete={k === "name" ? "name" : k === "email" ? "email" : "off"} />
       {errors[k] && <span className="cfield-err" role="alert">{errors[k]}</span>}
     </label>
@@ -378,7 +378,7 @@ function ContactForm() {
       {field("subject", "Sujet / projet")}
       <label className={"cfield" + (errors.message ? " err" : "")}>
         <span className="cfield-label">Message</span>
-        <textarea className="cfield-input cfield-area" rows={5} value={f.message} onChange={set("message")}
+        <textarea className="cfield-input cfield-area" rows={5} name="message" value={f.message} onChange={set("message")}
           placeholder="Parlez-nous de votre projet, votre moment, vos objectifs…" />
         {errors.message && <span className="cfield-err" role="alert">{errors.message}</span>}
       </label>

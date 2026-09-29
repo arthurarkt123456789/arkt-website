@@ -1,6 +1,6 @@
 /* ARKT — contenu (données projets, équipe, témoignages, offre) */
 const ARKT = {
-  email: "hello@arkt-conseil.com",
+  email: "arthur@arkt-conseil.com",
 
   nav: [
     { id: "offre", label: "Offre" },
