@@ -135,7 +135,7 @@
 /* testi et offre ont déjà de l'air en bas (rail, bandeau) : bas raccourci pour garder le même écart entre sections */
 .section-pad.testi, .section-pad.offre { padding-bottom: clamp(20px, 3vh, 56px); }
 .testi-halo { width: 44vw; height: 44vw; max-width: 600px; max-height: 600px; left: -8%; top: 15%; background: radial-gradient(circle, rgba(255,69,51,0.35), transparent 68%); opacity: calc(var(--halo) * 0.35); }
-.testi-head { max-width: 720px; margin-bottom: clamp(44px, 7vh, 80px); }
+.testi-head { max-width: 720px; margin-bottom: clamp(24px, 3.5vh, 44px); }
 .testi-eyebrow { margin-bottom: 20px; }
 .testi-bigtitle {
   font-size: clamp(36px, 5vw, 72px); font-weight: 800;
@@ -379,12 +379,12 @@ html[data-light="0"] .team-bubble-photo { border-color: var(--hairline); }
   .hero { min-height: 100svh; padding-top: calc(78px + 20px); padding-bottom: 20px; }
   .hero-card { max-width: 100%; }
   .hero-t1, .hero-t2 { font-size: calc(clamp(74px, 18vw, 178px) * var(--ds)); }
-  .testi-head { margin-bottom: 28px; }
+  .testi-head { margin-bottom: 12px; }
   /* rythme vertical unique entre sections */
   .section-pad, .section-pad.testi { padding-top: 36px; padding-bottom: 10px; }
   .contact { padding: 36px 0 10px; }
   /* compensations des marges internes propres à certaines sections */
-  .section-pad.testi { padding-bottom: 12px; }
+  .section-pad.testi { padding-bottom: 32px; }
   .section-pad.offre { padding-bottom: 6px; }
   .foot { padding-top: 40px; }
   /* avis : carrousel pleine largeur d'écran, un avis + l'aperçu du suivant ; le glissé remplace les flèches */
