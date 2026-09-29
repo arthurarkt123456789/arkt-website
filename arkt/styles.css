@@ -111,7 +111,7 @@ button { font-family: inherit; cursor: pointer; }
   padding-right: var(--gutter);
 }
 section { position: relative; }
-.section-pad { padding-top: clamp(80px, 12vh, 170px); padding-bottom: clamp(80px, 12vh, 170px); }
+.section-pad { padding-top: clamp(36px, 5vh, 76px); padding-bottom: clamp(36px, 5vh, 76px); }
 
 .light-section {
   background: var(--light);

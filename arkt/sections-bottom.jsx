@@ -191,7 +191,8 @@ function Testimonials() {
     const el = stageRef.current;
     if (!el) return;
     let down = false, sx = 0, sl = 0, moved = false;
-    const md = (e) => { down = true; moved = false; sx = e.clientX; sl = el.scrollLeft; el.classList.add("grabbing"); };
+    /* souris uniquement : au doigt, le défilement natif (élan + aimantation) prend le relais */
+    const md = (e) => { if (e.pointerType !== "mouse") return; down = true; moved = false; sx = e.clientX; sl = el.scrollLeft; el.classList.add("grabbing"); };
     const mm = (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; el.scrollLeft = sl - dx; };
     const mu = () => { down = false; el.classList.remove("grabbing"); };
     const click = (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } };
