@@ -110,6 +110,7 @@ const ARKT = {
       panels: [
         { kind: "intro", label: "Coup de cœur", title: "CIAOMISU! – 2026", sub: "Food & retail – Marseille" },
         { kind: "video", light: true, src: "arkt/videos/ciaomisu-video-1.mp4", poster: "arkt/videos/ciaomisu-video-1.jpg" },
+        { kind: "media", phr: "1/1", caption: "Ciaomisu! · compte Instagram", src: "arkt/images/ciaomisu-8.jpg" },
         { kind: "text", head: "Contexte", body: [
           "Au départ, une recette familiale et l'envie d'en faire autre chose qu'un dessert de fin de repas. Le tiramisu restait rangé dans la gourmandise nostalgique.",
           "Le vrai défi : sortir cette recette du placard pour en faire un lieu, une marque et une expérience qu'on ait envie de raconter.",
@@ -211,6 +212,57 @@ const ARKT = {
         { kind: "media", phr: "4/5", caption: "Palauma Global Group", src: "arkt/images/palauma-5.jpg" },
       ],
     },
+    { id: "racine", name: "Racine²", year: "2026", tag: "Clinique de greffe capillaire · Marseille",
+      logo: "arkt/images/racine-logo.jpg",
+      claim: "Installer une clinique de greffe capillaire dans le paysage marseillais, **au-delà du seul acte médical**.",
+      panels: [
+        { kind: "intro", label: "Projet", title: "Racine² – 2026", sub: "Clinique de greffe capillaire · Marseille" },
+        { kind: "video", light: true, src: "arkt/videos/racine-video-1.mp4", poster: "arkt/videos/racine-video-1.jpg" },
+        { kind: "video", light: true, src: "arkt/videos/racine-video-2.mp4", poster: "arkt/videos/racine-video-2.jpg" },
+        { kind: "text", head: "Contexte", body: [
+          "Racine² est une clinique de greffe capillaire à Marseille, sur un sujet encore chargé de tabou et un marché où la confiance se joue autant sur la réputation que sur l'expertise.",
+          "L'enjeu : s'implanter localement, gagner en visibilité et faire exister la clinique comme une marque suivie plutôt que comme un simple prestataire médical.",
+        ] },
+        { kind: "video", light: true, src: "arkt/videos/racine-video-3.mp4", poster: "arkt/videos/racine-video-3.jpg" },
+        { kind: "video", light: true, src: "arkt/videos/racine-video-4.mp4", poster: "arkt/videos/racine-video-4.jpg" },
+        { kind: "text", head: "Ce qu'on a fait", body: [
+          "Accompagnement complet sur l'implantation dans l'écosystème marseillais.",
+          "Création et gestion des contenus réseaux sociaux, stratégie événementielle et interactions ciblées avec les personnes qui comptent localement.",
+        ] },
+        { kind: "video", light: true, src: "arkt/videos/racine-video-5.mp4", poster: "arkt/videos/racine-video-5.jpg" },
+        { kind: "result-text", head: "Résultat", body: [
+          "Une clinique qui existe dans le paysage marseillais **bien au-delà de sa vitrine médicale**.",
+          "Une présence sociale installée, un ancrage local visible et un dispositif éditorial et événementiel qui transforme chaque prise de parole en preuve de place tenue dans la ville.",
+        ] },
+      ],
+    },
+    { id: "chezcharlot", name: "Chez Charlot", year: "2026", tag: "Restaurant festif · plateforme de marque · Marseille",
+      logo: "arkt/images/chezcharlot-logo.jpg",
+      claim: "Sortir un restaurant festif marseillais du générique pour en faire **une vraie maison qu'on raconte**.",
+      panels: [
+        { kind: "intro", label: "Projet", title: "Chez Charlot – 2026", sub: "Restaurant festif · plateforme de marque · Marseille" },
+        { kind: "media", phr: "1/1", caption: "Chez Charlot · logo sur velours tigré", src: "arkt/images/chezcharlot-1.jpg" },
+        { kind: "media", phr: "1/1", caption: "Chez Charlot · logo sur fourrure léopard", src: "arkt/images/chezcharlot-2.jpg" },
+        { kind: "text", head: "Contexte", body: [
+          "Chez Charlot est un lieu marseillais qui se présentait comme un « restaurant festif », un mot que partagent déjà des dizaines d'adresses de la ville.",
+          "Aucune couverture éditoriale, une visibilité qui reposait sur des fiches d'annuaire et deux salles qui se cannibalisaient sous la même enseigne.",
+          "Il fallait sortir la marque du terme générique et lui donner une identité assez forte pour que le lieu se raconte tout seul.",
+        ] },
+        { kind: "media", phr: "1/1", caption: "Chez Charlot · cartouche « Maison de nuit »", src: "arkt/images/chezcharlot-3.jpg" },
+        { kind: "media", phr: "1/1", caption: "Chez Charlot · tenues du personnel", src: "arkt/images/chezcharlot-4.jpg" },
+        { kind: "text", head: "Ce qu'on a fait", body: [
+          "Construction complète de la plateforme de marque autour d'un territoire fort : Chez Charlot n'est plus un restaurant, c'est une maison, avec un maître de maison fictif et le vocabulaire de l'hôtellerie (lobby, vestiaire, clés, chariot à bagages).",
+          "Refonte de la direction artistique (palette rouge/brun, cartouche léopard, usage retravaillé du logo existant) et définition d'un ton reconnaissable, fait de règles de maison écrites, de phrases courtes et d'humour assumé.",
+        ] },
+        { kind: "media", phr: "1/1", caption: "Chez Charlot · kit d'invitation et clé de la maison", src: "arkt/images/chezcharlot-5.jpg" },
+        { kind: "media", phr: "1/1", caption: "Chez Charlot · compte Instagram", src: "arkt/images/chezcharlot-6.jpg" },
+        { kind: "result-text", head: "Résultat", body: [
+          "Un lieu qui a désormais **une vraie identité de marque**, capable d'exister dans le récit avant même d'exister sur place.",
+          "Un territoire propre à Chez Charlot que personne d'autre à Marseille n'occupe, un ton reconnaissable et une direction artistique qui joue sur les codes de l'hôtellerie pour installer la maison comme une adresse dont on se raconte les soirées.",
+        ] },
+        { kind: "media", phr: "1/1", caption: "Chez Charlot · soirée", src: "arkt/images/chezcharlot-7.jpg" },
+      ],
+    },
     { id: "crousty", name: "Crousty Crew", year: "2026", tag: "Pour Taster · street food",
       logo: "arkt/images/crousty-logo.jpg",
       claim: "Donner une vraie marque à la **street food nouvelle génération** de Taster.",
@@ -239,6 +291,7 @@ const ARKT = {
       panels: [
         { kind: "intro", label: "Coup de cœur", title: "Vitamine – 2026", sub: "Breakfast Club · rituel d'entreprise" },
         { kind: "media", phr: "4/5", caption: "Vitamine Breakfast Club", src: "arkt/images/vitamine-1.jpg" },
+        { kind: "media", phr: "1/1", caption: "Vitamine Breakfast Club · compte Instagram", src: "arkt/images/vitamine-7.jpg" },
         { kind: "text", head: "Contexte", body: [
           "Le petit-déjeuner en entreprise restait perçu comme une prestation logistique parmi d'autres : un plateau posé sur une table, sans vraie place dans la culture d'équipe.",
           "L'enjeu de Vitamine était de sortir de cette case et de créer une marque capable de repositionner ce moment comme un rituel régulier, générateur de cohésion et de performance collective.",
@@ -884,7 +937,7 @@ const ARKT = {
       quand: "Vous lancez un projet, votre marque ne vous ressemble plus, ou vous décidez au feeling et ça commence à vous coûter.",
       contenuLabel: "Vous repartez avec",
       contenu: ["Un diagnostic", "Un positionnement", "Vos messages clés", "Vos priorités", "Vos angles de communication"],
-      cta: "Clarifier mon cap",
+      cta: "Faire le point",
       detail: {
         faire: "On prend le temps de comprendre votre activité, vos clients et ce qui vous rend différent. Puis on met des mots simples dessus, et on vous restitue tout en direct.",
         change: "Vous savez où vous allez. Vous pouvez dire non aux mauvaises idées. Et chaque euro investi ensuite sert à quelque chose.",
@@ -893,7 +946,7 @@ const ARKT = {
       quand: "Freelance, agence, alternant… Chacun avance dans sa direction, personne ne coordonne, et c'est vous qui validez les posts le soir.",
       contenuLabel: "Ce que ça comprend",
       contenu: ["Un point de pilotage mensuel", "Les arbitrages et la validation des actions", "La coordination de vos prestataires", "La cohérence de l'ensemble"],
-      cta: "Parler pilotage",
+      cta: "Reprendre le contrôle",
       detail: {
         faire: "On devient votre directeur marketing, sans que vous ayez à en recruter un. Chaque mois, on fait le point et on décide de la suite. Entre deux, on parle à vos prestataires et on tranche pour vous.",
         change: "Une seule direction, du temps retrouvé, et plus un euro dans ce qui ne sert pas votre cap.",
@@ -903,7 +956,7 @@ const ARKT = {
       contenuLabel: "Ce qu'on prend en charge",
       contenu: ["Réseaux sociaux & ligne éditoriale", "Contenu vidéo", "Identité visuelle", "Site & landing pages", "Scénographie & événementiel", "Retail & pop-up", "Campagnes"],
       fin: "Toujours dans le prolongement d'un cadrage stratégique.",
-      cta: "Lancer la production",
+      cta: "Passer à l'action",
       detail: {
         faire: "On produit ce qui a été décidé, avec une équipe qu'on connaît et qu'on pilote. Vous avez un seul interlocuteur, un planning clair et des allers-retours pour ajuster.",
         change: "Tout est cohérent, en ligne comme en physique. Et vous n'avez qu'un seul numéro à appeler.",

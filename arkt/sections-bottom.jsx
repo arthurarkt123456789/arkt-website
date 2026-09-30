@@ -5,6 +5,14 @@ import ARKT from './data.js';
 import { useLang } from './lang.jsx';
 
 /* ---------------- Offre ---------------- */
+function ArrowDown() {
+  return (
+    <svg className="offre-col-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M8 2.5V13M3.5 8.5L8 13L12.5 8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function OffreDetail({ o }) {
   const { t } = useLang();
   const d = o.detail;
@@ -99,7 +107,7 @@ function Offre() {
                       <p className="offre-col-k">{t.offre.isForYou}</p>
                       <p className="offre-col-p">{o.quand}</p>
                     </div>
-                    <span className="offre-col-more alink">{isOpen ? t.offre.close : t.offre.more} <Arrow size={14} /></span>
+                    <span className="offre-col-more alink">{isOpen ? t.offre.close : t.offre.more} <ArrowDown /></span>
                     <span className="ptile-plus offre-col-plus" aria-hidden="true"><i /><i /></span>
                   </Reveal>
                 );
@@ -430,6 +438,7 @@ function Contact() {
               <span className="dim">{tc.subBold}</span>{tc.subText}
             </p>
             <div className="contact-channels">
+              <p className="contact-channel contact-address"><span className="dim">{tc.office}</span> · 21 Rue Grignan, 13006 Marseille</p>
               <a href="https://www.linkedin.com/company/arktconseil/posts/?feedView=all" target="_blank" rel="noopener" className="contact-channel alink">
                 LinkedIn <Arrow size={13} />
               </a>

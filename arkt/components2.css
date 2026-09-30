@@ -84,6 +84,9 @@
 .offre-col:hover .offre-col-plus, .offre-col.open .offre-col-plus { background: var(--accent); border-color: var(--accent); }
 .offre-col.open .offre-col-plus i:nth-child(2) { transform: rotate(0deg); opacity: 0; }
 .offre-col-more { display: inline-flex; margin-top: 22px; color: var(--accent); font-size: 15px; border-bottom-color: rgba(255,69,51,0.4); }
+.offre-col-arrow { transition: transform .35s cubic-bezier(.22,1,.36,1); }
+.offre-col:hover .offre-col-arrow { transform: translateY(2px); }
+.offre-col.open .offre-col-arrow { transform: rotate(180deg); }
 
 /* le détail est inséré comme un item de la grille, juste après la carte cliquée */
 .offre-detail-slot { grid-column: 1 / -1; }
@@ -241,6 +244,7 @@ html[data-light="0"] .team-bubble-photo { border-color: var(--hairline); }
 .contact-sub { font-size: clamp(17px, 1.7vw, 21px); line-height: 1.5; margin: clamp(22px, 3.5vh, 34px) 0 0; max-width: 44ch; }
 .contact-channels { display: flex; flex-direction: column; gap: 10px; margin-top: clamp(22px, 3.5vh, 32px); }
 .contact-channel { font-size: 15px; font-weight: 480; color: var(--white); border-color: rgba(19,19,17,0.2); }
+.contact-address { margin: 0; }
 .contact-meta { display: flex; align-items: center; gap: 18px; margin-top: clamp(18px, 2.5vh, 28px); font-size: 15px; font-weight: 480; }
 .contact-sep { width: 4px; height: 4px; border-radius: 50%; background: rgba(19,19,17,0.28); }
 

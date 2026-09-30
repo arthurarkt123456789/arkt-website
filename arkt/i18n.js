@@ -47,7 +47,7 @@ export const i18n = {
       seeProjects: "Voir cette étendue dans les projets",
       isForYou: "C'est pour vous si",
       close: "Fermer",
-      more: "En savoir plus",
+      more: "Découvrir l'offre",
       ceQuOnFait: "Ce qu'on fait",
       items: {
         clarifier: {
@@ -56,7 +56,7 @@ export const i18n = {
           quand: "Vous lancez un projet, votre marque ne vous ressemble plus, ou vous décidez au feeling et ça commence à vous coûter.",
           contenuLabel: "Vous repartez avec",
           contenu: ["Un diagnostic", "Un positionnement", "Vos messages clés", "Vos priorités", "Vos angles de communication"],
-          cta: "Clarifier mon cap",
+          cta: "Faire le point",
           detail: {
             faire: "On prend le temps de comprendre votre activité, vos clients et ce qui vous rend différent. Puis on met des mots simples dessus, et on vous restitue tout en direct.",
             change: "Vous savez où vous allez. Vous pouvez dire non aux mauvaises idées. Et chaque euro investi ensuite sert à quelque chose.",
@@ -68,7 +68,7 @@ export const i18n = {
           quand: "Freelance, agence, alternant… Chacun avance dans sa direction, personne ne coordonne, et c'est vous qui validez les posts le soir.",
           contenuLabel: "Ce que ça comprend",
           contenu: ["Un point de pilotage mensuel", "Les arbitrages et la validation des actions", "La coordination de vos prestataires", "La cohérence de l'ensemble"],
-          cta: "Parler pilotage",
+          cta: "Reprendre le contrôle",
           detail: {
             faire: "On devient votre directeur marketing, sans que vous ayez à en recruter un. Chaque mois, on fait le point et on décide de la suite. Entre deux, on parle à vos prestataires et on tranche pour vous.",
             change: "Une seule direction, du temps retrouvé, et plus un euro dans ce qui ne sert pas votre cap.",
@@ -81,7 +81,7 @@ export const i18n = {
           contenuLabel: "Ce qu'on prend en charge",
           contenu: ["Réseaux sociaux & ligne éditoriale", "Contenu vidéo", "Identité visuelle", "Site & landing pages", "Scénographie & événementiel", "Retail & pop-up", "Campagnes"],
           fin: "Toujours dans le prolongement d'un cadrage stratégique.",
-          cta: "Lancer la production",
+          cta: "Passer à l'action",
           detail: {
             faire: "On produit ce qui a été décidé, avec une équipe qu'on connaît et qu'on pilote. Vous avez un seul interlocuteur, un planning clair et des allers-retours pour ajuster.",
             change: "Tout est cohérent, en ligne comme en physique. Et vous n'avez qu'un seul numéro à appeler.",
@@ -127,6 +127,7 @@ export const i18n = {
       subBold: "Un projet proche des nôtres ?",
       subText: " Une idée à mettre en trajectoire ? Parlez-nous en, on répond vite.",
       meta: ["Marseille", "Paris", "Réponse sous 48 h"],
+      office: "Bureau",
       form: {
         name: "Nom",
         email: "Email",
@@ -207,7 +208,7 @@ export const i18n = {
       seeProjects: "See this breadth in the projects",
       isForYou: "This is for you if",
       close: "Close",
-      more: "Learn more",
+      more: "Discover the offer",
       ceQuOnFait: "What we do",
       items: {
         clarifier: {
@@ -216,7 +217,7 @@ export const i18n = {
           quand: "You're launching a project, your brand no longer reflects who you are, or you're deciding by gut feeling and it's starting to cost you.",
           contenuLabel: "You leave with",
           contenu: ["A diagnosis", "A positioning", "Your key messages", "Your priorities", "Your communication angles"],
-          cta: "Clarify my direction",
+          cta: "Take stock",
           detail: {
             faire: "We take time to understand your business, your clients and what makes you different. Then we put simple words to it and debrief everything live.",
             change: "You know where you're going. You can say no to bad ideas. And every euro invested afterward actually serves a purpose.",
@@ -228,7 +229,7 @@ export const i18n = {
           quand: "Freelancer, agency, intern… everyone moves in their own direction, no one coordinates, and you end up validating posts late at night.",
           contenuLabel: "What's included",
           contenu: ["A monthly steering session", "Decision-making and action validation", "Coordination of your providers", "Overall coherence"],
-          cta: "Talk about steering",
+          cta: "Take back control",
           detail: {
             faire: "We become your marketing director — without you having to hire one. Every month we review and decide next steps. In between, we talk to your providers and make the calls.",
             change: "One direction, time reclaimed, and not a euro wasted on what doesn't serve your goals.",
@@ -241,7 +242,7 @@ export const i18n = {
           contenuLabel: "What we handle",
           contenu: ["Social media & editorial strategy", "Video content", "Visual identity", "Website & landing pages", "Scenography & events", "Retail & pop-up", "Campaigns"],
           fin: "Always built on a defined strategic framework.",
-          cta: "Start production",
+          cta: "Take action",
           detail: {
             faire: "We produce what was decided, with a team we know and manage. You have one contact, a clear schedule and rounds of revisions to fine-tune.",
             change: "Everything is coherent — online and offline. And you only need one number to call.",
@@ -287,6 +288,7 @@ export const i18n = {
       subBold: "A project close to ours?",
       subText: " An idea ready for launch? Tell us about it — we respond quickly.",
       meta: ["Marseille", "Paris", "Reply within 48h"],
+      office: "Office",
       form: {
         name: "Name",
         email: "Email",
@@ -379,6 +381,7 @@ export const i18n = {
           panels: [
             null,
             null,
+            null,
             { head: "Context", body: ["A family recipe and the desire to make it more than a dessert at the end of a meal. Tiramisu had been confined to nostalgic indulgence.", "The real challenge: pull this recipe out of the cupboard and turn it into a place, a brand and an experience worth talking about."] },
             null,
             null,
@@ -442,7 +445,7 @@ export const i18n = {
           claim: "Making the workplace breakfast **a real collective ritual**.",
           tag: "Breakfast Club · company ritual",
           panels: [
-            null, null,
+            null, null, null,
             { head: "Context", body: ["Workplace breakfast was still perceived as a logistics service like any other: a tray placed on a table, with no real place in team culture.", "Vitamine's challenge was to step out of this box and create a brand capable of repositioning this moment as a regular ritual, generating cohesion and collective performance."] },
             null,
             { head: "What we did", body: ["Brand creation from A to Z: naming (Vitamine Breakfast Club), platform, baseline 'Eat well, work better'.", "Complete art direction (cursive logo, solar palette, warm retro universe) and positioning centred on collective ritual, conviviality and corporate performance."] },
@@ -513,6 +516,31 @@ export const i18n = {
             { head: "What we did", body: ["Full project construction from A to Z.", "Strategic framing (a proud and generous Marseille voice, an agency that gives a stage to those who make the city), naming Ça Parle, visual identity, website, editorial strategy, and communication for each event: content, art direction for shoots, social media management."] },
             null,
             { head: "Result", body: ["An agency that now exists as **a real brand with a recognisable voice**.", "A name that says exactly what it does, an editorial framework that turns every evening into a continuous story, and an unapologetic Marseille identity that never becomes a postcard."] },
+            null,
+          ],
+        },
+        racine: {
+          claim: "Establishing a hair transplant clinic in Marseille's landscape, **beyond the medical procedure alone**.",
+          tag: "Hair transplant clinic · Marseille",
+          panels: [
+            null, null, null,
+            { head: "Context", body: ["Racine² is a hair transplant clinic in Marseille, on a subject still weighed down by taboo and in a market where trust depends as much on reputation as on expertise.", "The challenge: establish itself locally, gain visibility and make the clinic exist as a brand people follow rather than as a mere medical provider."] },
+            null, null,
+            { head: "What we did", body: ["End-to-end support on establishing the clinic within the Marseille ecosystem.", "Creation and management of social media content, event strategy and targeted interactions with the people who matter locally."] },
+            null,
+            { head: "Result", body: ["A clinic that exists in Marseille's landscape **well beyond its medical storefront**.", "An established social presence, visible local roots, and an editorial and event system that turns every public appearance into proof of the place it holds in the city."] },
+          ],
+        },
+        chezcharlot: {
+          claim: "Taking a festive Marseille restaurant out of the generic to make it **a real house people talk about**.",
+          tag: "Festive restaurant · brand platform · Marseille",
+          panels: [
+            null, null, null,
+            { head: "Context", body: ["Chez Charlot is a Marseille venue that described itself as a “festive restaurant”, a label already shared by dozens of addresses in the city.", "No editorial coverage, visibility relying on directory listings, and two dining rooms cannibalising each other under the same sign.", "The brand had to escape the generic term and get an identity strong enough for the place to tell its own story."] },
+            null, null,
+            { head: "What we did", body: ["Full brand platform built around a strong territory: Chez Charlot is no longer a restaurant, it's a house, with a fictional master of the house and the vocabulary of hospitality (lobby, cloakroom, keys, luggage trolley).", "A new art direction (red/brown palette, leopard cartouche, reworked use of the existing logo) and a recognisable tone of voice, made of written house rules, short sentences and unapologetic humour."] },
+            null, null,
+            { head: "Result", body: ["A venue that now has **a real brand identity**, able to exist in the story before it even exists on site.", "A territory of its own that no one else in Marseille occupies, a recognisable tone and an art direction playing on hospitality codes to establish the house as an address whose nights people tell each other about."] },
             null,
           ],
         },
