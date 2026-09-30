@@ -182,6 +182,12 @@ function ProjectDetail({ proj, onClose }) {
     return () => window.removeEventListener("resize", calc);
   }, [proj.id]);
 
+  /* reset du scroll quand le projet change (même rangée → React réutilise le composant) */
+  useEffect(() => {
+    const el = railRef.current;
+    if (el) { el.scrollLeft = 0; setAtStart(true); setAtEnd(false); }
+  }, [proj.id]);
+
   /* suivi de la progression — DOM direct pour le fill, setState uniquement aux bornes */
   useEffect(() => {
     const el = railRef.current;
@@ -297,12 +303,22 @@ function ProjectDetail({ proj, onClose }) {
         </div>
 
         {/* ─── droite 70% : rail continu ─── */}
-        <div className={"pslider no-bar" + (proj.flushRail ? " pslider-flush" : "")} ref={railRef}>
-          {slides.length > 0
-            ? slides.map((s, i) => <Slide key={i} s={s} name={proj.name} idx={i} />)
-            : <Placeholder ratio="4/3" label="VISUELS" style={{ height: "100%", width: "100%", borderRadius: 0 }} />
-          }
-          <div className="pslider-pad" />
+        <div className="pslider-wrap">
+          <div className={"pslider no-bar" + (proj.flushRail ? " pslider-flush" : "")} ref={railRef}>
+            {slides.length > 0
+              ? slides.map((s, i) => <Slide key={i} s={s} name={proj.name} idx={i} />)
+              : <Placeholder ratio="4/3" label="VISUELS" style={{ height: "100%", width: "100%", borderRadius: 0 }} />
+            }
+            <div className="pslider-pad" />
+          </div>
+          <button className={"pslider-arr pslider-arr-l" + (atStart ? " pslider-arr-hidden" : "")}
+            onClick={() => scroll(-1)} aria-label="Précédent">
+            <Arrow size={13} style={{ transform: "rotate(180deg)" }} />
+          </button>
+          <button className={"pslider-arr pslider-arr-r" + (atEnd ? " pslider-arr-hidden" : "")}
+            onClick={() => scroll(1)} aria-label="Suivant">
+            <Arrow size={13} />
+          </button>
         </div>
 
       </div>

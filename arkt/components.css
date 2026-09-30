@@ -590,6 +590,25 @@ html[data-light="0"] .light-section .rule { background: var(--hairline); }
 
 .pslider-pad { flex: 0 0 0; } /* pas de fond propre : laissait apparaître une bande noire en fin de scroll */
 
+/* wrapper relatif pour les flèches overlay */
+.pslider-wrap { position: relative; min-width: 0; overflow: hidden; }
+.pslider-wrap .pslider { height: 100%; }
+
+.pslider-arr {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  z-index: 4;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255,255,255,0.88); border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.16);
+  display: flex; align-items: center; justify-content: center;
+  color: #1a1a14; cursor: pointer;
+  transition: opacity .2s, background .2s;
+}
+.pslider-arr:hover { background: #fff; }
+.pslider-arr-l { left: 12px; }
+.pslider-arr-r { right: 12px; }
+.pslider-arr-hidden { opacity: 0; pointer-events: none; }
+
 .pcarr {
   width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--hairline);
   background: transparent; display: inline-flex; align-items: center;
