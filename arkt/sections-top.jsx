@@ -121,9 +121,10 @@ function Header() {
           ))}
         </nav>
         <div className="hdr-right">
-          <button className="lang-btn mono" onClick={toggleLang} aria-label={t.header.langAriaLabel}>
-            {t.langLabel}
-          </button>
+          <div className="lang-switch" role="group" aria-label="Language">
+            <button className={lang === 'fr' ? 'active' : ''} onClick={() => lang !== 'fr' && toggleLang()}>FR</button>
+            <button className={lang === 'en' ? 'active' : ''} onClick={() => lang !== 'en' && toggleLang()}>EN</button>
+          </div>
           <a className="btn btn-primary hdr-cta" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>{t.header.cta} <Arrow /></a>
           <button className={"hdr-burger" + (open ? " open" : "")} aria-label="Menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
             <svg viewBox="0 0 20 20" aria-hidden="true">
@@ -138,9 +139,10 @@ function Header() {
           <a key={n.id} href={"#" + n.id} onClick={(e) => { e.preventDefault(); setOpen(false); scrollToId(n.id); }}>{t.nav[n.id] || n.label}</a>
         ))}
         <a className="btn btn-primary" style={{ marginTop: 12 }} href="#contact" onClick={(e) => { e.preventDefault(); setOpen(false); scrollToId("contact"); }}>{t.header.mobileCta} <Arrow /></a>
-        <button className="lang-btn mono" style={{ marginTop: 8 }} onClick={() => { toggleLang(); setOpen(false); }} aria-label={t.header.langAriaLabel}>
-          {t.langLabel}
-        </button>
+        <div className="lang-switch" role="group" aria-label="Language" style={{ marginTop: 10, alignSelf: 'flex-start' }}>
+          <button className={lang === 'fr' ? 'active' : ''} onClick={() => { lang !== 'fr' && toggleLang(); setOpen(false); }}>FR</button>
+          <button className={lang === 'en' ? 'active' : ''} onClick={() => { lang !== 'en' && toggleLang(); setOpen(false); }}>EN</button>
+        </div>
       </div>
     </header>
   );

@@ -4,6 +4,21 @@ import { Reveal, Arrow, Placeholder } from './sections-top.jsx';
 import ARKT from './data.js';
 import { useLang } from './lang.jsx';
 
+/* Applique les traductions sur un projet (panels alignés par index, null = conserver l'original) */
+function translateProject(proj, tr) {
+  if (!tr) return proj;
+  const result = { ...proj };
+  if (tr.claim !== undefined) result.claim = tr.claim;
+  if (tr.tag !== undefined) result.tag = tr.tag;
+  if (tr.panels && proj.panels) {
+    result.panels = proj.panels.map((panel, i) => {
+      const tp = tr.panels[i];
+      return tp ? { ...panel, ...tp } : panel;
+    });
+  }
+  return result;
+}
+
 /* Normalise les deux formats (featured/grid) en format commun avec slides */
 function normalizeProject(p) {
   if (p.photos) {
@@ -298,7 +313,12 @@ function ProjectDetail({ proj, onClose }) {
 /* ---------- Grille unifiée — un seul projet ouvert à la fois + URL hash ---------- */
 function GridProjects() {
   const D = ARKT;
-  const allProjects = [...D.featured, ...D.grid].map(normalizeProject);
+  const { t, lang } = useLang();
+  const pd = lang === 'en' ? t.projectsData : null;
+  const allProjects = [
+    ...D.featured.map(p => normalizeProject(pd ? translateProject(p, pd.featured?.[p.id]) : p)),
+    ...D.grid.map(p => normalizeProject(pd ? translateProject(p, pd.grid?.[p.id]) : p)),
+  ];
   const [openId, setOpenId] = useState(null);
   const [cols, setCols] = useState(3);
   const gridRef = useRef(null);

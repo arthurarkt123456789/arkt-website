@@ -170,7 +170,10 @@ function TestiCard({ t }) {
 
 function Testimonials() {
   const D = ARKT;
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const testimonials = lang === 'en' && t.testimonialsItems
+    ? D.testimonials.map((item, i) => ({ ...item, ...(t.testimonialsItems[i] || {}) }))
+    : D.testimonials;
   const stageRef = useRef(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -179,7 +182,7 @@ function Testimonials() {
   useEffect(() => {
     const el = stageRef.current;
     if (!el) return;
-    let prevStart = true, prevEnd = D.testimonials.length <= 1;
+    let prevStart = true, prevEnd = testimonials.length <= 1;
     const update = () => {
       const max = el.scrollWidth - el.clientWidth;
       const p = max > 0 ? el.scrollLeft / max : 0;
@@ -193,7 +196,7 @@ function Testimonials() {
     el.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     return () => { el.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
-  }, [D.testimonials.length]);
+  }, [testimonials.length]);
 
   /* drag souris, comme le rail projets */
   useEffect(() => {
@@ -247,7 +250,7 @@ function Testimonials() {
             </button>
           )}
           <div className="testi-stage no-bar" ref={stageRef} style={{ WebkitMaskImage: mask, maskImage: mask }}>
-            {D.testimonials.map((testi, i) => (
+            {testimonials.map((testi, i) => (
               <div key={i} className="testi-slide">
                 <TestiCard t={testi} />
               </div>
