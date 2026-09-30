@@ -987,7 +987,7 @@ const ARKT = {
       bio: "Création de contenu vidéo & réseaux sociaux, stratégie marketing, DA." },
     { name: "Driss Azzoug", role: "Consultant Pop Culture", img: "https://framerusercontent.com/images/CjN28LCNrCmOmsN9OiwjmEZaU.jpg?width=656&height=686",
       bio: "Veille pop culture, direction créative." },
-    { name: "Sacha Bassili", role: "Consultante Marketing", img: "arkt/images/team-sacha-bassili.jpg",
+    { name: "Sacha Bassili", role: "Directrice des opérations", img: "arkt/images/team-sacha-bassili.jpg",
       bio: "Pilotage de l'organisation d'ARKT, structuration des processus, coordination des équipes et partenaires pour assurer la conduite des projets." },
   ],
 };
