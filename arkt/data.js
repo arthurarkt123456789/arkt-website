@@ -706,8 +706,8 @@ const ARKT = {
         { kind: "intro", label: "Coup de cœur", title: "ADS Design – 2024", sub: "Design urbain · stratégie & marketing" },
         { kind: "media", phr: "4/5", caption: "ADS Design", src: "arkt/images/adsdesign-1.jpg" },
         { kind: "text", head: "Contexte", body: [
-          "ADS Design conçoit du mobilier et du design urbain, avec une équipe marketing en interne mais sans direction claire pour faire avancer tout le monde dans le même sens.",
-          "Il fallait mettre du cadre stratégique, du pilotage au quotidien et les outils qui manquent pour que l'équipe puisse vraiment livrer.",
+          "ADS Design est un des leaders de la décoration urbaine & des illuminations. C'est surtout un outsider avec une grande capacité d'innovation & un procédé breveté.",
+          "D'un point de vue communication, il fallait mettre un cadre stratégique pour structurer l'acquisition client & piloter l'activation des différents leviers de communication.",
         ] },
         { kind: "media", phr: "4/5", caption: "ADS Design", src: "arkt/images/adsdesign-2.jpg" },
         { kind: "text", head: "Ce qu'on a fait", body: [

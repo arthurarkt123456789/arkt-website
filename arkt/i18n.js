@@ -690,7 +690,7 @@ export const i18n = {
           tag: "Urban design · strategy & marketing",
           panels: [
             null, null,
-            { head: "Context", body: ["ADS Design creates urban furniture and street design, with an in-house marketing team but no clear direction to move everyone in the same direction.", "What was needed: a strategic framework, day-to-day management and the tools that were missing for the team to genuinely deliver."] },
+            { head: "Context", body: ["ADS Design is one of the leaders in urban decoration & illuminations — and above all an outsider with a strong capacity for innovation and a patented process.", "From a communication standpoint, the challenge was to build a strategic framework to structure client acquisition and steer the activation of the different communication levers."] },
             null,
             { head: "What we did", body: ["Intervention at three levels.", "Communication strategy and messaging definition, operational management of the in-house marketing team and executive coaching to set direction, and deployment of an acquisition and customer relationship tech ecosystem (CRM, newsletter, content and social media run by the team under our direction)."] },
             null,
