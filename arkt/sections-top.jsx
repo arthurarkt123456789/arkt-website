@@ -1,6 +1,7 @@
 /* ARKT — helpers + sections hautes (header, hero, preuve sociale, votre moment) */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ARKT from './data.js';
+import { useLang } from './lang.jsx';
 
 /* ---------------- shared helpers ---------------- */
 function Reveal({ as = "div", delay = 0, className = "", style = {}, children, ...rest }) {
@@ -72,10 +73,11 @@ function scrollToId(id) {
 
 /* ---------------- TopBar ---------------- */
 function TopBar() {
+  const { t } = useLang();
   return (
     <div className="topbar">
       <span className="topbar-dot" />
-      Cabinet de conseil en stratégie de marque&nbsp;&middot;&nbsp;Marseille / Paris
+      {t.topbar}
     </div>
   );
 }
@@ -83,6 +85,7 @@ function TopBar() {
 /* ---------------- Header ---------------- */
 function Header() {
   const D = ARKT;
+  const { t, lang, toggleLang } = useLang();
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState(null);
@@ -107,18 +110,21 @@ function Header() {
   return (
     <header className={"hdr" + (solid ? " solid" : "")}>
       <div className="wrap hdr-in">
-        <a href="/" className="hdr-logo" onClick={(e) => { if (!document.getElementById("top")) return; e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} aria-label="ARKT — accueil">
+        <a href="/" className="hdr-logo" onClick={(e) => { if (!document.getElementById("top")) return; e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} aria-label={t.header.ariaLabel}>
           <img src="/arkt/logo-mark.png" alt="" aria-hidden="true" className="hdr-logo-mark" />
         </a>
-        <nav className="hdr-nav" aria-label="Navigation principale">
+        <nav className="hdr-nav" aria-label={t.header.navAriaLabel}>
           {D.nav.map((n) => (
             <a key={n.id} href={"#" + n.id}
               className={activeId === n.id ? "active" : ""}
-              onClick={(e) => { e.preventDefault(); scrollToId(n.id); }}>{n.label}</a>
+              onClick={(e) => { e.preventDefault(); scrollToId(n.id); }}>{t.nav[n.id] || n.label}</a>
           ))}
         </nav>
         <div className="hdr-right">
-          <a className="btn btn-primary hdr-cta" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>Démarrer un projet <Arrow /></a>
+          <button className="lang-btn mono" onClick={toggleLang} aria-label={t.header.langAriaLabel}>
+            {t.langLabel}
+          </button>
+          <a className="btn btn-primary hdr-cta" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>{t.header.cta} <Arrow /></a>
           <button className={"hdr-burger" + (open ? " open" : "")} aria-label="Menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <line x1="3" y1="10" x2="17" y2="10" />
@@ -129,9 +135,12 @@ function Header() {
       </div>
       <div className={"hdr-mobile" + (open ? " open" : "")}>
         {D.nav.map((n) => (
-          <a key={n.id} href={"#" + n.id} onClick={(e) => { e.preventDefault(); setOpen(false); scrollToId(n.id); }}>{n.label}</a>
+          <a key={n.id} href={"#" + n.id} onClick={(e) => { e.preventDefault(); setOpen(false); scrollToId(n.id); }}>{t.nav[n.id] || n.label}</a>
         ))}
-        <a className="btn btn-primary" style={{ marginTop: 12 }} href="#contact" onClick={(e) => { e.preventDefault(); setOpen(false); scrollToId("contact"); }}>Prendre contact <Arrow /></a>
+        <a className="btn btn-primary" style={{ marginTop: 12 }} href="#contact" onClick={(e) => { e.preventDefault(); setOpen(false); scrollToId("contact"); }}>{t.header.mobileCta} <Arrow /></a>
+        <button className="lang-btn mono" style={{ marginTop: 8 }} onClick={() => { toggleLang(); setOpen(false); }} aria-label={t.header.langAriaLabel}>
+          {t.langLabel}
+        </button>
       </div>
     </header>
   );
@@ -140,25 +149,25 @@ function Header() {
 /* ---------------- Hero ---------------- */
 
 function Hero() {
+  const { t } = useLang();
+  const h = t.hero;
   return (
     <section id="top" className="hero">
       <div className="hero-halo-tl halo" />
       <div className="hero-halo-br halo" />
 
       <div className="wrap hero-center">
-        <p className="hero-eyebrow">Cabinet de conseil · Marseille / Paris</p>
-        <h1 className="hero-t1 display">De l'idée</h1>
-        <p className="hero-t2 display" style={{ color: "var(--accent)" }}>à l'impact.</p>
-        <p className="hero-positioning">
-          La stratégie de marque pour les fondateurs qui veulent transformer une idée en impact.
-        </p>
-        <p className="hero-sectors mono">RETAIL · FOOD · IMMOBILIER · SPORT · LIFESTYLE</p>
+        <p className="hero-eyebrow">{h.eyebrow}</p>
+        <h1 className="hero-t1 display">{h.h1}</h1>
+        <p className="hero-t2 display" style={{ color: "var(--accent)" }}>{h.h2}</p>
+        <p className="hero-positioning">{h.positioning}</p>
+        <p className="hero-sectors mono">{h.sectors}</p>
         <div className="hero-cta">
-          <button className="btn btn-primary" onClick={() => scrollToId("projets")}>Voir nos projets <Arrow /></button>
-          <a className="btn btn-ghost" href="#offre" onClick={(e) => { e.preventDefault(); scrollToId("offre"); }}>Découvrir l'approche</a>
+          <button className="btn btn-primary" onClick={() => scrollToId("projets")}>{h.cta1} <Arrow /></button>
+          <a className="btn btn-ghost" href="#offre" onClick={(e) => { e.preventDefault(); scrollToId("offre"); }}>{h.cta2}</a>
         </div>
-        <button className="hero-scroll" onClick={() => scrollToId("offre")} aria-label="Défiler">
-          <span className="mono">SCROLLEZ</span>
+        <button className="hero-scroll" onClick={() => scrollToId("offre")} aria-label={h.scrollAriaLabel}>
+          <span className="mono">{h.scrollLabel}</span>
           <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><path d="M7 1V20M7 20L1 14M7 20L13 14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
       </div>

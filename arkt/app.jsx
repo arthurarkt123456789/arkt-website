@@ -1,5 +1,6 @@
 /* ARKT — application racine + Tweaks */
 import React, { useEffect } from 'react';
+import { LangProvider } from './lang.jsx';
 import { Header, Hero, ReadingProgress, scrollToId } from './sections-top.jsx';
 import { LegalPage, legalPageFor } from './legal.jsx';
 import { Testimonials, Offre, Team, Contact, Footer } from './sections-bottom.jsx';
@@ -55,6 +56,7 @@ function App({ path }) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
+    <LangProvider>
     <React.Fragment>
       <a href="#main-content" className="skip-link">Aller au contenu</a>
       <Header />
@@ -87,6 +89,7 @@ function App({ path }) {
           onChange={(v) => setTweak("motion", v)} />
       </TweaksPanel>
     </React.Fragment>
+    </LangProvider>
   );
 }
 
