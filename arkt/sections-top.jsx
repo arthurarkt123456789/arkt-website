@@ -122,8 +122,8 @@ function Header() {
         </nav>
         <div className="hdr-right">
           <div className="lang-switch" role="group" aria-label="Language">
-            <button className={lang === 'fr' ? 'active' : ''} onClick={() => lang !== 'fr' && toggleLang()}>FR</button>
-            <button className={lang === 'en' ? 'active' : ''} onClick={() => lang !== 'en' && toggleLang()}>EN</button>
+            <button type="button" className={lang === 'fr' ? 'active' : ''} onClick={() => lang !== 'fr' && toggleLang()}>FR</button>
+            <button type="button" className={lang === 'en' ? 'active' : ''} onClick={() => lang !== 'en' && toggleLang()}>EN</button>
           </div>
           <a className="btn btn-primary hdr-cta" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>{t.header.cta} <Arrow /></a>
           <button className={"hdr-burger" + (open ? " open" : "")} aria-label="Menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
@@ -140,8 +140,8 @@ function Header() {
         ))}
         <a className="btn btn-primary" style={{ marginTop: 12 }} href="#contact" onClick={(e) => { e.preventDefault(); setOpen(false); scrollToId("contact"); }}>{t.header.mobileCta} <Arrow /></a>
         <div className="lang-switch" role="group" aria-label="Language" style={{ marginTop: 10, alignSelf: 'flex-start' }}>
-          <button className={lang === 'fr' ? 'active' : ''} onClick={() => { lang !== 'fr' && toggleLang(); setOpen(false); }}>FR</button>
-          <button className={lang === 'en' ? 'active' : ''} onClick={() => { lang !== 'en' && toggleLang(); setOpen(false); }}>EN</button>
+          <button type="button" className={lang === 'fr' ? 'active' : ''} onClick={() => { lang !== 'fr' && toggleLang(); setOpen(false); }}>FR</button>
+          <button type="button" className={lang === 'en' ? 'active' : ''} onClick={() => { lang !== 'en' && toggleLang(); setOpen(false); }}>EN</button>
         </div>
       </div>
     </header>
