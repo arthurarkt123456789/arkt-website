@@ -242,7 +242,6 @@ const ARKT = {
       panels: [
         { kind: "intro", label: "Projet", title: "Chez Charlot – 2026", sub: "Restaurant festif · plateforme de marque · Marseille" },
         { kind: "media", phr: "1/1", caption: "Chez Charlot · logo sur velours tigré", src: "arkt/images/chezcharlot-1.jpg" },
-        { kind: "media", phr: "1/1", caption: "Chez Charlot · logo sur fourrure léopard", src: "arkt/images/chezcharlot-2.jpg" },
         { kind: "text", head: "Contexte", body: [
           "Chez Charlot est un lieu marseillais qui se présentait comme un « restaurant festif », un mot que partagent déjà des dizaines d'adresses de la ville.",
           "Aucune couverture éditoriale, une visibilité qui reposait sur des fiches d'annuaire et deux salles qui se cannibalisaient sous la même enseigne.",
@@ -254,7 +253,6 @@ const ARKT = {
           "Construction complète de la plateforme de marque autour d'un territoire fort : Chez Charlot n'est plus un restaurant, c'est une maison, avec un maître de maison fictif et le vocabulaire de l'hôtellerie (lobby, vestiaire, clés, chariot à bagages).",
           "Refonte de la direction artistique (palette rouge/brun, cartouche léopard, usage retravaillé du logo existant) et définition d'un ton reconnaissable, fait de règles de maison écrites, de phrases courtes et d'humour assumé.",
         ] },
-        { kind: "media", phr: "1/1", caption: "Chez Charlot · kit d'invitation et clé de la maison", src: "arkt/images/chezcharlot-5.jpg" },
         { kind: "media", phr: "1/1", caption: "Chez Charlot · compte Instagram", src: "arkt/images/chezcharlot-6.jpg" },
         { kind: "result-text", head: "Résultat", body: [
           "Un lieu qui a désormais **une vraie identité de marque**, capable d'exister dans le récit avant même d'exister sur place.",
@@ -633,7 +631,6 @@ const ARKT = {
       panels: [
         { kind: "intro", label: "Coup de cœur", title: "Vé – 2024", sub: "Glacier végétal · Marseille" },
         { kind: "media", phr: "4/5", caption: "Vé", src: "arkt/images/ve-1.jpg" },
-        { kind: "media", phr: "3/4", caption: "Devanture Vé", src: "arkt/images/ve-10.jpg" },
         { kind: "text", head: "Contexte", body: [
           "Un glacier 100 % végétal à Marseille, avec une conviction forte sur le produit et une idée très nette de ce que le fondateur ne voulait surtout pas.",
           "Pas d'adresse militante, pas d'excuse permanente à être végétal.",
@@ -649,6 +646,7 @@ const ARKT = {
           "**Une success story marseillaise**.",
           "Vé s'est installée comme une vraie adresse locale, avec aujourd'hui deux points de vente ouverts. Un glacier végétal qui n'a jamais joué la carte de la niche et qui a trouvé son public bien au-delà des consommateurs déjà convaincus.",
         ] },
+        { kind: "media", phr: "3/4", caption: "Devanture Vé", src: "arkt/images/ve-10.jpg" },
         { kind: "media", phr: "4/5", caption: "Vé", src: "arkt/images/ve-4.jpg" },
         { kind: "media", phr: "4/5", caption: "Vé", src: "arkt/images/ve-5.jpg" },
         { kind: "media", phr: "4/5", caption: "Vé", src: "arkt/images/ve-6.jpg" },
