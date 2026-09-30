@@ -718,7 +718,7 @@ export const i18n = {
           tag: "Urban design · strategy & marketing",
           panels: [
             null, null,
-            { head: "Context", body: ["ADS Design is one of the leaders in urban decoration & illuminations — and above all an outsider with a strong capacity for innovation and a patented process.", "From a communication standpoint, the challenge was to build a strategic framework to structure client acquisition and steer the activation of the different communication levers.", "ARKT has been acting as ADS Design's outsourced marketing director for 3 years."] },
+            { head: "Context", body: ["ADS Design is one of the leaders in urban decoration & illuminations — and above all an outsider with a strong capacity for innovation and a patented process.", "From a communication standpoint, the challenge was to build a strategic framework to structure client acquisition and steer the activation of the different communication levers.", "ARKT has been acting as ADS Design's outsourced marketing director for almost 3 years."] },
             null,
             { head: "What we did", body: ["Intervention at three levels.", "Communication strategy and messaging definition, operational management of the in-house marketing team and executive coaching to set direction, and deployment of an acquisition and customer relationship tech ecosystem (CRM, newsletter, content and social media run by the team under our direction)."] },
             null,
