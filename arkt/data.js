@@ -708,6 +708,7 @@ const ARKT = {
         { kind: "text", head: "Contexte", body: [
           "ADS Design est un des leaders de la décoration urbaine & des illuminations. C'est surtout un outsider avec une grande capacité d'innovation & un procédé breveté.",
           "D'un point de vue communication, il fallait mettre un cadre stratégique pour structurer l'acquisition client & piloter l'activation des différents leviers de communication.",
+          "ARKT assure la direction marketing externalisée de ADS Design depuis 3 ans.",
         ] },
         { kind: "media", phr: "4/5", caption: "ADS Design", src: "arkt/images/adsdesign-2.jpg" },
         { kind: "text", head: "Ce qu'on a fait", body: [
