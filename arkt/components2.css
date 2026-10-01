@@ -245,6 +245,7 @@ html[data-light="0"] .team-bubble-photo { border-color: var(--hairline); }
 .contact-channels { display: flex; flex-direction: column; gap: 10px; margin-top: clamp(22px, 3.5vh, 32px); }
 .contact-channel { font-size: 15px; font-weight: 480; color: var(--white); border-color: rgba(19,19,17,0.2); }
 .contact-address { margin: 0; }
+.contact-linkedin { align-self: flex-start; height: 46px; padding: 0 22px; margin-top: 6px; }
 .contact-meta { display: flex; align-items: center; gap: 18px; margin-top: clamp(18px, 2.5vh, 28px); font-size: 15px; font-weight: 480; }
 .contact-sep { width: 4px; height: 4px; border-radius: 50%; background: rgba(19,19,17,0.28); }
 

@@ -1,3 +1,4 @@
+import './fonts.css';
 import './styles.css';
 import './components.css';
 import './components2.css';

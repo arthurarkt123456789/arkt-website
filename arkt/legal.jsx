@@ -14,7 +14,7 @@ function MentionsLegales() {
       <h1 className="display">Mentions légales</h1>
 
       <H2 n={1}>Éditeur du site</H2>
-      <p>Le présent site, accessible à l’adresse <strong>www.arkt-conseil.com</strong>, est édité par :</p>
+      <p>Le présent site, accessible à l’adresse <strong>arkt-conseil.com</strong>, est édité par :</p>
       <div className="legal-card">
         <p>
           <strong>ARKT</strong><br />
@@ -43,7 +43,7 @@ function MentionsLegales() {
       </div>
 
       <H2 n={4}>Propriété intellectuelle</H2>
-      <p>L’ensemble des éléments présents sur le site www.arkt-conseil.com, notamment les textes, photographies, illustrations, éléments graphiques, logos, vidéos, créations, mises en page et éléments visuels, sont protégés par les dispositions applicables en matière de propriété intellectuelle.</p>
+      <p>L’ensemble des éléments présents sur le site arkt-conseil.com, notamment les textes, photographies, illustrations, éléments graphiques, logos, vidéos, créations, mises en page et éléments visuels, sont protégés par les dispositions applicables en matière de propriété intellectuelle.</p>
       <p>Sauf mention contraire, ces éléments sont la propriété d’ARKT ou sont utilisés avec l’autorisation de leurs titulaires.</p>
       <p>Toute reproduction, représentation, modification, adaptation, diffusion ou exploitation, totale ou partielle, de ces contenus, par quelque procédé que ce soit et sur quelque support que ce soit, sans autorisation écrite préalable d’ARKT, est interdite sauf dans les cas prévus par la loi.</p>
 
@@ -57,8 +57,8 @@ function MentionsLegales() {
       <p>Les informations relatives à la collecte et au traitement des données personnelles des utilisateurs sont détaillées dans la <strong><a href="/politique-de-confidentialite/">Politique de confidentialité</a></strong> du site.</p>
 
       <H2 n={7}>Cookies</H2>
-      <p>Le site peut utiliser des cookies ou autres traceurs nécessaires à son fonctionnement, à la mesure de son audience ou, sous réserve du consentement de l’utilisateur lorsque celui-ci est requis, à d’autres finalités.</p>
-      <p>L’utilisateur peut gérer ses préférences relatives aux cookies à tout moment depuis l’outil de gestion des cookies disponible sur le site.</p>
+      <p>Le site n’utilise aucun cookie ni autre traceur de mesure d’audience, publicitaire ou lié à des services tiers, et ne dépose aucun cookie nécessitant le consentement de l’utilisateur.</p>
+      <p>Si cela devait évoluer, un outil de gestion du consentement serait mis en place sur le site et les présentes mentions légales seraient mises à jour. Le détail figure dans la <a href="/politique-de-confidentialite/">Politique de confidentialité</a>.</p>
 
       <H2 n={8}>Droit applicable</H2>
       <p>Le présent site et les présentes mentions légales sont soumis au droit français.</p>
@@ -75,7 +75,7 @@ function PolitiqueConfidentialite() {
       <p className="legal-updated">Dernière mise à jour : septembre 2026</p>
 
       <p>ARKT accorde une importance particulière à la protection de vos données personnelles et s’engage à les traiter conformément au Règlement général sur la protection des données (RGPD) et à la législation française applicable.</p>
-      <p>La présente politique a pour objectif de vous expliquer quelles données peuvent être collectées lorsque vous utilisez le site <strong>www.arkt-conseil.com</strong>, pourquoi elles sont utilisées et quels sont vos droits.</p>
+      <p>La présente politique a pour objectif de vous expliquer quelles données peuvent être collectées lorsque vous utilisez le site <strong>arkt-conseil.com</strong>, pourquoi elles sont utilisées et quels sont vos droits.</p>
 
       <H2 n={1}>Responsable du traitement</H2>
       <p>Le responsable du traitement des données collectées sur le site est :</p>
@@ -98,9 +98,7 @@ function PolitiqueConfidentialite() {
       <ul>
         <li>votre nom et votre prénom ;</li>
         <li>votre adresse électronique ;</li>
-        <li>votre numéro de téléphone, lorsqu’il est demandé ;</li>
-        <li>le nom de votre entreprise ;</li>
-        <li>les informations relatives à votre projet ou à votre demande ;</li>
+        <li>le sujet de votre demande et les informations relatives à votre projet ;</li>
         <li>toute autre information que vous choisissez volontairement de nous transmettre.</li>
       </ul>
       <h3>Données techniques et de navigation</h3>
@@ -109,10 +107,9 @@ function PolitiqueConfidentialite() {
         <li>l’adresse IP ;</li>
         <li>le type de navigateur ou d’appareil utilisé ;</li>
         <li>les pages consultées ;</li>
-        <li>les dates et heures de connexion ;</li>
-        <li>certaines données relatives à la navigation et à la mesure d’audience.</li>
+        <li>les dates et heures de connexion.</li>
       </ul>
-      <p>La nature exacte des informations collectées dépend notamment des cookies et outils de mesure d’audience utilisés sur le site.</p>
+      <p>Ces données techniques sont traitées par l’hébergeur du site, uniquement pour en assurer le fonctionnement et la sécurité. Le site n’utilise aucun outil de mesure d’audience.</p>
 
       <H2 n={3}>Finalités du traitement</H2>
       <p>Les données personnelles collectées peuvent être utilisées afin de :</p>
@@ -122,7 +119,6 @@ function PolitiqueConfidentialite() {
         <li>étudier une demande de prestation ou de collaboration ;</li>
         <li>préparer et assurer le suivi d’une relation commerciale ;</li>
         <li>améliorer le fonctionnement, les contenus et l’expérience utilisateur du site ;</li>
-        <li>mesurer la fréquentation et les performances du site ;</li>
         <li>assurer la sécurité et le bon fonctionnement technique du site ;</li>
         <li>respecter les obligations légales et réglementaires applicables à ARKT.</li>
       </ul>
@@ -132,7 +128,7 @@ function PolitiqueConfidentialite() {
       <p>Selon la situation, les traitements réalisés par ARKT peuvent reposer sur :</p>
       <p><strong>L’intérêt légitime d’ARKT</strong>, notamment pour répondre à une demande de contact, assurer le suivi d’une relation professionnelle, sécuriser le site ou améliorer ses services.</p>
       <p><strong>L’exécution de mesures précontractuelles ou d’un contrat</strong>, lorsque les échanges concernent une demande de prestation ou une relation contractuelle avec ARKT.</p>
-      <p><strong>Le consentement</strong>, lorsque celui-ci est requis, notamment pour certains cookies ou traceurs.</p>
+      <p><strong>Le consentement</strong>, lorsque celui-ci est requis.</p>
       <p><strong>Une obligation légale</strong>, lorsque la conservation ou le traitement de certaines données est imposé par la réglementation.</p>
 
       <H2 n={5}>Destinataires des données</H2>
@@ -141,8 +137,7 @@ function PolitiqueConfidentialite() {
       <ul>
         <li>l’hébergement du site ;</li>
         <li>la maintenance et le fonctionnement du site ;</li>
-        <li>la gestion des formulaires ;</li>
-        <li>la mesure d’audience ;</li>
+        <li>la gestion du formulaire de contact ;</li>
         <li>les outils de communication et de gestion commerciale.</li>
       </ul>
       <p>Ces prestataires ne peuvent utiliser les données qui leur sont confiées que dans le cadre des missions qui leur sont attribuées et conformément aux exigences applicables en matière de protection des données.</p>
@@ -154,16 +149,14 @@ function PolitiqueConfidentialite() {
       <ul>
         <li>les données relatives à un prospect peuvent être conservées pendant <strong>trois ans à compter de leur collecte ou du dernier contact émanant du prospect</strong> ;</li>
         <li>les données relatives à une relation client peuvent être conservées pendant la durée de la relation commerciale puis archivées pendant les durées nécessaires au respect des obligations légales ou à la défense des droits d’ARKT ;</li>
-        <li>les données collectées via certains outils de mesure d’audience et cookies sont conservées pendant une durée limitée dépendant de leur finalité et de l’outil utilisé.</li>
+        <li>les données techniques de navigation sont conservées par l’hébergeur pour une durée limitée, nécessaire à la sécurité et au bon fonctionnement du site.</li>
       </ul>
       <p>À l’issue de ces périodes, les données sont supprimées ou anonymisées, sauf lorsqu’une obligation légale impose leur conservation pendant une durée plus longue.</p>
 
       <H2 n={7}>Cookies et traceurs</H2>
-      <p>Le site peut utiliser des cookies et autres traceurs afin d’assurer son bon fonctionnement et, le cas échéant, de mesurer son audience.</p>
-      <p>Certains cookies strictement nécessaires au fonctionnement du site peuvent être déposés sans consentement préalable.</p>
-      <p>Les cookies qui ne sont pas strictement nécessaires, notamment certains cookies de mesure d’audience, publicitaires ou liés à des services tiers, ne sont déposés qu’après avoir obtenu votre consentement lorsque celui-ci est requis.</p>
-      <p>Vous pouvez accepter ou refuser ces cookies et modifier votre choix à tout moment depuis le module de gestion des cookies accessible sur le site.</p>
-      <p>Le refus des cookies non nécessaires n’empêche pas l’accès aux principales fonctionnalités du site.</p>
+      <p>Le site n’utilise aucun cookie de mesure d’audience, publicitaire ou lié à des services tiers, ni aucun autre traceur soumis à votre consentement. Aucun bandeau de consentement n’est donc affiché.</p>
+      <p>Les polices de caractères du site sont hébergées avec le site lui-même : leur affichage ne transmet aucune donnée à un service tiers.</p>
+      <p>Si ARKT venait à utiliser des cookies ou traceurs soumis à consentement, un module de gestion du consentement serait mis en place sur le site et la présente politique serait mise à jour.</p>
 
       <H2 n={8}>Transferts de données hors de l’Union européenne</H2>
       <p>Certains prestataires techniques utilisés par ARKT peuvent être établis ou traiter certaines données en dehors de l’Union européenne ou de l’Espace économique européen.</p>
@@ -171,6 +164,31 @@ function PolitiqueConfidentialite() {
 
       <H2 n={9}>Sécurité des données</H2>
       <p>ARKT met en œuvre des mesures techniques et organisationnelles raisonnables afin de protéger les données personnelles contre leur destruction, perte, altération, divulgation ou accès non autorisé.</p>
+      <p>Toutefois, aucun système informatique ou service accessible sur Internet ne peut garantir une sécurité absolue.</p>
+
+      <H2 n={10}>Vos droits</H2>
+      <p>Conformément à la réglementation applicable en matière de protection des données, vous pouvez, selon les circonstances, exercer les droits suivants :</p>
+      <ul>
+        <li>droit d’accès à vos données ;</li>
+        <li>droit de rectification ;</li>
+        <li>droit à l’effacement ;</li>
+        <li>droit à la limitation du traitement ;</li>
+        <li>droit d’opposition ;</li>
+        <li>droit à la portabilité lorsque celui-ci est applicable ;</li>
+        <li>droit de retirer votre consentement à tout moment lorsqu’un traitement repose sur celui-ci.</li>
+      </ul>
+      <p>Pour exercer vos droits, vous pouvez contacter ARKT à l’adresse :</p>
+      <p><strong><a href={"mailto:" + MAIL}>{MAIL}</a></strong></p>
+      <p>ARKT pourra demander des informations complémentaires uniquement lorsque celles-ci sont nécessaires pour vérifier l’identité du demandeur.</p>
+      <p>Vous disposez également du droit d’introduire une réclamation auprès de la <strong>Commission nationale de l’informatique et des libertés (CNIL)</strong> si vous estimez que le traitement de vos données personnelles ne respecte pas la réglementation applicable.</p>
+
+      <H2 n={11}>Liens vers des sites tiers</H2>
+      <p>Le site peut contenir des liens dirigeant vers des sites ou services exploités par des tiers.</p>
+      <p>ARKT n’est pas responsable des pratiques de ces tiers en matière de protection des données. Nous vous invitons à consulter leurs propres politiques de confidentialité avant de leur transmettre des informations personnelles.</p>
+
+      <H2 n={12}>Modification de la politique de confidentialité</H2>
+      <p>ARKT peut modifier la présente politique de confidentialité afin de prendre en compte une évolution réglementaire, technique ou liée aux services proposés sur le site.</p>
+      <p>La version applicable est celle publiée sur le site à la date de consultation.</p>
     </>
   );
 }

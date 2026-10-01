@@ -963,29 +963,29 @@ const ARKT = {
 
   /* ---------- témoignages (verbatims réels) ---------- */
   testimonials: [
-    { name: "Julien Raynal", role: "CEO de Twicy", img: "https://framerusercontent.com/images/zE2BUbJcEjtHSkGL4KeMPa2SGho.png?width=828&height=782",
+    { name: "Julien Raynal", role: "CEO de Twicy", img: "arkt/images/avis-julien-raynal.jpg",
       quote: "Travailler avec ARKT est un vrai atout pour Twicy. Leur capacité à s'immerger rapidement dans notre business model leur permet de produire des contenus qui apportent une réelle valeur à nos clients : ils comprennent notre activité, nos enjeux et nos partenaires, avec une fluidité impressionnante, comme s'ils faisaient partie intégrante de l'entreprise. ARKT est un partenaire clé pour notre croissance.",
       hi: ["un vrai atout pour Twicy", "comme s'ils faisaient partie intégrante de l'entreprise", "un partenaire clé pour notre croissance"] },
-    { name: "Maxime Brousse", role: "CEO de Selency", img: "https://framerusercontent.com/images/TybSV8UwyID2kF9mPEmMzyQQjA.webp?width=258&height=246",
+    { name: "Maxime Brousse", role: "CEO de Selency", img: "arkt/images/avis-maxime-brousse.jpg",
       quote: "Arthur a construit le service pro de Selency, un pôle stratégique devenu un véritable levier de croissance pour la marque. Je le recommande pour sa capacité à innover, construire et pérenniser des projets complexes et stratégiques.",
       hi: ["un véritable levier de croissance", "innover, construire et pérenniser"] },
-    { name: "Barbara Adinany", role: "CEO de L'Instant Cryo", img: "https://framerusercontent.com/images/sOBFIcV4MtSCAIFtHtmi0ElYmA.jpg?width=764&height=1135",
+    { name: "Barbara Adinany", role: "CEO de L'Instant Cryo", img: "arkt/images/avis-barbara-adinany.jpg",
       quote: "Arthur possède une expertise dingue en matière de conception et développement stratégique. Grâce à sa grande capacité à comprendre mes besoins, nos collaborations régulières sont fluides et efficaces.",
       hi: ["une expertise dingue", "fluides et efficaces"] },
-    { name: "Christophe Alloun", role: "Fondateur de Vé!", img: "https://framerusercontent.com/images/ABvRzJ5B6cOy4isg2lH8O3YAmY.png?width=470&height=481",
+    { name: "Christophe Alloun", role: "Fondateur de Vé!", img: "arkt/images/avis-christophe-alloun.jpg",
       quote: "Quand on a décidé d'ouvrir notre glacier, on nous a tout de suite recommandé ARKT pour créer notre identité. Nous savions exactement ce que nous ne voulions pas, et Arthur a parfaitement compris ce qu'il nous fallait. Chaque fois que j'entends « Vé, ton glacier comme il est beau », je dis merci Arthur.",
       hi: ["on nous a tout de suite recommandé ARKT", "a parfaitement compris ce qu'il nous fallait"] },
   ],
 
   /* ---------- équipe ---------- */
   team: [
-    { name: "Arthur Barret", role: "Founder & CEO", img: "https://framerusercontent.com/images/rb4UNclQQsvqth0gNNBep2r4jHg.png?width=1436&height=1434",
+    { name: "Arthur Barret", role: "Founder & CEO", img: "arkt/images/equipe-arthur-barret.jpg",
       bio: "+10 ans à la tête de directions marketing & commerciales : Vestiaire Collective, Selency. Cofondateur du concept food La Meulerie." },
-    { name: "Tobias Simon", role: "Consultant Marketing", img: "https://framerusercontent.com/images/XXlxtuXS3aS1YGtBgxtvWp8eA.jpeg?width=717&height=601",
+    { name: "Tobias Simon", role: "Consultant Marketing", img: "arkt/images/equipe-tobias-simon.jpg",
       bio: "Coordination clients, gestion des projets récurrents, growth strategy." },
-    { name: "Mickaël Guagenti", role: "Consultant Marketing", img: "https://framerusercontent.com/images/wwCV3juDZzvq7vIgGLzKbvVCtM.jpeg?width=800&height=800",
+    { name: "Mickaël Guagenti", role: "Consultant Marketing", img: "arkt/images/equipe-mickael-guagenti.jpg",
       bio: "Création de contenu vidéo & réseaux sociaux, stratégie marketing, DA." },
-    { name: "Driss Azzoug", role: "Consultant Pop Culture", img: "https://framerusercontent.com/images/CjN28LCNrCmOmsN9OiwjmEZaU.jpg?width=656&height=686",
+    { name: "Driss Azzoug", role: "Consultant Pop Culture", img: "arkt/images/equipe-driss-azzoug.jpg",
       bio: "Veille pop culture, direction créative." },
     { name: "Sacha Bassili", role: "Directrice des opérations", img: "arkt/images/team-sacha-bassili.jpg",
       bio: "Pilotage de l'organisation d'ARKT, structuration des processus, coordination des équipes et partenaires pour assurer la conduite des projets." },
