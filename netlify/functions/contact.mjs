@@ -1,27 +1,28 @@
 const DEST = "arthur@arkt-conseil.com";
 const FROM = "ARKT Contact <noreply@arkt-conseil.com>";
 
-export default async (req) => {
-  if (req.method !== "POST") {
-    return new Response("Method Not Allowed", { status: 405 });
+export const handler = async (event) => {
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, body: "Method Not Allowed" };
   }
 
   let data;
   try {
-    data = await req.json();
+    data = JSON.parse(event.body || "{}");
   } catch {
-    return new Response("Bad Request", { status: 400 });
+    return { statusCode: 400, body: "Bad Request" };
   }
 
   const { name = "", email = "", subject = "", message = "" } = data;
 
   if (!name || !email || !subject || !message) {
-    return new Response("Missing fields", { status: 422 });
+    return { statusCode: 422, body: "Missing fields" };
   }
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    return new Response("Email service not configured", { status: 503 });
+    console.error("RESEND_API_KEY is not set");
+    return { statusCode: 503, body: "Email service not configured" };
   }
 
   const html = `
@@ -52,14 +53,15 @@ export default async (req) => {
 
   if (!res.ok) {
     const err = await res.text();
-    console.error("Resend error:", err);
-    return new Response("Email sending failed", { status: 502 });
+    console.error("Resend error", res.status, err);
+    return { statusCode: 502, body: "Email sending failed" };
   }
 
-  return new Response(JSON.stringify({ ok: true }), {
-    status: 200,
+  return {
+    statusCode: 200,
     headers: { "Content-Type": "application/json" },
-  });
+    body: JSON.stringify({ ok: true }),
+  };
 };
 
 function esc(str) {
