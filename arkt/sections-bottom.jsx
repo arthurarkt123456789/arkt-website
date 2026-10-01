@@ -341,11 +341,10 @@ function ContactForm() {
     if (Object.keys(er).length > 0) return;
     setStatus("sending");
     try {
-      const body = new URLSearchParams({ "form-name": "contact", ...f }).toString();
-      const res = await fetch("/", {
+      const res = await fetch("/.netlify/functions/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(f),
       });
       setStatus(res.ok ? "sent" : "error");
     } catch {
@@ -395,9 +394,7 @@ function ContactForm() {
   );
 
   return (
-    <form className="cform" onSubmit={submit} noValidate
-      data-netlify="true" name="contact">
-      <input type="hidden" name="form-name" value="contact" />
+    <form className="cform" onSubmit={submit} noValidate>
       <div className="cform-row">
         {field("name", cf.name)}
         {field("email", cf.email, "email")}
