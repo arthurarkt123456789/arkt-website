@@ -1,0 +1,91 @@
+{
+  "version": "2027-01",
+  "devise": "EUR",
+  "ht": true,
+  "arrondi": 50,
+  "categories": [
+    {
+      "id": "accompagnement",
+      "label": "Accompagnement mensuel",
+      "items": [
+        { "id": "suivi-leger", "label": "Suivi communication", "unite": "mois", "prix": 900, "contenu": "Suivi éditorial, conseil et publication sur un périmètre restreint." },
+        { "id": "strategique", "label": "Accompagnement communication, partie stratégique", "unite": "mois", "prix": 1350, "contenu": "Pilotage stratégique, calendrier éditorial, arbitrages, points mensuels." },
+        { "id": "cm", "label": "Community management", "unite": "mois", "prix": 1650, "contenu": "Création et publication des posts, animation et modération des comptes." },
+        { "id": "accompagnement-com", "label": "Accompagnement communication", "unite": "mois", "prix": 2100, "contenu": "Production de contenu, création des posts et gestion des réseaux sociaux." },
+        { "id": "operationnel", "label": "Accompagnement communication, partie opérationnelle", "unite": "mois", "prix": 1350, "contenu": "Exécution, production et diffusion, en complément de la partie stratégique." },
+        { "id": "direction-com", "label": "Direction communication externalisée", "unite": "mois", "prix": 4400, "contenu": "Stratégie, production, réseaux sociaux des dirigeants, coordination des prestataires." }
+      ]
+    },
+    {
+      "id": "marque",
+      "label": "Marque et identité",
+      "items": [
+        { "id": "naming", "label": "Naming", "unite": "forfait", "prix": 850 },
+        { "id": "audit-marque", "label": "Audit de marque", "unite": "forfait", "prix": 1900 },
+        { "id": "logo-charte", "label": "Logo et charte graphique", "unite": "forfait", "prix": 2500, "prix_max": 3100 },
+        { "id": "strategie-marque", "label": "Stratégie de marque", "unite": "forfait", "prix": 4950 },
+        { "id": "identite-complete", "label": "Identité et univers visuel", "unite": "forfait", "prix": 6600 },
+        { "id": "strategie-contenu", "label": "Stratégie de contenu et lancement", "unite": "forfait", "prix": 4400 }
+      ]
+    },
+    {
+      "id": "web",
+      "label": "Web",
+      "items": [
+        { "id": "site-vitrine", "label": "Site vitrine et prise de rendez-vous", "unite": "forfait", "prix": 3850 },
+        { "id": "site-da-ux", "label": "Direction artistique et conception UX/UI", "unite": "forfait", "prix": 2750 },
+        { "id": "site-dev", "label": "Développement et intégration CMS", "unite": "forfait", "prix": 4200 },
+        { "id": "site-mise-en-ligne", "label": "Mise en ligne et transition", "unite": "forfait", "prix": 1750 },
+        { "id": "maintenance-essentiel", "label": "Hébergement et maintenance", "unite": "mois", "prix": 60 },
+        { "id": "maintenance-premium", "label": "Hébergement, maintenance et mises à jour", "unite": "mois", "prix": 390 },
+        { "id": "newsletter-setup", "label": "Mise en place d'un outil de newsletter", "unite": "forfait", "prix": 250 }
+      ]
+    },
+    {
+      "id": "video",
+      "label": "Vidéo, photo, contenu",
+      "items": [
+        { "id": "teaser-50s", "label": "Teaser vidéo d'environ 50 secondes", "unite": "forfait", "prix": 8250, "contenu": "Écriture du script, séquençage, direction artistique, production des images, montage." },
+        { "id": "short-form", "label": "Vidéo publicitaire short-form", "unite": "vidéo", "prix": 340, "minimum": 8 },
+        { "id": "video-cas-client", "label": "Vidéo cas client, tournage et montage", "unite": "vidéo", "prix": 650 },
+        { "id": "shooting-photo", "label": "Shooting photo professionnel", "unite": "forfait", "prix": 800 },
+        { "id": "strategie-video", "label": "Stratégie vidéo pilote", "unite": "forfait", "prix": 4600 },
+        { "id": "prod-direction", "label": "Direction créative et supervision", "unite": "forfait", "prix": 7150 },
+        { "id": "prod-equipe", "label": "Équipe de tournage", "unite": "forfait", "prix": 5300 },
+        { "id": "prod-post", "label": "Montage et post-production", "unite": "forfait", "prix": 5700 },
+        { "id": "prod-casting", "label": "Casting", "unite": "forfait", "prix": 1300 },
+        { "id": "prod-musique", "label": "Licence musicale", "unite": "forfait", "prix": 650 }
+      ]
+    },
+    {
+      "id": "edition-3d",
+      "label": "Édition et 3D",
+      "items": [
+        { "id": "brochure-da", "label": "Direction artistique et système graphique", "unite": "forfait", "prix": 650 },
+        { "id": "brochure-execution", "label": "Mise en page et exécution (base 35 pages)", "unite": "forfait", "prix": 1900 },
+        { "id": "brochure-finalisation", "label": "Allers-retours et finalisation", "unite": "forfait", "prix": 650 },
+        { "id": "3d-concept", "label": "Direction artistique et concept créatif", "unite": "forfait", "prix": 2750 },
+        { "id": "3d-modelisation", "label": "Modélisation et vues 3D des espaces", "unite": "forfait", "prix": 3950 },
+        { "id": "3d-immersif", "label": "Expériences immersives", "unite": "forfait", "prix": 3200 },
+        { "id": "delais-contraints", "label": "Livraison en délais contraints", "unite": "forfait", "prix": 1950 }
+      ]
+    },
+    {
+      "id": "conseil",
+      "label": "Conseil",
+      "items": [
+        { "id": "appel-offres", "label": "Conseil stratégique, préparation d'appel d'offres", "unite": "forfait", "prix": 1100 },
+        { "id": "activation", "label": "Activation marketing", "unite": "forfait", "prix": 3500 }
+      ]
+    }
+  ],
+  "refacturation": {
+    "regle": "Licences, achats média, achats matériel et frais de déplacement refacturés au réel, sur une ligne séparée.",
+    "exemples_2026": ["Licence Lemlist 69 / mois", "Licence Pipedrive 497", "Campagne Google Ads 150 / mois", "Licence Mailchimp 23 / mois"]
+  },
+  "conditions": {
+    "acompte_standard": "50 % à la commande, 50 % à la livraison",
+    "acompte_gros_projet": "30 % à la commande, puis échéances à définir",
+    "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
+  }
+}

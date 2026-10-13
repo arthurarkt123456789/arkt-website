@@ -1,0 +1,84 @@
+{
+  "slug": "_exemple",
+  "numero": "D-2026-000",
+  "date": "2026-10-13",
+  "validite_jours": 30,
+  "client": {
+    "societe": "Maison Exemple",
+    "secteur": "Restauration",
+    "contact": "Camille Martin",
+    "fonction": "Fondatrice",
+    "email": "camille@exemple.fr"
+  },
+  "accroche": "Lancer Maison Exemple avec une marque prête à vendre dès l'ouverture.",
+  "contexte": "Ouverture prévue au printemps dans le 6e arrondissement de Marseille. Aucun élément de marque existant. Un local signé, une carte en cours de finalisation.",
+  "enjeux": [
+    "Se distinguer sur une rue où trois concepts proches sont déjà installés",
+    "Être visible et attendu avant l'ouverture",
+    "Disposer d'outils simples à faire vivre en interne"
+  ],
+  "lots": [
+    {
+      "titre": "Stratégie de marque",
+      "tarif_id": "strategie-marque",
+      "description": "Positionnement, cibles, plateforme de marque et ton. Restitution en atelier.",
+      "livrables": ["Plateforme de marque", "Atelier de restitution"],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 4950
+    },
+    {
+      "titre": "Identité et univers visuel",
+      "tarif_id": "identite-complete",
+      "description": "Logo, charte et système graphique, déclinés sur les supports d'ouverture.",
+      "livrables": ["Logo et déclinaisons", "Charte graphique", "Kit réseaux sociaux", "Menu et carte de visite"],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 6600
+    },
+    {
+      "titre": "Accompagnement communication",
+      "tarif_id": "accompagnement-com",
+      "description": "Production de contenu, création des posts et gestion des réseaux sociaux sur les trois mois de lancement.",
+      "livrables": ["Calendrier éditorial", "12 posts par mois", "Reporting mensuel"],
+      "quantite": 3,
+      "unite": "mois",
+      "prix_unitaire": 2100
+    }
+  ],
+  "options": [
+    {
+      "titre": "Site vitrine et prise de rendez-vous",
+      "tarif_id": "site-vitrine",
+      "description": "Site une page, réservation en ligne, hébergement la première année.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 3850
+    },
+    {
+      "titre": "Shooting photo professionnel",
+      "tarif_id": "shooting-photo",
+      "description": "Une demi-journée sur place, 25 photos retouchées.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 800
+    }
+  ],
+  "refacturations": [
+    { "label": "Achat média Meta (lancement)", "estimation": 500, "unite": "mois" }
+  ],
+  "remise": null,
+  "planning": [
+    { "etape": "Stratégie de marque", "duree": "3 semaines" },
+    { "etape": "Identité visuelle", "duree": "4 semaines" },
+    { "etape": "Lancement et réseaux sociaux", "duree": "3 mois" }
+  ],
+  "conditions": {
+    "paiement": "30 % à la commande, solde selon l'avancement du planning.",
+    "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
+  },
+  "projets_refs": ["horsdoeuvre", "ciaomisu", "vitamine"],
+  "equipe": ["Arthur Barret", "Mickaël Guagenti"],
+  "pdf_url": null,
+  "tva": 0.2
+}

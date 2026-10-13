@@ -1,0 +1,93 @@
+{
+  "slug": "muse-studio-r9k2z",
+  "numero": "D-2026-001",
+  "date": "2026-10-13",
+  "validite_jours": 30,
+  "client": {
+    "societe": "Muse Studio",
+    "secteur": "Studio bien-être · pilates reformer, yoga, soins",
+    "contact": "Marie",
+    "fonction": "",
+    "email": ""
+  },
+  "accroche": "Faire de Muse une marque de référence du bien-être à Marseille, prête à s'ouvrir sur plusieurs lieux.",
+  "contexte": "Muse Studio propose des cours de pilates reformer, yoga et des soins au 19 rue Louis Astruc dans le 13005 à Marseille. Un café avec terrasse de 90 m² complète l'offre. L'atmosphère est singulière : cours en pièce noire éclairée à la bougie, positionnement pleine conscience. La marque dispose d'une communauté fidèle de 3 000 abonnés sur Instagram. La prochaine étape : une image plus qualitative, une notoriété plus large, et une marque capable de se dupliquer sur 3 à 4 lieux, en franchise ou en propre.",
+  "enjeux": [
+    "Faire évoluer l'image sans perdre ce qui fait l'identité de Muse : la pièce noire, les bougies, l'esprit familial.",
+    "Construire une marque duplicable sur 3 à 4 lieux, en franchise ou en propre.",
+    "Développer la notoriété à partir d'une communauté de 3 000 abonnés encore confidentielle.",
+    "Rendre l'image plus qualitative, plus « marque », sans tout reconstruire à zéro."
+  ],
+  "lots": [
+    {
+      "titre": "Stratégie de marque",
+      "tarif_id": "strategie-marque",
+      "description": "La mission démarre par un audit rapide de la marque existante : cohérence, forces à capitaliser, failles à combler. Cette base alimente directement la plateforme de marque, pensée pour une architecture duplicable sur plusieurs lieux.",
+      "livrables": ["Audit marque existante", "Plateforme de marque", "Positionnement et territoire créatif", "Charte de ton et d'écriture", "Guide de déploiement multi-lieux", "Atelier de restitution"],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 5500
+    },
+    {
+      "titre": "Évolution de l'identité visuelle",
+      "tarif_id": "identite-complete",
+      "description": "Faire évoluer l'identité existante — logo MU, bordeaux — vers un système graphique plus fort et duplicable. Inclut une direction artistique photo pour la pièce noire et les bases de la signalétique studio.",
+      "livrables": ["Évolution logo et déclinaisons", "Palette et typographies", "Système graphique complet", "Direction artistique photo", "Concepts signalétique studio", "Charte graphique"],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 7200
+    },
+    {
+      "titre": "Stratégie de contenu et notoriété",
+      "tarif_id": "strategie-contenu",
+      "description": "Définir la stratégie de contenu Instagram et le plan de notoriété locale. Identifier les leviers presse, les partenariats pertinents et les formats qui fonctionnent dans l'univers sensoriel de Muse.",
+      "livrables": ["Stratégie de contenu Instagram", "Formats et piliers éditoriaux", "Plan de notoriété locale (presse, partenariats)", "Calendrier éditorial modèle", "Recommandations partenaires et presse"],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 4400
+    }
+  ],
+  "options": [
+    {
+      "titre": "Accompagnement communication",
+      "tarif_id": "accompagnement-com",
+      "description": "Production de contenu, création des posts et gestion du compte Instagram sur 3 mois après le lancement de la nouvelle identité.",
+      "quantite": 3,
+      "unite": "mois",
+      "prix_unitaire": 2100
+    },
+    {
+      "titre": "Shooting photo pièce noire",
+      "tarif_id": "shooting-photo",
+      "description": "Une demi-journée de shooting dans la pièce noire éclairée à la bougie. 25 photos retouchées pour les réseaux sociaux et le site.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 800
+    },
+    {
+      "titre": "Livret de marque pour les futurs lieux",
+      "tarif_id": "brochure-execution",
+      "description": "Livret de marque complet destiné à l'ouverture des futurs lieux : charte d'usage, règles d'application, exemples de déclinaisons. Chiffré par analogie avec la grille édition.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 3200
+    }
+  ],
+  "refacturations": [
+    { "label": "Achats média Meta ou Google (si campagnes activées)", "estimation": null }
+  ],
+  "remise": null,
+  "planning": [
+    { "etape": "Audit et stratégie de marque", "duree": "3 semaines" },
+    { "etape": "Évolution identité visuelle", "duree": "5 semaines" },
+    { "etape": "Stratégie de contenu et notoriété", "duree": "2 semaines" }
+  ],
+  "conditions": {
+    "paiement": "30 % à la commande, solde selon l'avancement du planning.",
+    "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
+  },
+  "projets_refs": ["capsule", "spilow", "linstantcryo"],
+  "equipe": ["Arthur Barret", "Mickaël Guagenti"],
+  "pdf_url": null,
+  "tva": 0.2
+}

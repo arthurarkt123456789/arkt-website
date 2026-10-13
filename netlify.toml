@@ -5,3 +5,15 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+# Propositions commerciales : jamais indexées, jamais mises en cache
+[[headers]]
+  for = "/devis/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/devis.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
