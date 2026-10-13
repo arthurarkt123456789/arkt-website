@@ -76,8 +76,8 @@ export default function DevisPage({ devis }) {
 
   const totals = useMemo(() => computeTotals(d, selected), [d, selected]);
   const projets = (d.projets_refs || []).map(projectCard).filter(Boolean).slice(0, 3);
-  const equipe = ARKT.team;
-  const accountManager = d.equipe?.[0] || ARKT.team[0]?.name;
+  const equipeProjet = ARKT.team.filter((m) => (d.equipe || []).includes(m.name));
+  const equipeArkt = ARKT.team;
   const temoignages = (ARKT.testimonials || []).slice(0, 2);
   const exp = expiry(d);
 
@@ -255,7 +255,11 @@ export default function DevisPage({ devis }) {
                         <span className="dv-option-title">{o.titre}</span>
                         {o.description && <span className="dv-option-desc">{o.description}</span>}
                       </span>
-                      <span className="dv-option-price">+ {eur(lineTotal(o))} HT{unitLabel(o) && <small>{unitLabel(o)}</small>}</span>
+                      {o.mensuel ? (
+                        <span className="dv-option-price">+ {eur(o.prix_unitaire)}<small>HT&nbsp;/&nbsp;mois · {o.quantite}&nbsp;mois</small></span>
+                      ) : (
+                        <span className="dv-option-price">+ {eur(lineTotal(o))} HT{unitLabel(o) && <small>{unitLabel(o)}</small>}</span>
+                      )}
                     </label>
                   );
                 })}
@@ -294,13 +298,24 @@ export default function DevisPage({ devis }) {
               <table className="dv-totals">
                 <tbody>
                   <tr><th>Prestations</th><td>{eur(totals.lots)}</td></tr>
-                  {d.options?.length > 0 && <tr><th>Options retenues</th><td>{eur(totals.opts)}</td></tr>}
+                  {totals.opts > 0 && <tr><th>Options retenues</th><td>{eur(totals.opts)}</td></tr>}
                   {totals.remise > 0 && <tr><th>{d.remise?.label || "Remise"}</th><td>− {eur(totals.remise)}</td></tr>}
                   <tr className="dv-tot-ht"><th>Total HT</th><td>{eur(totals.ht)}</td></tr>
                   <tr><th>TVA {Math.round(totals.taux * 100)} %</th><td>{eur(totals.tva)}</td></tr>
                   <tr className="dv-tot-ttc"><th>Total TTC</th><td>{eur(totals.ttc)}</td></tr>
                 </tbody>
               </table>
+              {selected.some((i) => d.options?.[i]?.mensuel) && (
+                <div className="dv-refact">
+                  <div className="dv-sub-s">Engagement mensuel, hors total</div>
+                  <ul>
+                    {selected.filter((i) => d.options?.[i]?.mensuel).map((i) => {
+                      const o = d.options[i];
+                      return <li key={i}><span>{o.titre}</span><span>{eur(o.prix_unitaire)} HT / mois</span></li>;
+                    })}
+                  </ul>
+                </div>
+              )}
               {d.refacturations?.length > 0 && (
                 <div className="dv-refact">
                   <div className="dv-sub-s">Refacturé au réel, hors total</div>
@@ -385,14 +400,29 @@ export default function DevisPage({ devis }) {
       <footer className="dv-foot">
         <div className="dv-wrap">
           <Eyebrow>Votre équipe</Eyebrow>
-          <div className="dv-team">
-            {equipe.map((m) => (
-              <div key={m.name} className={`dv-member${m.name === accountManager ? " dv-member-am" : ""}`}>
-                {m.name === accountManager && <span className="dv-member-am-label">Contact privilégié</span>}
-                {m.img && <img src={asset(m.img)} alt="" loading="lazy" />}
-                <div><strong>{m.name}</strong><span>{m.role}</span></div>
+          {equipeProjet.length > 0 && (
+            <div className="dv-team-group">
+              <div className="dv-team-label">Sur ce projet</div>
+              <div className="dv-team">
+                {equipeProjet.map((m) => (
+                  <div key={m.name} className="dv-member">
+                    {m.img && <img src={asset(m.img)} alt="" loading="lazy" />}
+                    <div><strong>{m.name}</strong><span>{m.role}</span></div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+          )}
+          <div className="dv-team-group dv-team-group-arkt">
+            <div className="dv-team-label">Équipe ARKT</div>
+            <div className="dv-team dv-team-sm">
+              {equipeArkt.map((m) => (
+                <div key={m.name} className="dv-member">
+                  {m.img && <img src={asset(m.img)} alt="" loading="lazy" />}
+                  <div><strong>{m.name}</strong><span>{m.role}</span></div>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="dv-foot-bottom">
             <a href={`mailto:${ARKT.email}?subject=${encodeURIComponent(`Proposition ${d.numero}`)}`}>{ARKT.email}</a>

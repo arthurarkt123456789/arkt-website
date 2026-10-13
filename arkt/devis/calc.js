@@ -8,7 +8,7 @@ export function lineTotal(l) {
 
 export function computeTotals(devis, selected = []) {
   const lots = (devis.lots || []).reduce((s, l) => s + lineTotal(l), 0);
-  const opts = (devis.options || []).reduce((s, o, i) => (selected.includes(i) ? s + lineTotal(o) : s), 0);
+  const opts = (devis.options || []).reduce((s, o, i) => (!o.mensuel && selected.includes(i) ? s + lineTotal(o) : s), 0);
   const brut = lots + opts;
   let remise = 0;
   const r = devis.remise;

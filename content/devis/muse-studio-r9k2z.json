@@ -26,7 +26,7 @@
       "livrables": ["Audit marque existante", "Plateforme de marque", "Positionnement et territoire créatif", "Charte de ton et d'écriture", "Guide de déploiement multi-lieux", "Atelier de restitution"],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 5500
+      "prix_unitaire": 2400
     },
     {
       "titre": "Évolution de l'identité visuelle",
@@ -35,16 +35,16 @@
       "livrables": ["Évolution logo et déclinaisons", "Palette et typographies", "Système graphique complet", "Direction artistique photo", "Concepts signalétique studio", "Charte graphique"],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 7200
+      "prix_unitaire": 3200
     },
     {
       "titre": "Stratégie de contenu et notoriété",
       "tarif_id": "strategie-contenu",
-      "description": "Définir la stratégie de contenu Instagram et le plan de notoriété locale. Identifier les leviers presse, les partenariats pertinents et les formats qui fonctionnent dans l'univers sensoriel de Muse.",
-      "livrables": ["Stratégie de contenu Instagram", "Formats et piliers éditoriaux", "Plan de notoriété locale (presse, partenariats)", "Calendrier éditorial modèle", "Recommandations partenaires et presse"],
+      "description": "Définir la stratégie de contenu Instagram et le plan de notoriété locale. Identifier les leviers presse, les partenariats pertinents, les formats qui fonctionnent dans l'univers sensoriel de Muse — et les opportunités d'activation événementielle.",
+      "livrables": ["Stratégie de contenu Instagram", "Formats et piliers éditoriaux", "Plan de notoriété locale (presse, partenariats)", "RP et influence locale", "Évènementiel stratégique", "Calendrier éditorial modèle", "Recommandations partenaires et presse"],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 4400
+      "prix_unitaire": 3500
     }
   ],
   "options": [
@@ -54,7 +54,8 @@
       "description": "Production de contenu, création des posts et gestion du compte Instagram sur 3 mois après le lancement de la nouvelle identité.",
       "quantite": 3,
       "unite": "mois",
-      "prix_unitaire": 2100
+      "prix_unitaire": 1700,
+      "mensuel": true
     },
     {
       "titre": "Shooting photo pièce noire",
@@ -70,7 +71,7 @@
       "description": "Livret de marque complet destiné à l'ouverture des futurs lieux : charte d'usage, règles d'application, exemples de déclinaisons. Chiffré par analogie avec la grille édition.",
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 3200
+      "prix_unitaire": 2550
     }
   ],
   "refacturations": [
@@ -83,10 +84,10 @@
     { "etape": "Stratégie de contenu et notoriété", "duree": "2 semaines" }
   ],
   "conditions": {
-    "paiement": "30 % à la commande, solde selon l'avancement du planning.",
+    "paiement": "50 % à la commande, 50 % à la livraison.",
     "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
   },
-  "projets_refs": ["capsule", "spilow", "linstantcryo"],
+  "projets_refs": ["capsule", "kube", "horsdoeuvre"],
   "equipe": ["Arthur Barret", "Mickaël Guagenti"],
   "pdf_url": null,
   "tva": 0.2
