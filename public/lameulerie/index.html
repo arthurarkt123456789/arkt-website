@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Meulerie × Pizza Cosy — 05 Novembre</title>
+
+  <!-- Open Graph / WhatsApp preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.arkt-conseil.com/lameulerie/" />
+  <meta property="og:title" content="La Meulerie × Pizza Cosy — Jeudi 05 Novembre" />
+  <meta property="og:description" content="19H · La Meulerie Davso · 1 rue Breteuil, 13001 Marseille · Confirme ta présence avant le 01 novembre 🍕" />
+  <meta property="og:image" content="https://www.arkt-conseil.com/lameulerie/bg.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="fr_FR" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      color: #fff;
+      min-height: 100svh;
+      background: #000;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      background: url('bg.jpg') center center / cover no-repeat;
+      z-index: 0;
+    }
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.52);
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .logo-main {
+      width: min(320px, 82vw);
+    }
+
+    .event-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .event-date {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .event-time {
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      opacity: 0.7;
+    }
+
+    .sep {
+      width: 30px;
+      height: 1px;
+      background: rgba(255,255,255,0.4);
+      margin: 0.4rem 0;
+    }
+
+    .event-venue {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      opacity: 0.85;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    .event-lieu {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      opacity: 0.75;
+    }
+
+    .event-rsvp {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+
+    .form-wrap {
+      width: 100%;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .form input,
+    .form select {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      padding: 0.75rem 1rem;
+      outline: none;
+      border-radius: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: border-color 0.2s;
+      backdrop-filter: blur(4px);
+    }
+
+    .form input::placeholder { color: rgba(255,255,255,0.4); }
+
+    .form input:focus,
+    .form select:focus {
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .form select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='white' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-color: rgba(255,255,255,0.07);
+      cursor: pointer;
+    }
+
+    .form select option {
+      background: #1a1a1a;
+      color: #fff;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: #fff;
+      border: none;
+      color: #111;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 0.2rem;
+    }
+
+    .submit-btn:hover:not(:disabled) { opacity: 0.85; }
+    .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .msg {
+      display: none;
+      text-align: center;
+      font-size: 0.72rem;
+      padding: 0.75rem;
+      letter-spacing: 0.05em;
+      margin-top: 0.4rem;
+    }
+    .msg.success {
+      display: block;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .msg.error {
+      display: block;
+      background: rgba(255,80,80,0.15);
+      border: 1px solid rgba(255,80,80,0.3);
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-top: 0.75rem;
+    }
+
+    .detail-line {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.4;
+      text-align: center;
+    }
+
+    @media (max-height: 700px) {
+      .card { gap: 0.9rem; }
+      .logo-main { width: min(240px, 72vw); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg"></div>
+
+  <div class="page">
+    <div class="card">
+
+      <img src="logo.png" alt="La Meulerie × Pizza Cosy" class="logo-main" />
+
+      <div class="event-info">
+        <p class="event-date">Jeudi 05 Novembre</p>
+        <p class="event-time">19H</p>
+        <div class="sep"></div>
+        <p class="event-venue">La Meulerie Davso</p>
+        <p class="event-lieu">1 rue Breteuil · 13001 Marseille</p>
+        <p class="event-rsvp">Confirmer avant le 01 novembre</p>
+      </div>
+
+      <div class="form-wrap">
+        <form class="form" id="rsvpForm" novalidate>
+          <input type="text" id="nom" name="nom" placeholder="Nom & Prénom" required />
+          <input type="email" id="email" name="email" placeholder="Adresse email" required />
+          <select id="personnes" name="personnes" required>
+            <option value="" disabled selected>Nombre de personnes</option>
+            <option value="1">1 personne</option>
+            <option value="2">2 personnes</option>
+            <option value="3">3 personnes</option>
+            <option value="4">4 personnes</option>
+            <option value="5">5 personnes</option>
+            <option value="6+">6 ou plus</option>
+          </select>
+          <button type="submit" class="submit-btn" id="submitBtn">Confirmer ma présence</button>
+          <div class="msg" id="msgSuccess">Merci ! À très vite le 05 novembre.</div>
+          <div class="msg" id="msgError">Une erreur est survenue. Merci de réessayer.</div>
+        </form>
+        <div class="details">
+          <p class="detail-line">Dress code : Doudoune &amp; moonboots</p>
+          <p class="detail-line">Pizzas · Cheese · Spritz</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_URL = 'REMPLACER_PAR_URL_APPS_SCRIPT';
+
+    const form = document.getElementById('rsvpForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const msgSuccess = document.getElementById('msgSuccess');
+    const msgError = document.getElementById('msgError');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nom = document.getElementById('nom').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const personnes = document.getElementById('personnes').value;
+      if (!nom || !email || !personnes) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Envoi…';
+      msgSuccess.style.display = 'none';
+      msgError.style.display = 'none';
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nom, email, personnes, timestamp: new Date().toLocaleString('fr-FR') })
+        });
+        form.reset();
+        msgSuccess.classList.add('success');
+        msgSuccess.style.display = 'block';
+        submitBtn.textContent = 'Présence confirmée ✓';
+      } catch {
+        msgError.classList.add('error');
+        msgError.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Confirmer ma présence';
+      }
+    });
+  </script>
+
+</body>
+</html>
