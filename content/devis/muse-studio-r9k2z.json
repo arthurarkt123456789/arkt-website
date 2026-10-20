@@ -44,12 +44,12 @@
       "tarif_id": "strategie-contenu",
       "description": "Une fois la marque posée, on construit la stratégie pour la faire rayonner. On définit les piliers de contenu Instagram, les formats adaptés à l'univers sensoriel de Muse, le rythme de publication réaliste pour une équipe qui gère aussi les cours et les soins. On cartographie les relais de notoriété locaux : presse lifestyle marseillaise, créateurs de contenu bien-être, partenaires complémentaires, opportunités événementielles. On identifie les leviers d'influence locale qui correspondent à l'esprit de Muse. Le livrable est un guide complet, opérationnel dès la semaine suivante, que Marie peut suivre seule ou transmettre.",
       "livrables": [
-        "Stratégie de contenu Instagram (piliers éditoriaux, formats prioritaires, fréquence, ton)",
-        "Calendrier éditorial modèle sur 12 semaines (posts types, accroches, visuels à prévoir)",
-        "Plan de notoriété locale (presse, influenceurs, partenaires, événementiel)",
-        "Liste de 10 cibles RP et partenariats prioritaires avec plan d'approche",
-        "Recommandations événementielles (formats d'activation adaptés à l'univers Muse)",
-        "Brief créatif pour le premier mois de publication post-lancement"
+        "Document stratégie de contenu (objectifs, cibles, piliers éditoriaux, formats par pilier, fréquence recommandée, ton et style)",
+        "Calendrier éditorial modèle sur 12 semaines : thème, format, accroche, visuel à produire et objectif pour chaque post",
+        "Cartographie notoriété locale : liste commentée de 15 médias, comptes et partenaires pertinents (presse lifestyle, créateurs bien-être, studios complémentaires)",
+        "Fiches approche pour les 5 cibles prioritaires (angle, message, mode de contact recommandé)",
+        "Note événementielle : 3 formats d'activation adaptés à l'univers Muse (open class, soirée presse, collab partenaire)",
+        "Brief créatif du premier mois : thèmes, visuels à préparer, légendes types, hashtags"
       ],
       "quantite": 1,
       "unite": "forfait",
@@ -60,7 +60,7 @@
     {
       "titre": "Pilotage éditorial mensuel",
       "tarif_id": "strategique",
-      "description": "Chaque mois : un point stratégique de 45 minutes, un brief créatif pour le mois à venir, une revue des publications et des performances. On ajuste la ligne si nécessaire. Ce n'est pas de la production de contenu. C'est la direction éditoriale pour que Muse reste cohérente, quel que soit le volume de travail de Marie côté studio.",
+      "description": "Chaque mois, Marie reçoit trois choses : un compte-rendu de performance (portée, engagement, publications qui ont fonctionné et pourquoi), un brief créatif pour le mois à venir (thèmes, formats, accroches types, visuels à préparer), et un point stratégique de 45 minutes pour ajuster la ligne si nécessaire. Ce n'est pas de la production de contenu. C'est la direction éditoriale pour que Muse reste cohérente mois après mois, sans que Marie ait à tout porter seule.",
       "quantite": 3,
       "unite": "mois",
       "prix_unitaire": 1200,
