@@ -20,48 +20,40 @@
   ],
   "lots": [
     {
-      "titre": "Stratégie de marque",
-      "tarif_id": "audit-marque",
-      "description": "On commence par regarder ce qui existe : le logo MU, la palette bordeaux, les publications Instagram, le ressenti en salle. Pas pour tout refaire, mais pour identifier ce qui tient et ce qui freine. Ce diagnostic rapide alimente directement la plateforme de marque : ce que Muse est, ce qu'elle promet, comment elle parle et à qui. C'est le socle. Il garantit qu'une future responsable de salle à Lyon comprend Muse sans devoir appeler Marie, et qu'un futur franchisé sait exactement ce qu'il incarne.",
+      "titre": "Stratégie de marque et fondations visuelles",
+      "tarif_id": "strategie-marque",
+      "description": "On commence par regarder ce qui existe : le logo MU, la palette bordeaux, les publications Instagram, le ressenti en salle. Pas pour tout refaire, mais pour identifier ce qui tient et ce qui freine. Ce diagnostic rapide alimente directement la plateforme de marque : ce que Muse est, ce qu'elle promet, comment elle parle et à qui. À partir de là, on fait évoluer l'identité visuelle en cohérence avec ce socle. Logo, palette, typographies, gabarits clés pour Instagram et les supports essentiels. Le tout livré en fichiers directement utilisables. C'est la base qui garantit qu'une future responsable de salle à Lyon ou un franchisé comprend Muse sans devoir appeler Marie.",
       "livrables": [
         "Audit de la marque existante (logo, ton, publications Instagram, cohérence d'ensemble)",
         "Plateforme de marque (ADN, mission, valeurs, promesse client)",
-        "Positionnement et territoire créatif (ce qui différencie Muse dans l'univers bien-être)",
-        "Charte de ton et d'écriture (formulations types, tournures à éviter, exemples concrets)",
+        "Positionnement et territoire créatif",
+        "Charte de ton et d'écriture (formulations types, tournures à éviter, exemples)",
+        "Évolution du logo et déclinaisons (horizontal, carré, monochrome, fond sombre et fond clair)",
+        "Palette de couleurs finalisée avec codes hex, CMJN et Pantone",
+        "Sélection typographique avec règles d'usage",
+        "Gabarits Instagram (feed et stories), carte de visite, en-tête document",
+        "Fichiers sources sur Figma, exports PDF et PNG prêts à l'emploi",
         "Atelier de restitution (2h, présentiel ou visio)"
       ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 1800
+      "prix_unitaire": 2200
     },
     {
-      "titre": "Fondations visuelles",
-      "tarif_id": "logo-charte",
-      "description": "L'objectif n'est pas de repartir de zéro, mais de donner au logo MU et à la palette bordeaux un système graphique solide et utilisable. On travaille les déclinaisons du logo, on fixe les typographies, on crée les gabarits de base pour Instagram et les supports imprimés essentiels. Le résultat : un fichier maître que Marie ou n'importe quel futur collaborateur peut ouvrir et appliquer sans interprétation libre. Pas de charte graphique de 80 pages. Des outils concrets, immédiatement opérationnels.",
-      "livrables": [
-        "Évolution du logo et déclinaisons (horizontal, carré, monochrome, fond sombre et fond clair)",
-        "Palette de couleurs finalisée avec codes hex, CMJN et Pantone",
-        "Sélection typographique avec règles d'usage et exemples d'application",
-        "Système graphique : gabarits Instagram (feed et stories), carte de visite, en-tête document",
-        "Fichiers sources livrés sur Figma, exports PDF et PNG prêts à l'emploi"
-      ],
-      "quantite": 1,
-      "unite": "forfait",
-      "prix_unitaire": 1500
-    },
-    {
-      "titre": "Stratégie de contenu",
+      "titre": "Stratégie de contenu et notoriété",
       "tarif_id": "strategie-contenu",
-      "description": "On pose la stratégie Instagram : les piliers de contenu, les formats adaptés à l'univers sensoriel de Muse, la fréquence réaliste pour une équipe qui gère aussi les cours et les soins. On identifie les relais de notoriété locaux pertinents : presse lifestyle marseillaise, créateurs de contenu bien-être, partenaires potentiels. Le livrable est un guide opérationnel que Marie peut suivre seule ou transmettre à un futur prestataire.",
+      "description": "Une fois la marque posée, on construit la stratégie pour la faire rayonner. On définit les piliers de contenu Instagram, les formats adaptés à l'univers sensoriel de Muse, le rythme de publication réaliste pour une équipe qui gère aussi les cours et les soins. On cartographie les relais de notoriété locaux : presse lifestyle marseillaise, créateurs de contenu bien-être, partenaires complémentaires, opportunités événementielles. On identifie les leviers d'influence locale qui correspondent à l'esprit de Muse. Le livrable est un guide complet, opérationnel dès la semaine suivante, que Marie peut suivre seule ou transmettre.",
       "livrables": [
         "Stratégie de contenu Instagram (piliers éditoriaux, formats prioritaires, fréquence, ton)",
-        "Calendrier éditorial modèle sur 8 semaines (posts types, accroches, visuels à prévoir)",
-        "Recommandations notoriété locale (presse, influenceurs, partenaires à activer)",
-        "Liste de 10 cibles RP et partenariats prioritaires avec plan d'approche"
+        "Calendrier éditorial modèle sur 12 semaines (posts types, accroches, visuels à prévoir)",
+        "Plan de notoriété locale (presse, influenceurs, partenaires, événementiel)",
+        "Liste de 10 cibles RP et partenariats prioritaires avec plan d'approche",
+        "Recommandations événementielles (formats d'activation adaptés à l'univers Muse)",
+        "Brief créatif pour le premier mois de publication post-lancement"
       ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 700
+      "prix_unitaire": 1800
     }
   ],
   "options": [
@@ -97,10 +89,9 @@
   "remise": null,
   "planning": [
     { "etape": "Audit et diagnostic de la marque existante", "duree": "1 semaine" },
-    { "etape": "Plateforme de marque et charte de ton", "duree": "2 semaines" },
-    { "etape": "Atelier de restitution et validation stratégique", "duree": "1 semaine" },
-    { "etape": "Fondations visuelles (logo, palette, système graphique)", "duree": "3 semaines" },
-    { "etape": "Stratégie de contenu et guide éditorial", "duree": "1 semaine" }
+    { "etape": "Plateforme de marque, charte de ton et fondations visuelles", "duree": "4 semaines" },
+    { "etape": "Atelier de restitution et validation", "duree": "1 semaine" },
+    { "etape": "Stratégie de contenu, plan notoriété et guide éditorial", "duree": "2 semaines" }
   ],
   "conditions": {
     "paiement": "50 % à la commande, 50 % à la livraison.",
