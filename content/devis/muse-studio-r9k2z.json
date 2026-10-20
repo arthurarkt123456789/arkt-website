@@ -1,7 +1,7 @@
 {
   "slug": "muse-studio-r9k2z",
   "numero": "D-2026-001",
-  "date": "2026-10-13",
+  "date": "2026-10-20",
   "validite_jours": 30,
   "client": {
     "societe": "Muse Studio",
@@ -10,68 +10,85 @@
     "fonction": "",
     "email": ""
   },
-  "accroche": "Faire de Muse une marque de référence du bien-être à Marseille, prête à s'ouvrir sur plusieurs lieux.",
-  "contexte": "Muse Studio propose des cours de pilates reformer, yoga et des soins au 19 rue Louis Astruc dans le 13005 à Marseille. Un café avec terrasse de 90 m² complète l'offre. L'atmosphère est singulière : cours en pièce noire éclairée à la bougie, positionnement pleine conscience. La marque dispose d'une communauté fidèle de 3 000 abonnés sur Instagram. La prochaine étape : une image plus qualitative, une notoriété plus large, et une marque capable de se dupliquer sur 3 à 4 lieux, en franchise ou en propre.",
+  "accroche": "Poser les bases d'une marque capable de grandir, de se dupliquer et d'attirer un public plus large à Marseille.",
+  "contexte": "Muse Studio, c'est 19 rue Louis Astruc dans le 5e arrondissement de Marseille : des cours de pilates reformer et de yoga dans une pièce noire éclairée à la bougie, des soins corps et visage, et un café avec terrasse de 90 m². L'atmosphère est immédiatement reconnaissable. La communauté est là : 3 000 abonnés sur Instagram, une clientèle fidèle qui recommande. Ce qui manque, c'est une image à la hauteur de l'expérience, formalisée, transmissible. L'ambition est claire : ouvrir plusieurs lieux, en franchise ou en propre. Pour ça, la marque doit exister au-delà de Marie.",
   "enjeux": [
-    "Faire évoluer l'image sans perdre ce qui fait l'identité de Muse : la pièce noire, les bougies, l'esprit familial.",
-    "Construire une marque duplicable sur 3 à 4 lieux, en franchise ou en propre.",
-    "Développer la notoriété à partir d'une communauté de 3 000 abonnés encore confidentielle.",
-    "Rendre l'image plus qualitative, plus « marque », sans tout reconstruire à zéro."
+    "Faire évoluer l'image sans trahir ce qui fait Muse : la pièce noire, les bougies, l'esprit intimiste.",
+    "Formaliser une identité transmissible, capable de se dupliquer sur 3 à 4 lieux.",
+    "Poser une ligne de contenu claire pour passer de 3 000 abonnés à une communauté qui grandit.",
+    "Construire une marque assez solide pour embarquer de futurs partenaires ou franchisés."
   ],
   "lots": [
     {
       "titre": "Stratégie de marque",
-      "tarif_id": "strategie-marque",
-      "description": "La mission démarre par un audit rapide de la marque existante : cohérence, forces à capitaliser, failles à combler. Cette base alimente directement la plateforme de marque, pensée pour une architecture duplicable sur plusieurs lieux.",
-      "livrables": ["Audit marque existante", "Plateforme de marque", "Positionnement et territoire créatif", "Charte de ton et d'écriture", "Guide de déploiement multi-lieux", "Atelier de restitution"],
+      "tarif_id": "audit-marque",
+      "description": "On commence par regarder ce qui existe : le logo MU, la palette bordeaux, les publications Instagram, le ressenti en salle. Pas pour tout refaire, mais pour identifier ce qui tient et ce qui freine. Ce diagnostic rapide alimente directement la plateforme de marque : ce que Muse est, ce qu'elle promet, comment elle parle et à qui. C'est le socle. Il garantit qu'une future responsable de salle à Lyon comprend Muse sans devoir appeler Marie, et qu'un futur franchisé sait exactement ce qu'il incarne.",
+      "livrables": [
+        "Audit de la marque existante (logo, ton, publications Instagram, cohérence d'ensemble)",
+        "Plateforme de marque (ADN, mission, valeurs, promesse client)",
+        "Positionnement et territoire créatif (ce qui différencie Muse dans l'univers bien-être)",
+        "Charte de ton et d'écriture (formulations types, tournures à éviter, exemples concrets)",
+        "Atelier de restitution (2h, présentiel ou visio)"
+      ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 2400
+      "prix_unitaire": 1800
     },
     {
-      "titre": "Évolution de l'identité visuelle",
-      "tarif_id": "identite-complete",
-      "description": "Faire évoluer l'identité existante — logo MU, bordeaux — vers un système graphique plus fort et duplicable. Inclut une direction artistique photo pour la pièce noire et les bases de la signalétique studio.",
-      "livrables": ["Évolution logo et déclinaisons", "Palette et typographies", "Système graphique complet", "Direction artistique photo", "Concepts signalétique studio", "Charte graphique"],
+      "titre": "Fondations visuelles",
+      "tarif_id": "logo-charte",
+      "description": "L'objectif n'est pas de repartir de zéro, mais de donner au logo MU et à la palette bordeaux un système graphique solide et utilisable. On travaille les déclinaisons du logo, on fixe les typographies, on crée les gabarits de base pour Instagram et les supports imprimés essentiels. Le résultat : un fichier maître que Marie ou n'importe quel futur collaborateur peut ouvrir et appliquer sans interprétation libre. Pas de charte graphique de 80 pages. Des outils concrets, immédiatement opérationnels.",
+      "livrables": [
+        "Évolution du logo et déclinaisons (horizontal, carré, monochrome, fond sombre et fond clair)",
+        "Palette de couleurs finalisée avec codes hex, CMJN et Pantone",
+        "Sélection typographique avec règles d'usage et exemples d'application",
+        "Système graphique : gabarits Instagram (feed et stories), carte de visite, en-tête document",
+        "Fichiers sources livrés sur Figma, exports PDF et PNG prêts à l'emploi"
+      ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 3200
+      "prix_unitaire": 1500
     },
     {
-      "titre": "Stratégie de contenu et notoriété",
+      "titre": "Stratégie de contenu",
       "tarif_id": "strategie-contenu",
-      "description": "Définir la stratégie de contenu Instagram et le plan de notoriété locale. Identifier les leviers presse, les partenariats pertinents, les formats qui fonctionnent dans l'univers sensoriel de Muse — et les opportunités d'activation événementielle.",
-      "livrables": ["Stratégie de contenu Instagram", "Formats et piliers éditoriaux", "Plan de notoriété locale (presse, partenariats)", "RP et influence locale", "Évènementiel stratégique", "Calendrier éditorial modèle", "Recommandations partenaires et presse"],
+      "description": "On pose la stratégie Instagram : les piliers de contenu, les formats adaptés à l'univers sensoriel de Muse, la fréquence réaliste pour une équipe qui gère aussi les cours et les soins. On identifie les relais de notoriété locaux pertinents : presse lifestyle marseillaise, créateurs de contenu bien-être, partenaires potentiels. Le livrable est un guide opérationnel que Marie peut suivre seule ou transmettre à un futur prestataire.",
+      "livrables": [
+        "Stratégie de contenu Instagram (piliers éditoriaux, formats prioritaires, fréquence, ton)",
+        "Calendrier éditorial modèle sur 8 semaines (posts types, accroches, visuels à prévoir)",
+        "Recommandations notoriété locale (presse, influenceurs, partenaires à activer)",
+        "Liste de 10 cibles RP et partenariats prioritaires avec plan d'approche"
+      ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 3500
+      "prix_unitaire": 700
     }
   ],
   "options": [
     {
-      "titre": "Accompagnement communication",
-      "tarif_id": "accompagnement-com",
-      "description": "Production de contenu, création des posts et gestion du compte Instagram sur 3 mois après le lancement de la nouvelle identité.",
+      "titre": "Pilotage éditorial mensuel",
+      "tarif_id": "strategique",
+      "description": "Chaque mois : un point stratégique de 45 minutes, un brief créatif pour le mois à venir, une revue des publications et des performances. On ajuste la ligne si nécessaire. Ce n'est pas de la production de contenu. C'est la direction éditoriale pour que Muse reste cohérente, quel que soit le volume de travail de Marie côté studio.",
       "quantite": 3,
       "unite": "mois",
-      "prix_unitaire": 1700,
+      "prix_unitaire": 1200,
       "mensuel": true
     },
     {
       "titre": "Shooting photo pièce noire",
       "tarif_id": "shooting-photo",
-      "description": "Une demi-journée de shooting dans la pièce noire éclairée à la bougie. 25 photos retouchées pour les réseaux sociaux et le site.",
+      "description": "Une demi-journée de shooting dans la pièce noire éclairée à la bougie. Ambiance, pratiquants, détails de salle. 25 photos retouchées, prêtes à l'emploi pour Instagram et le site.",
       "quantite": 1,
       "unite": "forfait",
       "prix_unitaire": 800
     },
     {
-      "titre": "Livret de marque pour les futurs lieux",
+      "titre": "Livret de déploiement multi-lieux",
       "tarif_id": "brochure-execution",
-      "description": "Livret de marque complet destiné à l'ouverture des futurs lieux : charte d'usage, règles d'application, exemples de déclinaisons. Chiffré par analogie avec la grille édition.",
+      "description": "Un livret de marque complet à destination des futurs lieux : règles d'application de l'identité visuelle, standards de l'expérience Muse, exemples de déclinaisons par support. Indispensable avant d'ouvrir un deuxième site ou de lancer une franchise.",
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 2550
+      "prix_unitaire": 1900
     }
   ],
   "refacturations": [
@@ -79,15 +96,17 @@
   ],
   "remise": null,
   "planning": [
-    { "etape": "Audit et stratégie de marque", "duree": "3 semaines" },
-    { "etape": "Évolution identité visuelle", "duree": "5 semaines" },
-    { "etape": "Stratégie de contenu et notoriété", "duree": "2 semaines" }
+    { "etape": "Audit et diagnostic de la marque existante", "duree": "1 semaine" },
+    { "etape": "Plateforme de marque et charte de ton", "duree": "2 semaines" },
+    { "etape": "Atelier de restitution et validation stratégique", "duree": "1 semaine" },
+    { "etape": "Fondations visuelles (logo, palette, système graphique)", "duree": "3 semaines" },
+    { "etape": "Stratégie de contenu et guide éditorial", "duree": "1 semaine" }
   ],
   "conditions": {
     "paiement": "50 % à la commande, 50 % à la livraison.",
     "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
   },
-  "projets_refs": ["capsule", "kube", "horsdoeuvre"],
+  "projets_refs": ["capsule", "kube", "linstantcryo"],
   "equipe": ["Arthur Barret", "Mickaël Guagenti"],
   "pdf_url": null,
   "tva": 0.2
