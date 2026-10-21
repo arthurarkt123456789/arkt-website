@@ -1,0 +1,148 @@
+{
+  "slug": "play-forward",
+  "numero": "D-2026-002",
+  "date": "2026-10-21",
+  "validite_jours": 30,
+  "client": {
+    "societe": "Play Forward",
+    "secteur": "Programme sport-études USA, athlètes 15-18 ans",
+    "contact": "Anne-Sophie Dutat",
+    "fonction": "Fondatrice",
+    "email": ""
+  },
+  "accroche": "Poser les fondations d'une marque lisible pour les parents et les athlètes, et construire la machine qui transforme chaque masterclass en inscriptions.",
+  "contexte": "Play Forward prépare des athlètes de 15 à 18 ans à l'accès aux études sportives aux États-Unis. Le programme est opérationnel. La masterclass du 1er novembre est en place. Il manque une marque à la hauteur de l'ambition et un dispositif pour capter et convertir.",
+  "enjeux": [
+    "Le programme est clair et la masterclass du 1er novembre est en place.",
+    "La marque empile trois noms : Play Forward, Young Leader Program, SDNT x ATHLET x LEADER.",
+    "Le logo actuel est une image provisoire.",
+    "Le site ne montre ni prix, ni témoignage, ni résultat d'élève.",
+    "La différence avec les agences de placement figure en FAQ et pas en page d'accueil.",
+    "Deux publics à convaincre : le parent qui finance, l'athlète de 15 à 18 ans qui porte le projet."
+  ],
+  "lots": [
+    {
+      "titre": "Plateforme de marque",
+      "tarif_id": "strategie-marque",
+      "description": "On commence par trancher sur l'architecture de nom : quelle est la marque mère, quel est le nom de l'offre. À partir de là, on pose le positionnement face aux agences de placement, les messages par cible et la segmentation par type de sport.",
+      "livrables": [
+        "Architecture de nom : marque mère et nom d'offre",
+        "Positionnement face aux agences de placement",
+        "Messages par cible : parents, athlètes",
+        "Segmentation : sports individuels, sports collectifs"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 2500
+    },
+    {
+      "titre": "Identité visuelle",
+      "tarif_id": "identite-complete",
+      "description": "Remplacement du logo provisoire par un système visuel complet. Charte, couleurs, typographies, règles photo. Gabarits prêts à l'emploi pour tous les formats réseaux.",
+      "livrables": [
+        "Logo et déclinaisons",
+        "Charte : couleurs, typographies, règles photo",
+        "Gabarits réseaux sociaux : post, carrousel, story, couverture Reels"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 4000
+    },
+    {
+      "titre": "Site",
+      "tarif_id": "site-vitrine",
+      "description": "Refonte des pages clés orientée conversion. On fait apparaître le prix, les preuves et la différence avec les agences de placement dès la page d'accueil. On installe le tracking complet pour piloter les campagnes.",
+      "livrables": [
+        "Refonte page d'accueil, programme, masterclass et FAQ",
+        "Bloc preuves : témoignages, parcours, chiffres",
+        "Affichage du prix ou d'un point d'entrée tarifaire",
+        "SEO de base : structure, balises, requêtes sport-études USA, bourse sportive, NCAA",
+        "Tracking : Google Analytics, pixel Meta, événements de conversion"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 5000
+    },
+    {
+      "titre": "Funnel webinar",
+      "tarif_id": "accompagnement-com",
+      "description": "Un tunnel de masterclass récurrent, réutilisable chaque mois. Pages inscription, merci et replay. Séquences email et SMS complètes. Tableau de suivi pour piloter les conversions de chaque session.",
+      "livrables": [
+        "Tunnel masterclass récurrent mensuel",
+        "Pages inscription, merci, replay",
+        "Séquences email et SMS complètes",
+        "Tableau de suivi : inscrits, présents, RDV, inscriptions"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 2000
+    }
+  ],
+  "options": [
+    {
+      "titre": "Express masterclass 1er novembre",
+      "tarif_id": "express-masterclass",
+      "description": "Intervention rapide avant la masterclass du 1er novembre. Séquences email et SMS de rappel avant et après la session, correctifs urgents du site. Livraison avant le 30 octobre.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 1200
+    },
+    {
+      "titre": "Acquisition 6 mois",
+      "tarif_id": "acquisition",
+      "description": "Community management Instagram et TikTok (1 900 € HT / mois), LinkedIn de la fondatrice (800 € HT / mois), pilotage des campagnes Meta Ads (800 € HT / mois, budget média non inclus). Démarrage après livraison des Fondations.",
+      "quantite": 6,
+      "unite": "mois",
+      "prix_unitaire": 3500,
+      "mensuel": true
+    },
+    {
+      "titre": "Production vidéo ads, 3 à 4 formats",
+      "tarif_id": "production-video",
+      "description": "Production de 3 à 4 formats vidéo pour les campagnes Meta Ads.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 2500
+    },
+    {
+      "titre": "CRM",
+      "tarif_id": "crm",
+      "description": "Pipeline lead, RDV, inscription et automatisations.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 1500
+    },
+    {
+      "titre": "Kit prescription clubs et sections sport-études",
+      "tarif_id": "kit-prescription",
+      "description": "Deck et supports de présentation pour les clubs et sections sport-études.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 1500
+    }
+  ],
+  "refacturations": [
+    { "label": "Budget média Meta Ads (si campagnes activées)", "estimation": null }
+  ],
+  "remise": {
+    "label": "Remise pack Fondations",
+    "type": "absolu",
+    "valeur": 2000
+  },
+  "planning": [
+    { "etape": "Express masterclass (si retenu)", "duree": "avant le 30 octobre" },
+    { "etape": "Plateforme de marque et architecture de nom", "duree": "2 semaines" },
+    { "etape": "Identité visuelle", "duree": "3 semaines" },
+    { "etape": "Site et SEO", "duree": "3 semaines" },
+    { "etape": "Funnel webinar", "duree": "1 semaine" },
+    { "etape": "Démarrage acquisition (si retenu)", "duree": "à la livraison des Fondations" }
+  ],
+  "conditions": {
+    "paiement": "50 % à la signature, 50 % à la livraison.",
+    "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
+  },
+  "projets_refs": ["racine", "airbnb", "palauma"],
+  "equipe": ["Arthur Barret"],
+  "pdf_url": null,
+  "tva": 0.2
+}
