@@ -164,7 +164,7 @@ export default function DevisPage({ devis }) {
           <a href="/" className="dv-brand" aria-label="ARKT Conseil">
             <img src="/arkt/logo-arkt.png" alt="ARKT Conseil" />
           </a>
-          <span className="dv-top-ref">Proposition {d.numero}</span>
+          <span className="dv-top-ref">Proposition commerciale</span>
         </div>
       </header>
 
@@ -173,7 +173,7 @@ export default function DevisPage({ devis }) {
         <section className="dv-hero">
           <div className="dv-halo" aria-hidden="true" />
           <div className="dv-wrap dv-hero-in">
-            <Eyebrow>Proposition commerciale · {d.numero}</Eyebrow>
+            <Eyebrow>Proposition commerciale</Eyebrow>
             <h1 className="dv-display dv-hero-title">{d.client?.societe}</h1>
             {d.accroche && <p className="dv-hero-lead">{d.accroche}</p>}
             <dl className="dv-hero-meta">
