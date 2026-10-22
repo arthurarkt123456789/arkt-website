@@ -11,15 +11,20 @@
     "email": ""
   },
   "accroche": "Poser les fondations d'une marque lisible pour les parents et les athlètes, et construire la machine qui transforme chaque masterclass en inscriptions.",
-  "contexte": "Play Forward prépare des athlètes de 15 à 18 ans à l'accès aux études sportives aux États-Unis. Le programme est opérationnel. La masterclass du 1er novembre est en place. Il manque une marque à la hauteur de l'ambition et un dispositif pour capter et convertir.",
+  "contexte": "Play Forward prépare des athlètes de 15 à 18 ans à l'accès aux études sportives aux États-Unis. Le programme est opérationnel et les résultats sont là. Ce qui manque : une marque à la hauteur de l'ambition et le dispositif pour transformer l'audience en inscriptions.",
   "enjeux": [
-    "Le programme est clair et la masterclass du 1er novembre est en place.",
-    "La marque empile trois noms : Play Forward, Young Leader Program, SDNT x ATHLET x LEADER.",
-    "Le logo actuel est une image provisoire.",
-    "Le site ne montre ni prix, ni témoignage, ni résultat d'élève.",
-    "La différence avec les agences de placement figure en FAQ et pas en page d'accueil.",
-    "Deux publics à convaincre : le parent qui finance, l'athlète de 15 à 18 ans qui porte le projet."
+    "Un programme qui a fait ses preuves — des athlètes placés, des résultats concrets — mais une marque qui ne leur rend pas justice et qui ne convertit pas encore à sa hauteur.",
+    "La fenêtre est ouverte : le marché des études sportives aux États-Unis n'a pas encore de leader identifié en France. Celui qui s'impose maintenant verrouille la position.",
+    "Deux décisions à déclencher en parallèle : la confiance du parent qui investit et l'adhésion de l'athlète qui rêve — avec des messages et des preuves différents pour chacun.",
+    "Une architecture de marque fragmentée — trois noms, un logo provisoire — qui dilue la crédibilité d'un programme premium face à des familles qui ont besoin d'être rassurées avant d'investir.",
+    "La masterclass est une machine à prospects. Sans dispositif de capture et de conversion derrière, elle génère de l'audience sans transformer.",
+    "La différenciation face aux agences de placement est la clé de la décision d'achat — mais elle est enfouie là où personne ne la lit."
   ],
+  "site_preview": {
+    "label": "Notre vision de votre prochain site",
+    "url": "/devis-assets/play-forward-maquette.html",
+    "description": "Une maquette conçue pour vous montrer concrètement ce que pourrait être votre site refonte : une page d'accueil orientée conversion, avec les bons messages aux bons endroits."
+  },
   "lots": [
     {
       "titre": "Plateforme de marque",
@@ -121,6 +126,76 @@
       "prix_unitaire": 1500
     }
   ],
+  "meta_ads": {
+    "axes": [
+      {
+        "titre": "Conversion directe",
+        "detail": "Campagnes orientées inscription masterclass avec optimisation coût par lead. L'objectif : remplir chaque session au meilleur coût, avec un pixel bien installé pour mesurer chaque étape du funnel."
+      },
+      {
+        "titre": "Notoriété aspirationnelle",
+        "detail": "Toucher les parents et athlètes en amont, avant même qu'ils cherchent une solution — en jouant sur le registre du rêve américain et de la réussite concrète d'anciens élèves."
+      },
+      {
+        "titre": "Retargeting précis",
+        "detail": "Récupérer les visiteurs du site, les inscrits aux masterclasses non-convertis, et les nourrir jusqu'à la décision avec des messages adaptés à leur stade de réflexion."
+      }
+    ],
+    "ciblages": [
+      "Parents 35–50 ans, CSP+, enfants de 14–18 ans pratiquant un sport · France entière",
+      "Athlètes 15–25 ans · centres d'intérêt : sport universitaire US, NCAA, bourses sportives, sport de haut niveau",
+      "Lookalike 1–2 % basé sur les inscrits et conversions passées",
+      "Clubs et sections sport-études · géociblage zones à fort potentiel : Île-de-France, Auvergne-Rhône-Alpes, PACA, Bretagne"
+    ],
+    "storyboards": [
+      {
+        "format": "Reel 15 s · POV athlète",
+        "script": "Texte à l'écran : « Il s'entraînait en Nationale. Il joue maintenant à UCLA. » — Coupe rapide : terrain FR → campus US → visa → famille fière. Voix off : « Play Forward. Le programme qui ouvre les portes. » CTA : « Je découvre la masterclass. »"
+      },
+      {
+        "format": "Carrousel · Témoignage parent",
+        "script": "Slide 1 : « Je ne savais pas que c'était possible pour mon fils. » · Slide 2 : « On a eu toutes les réponses en un rendez-vous. » · Slide 3 : « Aujourd'hui il est à San Diego. » · Slide finale CTA : « Rejoignez la prochaine masterclass. »"
+      },
+      {
+        "format": "Reel 30 s · Urgency masterclass",
+        "script": "Anne-Sophie face caméra, ton direct : « Le 1er novembre, je vous explique exactement comment ça marche : les critères, les universités, les coûts réels et les bourses possibles. Les places sont limitées. » CTA : « Je réserve ma place. »"
+      },
+      {
+        "format": "Story 6 s · Retargeting punch",
+        "script": "Fond noir. Texte blanc : « Vous avez regardé. Pas encore sauté le pas. » Texte accent : « La masterclass est le 1er novembre. » CTA swipe up : « Je m'inscris. »"
+      }
+    ]
+  },
+  "partenaires": {
+    "athletes": [
+      {
+        "profil": "Basketteur de Pro B ou Nationale 1",
+        "pourquoi": "Niveau suffisant pour les universités Division II et III, communauté Instagram engagée, et un témoignage crédible pour les familles qui hésitent encore."
+      },
+      {
+        "profil": "Nageuse de haut niveau hors JO",
+        "pourquoi": "La natation est le sport le plus doté en bourses NCAA. Ce profil d'athlète élite reconnue rassure les parents sur la qualité et le sérieux du programme."
+      },
+      {
+        "profil": "Rugbyman ou footballeur américain en reconversion",
+        "pourquoi": "Le football américain est en plein essor en France. Ce profil « pionnier » incarne exactement la promesse Play Forward : ouvrir une voie qui n'existait pas encore."
+      }
+    ],
+    "ecoles": [
+      {
+        "profil": "Sections sport-études lycées Île-de-France (Lakanal, Pôle France INSEP)",
+        "pourquoi": "Concentration maximale d'athlètes au profil exact, avec des conseillers d'orientation en recherche active d'alternatives aux filières classiques."
+      },
+      {
+        "profil": "CREPS régionaux (Centres de Ressources, d'Expertise et de Performance Sportive)",
+        "pourquoi": "Présents dans 14 régions, ils accueillent les espoirs nationaux et représentent un canal de prescription institutionnel à très fort potentiel de volume."
+      },
+      {
+        "profil": "Classes prépa STAPS et BTS Sport",
+        "pourquoi": "Jeunes qui ont le niveau sportif mais pas la filière académique classique — Play Forward est exactement l'alternative qu'ils cherchent sans savoir qu'elle existe."
+      }
+    ]
+  },
   "refacturations": [
     { "label": "Budget média Meta Ads (si campagnes activées)", "estimation": null }
   ],

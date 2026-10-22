@@ -10,8 +10,9 @@ function projectCard(id) {
   const p = ALL_PROJECTS.find((x) => x.id === id);
   if (!p) return null;
   const panels = p.panels || [];
-  const media = panels.find((x) => x.kind === "media");
-  const video = panels.find((x) => x.kind === "video");
+  const mediaPanels = panels
+    .filter((x) => x.kind === "media" || x.kind === "video")
+    .slice(0, 6);
   const did = panels.find((x) => x.kind === "text" && /fait/i.test(x.head || ""));
   return {
     id,
@@ -20,7 +21,9 @@ function projectCard(id) {
     tag: p.tag,
     claim: p.claim,
     logo: asset(p.logo),
-    img: asset(media?.src || video?.poster),
+    images: mediaPanels
+      .map((x) => ({ src: asset(x.src || x.poster || null), caption: x.caption || "" }))
+      .filter((x) => x.src),
     did: did?.body?.[1] || did?.body?.[0] || "",
   };
 }
@@ -52,6 +55,36 @@ function useReveal() {
 
 function Eyebrow({ children }) {
   return <div className="dv-eyebrow"><span className="dv-dot" />{children}</div>;
+}
+
+function RefCarousel({ images }) {
+  const [idx, setIdx] = useState(0);
+  if (!images?.length) return null;
+  const total = images.length;
+  const prev = () => setIdx((i) => (i - 1 + total) % total);
+  const next = () => setIdx((i) => (i + 1) % total);
+  return (
+    <div className="dv-car">
+      <div className="dv-car-track" style={{ "--slide": idx }}>
+        {images.map((img, i) => (
+          <div key={i} className="dv-car-slide">
+            <img src={img.src} alt={img.caption} loading="lazy" />
+          </div>
+        ))}
+      </div>
+      {total > 1 && (
+        <>
+          <button className="dv-car-btn dv-car-prev" onClick={prev} aria-label="Précédent">&#8249;</button>
+          <button className="dv-car-btn dv-car-next" onClick={next} aria-label="Suivant">&#8250;</button>
+          <div className="dv-car-dots" aria-hidden="true">
+            {images.map((_, i) => (
+              <button key={i} className={`dv-car-dot${i === idx ? " on" : ""}`} onClick={() => setIdx(i)} tabIndex={-1} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default function DevisPage({ devis }) {
@@ -174,7 +207,7 @@ export default function DevisPage({ devis }) {
               <div className="dv-refs">
                 {projets.map((p, i) => (
                   <article key={p.id} className="dv-ref dv-reveal" style={{ transitionDelay: `${i * 90}ms` }}>
-                    {p.img && <div className="dv-ref-img"><img src={p.img} alt={p.name} loading="lazy" /></div>}
+                    <RefCarousel images={p.images} />
                     <div className="dv-ref-body">
                       <div className="dv-ref-top">
                         {p.logo && <img className="dv-ref-logo" src={p.logo} alt="" loading="lazy" />}
@@ -242,6 +275,22 @@ export default function DevisPage({ devis }) {
               ))}
             </div>
 
+            {/* Aperçu maquette site */}
+            {d.site_preview && (
+              <div className="dv-site-preview dv-reveal">
+                <div className="dv-site-preview-in">
+                  <div className="dv-site-preview-text">
+                    <div className="dv-eyebrow dv-eyebrow-sm"><span className="dv-dot" />Aperçu inclus</div>
+                    <h3 className="dv-site-preview-title">{d.site_preview.label}</h3>
+                    <p>{d.site_preview.description}</p>
+                  </div>
+                  <a href={d.site_preview.url} target="_blank" rel="noopener" className="dv-btn dv-btn-light dv-site-preview-cta">
+                    Voir la maquette →
+                  </a>
+                </div>
+              </div>
+            )}
+
             {d.options?.length > 0 && (
               <div className="dv-options">
                 <h3 className="dv-sub dv-reveal">Options</h3>
@@ -267,6 +316,104 @@ export default function DevisPage({ devis }) {
             )}
           </div>
         </section>
+
+        {/* ---------- META ADS ---------- */}
+        {d.meta_ads && (
+          <section className="dv-section dv-alt">
+            <div className="dv-wrap">
+              <div className="dv-head dv-reveal">
+                <Eyebrow>Recommandations</Eyebrow>
+                <h2 className="dv-display dv-h2">Notre approche Meta Ads</h2>
+                <p className="dv-lead">Une stratégie publicitaire en trois temps, pensée pour le cycle de décision propre au programme : de la découverte à l'inscription.</p>
+              </div>
+
+              {/* Axes */}
+              <div className="dv-ads-axes">
+                {d.meta_ads.axes.map((ax, i) => (
+                  <div key={i} className="dv-ads-axe dv-reveal" style={{ transitionDelay: `${i * 80}ms` }}>
+                    <div className="dv-ads-axe-k">0{i + 1}</div>
+                    <h3 className="dv-ads-axe-title">{ax.titre}</h3>
+                    <p>{ax.detail}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Ciblages */}
+              <div className="dv-ads-block dv-reveal">
+                <div className="dv-ads-block-label">Ciblages</div>
+                <ul className="dv-ads-list">
+                  {d.meta_ads.ciblages.map((c, i) => (
+                    <li key={i}>{c}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Storyboards */}
+              <div className="dv-ads-block dv-reveal">
+                <div className="dv-ads-block-label">Storyboards type</div>
+                <div className="dv-ads-boards">
+                  {d.meta_ads.storyboards.map((sb, i) => (
+                    <div key={i} className="dv-ads-board dv-reveal" style={{ transitionDelay: `${i * 70}ms` }}>
+                      <div className="dv-ads-board-format">{sb.format}</div>
+                      <p className="dv-ads-board-script">{sb.script}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ---------- PARTENAIRES POTENTIELS ---------- */}
+        {d.partenaires && (
+          <section className="dv-section">
+            <div className="dv-wrap">
+              <div className="dv-head dv-reveal">
+                <Eyebrow>Pour aller plus loin</Eyebrow>
+                <h2 className="dv-display dv-h2">Profils à activer</h2>
+                <p className="dv-lead">Des partenariats ciblés pour amplifier la crédibilité du programme et accéder à un recrutement à volume.</p>
+              </div>
+
+              <div className="dv-partner-cols">
+                {/* Athlètes */}
+                {d.partenaires.athletes?.length > 0 && (
+                  <div className="dv-partner-col dv-reveal">
+                    <div className="dv-partner-col-label">Athlètes ambassadeurs</div>
+                    <ol className="dv-partner-list">
+                      {d.partenaires.athletes.map((a, i) => (
+                        <li key={i} className="dv-partner-item">
+                          <div className="dv-partner-k">0{i + 1}</div>
+                          <div>
+                            <div className="dv-partner-title">{a.profil}</div>
+                            <p className="dv-partner-why">{a.pourquoi}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+
+                {/* Écoles */}
+                {d.partenaires.ecoles?.length > 0 && (
+                  <div className="dv-partner-col dv-reveal" style={{ transitionDelay: "120ms" }}>
+                    <div className="dv-partner-col-label">Écoles et institutions sport</div>
+                    <ol className="dv-partner-list">
+                      {d.partenaires.ecoles.map((e, i) => (
+                        <li key={i} className="dv-partner-item">
+                          <div className="dv-partner-k">0{i + 1}</div>
+                          <div>
+                            <div className="dv-partner-title">{e.profil}</div>
+                            <p className="dv-partner-why">{e.pourquoi}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ---------- PLANNING ---------- */}
         {d.planning?.length > 0 && (
