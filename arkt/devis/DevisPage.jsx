@@ -222,13 +222,13 @@ export default function DevisPage({ devis }) {
                 <Eyebrow>Références</Eyebrow>
                 <h2 className="dv-display dv-h2">Des projets inspirants</h2>
               </div>
-            </div>
-            <div className="dv-refs-stack">
-              {projets.map((proj) => (
-                <div key={proj.id} className="dv-ref-full dv-reveal">
-                  <ProjectDetail proj={proj} onClose={() => {}} />
-                </div>
-              ))}
+              <div className="dv-refs-stack">
+                {projets.map((proj) => (
+                  <div key={proj.id} className="dv-ref-full dv-reveal">
+                    <ProjectDetail proj={proj} onClose={() => {}} />
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         )}
