@@ -22,7 +22,7 @@ function projectCard(id) {
     claim: p.claim,
     logo: asset(p.logo),
     images: mediaPanels
-      .map((x) => ({ src: asset(x.src || x.poster || null), caption: x.caption || "" }))
+      .map((x) => ({ src: asset(x.kind === "video" ? x.poster : x.src || x.poster || null), caption: x.caption || "" }))
       .filter((x) => x.src),
     did: did?.body?.[1] || did?.body?.[0] || "",
   };
