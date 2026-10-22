@@ -423,15 +423,17 @@ export default function DevisPage({ devis }) {
                 <Eyebrow>Planning</Eyebrow>
                 <h2 className="dv-display dv-h2">Les étapes</h2>
               </div>
-              <ol className="dv-plan">
-                {d.planning.map((p, i) => (
-                  <li key={i} className="dv-reveal" style={{ transitionDelay: `${i * 80}ms` }}>
-                    <span className="dv-plan-k">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="dv-plan-step">{p.etape}</span>
-                    <span className="dv-plan-dur">{p.duree}</span>
-                  </li>
-                ))}
-              </ol>
+              <div className="dv-plan-wrap">
+                <ol className="dv-plan">
+                  {d.planning.map((p, i) => (
+                    <li key={i}>
+                      <span className="dv-plan-k">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="dv-plan-step">{p.etape}</span>
+                      <span className="dv-plan-dur">{p.duree}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
           </section>
         )}

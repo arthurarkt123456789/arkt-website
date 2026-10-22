@@ -11,14 +11,14 @@
     "email": ""
   },
   "accroche": "Poser les fondations d'une marque lisible pour les parents et les athlètes, et construire la machine qui transforme chaque masterclass en inscriptions.",
-  "contexte": "Play Forward prépare des athlètes de 15 à 18 ans à l'accès aux études sportives aux États-Unis. Le programme est opérationnel et les résultats sont là. Ce qui manque : une marque à la hauteur de l'ambition et le dispositif pour transformer l'audience en inscriptions.",
+  "contexte": "Play Forward prépare des athlètes de 15 à 18 ans à l'accès aux études sportives aux États-Unis. Le programme est construit, l'offre est claire, la masterclass du 1er novembre est en place. Ce qui manque : une marque à la hauteur de l'ambition et le dispositif pour transformer chaque inscrit en lead qualifié.",
   "enjeux": [
-    "Un programme qui a fait ses preuves — des athlètes placés, des résultats concrets — mais une marque qui ne leur rend pas justice et qui ne convertit pas encore à sa hauteur.",
+    "Un programme structuré et opérationnel, avec une proposition claire et différenciante, mais une marque qui n'est pas encore à la hauteur de l'ambition.",
     "La fenêtre est ouverte : le marché des études sportives aux États-Unis n'a pas encore de leader identifié en France. Celui qui s'impose maintenant verrouille la position.",
-    "Deux décisions à déclencher en parallèle : la confiance du parent qui investit et l'adhésion de l'athlète qui rêve — avec des messages et des preuves différents pour chacun.",
-    "Une architecture de marque fragmentée — trois noms, un logo provisoire — qui dilue la crédibilité d'un programme premium face à des familles qui ont besoin d'être rassurées avant d'investir.",
+    "Deux décisions à déclencher en parallèle : la confiance du parent qui investit et l'adhésion de l'athlète qui rêve, avec des messages et des preuves différents pour chacun.",
+    "Une architecture de marque fragmentée (trois noms, un logo provisoire) qui dilue la crédibilité d'un programme premium face à des familles qui ont besoin d'être rassurées avant d'investir.",
     "La masterclass est une machine à prospects. Sans dispositif de capture et de conversion derrière, elle génère de l'audience sans transformer.",
-    "La différenciation face aux agences de placement est la clé de la décision d'achat — mais elle est enfouie là où personne ne la lit."
+    "La différenciation face aux agences de placement est la clé de la décision d'achat, mais elle est enfouie là où personne ne la lit."
   ],
   "site_preview": {
     "label": "Notre vision de votre prochain site",
@@ -93,21 +93,29 @@
       "prix_unitaire": 1200
     },
     {
+      "titre": "Stratégie d'acquisition & performance",
+      "tarif_id": "strat-acquisition",
+      "description": "Stratégie Meta Ads complète, architecture des campagnes, ciblages, brief créatif, storyboards et tableau de bord de pilotage. Ce forfait pose le cadre stratégique et les outils de mesure pour que chaque euro investi en média soit traçable et optimisable.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 4000
+    },
+    {
+      "titre": "Pack créa vidéos, 15 formats",
+      "tarif_id": "pack-video",
+      "description": "Production de 15 formats vidéo prêts à diffuser sur Meta Ads. Scripts, tournage ou montage sur base de rushes existants, formats adaptés : Reels 9/16, formats carrés, stories. Chaque vidéo est pensée pour un objectif précis : notoriété, masterclass, retargeting.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 6000
+    },
+    {
       "titre": "Acquisition 6 mois",
       "tarif_id": "acquisition",
-      "description": "Community management Instagram et TikTok (1 900 € HT / mois), LinkedIn de la fondatrice (800 € HT / mois), pilotage des campagnes Meta Ads (800 € HT / mois, budget média non inclus). Démarrage après livraison des Fondations.",
+      "description": "Community management Instagram et TikTok (1 900 HT / mois), LinkedIn de la fondatrice (800 HT / mois), pilotage des campagnes Meta Ads (800 HT / mois, budget média non inclus). Démarrage après livraison des Fondations.",
       "quantite": 6,
       "unite": "mois",
       "prix_unitaire": 3500,
       "mensuel": true
-    },
-    {
-      "titre": "Production vidéo ads, 3 à 4 formats",
-      "tarif_id": "production-video",
-      "description": "Production de 3 à 4 formats vidéo pour les campagnes Meta Ads.",
-      "quantite": 1,
-      "unite": "forfait",
-      "prix_unitaire": 2500
     },
     {
       "titre": "CRM",
@@ -134,7 +142,7 @@
       },
       {
         "titre": "Notoriété aspirationnelle",
-        "detail": "Toucher les parents et athlètes en amont, avant même qu'ils cherchent une solution — en jouant sur le registre du rêve américain et de la réussite concrète d'anciens élèves."
+        "detail": "Toucher les parents et athlètes en amont, avant même qu'ils cherchent une solution, en jouant sur le registre du rêve américain et de la réussite concrète d'anciens élèves."
       },
       {
         "titre": "Retargeting précis",
@@ -142,26 +150,26 @@
       }
     ],
     "ciblages": [
-      "Parents 35–50 ans, CSP+, enfants de 14–18 ans pratiquant un sport · France entière",
-      "Athlètes 15–25 ans · centres d'intérêt : sport universitaire US, NCAA, bourses sportives, sport de haut niveau",
-      "Lookalike 1–2 % basé sur les inscrits et conversions passées",
-      "Clubs et sections sport-études · géociblage zones à fort potentiel : Île-de-France, Auvergne-Rhône-Alpes, PACA, Bretagne"
+      "Parents 35-50 ans, CSP+, enfants de 14-18 ans pratiquant un sport, France entière",
+      "Athlètes 15-25 ans, centres d'intérêt : sport universitaire US, NCAA, bourses sportives, sport de haut niveau",
+      "Lookalike 1-2% basé sur les inscrits et conversions passées",
+      "Clubs et sections sport-études, géociblage zones à fort potentiel : Île-de-France, Auvergne-Rhône-Alpes, PACA, Bretagne"
     ],
     "storyboards": [
       {
-        "format": "Reel 15 s · POV athlète",
-        "script": "Texte à l'écran : « Il s'entraînait en Nationale. Il joue maintenant à UCLA. » — Coupe rapide : terrain FR → campus US → visa → famille fière. Voix off : « Play Forward. Le programme qui ouvre les portes. » CTA : « Je découvre la masterclass. »"
+        "format": "Reel 15 s - POV athlète",
+        "script": "Texte à l'écran : « Il s'entraînait en Nationale. Il joue maintenant à UCLA. » Coupe rapide : terrain FR, campus US, visa, famille fière. Voix off : « Play Forward. Le programme qui ouvre les portes. » CTA : « Je découvre la masterclass. »"
       },
       {
-        "format": "Carrousel · Témoignage parent",
-        "script": "Slide 1 : « Je ne savais pas que c'était possible pour mon fils. » · Slide 2 : « On a eu toutes les réponses en un rendez-vous. » · Slide 3 : « Aujourd'hui il est à San Diego. » · Slide finale CTA : « Rejoignez la prochaine masterclass. »"
+        "format": "Carrousel - Témoignage parent",
+        "script": "Slide 1 : « Je ne savais pas que c'était possible pour mon fils. » Slide 2 : « On a eu toutes les réponses en un rendez-vous. » Slide 3 : « Aujourd'hui il est à San Diego. » Slide finale CTA : « Rejoignez la prochaine masterclass. »"
       },
       {
-        "format": "Reel 30 s · Urgency masterclass",
+        "format": "Reel 30 s - Urgency masterclass",
         "script": "Anne-Sophie face caméra, ton direct : « Le 1er novembre, je vous explique exactement comment ça marche : les critères, les universités, les coûts réels et les bourses possibles. Les places sont limitées. » CTA : « Je réserve ma place. »"
       },
       {
-        "format": "Story 6 s · Retargeting punch",
+        "format": "Story 6 s - Retargeting punch",
         "script": "Fond noir. Texte blanc : « Vous avez regardé. Pas encore sauté le pas. » Texte accent : « La masterclass est le 1er novembre. » CTA swipe up : « Je m'inscris. »"
       }
     ]
@@ -169,21 +177,21 @@
   "partenaires": {
     "athletes": [
       {
-        "profil": "Basketteur de Pro B ou Nationale 1",
-        "pourquoi": "Niveau suffisant pour les universités Division II et III, communauté Instagram engagée, et un témoignage crédible pour les familles qui hésitent encore."
+        "profil": "Joël Ayayi",
+        "pourquoi": "Formé en France, Joël Ayayi a rejoint Gonzaga University en NCAA Division I avant de signer en NBA puis en EuroLeague. Son parcours est exactement la promesse Play Forward : une voie concrète, tracée, accessible depuis la France."
       },
       {
-        "profil": "Nageuse de haut niveau hors JO",
-        "pourquoi": "La natation est le sport le plus doté en bourses NCAA. Ce profil d'athlète élite reconnue rassure les parents sur la qualité et le sérieux du programme."
+        "profil": "Béryl Gastaldello",
+        "pourquoi": "Nageuse internationale, Béryl Gastaldello a entraîné à LSU (Louisiana State University, NCAA D1) tout en représentant la France en compétition internationale. La natation est le sport le plus doté en bourses NCAA, son profil crédibilise immédiatement le programme auprès des familles."
       },
       {
-        "profil": "Rugbyman ou footballeur américain en reconversion",
-        "pourquoi": "Le football américain est en plein essor en France. Ce profil « pionnier » incarne exactement la promesse Play Forward : ouvrir une voie qui n'existait pas encore."
+        "profil": "Anthony Mouyokolo",
+        "pourquoi": "Figure majeure du football américain en France, Anthony Mouyokolo a une communauté engagée et incarne le profil pionnier : quelqu'un qui a choisi une voie atypique et réussi. Parfait pour parler à la génération de jeunes qui veulent sortir des rails classiques."
       }
     ],
     "ecoles": [
       {
-        "profil": "Sections sport-études lycées Île-de-France (Lakanal, Pôle France INSEP)",
+        "profil": "Sections sport-études des lycées d'Île-de-France (Lakanal, pôle France INSEP)",
         "pourquoi": "Concentration maximale d'athlètes au profil exact, avec des conseillers d'orientation en recherche active d'alternatives aux filières classiques."
       },
       {
@@ -192,7 +200,7 @@
       },
       {
         "profil": "Classes prépa STAPS et BTS Sport",
-        "pourquoi": "Jeunes qui ont le niveau sportif mais pas la filière académique classique — Play Forward est exactement l'alternative qu'ils cherchent sans savoir qu'elle existe."
+        "pourquoi": "Jeunes qui ont le niveau sportif mais pas la filière académique classique. Play Forward est exactement l'alternative qu'ils cherchent sans savoir qu'elle existe."
       }
     ]
   },
@@ -217,7 +225,7 @@
     "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
   },
   "projets_refs": ["racine", "airbnb", "palauma"],
-  "equipe": ["Arthur Barret"],
+  "equipe": ["Arthur Barret", "Tobias Simon", "Sacha Bassili"],
   "pdf_url": null,
   "tva": 0.2
 }
