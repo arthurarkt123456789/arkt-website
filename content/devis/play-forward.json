@@ -185,7 +185,7 @@
   "remise": {
     "label": "Remise pack Fondations",
     "type": "absolu",
-    "valeur": 2000
+    "valeur": 1000
   },
   "planning": [
     { "etape": "Plateforme de marque et architecture de nom", "duree": "2 semaines" },
