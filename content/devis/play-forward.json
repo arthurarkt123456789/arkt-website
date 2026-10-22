@@ -38,7 +38,7 @@
       ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 2500
+      "prix_unitaire": 2000
     },
     {
       "titre": "Identité visuelle",
@@ -51,7 +51,7 @@
       ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 4000
+      "prix_unitaire": 3200
     },
     {
       "titre": "Funnel webinar",
@@ -79,7 +79,7 @@
       ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 4000
+      "prix_unitaire": 3200
     },
     {
       "titre": "Pack créa vidéos, 15 formats",
@@ -93,7 +93,7 @@
       ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 6000
+      "prix_unitaire": 4800
     }
   ],
   "options": [
@@ -111,7 +111,7 @@
       "description": "Refonte des pages clés orientée conversion. Prix, preuves et différenciation face aux agences de placement dès la page d'accueil. Tracking complet pour piloter les campagnes.",
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 5000
+      "prix_unitaire": 4000
     },
     {
       "titre": "Acquisition 6 mois",
@@ -119,7 +119,7 @@
       "description": "Community management Instagram et TikTok (1 900 HT / mois), LinkedIn de la fondatrice (800 HT / mois), pilotage des campagnes Meta Ads (800 HT / mois, budget média non inclus). Démarrage après livraison des Fondations.",
       "quantite": 6,
       "unite": "mois",
-      "prix_unitaire": 3500,
+      "prix_unitaire": 2800,
       "mensuel": true
     },
     {
