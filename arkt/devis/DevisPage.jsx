@@ -1,30 +1,31 @@
 /* ARKT · page de proposition commerciale /devis/[slug] */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import ARKT from "../data.js";
+import { ProjectDetail } from "../sections-projects.jsx";
+import { Arrow } from "../sections-top.jsx";
 import { computeTotals, lineTotal, expiry, isExpired, eur, fmtDate, unitLabel } from "./calc.js";
 
 const ALL_PROJECTS = [...(ARKT.featured || []), ...(ARKT.grid || [])];
 const asset = (p) => (p ? (p.startsWith("/") || p.startsWith("http") ? p : `/${p}`) : null);
 
-function projectCard(id) {
+function getProjectForDetail(id) {
   const p = ALL_PROJECTS.find((x) => x.id === id);
   if (!p) return null;
-  const panels = p.panels || [];
-  const mediaPanels = panels
-    .filter((x) => x.kind === "media" || x.kind === "video")
-    .slice(0, 6);
-  const did = panels.find((x) => x.kind === "text" && /fait/i.test(x.head || ""));
+  const slides = (p.panels || []).filter((x) => x.kind !== "intro").map((s) => ({
+    ...s,
+    src: s.src ? asset(s.src) : undefined,
+    poster: s.poster ? asset(s.poster) : undefined,
+  }));
+  const firstImg = slides.find((x) => x.kind === "media" && x.src);
   return {
-    id,
+    id: p.id,
     name: p.name,
     year: p.year,
-    tag: p.tag,
-    claim: p.claim,
-    logo: asset(p.logo),
-    images: mediaPanels
-      .map((x) => ({ src: asset(x.kind === "video" ? x.poster : x.src || x.poster || null), caption: x.caption || "" }))
-      .filter((x) => x.src),
-    did: did?.body?.[1] || did?.body?.[0] || "",
+    short: p.tag,
+    logo: asset(p.logo || (firstImg ? firstImg.src : null)),
+    slides,
+    body: p.claim,
+    alwaysOpen: true,
   };
 }
 
@@ -57,32 +58,49 @@ function Eyebrow({ children }) {
   return <div className="dv-eyebrow"><span className="dv-dot" />{children}</div>;
 }
 
-function RefCarousel({ images }) {
-  const [idx, setIdx] = useState(0);
-  if (!images?.length) return null;
-  const total = images.length;
-  const prev = () => setIdx((i) => (i - 1 + total) % total);
-  const next = () => setIdx((i) => (i + 1) % total);
+function PlanSlider({ steps }) {
+  const ref = useRef(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => {
+      const max = el.scrollWidth - el.clientWidth;
+      setAtStart(el.scrollLeft <= 4);
+      setAtEnd(max <= 4 || el.scrollLeft >= max - 4);
+    };
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    return () => el.removeEventListener("scroll", update);
+  }, []);
+
+  const scroll = (dir) => ref.current?.scrollBy({ left: dir * 270, behavior: "smooth" });
+
   return (
-    <div className="dv-car">
-      <div className="dv-car-track" style={{ "--slide": idx }}>
-        {images.map((img, i) => (
-          <div key={i} className="dv-car-slide">
-            <img src={img.src} alt={img.caption} loading="lazy" />
-          </div>
-        ))}
+    <div className="dv-plan-outer">
+      <div className="dv-plan-wrap" ref={ref}>
+        <ol className="dv-plan">
+          {steps.map((p, i) => (
+            <li key={i}>
+              <span className="dv-plan-k">{String(i + 1).padStart(2, "0")}</span>
+              <span className="dv-plan-step">{p.etape}</span>
+              <span className="dv-plan-dur">{p.duree}</span>
+            </li>
+          ))}
+        </ol>
       </div>
-      {total > 1 && (
-        <>
-          <button className="dv-car-btn dv-car-prev" onClick={prev} aria-label="Précédent">&#8249;</button>
-          <button className="dv-car-btn dv-car-next" onClick={next} aria-label="Suivant">&#8250;</button>
-          <div className="dv-car-dots" aria-hidden="true">
-            {images.map((_, i) => (
-              <button key={i} className={`dv-car-dot${i === idx ? " on" : ""}`} onClick={() => setIdx(i)} tabIndex={-1} />
-            ))}
-          </div>
-        </>
-      )}
+      <button
+        className={"dv-plan-arrow dv-plan-arrow-l" + (atStart ? " dv-plan-arrow-off" : "")}
+        onClick={() => scroll(-1)} aria-label="Précédent">
+        <Arrow size={13} style={{ transform: "rotate(180deg)" }} />
+      </button>
+      <button
+        className={"dv-plan-arrow dv-plan-arrow-r" + (atEnd ? " dv-plan-arrow-off" : "")}
+        onClick={() => scroll(1)} aria-label="Suivant">
+        <Arrow size={13} />
+      </button>
     </div>
   );
 }
@@ -108,7 +126,7 @@ export default function DevisPage({ devis }) {
   useEffect(() => { setExpired(isExpired(d)); }, [d]);
 
   const totals = useMemo(() => computeTotals(d, selected), [d, selected]);
-  const projets = (d.projets_refs || []).map(projectCard).filter(Boolean).slice(0, 3);
+  const projets = (d.projets_refs || []).map(getProjectForDetail).filter(Boolean).slice(0, 3);
   const equipeProjet = ARKT.team.filter((m) => (d.equipe || []).includes(m.name));
   const equipeArkt = ARKT.team;
   const temoignages = (ARKT.testimonials || []).slice(0, 2);
@@ -204,24 +222,13 @@ export default function DevisPage({ devis }) {
                 <Eyebrow>Références</Eyebrow>
                 <h2 className="dv-display dv-h2">Des projets inspirants</h2>
               </div>
-              <div className="dv-refs">
-                {projets.map((p, i) => (
-                  <article key={p.id} className="dv-ref dv-reveal" style={{ transitionDelay: `${i * 90}ms` }}>
-                    <RefCarousel images={p.images} />
-                    <div className="dv-ref-body">
-                      <div className="dv-ref-top">
-                        {p.logo && <img className="dv-ref-logo" src={p.logo} alt="" loading="lazy" />}
-                        <div>
-                          <div className="dv-ref-name">{p.name} <span>{p.year}</span></div>
-                          <div className="dv-ref-tag">{p.tag}</div>
-                        </div>
-                      </div>
-                      <p className="dv-ref-claim"><Rich text={p.claim} /></p>
-                      {p.did && <p className="dv-ref-did">{p.did}</p>}
-                    </div>
-                  </article>
-                ))}
-              </div>
+            </div>
+            <div className="dv-refs-stack">
+              {projets.map((proj) => (
+                <div key={proj.id} className="dv-ref-full dv-reveal">
+                  <ProjectDetail proj={proj} onClose={() => {}} />
+                </div>
+              ))}
             </div>
           </section>
         )}
@@ -327,7 +334,6 @@ export default function DevisPage({ devis }) {
                 <p className="dv-lead">Une stratégie publicitaire en trois temps, pensée pour le cycle de décision propre au programme : de la découverte à l'inscription.</p>
               </div>
 
-              {/* Axes */}
               <div className="dv-ads-axes">
                 {d.meta_ads.axes.map((ax, i) => (
                   <div key={i} className="dv-ads-axe dv-reveal" style={{ transitionDelay: `${i * 80}ms` }}>
@@ -338,7 +344,6 @@ export default function DevisPage({ devis }) {
                 ))}
               </div>
 
-              {/* Ciblages */}
               <div className="dv-ads-block dv-reveal">
                 <div className="dv-ads-block-label">Ciblages</div>
                 <ul className="dv-ads-list">
@@ -348,7 +353,6 @@ export default function DevisPage({ devis }) {
                 </ul>
               </div>
 
-              {/* Storyboards */}
               <div className="dv-ads-block dv-reveal">
                 <div className="dv-ads-block-label">Storyboards type</div>
                 <div className="dv-ads-boards">
@@ -375,7 +379,6 @@ export default function DevisPage({ devis }) {
               </div>
 
               <div className="dv-partner-cols">
-                {/* Athlètes */}
                 {d.partenaires.athletes?.length > 0 && (
                   <div className="dv-partner-col dv-reveal">
                     <div className="dv-partner-col-label">Athlètes ambassadeurs</div>
@@ -393,7 +396,6 @@ export default function DevisPage({ devis }) {
                   </div>
                 )}
 
-                {/* Écoles */}
                 {d.partenaires.ecoles?.length > 0 && (
                   <div className="dv-partner-col dv-reveal" style={{ transitionDelay: "120ms" }}>
                     <div className="dv-partner-col-label">Écoles et institutions sport</div>
@@ -417,29 +419,19 @@ export default function DevisPage({ devis }) {
 
         {/* ---------- PLANNING ---------- */}
         {d.planning?.length > 0 && (
-          <section className="dv-section">
+          <section className="dv-section dv-alt">
             <div className="dv-wrap">
               <div className="dv-head dv-reveal">
                 <Eyebrow>Planning</Eyebrow>
                 <h2 className="dv-display dv-h2">Les étapes</h2>
               </div>
-              <div className="dv-plan-wrap">
-                <ol className="dv-plan">
-                  {d.planning.map((p, i) => (
-                    <li key={i}>
-                      <span className="dv-plan-k">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="dv-plan-step">{p.etape}</span>
-                      <span className="dv-plan-dur">{p.duree}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
+              <PlanSlider steps={d.planning} />
             </div>
           </section>
         )}
 
         {/* ---------- INVESTISSEMENT + VALIDATION ---------- */}
-        <section className="dv-section dv-alt" id="validation">
+        <section className="dv-section" id="validation">
           <div className="dv-wrap dv-split dv-split-top">
             <div className="dv-reveal">
               <Eyebrow>Investissement</Eyebrow>

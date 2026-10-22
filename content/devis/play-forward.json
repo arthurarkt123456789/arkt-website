@@ -13,12 +13,12 @@
   "accroche": "Poser les fondations d'une marque lisible pour les parents et les athlètes, et construire la machine qui transforme chaque masterclass en inscriptions.",
   "contexte": "Play Forward prépare des athlètes de 15 à 18 ans à l'accès aux études sportives aux États-Unis. Le programme est construit, l'offre est claire, la masterclass du 1er novembre est en place. Ce qui manque : une marque à la hauteur de l'ambition et le dispositif pour transformer chaque inscrit en lead qualifié.",
   "enjeux": [
-    "Un programme structuré et opérationnel, avec une proposition claire et différenciante, mais une marque qui n'est pas encore à la hauteur de l'ambition.",
-    "La fenêtre est ouverte : le marché des études sportives aux États-Unis n'a pas encore de leader identifié en France. Celui qui s'impose maintenant verrouille la position.",
-    "Deux décisions à déclencher en parallèle : la confiance du parent qui investit et l'adhésion de l'athlète qui rêve, avec des messages et des preuves différents pour chacun.",
-    "Une architecture de marque fragmentée (trois noms, un logo provisoire) qui dilue la crédibilité d'un programme premium face à des familles qui ont besoin d'être rassurées avant d'investir.",
-    "La masterclass est une machine à prospects. Sans dispositif de capture et de conversion derrière, elle génère de l'audience sans transformer.",
-    "La différenciation face aux agences de placement est la clé de la décision d'achat, mais elle est enfouie là où personne ne la lit."
+    "Anne-Sophie a posé seule les bases d'un programme ambitieux en quelques jours. C'est le signe d'une fondatrice qui sait construire vite. On est là pour mettre la marque et les outils à la hauteur de cette vitesse.",
+    "Play Forward a tout pour devenir la référence française des études sportives aux États-Unis : une fondatrice qui connaît le milieu, une offre structurée, un moment de lancement parfait. Le marché est ouvert.",
+    "L'ambition est claire : des centaines d'athlètes accompagnés chaque année, un programme qui scale. Tout ce qu'on construit aujourd'hui doit être pensé pour cette dimension, pas pour les prochaines semaines.",
+    "Le programme répond à deux décisions profondes : la confiance du parent qui investit dans l'avenir de son enfant, et l'adhésion de l'athlète de 15-18 ans qui veut réécrire ses possibles.",
+    "La masterclass du 1er novembre est le premier acte public de Play Forward. C'est aussi le premier test de la machine de conversion. On veut qu'elle tourne à plein dès le lancement.",
+    "Play Forward n'est pas une agence de placement. C'est une différence fondamentale et un avantage concurrentiel décisif. Il mérite d'être en première ligne de chaque prise de parole."
   ],
   "site_preview": {
     "label": "Notre vision de votre prochain site",
@@ -54,21 +54,6 @@
       "prix_unitaire": 4000
     },
     {
-      "titre": "Site",
-      "tarif_id": "site-vitrine",
-      "description": "Refonte des pages clés orientée conversion. On fait apparaître le prix, les preuves et la différence avec les agences de placement dès la page d'accueil. On installe le tracking complet pour piloter les campagnes.",
-      "livrables": [
-        "Refonte page d'accueil, programme, masterclass et FAQ",
-        "Bloc preuves : témoignages, parcours, chiffres",
-        "Affichage du prix ou d'un point d'entrée tarifaire",
-        "SEO de base : structure, balises, requêtes sport-études USA, bourse sportive, NCAA",
-        "Tracking : Google Analytics, pixel Meta, événements de conversion"
-      ],
-      "quantite": 1,
-      "unite": "forfait",
-      "prix_unitaire": 5000
-    },
-    {
       "titre": "Funnel webinar",
       "tarif_id": "accompagnement-com",
       "description": "Un tunnel de masterclass récurrent, réutilisable chaque mois. Pages inscription, merci et replay. Séquences email et SMS complètes. Tableau de suivi pour piloter les conversions de chaque session.",
@@ -81,6 +66,34 @@
       "quantite": 1,
       "unite": "forfait",
       "prix_unitaire": 2000
+    },
+    {
+      "titre": "Stratégie d'acquisition & performance",
+      "tarif_id": "strat-acquisition",
+      "description": "Stratégie Meta Ads complète, architecture des campagnes, ciblages, brief créatif, storyboards et tableau de bord de pilotage. Ce forfait pose le cadre stratégique et les outils de mesure pour que chaque euro investi en média soit traçable et optimisable.",
+      "livrables": [
+        "Stratégie Meta Ads : axes, ciblages, séquencement",
+        "Brief créatif et storyboards par objectif (notoriété, masterclass, retargeting)",
+        "Architecture des campagnes et setup du gestionnaire de publicités",
+        "Tableau de bord de pilotage : coût par lead, taux de conversion, ROAS"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 4000
+    },
+    {
+      "titre": "Pack créa vidéos, 15 formats",
+      "tarif_id": "pack-video",
+      "description": "Production de 15 formats vidéo prêts à diffuser sur Meta Ads. Scripts, tournage ou montage sur base de rushes existants, formats adaptés : Reels 9/16, formats carrés, stories. Chaque vidéo est pensée pour un objectif précis : notoriété, masterclass, retargeting.",
+      "livrables": [
+        "15 formats vidéo finalisés et exportés pour Meta Ads",
+        "Scripts et directions créatives par format",
+        "Déclinaisons 9/16, 1/1 et 4/5 selon les placements",
+        "Sous-titres et textes d'accroche testables (A/B)"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 6000
     }
   ],
   "options": [
@@ -93,20 +106,12 @@
       "prix_unitaire": 1200
     },
     {
-      "titre": "Stratégie d'acquisition & performance",
-      "tarif_id": "strat-acquisition",
-      "description": "Stratégie Meta Ads complète, architecture des campagnes, ciblages, brief créatif, storyboards et tableau de bord de pilotage. Ce forfait pose le cadre stratégique et les outils de mesure pour que chaque euro investi en média soit traçable et optimisable.",
+      "titre": "Site",
+      "tarif_id": "site-vitrine",
+      "description": "Refonte des pages clés orientée conversion. Prix, preuves et différenciation face aux agences de placement dès la page d'accueil. Tracking complet pour piloter les campagnes.",
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 4000
-    },
-    {
-      "titre": "Pack créa vidéos, 15 formats",
-      "tarif_id": "pack-video",
-      "description": "Production de 15 formats vidéo prêts à diffuser sur Meta Ads. Scripts, tournage ou montage sur base de rushes existants, formats adaptés : Reels 9/16, formats carrés, stories. Chaque vidéo est pensée pour un objectif précis : notoriété, masterclass, retargeting.",
-      "quantite": 1,
-      "unite": "forfait",
-      "prix_unitaire": 6000
+      "prix_unitaire": 5000
     },
     {
       "titre": "Acquisition 6 mois",
@@ -216,8 +221,8 @@
     { "etape": "Express masterclass (si retenu)", "duree": "avant le 30 octobre" },
     { "etape": "Plateforme de marque et architecture de nom", "duree": "2 semaines" },
     { "etape": "Identité visuelle", "duree": "3 semaines" },
-    { "etape": "Site et SEO", "duree": "3 semaines" },
     { "etape": "Funnel webinar", "duree": "1 semaine" },
+    { "etape": "Stratégie d'acquisition & production vidéo", "duree": "3 semaines" },
     { "etape": "Démarrage acquisition (si retenu)", "duree": "à la livraison des Fondations" }
   ],
   "conditions": {

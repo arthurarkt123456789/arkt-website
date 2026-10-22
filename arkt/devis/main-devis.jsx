@@ -1,5 +1,7 @@
 import '../fonts.css';
 import '../styles.css';
+import '../components.css';
+import '../components2.css';
 import './devis.css';
 import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
