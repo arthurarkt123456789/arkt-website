@@ -192,13 +192,13 @@ section{position:relative}
 .meul-stats b{font-family:"Anton",sans-serif;font-weight:400;font-size:clamp(2rem,3.6vw,3rem);display:block;line-height:1;color:var(--yellow)}
 .meul-stats span{font-size:.9rem;color:#e4e5ff}
 @media(max-width:900px){.meul-grid{grid-template-columns:1fr}.meul-img{aspect-ratio:4/3}}
-.collabs{margin-top:clamp(60px,8vw,100px)}
-.collabs h3{font-family:"Anton",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(1.8rem,3vw,2.6rem);margin-bottom:22px}
+.collabs{background:var(--blue);border-radius:24px;padding:clamp(32px,4vw,56px);margin-top:clamp(60px,8vw,100px)}
+.collabs h3{font-family:"Anton",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(1.8rem,3vw,2.6rem);margin-bottom:22px;color:#fff}
 .cgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
 .cgrid figure{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/5;background:#000}
 .cgrid img{width:100%;height:100%;object-fit:cover;transition:transform .6s,opacity .4s}
 .cgrid figure:hover img{transform:scale(1.07);opacity:.55}
-.cgrid figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px 10px 10px;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;line-height:1.25}
+.cgrid figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px 10px 10px;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;line-height:1.25;color:#fff}
 .cgrid figcaption small{display:block;font-weight:500;opacity:.75}
 @media(max-width:1000px){.cgrid{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:600px){.cgrid{grid-template-columns:repeat(2,1fr)}}
@@ -1461,7 +1461,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <div class="ctv-phone"><div class="iphone-mock"><div class="iph-notch"></div><div class="iph-screen iph-s1"><div class="iph-ico">🧀</div><div class="iph-title">Quelque chose arrive</div><div class="iph-sub">#LaMeulerie</div></div></div></div>
           <div class="ctv-info">
             <span class="ctv-when">Automne 2026</span>
-            <h3>Chauffage du public</h3>
+            <h3>La rumeur commence</h3>
             <p>Teasers mystère, stories, premiers contenus. 30 000 abonnés en alerte.</p>
             <div class="ctv-tags"><span>Instagram</span><span>TikTok</span><span>Newsletter</span></div>
           </div>
@@ -1558,9 +1558,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
               <div><b>1</b><span>record du monde à votre nom</span></div>
             </div>
             <div class="ap-packs">
-              <div class="ap-pack gold"><span class="pk">1 place · Partenaire principal</span><h4>Naming & présence totale</h4><ul><li>Naming « présenté par [votre marque] »</li><li>Logo majeur sur tous les supports</li><li>Prise de parole sur scène</li><li>10 tables réservées, nappes brandées</li><li>Espace d'activation sur site</li><li>Usage du titre record du monde</li></ul></div>
-              <div class="ap-pack"><span class="pk">4 places · Partenaire officiel</span><h4>Visibilité & activation</h4><ul><li>Logo sur affiches, minisite, billetterie</li><li>Citation dans les communiqués</li><li>3 tables réservées, nappes brandées</li><li>Stand sur site</li><li>Accès espace hospitalité</li></ul></div>
-              <div class="ap-pack"><span class="pk">20 places · Partenaire table</span><h4>Une table à vos couleurs</h4><ul><li>Une table de 8 à votre nom</li><li>Logo sur écrans géants</li><li>Logo sur le minisite</li><li>Contenu dédié sur nos réseaux</li></ul></div>
+              <div class="ap-pack gold"><span class="pk">1 place · Partenaire principal</span><h4>Naming & présence totale</h4><ul><li>Naming « présenté par [votre marque] »</li><li>Logo majeur sur tous les supports</li><li>Prise de parole sur scène</li><li>10 tables réservées, nappes brandées</li><li>Espace d'activation sur site</li><li>Usage du titre record du monde</li></ul><div class="ap-pack-footer"><div><span class="ap-price">30 000 €<small>HT</small></span></div><button class="ap-pack-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Devenir partenaire principal →</button></div></div>
+              <div class="ap-pack"><span class="pk">4 places · Partenaire officiel</span><h4>Visibilité & activation</h4><ul><li>Logo sur affiches, minisite, billetterie</li><li>Citation dans les communiqués</li><li>3 tables réservées, nappes brandées</li><li>Stand sur site</li><li>Accès espace hospitalité</li></ul><div class="ap-pack-footer"><div><span class="ap-price">10 000 €<small>HT</small></span></div><button class="ap-pack-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Réserver ce forfait →</button></div></div>
+              <div class="ap-pack"><span class="pk">20 places · Partenaire table</span><h4>Une table à vos couleurs</h4><ul><li>Une table de 8 à votre nom</li><li>Logo sur écrans géants</li><li>Logo sur le minisite</li><li>Contenu dédié sur nos réseaux</li></ul><div class="ap-pack-footer"><div><span class="ap-price">3 500 €<small>HT</small></span></div><button class="ap-pack-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Réserver une table →</button></div></div>
+            </div>
+            <div class="ap-cta">
+              <p>Un projet à votre mesure ? On s'adapte. Contactez-nous pour recevoir le dossier partenaires complet.</p>
+              <button class="ap-cta-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Recevoir le dossier partenaires →</button>
             </div>
           </div>
 
