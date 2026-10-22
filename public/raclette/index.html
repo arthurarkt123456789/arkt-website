@@ -576,6 +576,112 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .pcard-role{font-size:.82rem;color:var(--muted);font-weight:600}
 @media(max-width:900px){.team-orgs{grid-template-columns:1fr}.team-org.solo .team-persons{grid-template-columns:1fr}}
 @media(max-width:600px){.team-persons{grid-template-columns:repeat(2,1fr)}}
+
+/* COMM TIMELINE — HORIZONTAL SCROLL */
+.comms{background:var(--paper);overflow:hidden}
+.comm-tl-wrap{
+  overflow-x:auto;
+  overflow-y:visible;
+  cursor:grab;
+  user-select:none;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:32px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--blue) var(--line)
+}
+.comm-tl-wrap:active{cursor:grabbing}
+.comm-tl-wrap::-webkit-scrollbar{height:4px}
+.comm-tl-wrap::-webkit-scrollbar-track{background:var(--line);border-radius:2px}
+.comm-tl-wrap::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px}
+.comm-tl{
+  display:flex;
+  align-items:flex-start;
+  gap:0;
+  padding:60px 0 0;
+  width:max-content;
+  position:relative;
+  min-width:100%
+}
+/* Ligne continue */
+.comm-tl::before{
+  content:"";
+  position:absolute;
+  top:80px;
+  left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--blue) 85%,transparent);
+  z-index:0
+}
+.ctl-node{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:260px;
+  flex-shrink:0;
+  position:relative;
+  padding:0 20px
+}
+.ctl-node:first-child{padding-left:0}
+.ctl-node:last-child{padding-right:0;width:280px}
+/* Alternance haut/bas */
+.ctl-node:nth-child(even){flex-direction:column-reverse;padding-top:0;margin-top:0}
+.ctl-node:nth-child(even) .ctl-dot{margin-top:0;margin-bottom:0}
+.ctl-node:nth-child(even) .ctl-info{padding-top:24px;padding-bottom:0}
+.ctl-node:nth-child(odd) .ctl-info{padding-bottom:24px;padding-top:0}
+
+/* Dot */
+.ctl-dot{
+  width:20px;height:20px;
+  border-radius:50%;
+  background:var(--blue);
+  border:3px solid #fff;
+  box-shadow:0 0 0 3px var(--blue);
+  flex-shrink:0;
+  position:relative;z-index:2;
+  margin:0
+}
+.ctl-node:last-child .ctl-dot{
+  background:var(--yellow);
+  box-shadow:0 0 0 3px var(--ink);
+  border-color:#fff;
+  width:26px;height:26px
+}
+.ctl-node:nth-child(odd) .ctl-dot{margin-bottom:-1.5px}
+.ctl-node:nth-child(even) .ctl-dot{margin-top:-1.5px}
+
+/* Connector vertical */
+.ctl-vline{width:3px;background:var(--blue);flex-shrink:0}
+.ctl-node:nth-child(odd) .ctl-vline{height:32px;order:1}
+.ctl-node:nth-child(even) .ctl-vline{height:32px;order:-1}
+
+/* Info box */
+.ctl-info{text-align:center}
+.ctl-when{font-weight:800;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:8px}
+.ctl-info h3{font-family:"Anton",sans-serif;font-weight:400;text-transform:uppercase;font-size:1.15rem;line-height:1.05;margin-bottom:6px}
+.ctl-info p{font-size:.82rem;color:var(--muted);max-width:22ch;margin:0 auto}
+.ctl-tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:10px}
+.ctl-tags span{background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:.68rem;font-weight:600;color:var(--muted)}
+
+/* iPhone mock dans la node */
+.ctl-node .iphone-mock{width:90px;aspect-ratio:9/19;border-radius:18px;border:4px solid #1a1a1a;flex-shrink:0;position:relative;overflow:hidden;box-shadow:0 12px 30px -10px rgba(0,0,0,.4);margin:12px auto}
+.ctl-node .iph-notch{height:14px;width:44%;border-radius:0 0 10px 10px}
+.ctl-node .iph-screen{padding:14px 6px 10px;gap:3px}
+.ctl-node .iph-ico{font-size:.9rem}
+.ctl-node .iph-title{font-size:.55rem}
+.ctl-node .iph-sub{font-size:.48rem}
+.ctl-node .iph-live{font-size:.42rem;padding:2px 5px}
+.ctl-node .iph-play{width:22px;height:22px}
+.ctl-node .iph-play::after{border-left:8px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px}
+
+/* Scroll hint arrow */
+.comm-scroll-hint{display:flex;align-items:center;gap:10px;margin-top:20px;color:var(--muted);font-size:.8rem;font-weight:600}
+.comm-scroll-hint svg{animation:slide-right 1.4s ease-in-out infinite}
+@keyframes slide-right{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+
+@media(max-width:700px){
+  .ctl-node{width:200px}
+  .ctl-node .iphone-mock{width:70px}
+}
 </style>
 </head>
 <body>
@@ -918,88 +1024,89 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="wrap">
     <div class="sec-head rv"><span class="sec-num">09</span><span class="kicker">La communication</span></div>
     <h2 class="display h2 rv">Un événement qui vit <span class="blue">avant, pendant, après</span></h2>
-    <p class="lead rv" style="margin-top:24px;max-width:64ch">De la première story Instagram jusqu'aux retombées TV, chaque étape génère de la visibilité pour nos partenaires — bien au-delà du jour J.</p>
+    <p class="lead rv" style="margin-top:24px;max-width:64ch">De la première story jusqu'aux retombées TV — chaque étape génère de la visibilité pour nos partenaires.</p>
 
-    <div class="comm-tl">
+    <div class="comm-tl-wrap rv" id="commWrap">
+      <div class="comm-tl" id="commTl">
 
-      <div class="ctl-step rv">
-        <div class="ctl-phone">
-          <div class="iphone-mock"><div class="iph-notch"></div><div class="iph-screen iph-s1"><div class="iph-ico">🧀</div><div class="iph-title">Quelque chose arrive à Marseille</div><div class="iph-sub">#LaMeulerie · 30K abonnés</div></div></div>
+        <div class="ctl-node">
+          <div class="ctl-info">
+            <span class="ctl-when">Automne 2026</span>
+            <h3>Chauffage du public</h3>
+            <p>Teasers mystère, stories, premiers contenus. 30 000 abonnés en alerte.</p>
+            <div class="ctl-tags"><span>Instagram</span><span>TikTok</span></div>
+          </div>
+          <div class="ctl-vline"></div>
+          <div class="ctl-dot"></div>
+          <div class="iphone-mock"><div class="iph-notch" style="background:#111;position:absolute;top:0;left:50%;transform:translateX(-50%);width:48%;z-index:3"></div><div class="iph-screen iph-s1"><div class="iph-ico">🧀</div><div class="iph-title">Quelque chose arrive</div><div class="iph-sub">#LaMeulerie</div></div></div>
         </div>
-        <div class="ctl-line"><div class="ctl-dot"></div><div class="ctl-bar"></div></div>
-        <div class="ctl-info">
-          <span class="ctl-when">Automne 2026</span>
-          <h3>Chauffage du public</h3>
-          <p>Premiers teasers mystère, stories, contenus "quelque chose arrive". La communauté La Meulerie — 30 000 abonnés — est la première alertée.</p>
-          <div class="ctl-tags"><span>Instagram</span><span>TikTok</span><span>Newsletter</span></div>
+
+        <div class="ctl-node">
+          <div class="iphone-mock"><div class="iph-notch" style="background:#111;position:absolute;top:0;left:50%;transform:translateX(-50%);width:48%;z-index:3"></div><div class="iph-screen iph-s2"><div class="iph-ico">📰</div><div class="iph-title">Conférence de presse</div><div class="iph-sub">Presse · Radio · TV</div></div></div>
+          <div class="ctl-dot"></div>
+          <div class="ctl-vline"></div>
+          <div class="ctl-info">
+            <span class="ctl-when">Hiver 2026–2027</span>
+            <h3>Annonce officielle</h3>
+            <p>Conférence de presse, premiers articles locaux et nationaux.</p>
+            <div class="ctl-tags"><span>Presse locale</span><span>Radio</span></div>
+          </div>
         </div>
+
+        <div class="ctl-node">
+          <div class="ctl-info">
+            <span class="ctl-when">Printemps 2027</span>
+            <h3>Ouverture billetterie</h3>
+            <p>Rush tickets, explosion des réseaux. Sold out en 48h.</p>
+            <div class="ctl-tags"><span>Buzz</span><span>Articles nat.</span></div>
+          </div>
+          <div class="ctl-vline"></div>
+          <div class="ctl-dot"></div>
+          <div class="iphone-mock"><div class="iph-notch" style="background:#e8c800;position:absolute;top:0;left:50%;transform:translateX(-50%);width:48%;z-index:3;border-radius:0 0 8px 8px"></div><div class="iph-screen iph-s3"><div class="iph-ico">🎟️</div><div class="iph-title">SOLD OUT 48h</div><div class="iph-sub">5 000 places</div></div></div>
+        </div>
+
+        <div class="ctl-node">
+          <div class="iphone-mock"><div class="iph-notch" style="background:#111;position:absolute;top:0;left:50%;transform:translateX(-50%);width:48%;z-index:3"></div><div class="iph-screen iph-s4"><div class="iph-play"></div><div class="iph-title">Dans les coulisses</div><div class="iph-sub">Artisans · Lait cru</div></div></div>
+          <div class="ctl-dot"></div>
+          <div class="ctl-vline"></div>
+          <div class="ctl-info">
+            <span class="ctl-when">Été 2027</span>
+            <h3>Com' continue & RP</h3>
+            <p>Countdown, portraits d'artisans, relations presse nationales.</p>
+            <div class="ctl-tags"><span>Vidéos</span><span>Presse nat.</span></div>
+          </div>
+        </div>
+
+        <div class="ctl-node">
+          <div class="ctl-info">
+            <span class="ctl-when">Octobre 2027 · Jour J</span>
+            <h3>Explosion réseaux</h3>
+            <p>Stories, Reels, trending France. Presse nationale en direct.</p>
+            <div class="ctl-tags"><span>Live</span><span>Trending</span></div>
+          </div>
+          <div class="ctl-vline"></div>
+          <div class="ctl-dot"></div>
+          <div class="iphone-mock"><div class="iph-notch" style="background:#111;position:absolute;top:0;left:50%;transform:translateX(-50%);width:48%;z-index:3"></div><div class="iph-screen iph-s5"><div class="iph-live">LIVE</div><div class="iph-title">5 000 convives</div><div class="iph-sub">Parvis du MuCEM</div></div></div>
+        </div>
+
+        <div class="ctl-node">
+          <div class="iphone-mock"><div class="iph-notch" style="background:#111;position:absolute;top:0;left:50%;transform:translateX(-50%);width:48%;z-index:3"></div><div class="iph-screen iph-s6"><div class="iph-play"></div><div class="iph-title">Aftermovie officiel</div><div class="iph-sub">+2M vues · TV · Int'l</div></div></div>
+          <div class="ctl-dot"></div>
+          <div class="ctl-vline"></div>
+          <div class="ctl-info">
+            <span class="ctl-when">Après l'événement</span>
+            <h3>Retombées médias</h3>
+            <p>TV, presse internationale, aftermovie viral. Visibilité durable.</p>
+            <div class="ctl-tags"><span>TV</span><span>Presse int'l</span><span>Aftermovie</span></div>
+          </div>
+        </div>
+
       </div>
+    </div>
 
-      <div class="ctl-step reverse rv">
-        <div class="ctl-phone">
-          <div class="iphone-mock"><div class="iph-notch"></div><div class="iph-screen iph-s2"><div class="iph-ico">📰</div><div class="iph-title">Conférence de presse · annonce officielle</div><div class="iph-sub">Presse locale · Radio · TV régionale</div></div></div>
-        </div>
-        <div class="ctl-line"><div class="ctl-dot"></div><div class="ctl-bar"></div></div>
-        <div class="ctl-info">
-          <span class="ctl-when">Hiver 2026–2027</span>
-          <h3>Annonce officielle</h3>
-          <p>Conférence de presse, premiers articles locaux et nationaux. Le projet entre dans l'agenda médiatique. Les partenaires fondateurs sont cités.</p>
-          <div class="ctl-tags"><span>Presse locale</span><span>Radio</span><span>TV régionale</span></div>
-        </div>
-      </div>
-
-      <div class="ctl-step rv">
-        <div class="ctl-phone">
-          <div class="iphone-mock"><div class="iph-notch"></div><div class="iph-screen iph-s3"><div class="iph-ico">🎟️</div><div class="iph-title">SOLD OUT en 48h</div><div class="iph-sub">5 000 places écoulées</div></div></div>
-        </div>
-        <div class="ctl-line"><div class="ctl-dot"></div><div class="ctl-bar"></div></div>
-        <div class="ctl-info">
-          <span class="ctl-when">Printemps 2027</span>
-          <h3>Ouverture de la billetterie</h3>
-          <p>Rush tickets, explosion des réseaux. À Martigny en 2025, tout était sold out en 1h20. On vise pareil — voire mieux.</p>
-          <div class="ctl-tags"><span>Buzz réseaux</span><span>Articles nationaux</span><span>Billetterie</span></div>
-        </div>
-      </div>
-
-      <div class="ctl-step reverse rv">
-        <div class="ctl-phone">
-          <div class="iphone-mock"><div class="iph-notch"></div><div class="iph-screen iph-s4"><div class="iph-play"></div><div class="iph-title">Dans les coulisses des fromagers</div><div class="iph-sub">Lait cru · Affinage · Artisanat</div></div></div>
-        </div>
-        <div class="ctl-line"><div class="ctl-dot"></div><div class="ctl-bar"></div></div>
-        <div class="ctl-info">
-          <span class="ctl-when">Été 2027</span>
-          <h3>Communication continue & relations presse</h3>
-          <p>Countdown, behind the scenes, portraits d'artisans et fromagers. Relations presse nationales et internationales. Les partenaires intégrés dans tous les contenus.</p>
-          <div class="ctl-tags"><span>Vidéos artisans</span><span>Relations presse nat.</span><span>Contenus partenaires</span></div>
-        </div>
-      </div>
-
-      <div class="ctl-step rv">
-        <div class="ctl-phone">
-          <div class="iphone-mock"><div class="iph-notch"></div><div class="iph-screen iph-s5"><div class="iph-live">LIVE</div><div class="iph-title">5 000 convives · Parvis du MuCEM</div><div class="iph-sub">Record du monde · Trending France</div></div></div>
-        </div>
-        <div class="ctl-line"><div class="ctl-dot"></div><div class="ctl-bar"></div></div>
-        <div class="ctl-info">
-          <span class="ctl-when">Octobre 2027 · Jour J</span>
-          <h3>Explosion des réseaux sociaux</h3>
-          <p>Stories, Reels, posts en temps réel. Des milliers d'utilisateurs partagent le moment. Hashtags trending. Presse nationale en direct. Vos marques dans chaque image.</p>
-          <div class="ctl-tags"><span>Live Instagram</span><span>Trending TikTok</span><span>Presse nat. en direct</span></div>
-        </div>
-      </div>
-
-      <div class="ctl-step reverse last rv">
-        <div class="ctl-phone">
-          <div class="iphone-mock"><div class="iph-notch"></div><div class="iph-screen iph-s6"><div class="iph-play"></div><div class="iph-title">Aftermovie officiel</div><div class="iph-sub">+2 M vues · TV · Presse internationale</div></div></div>
-        </div>
-        <div class="ctl-line"><div class="ctl-dot"></div></div>
-        <div class="ctl-info">
-          <span class="ctl-when">Après l'événement</span>
-          <h3>Retombées médias durables</h3>
-          <p>Presse nationale et internationale, passages TV, aftermovie viral. Les images du record font le tour du monde. Une visibilité longue durée pour tous les partenaires.</p>
-          <div class="ctl-tags"><span>TV nationale</span><span>Presse internationale</span><span>Aftermovie</span></div>
-        </div>
-      </div>
-
+    <div class="comm-scroll-hint rv">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Faites glisser pour voir toute la frise
     </div>
   </div>
 </section>
@@ -1161,6 +1268,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   document.querySelectorAll('.rv,[data-count],#chart,#plan').forEach(function(el){io.observe(el)});
 })();
 
+
+
+// Drag-to-scroll timeline
+(function(){
+  var wrap=document.getElementById('commWrap');
+  if(!wrap)return;
+  var isDown=false,startX,scrollLeft;
+  wrap.addEventListener('mousedown',function(e){isDown=true;wrap.classList.add('active');startX=e.pageX-wrap.offsetLeft;scrollLeft=wrap.scrollLeft});
+  document.addEventListener('mouseup',function(){isDown=false;wrap.classList.remove('active')});
+  wrap.addEventListener('mousemove',function(e){if(!isDown)return;e.preventDefault();var x=e.pageX-wrap.offsetLeft;wrap.scrollLeft=scrollLeft-(x-startX)*1.5});
+})();
 
 // Password gate
 (function(){
