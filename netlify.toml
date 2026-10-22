@@ -17,3 +17,10 @@
   for = "/devis.html"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
+
+# Page cachée La Plus Belle Raclette du Monde
+[[headers]]
+  for = "/raclette/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-cache"
