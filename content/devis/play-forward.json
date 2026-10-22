@@ -11,13 +11,13 @@
     "email": ""
   },
   "accroche": "Poser les fondations d'une marque lisible pour les parents et les athlètes, et construire la machine qui transforme chaque masterclass en inscriptions.",
-  "contexte": "Play Forward prépare des athlètes de 15 à 18 ans à l'accès aux études sportives aux États-Unis. Le programme est construit, l'offre est claire, la masterclass du 1er novembre est en place. Ce qui manque : une marque à la hauteur de l'ambition et le dispositif pour transformer chaque inscrit en lead qualifié.",
+  "contexte": "Play Forward prépare des athlètes de 15 à 18 ans à l'accès aux études sportives aux États-Unis. Le programme est construit, l'offre est claire, la masterclass du 1er décembre est en place. Ce qui manque : une marque à la hauteur de l'ambition et le dispositif pour transformer chaque inscrit en lead qualifié.",
   "enjeux": [
     "Anne-Sophie a posé seule les bases d'un programme ambitieux en quelques jours. C'est le signe d'une fondatrice qui sait construire vite. On est là pour mettre la marque et les outils à la hauteur de cette vitesse.",
     "Play Forward a tout pour devenir la référence française des études sportives aux États-Unis : une fondatrice qui connaît le milieu, une offre structurée, un moment de lancement parfait. Le marché est ouvert.",
     "L'ambition est claire : des centaines d'athlètes accompagnés chaque année, un programme qui scale. Tout ce qu'on construit aujourd'hui doit être pensé pour cette dimension, pas pour les prochaines semaines.",
     "Le programme répond à deux décisions profondes : la confiance du parent qui investit dans l'avenir de son enfant, et l'adhésion de l'athlète de 15-18 ans qui veut réécrire ses possibles.",
-    "La masterclass du 1er novembre est le premier acte public de Play Forward. C'est aussi le premier test de la machine de conversion. On veut qu'elle tourne à plein dès le lancement.",
+    "La masterclass du 1er décembre est le premier acte public de Play Forward. C'est aussi le premier test de la machine de conversion. On veut qu'elle tourne à plein dès le lancement.",
     "Play Forward n'est pas une agence de placement. C'est une différence fondamentale et un avantage concurrentiel décisif. Il mérite d'être en première ligne de chaque prise de parole."
   ],
   "site_preview": {
@@ -54,20 +54,6 @@
       "prix_unitaire": 3200
     },
     {
-      "titre": "Funnel webinar",
-      "tarif_id": "accompagnement-com",
-      "description": "Un tunnel de masterclass récurrent, réutilisable chaque mois. Pages inscription, merci et replay. Séquences email et SMS complètes. Tableau de suivi pour piloter les conversions de chaque session.",
-      "livrables": [
-        "Tunnel masterclass récurrent mensuel",
-        "Pages inscription, merci, replay",
-        "Séquences email et SMS complètes",
-        "Tableau de suivi : inscrits, présents, RDV, inscriptions"
-      ],
-      "quantite": 1,
-      "unite": "forfait",
-      "prix_unitaire": 2000
-    },
-    {
       "titre": "Stratégie d'acquisition & performance",
       "tarif_id": "strat-acquisition",
       "description": "Stratégie Meta Ads complète, architecture des campagnes, ciblages, brief créatif, storyboards et tableau de bord de pilotage. Ce forfait pose le cadre stratégique et les outils de mesure pour que chaque euro investi en média soit traçable et optimisable.",
@@ -79,7 +65,7 @@
       ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 3200
+      "prix_unitaire": 2400
     },
     {
       "titre": "Pack créa vidéos, 15 formats",
@@ -98,14 +84,6 @@
   ],
   "options": [
     {
-      "titre": "Express masterclass 1er novembre",
-      "tarif_id": "express-masterclass",
-      "description": "Intervention rapide avant la masterclass du 1er novembre. Séquences email et SMS de rappel avant et après la session, correctifs urgents du site. Livraison avant le 30 octobre.",
-      "quantite": 1,
-      "unite": "forfait",
-      "prix_unitaire": 1200
-    },
-    {
       "titre": "Site",
       "tarif_id": "site-vitrine",
       "description": "Refonte des pages clés orientée conversion. Prix, preuves et différenciation face aux agences de placement dès la page d'accueil. Tracking complet pour piloter les campagnes.",
@@ -121,14 +99,6 @@
       "unite": "mois",
       "prix_unitaire": 2800,
       "mensuel": true
-    },
-    {
-      "titre": "CRM",
-      "tarif_id": "crm",
-      "description": "Pipeline lead, RDV, inscription et automatisations.",
-      "quantite": 1,
-      "unite": "forfait",
-      "prix_unitaire": 1500
     },
     {
       "titre": "Kit prescription clubs et sections sport-études",
@@ -171,11 +141,11 @@
       },
       {
         "format": "Reel 30 s - Urgency masterclass",
-        "script": "Anne-Sophie face caméra, ton direct : « Le 1er novembre, je vous explique exactement comment ça marche : les critères, les universités, les coûts réels et les bourses possibles. Les places sont limitées. » CTA : « Je réserve ma place. »"
+        "script": "Anne-Sophie face caméra, ton direct : « Le 1er décembre, je vous explique exactement comment ça marche : les critères, les universités, les coûts réels et les bourses possibles. Les places sont limitées. » CTA : « Je réserve ma place. »"
       },
       {
         "format": "Story 6 s - Retargeting punch",
-        "script": "Fond noir. Texte blanc : « Vous avez regardé. Pas encore sauté le pas. » Texte accent : « La masterclass est le 1er novembre. » CTA swipe up : « Je m'inscris. »"
+        "script": "Fond noir. Texte blanc : « Vous avez regardé. Pas encore sauté le pas. » Texte accent : « La masterclass est le 1er décembre. » CTA swipe up : « Je m'inscris. »"
       }
     ]
   },
@@ -218,11 +188,10 @@
     "valeur": 2000
   },
   "planning": [
-    { "etape": "Express masterclass (si retenu)", "duree": "avant le 30 octobre" },
     { "etape": "Plateforme de marque et architecture de nom", "duree": "2 semaines" },
     { "etape": "Identité visuelle", "duree": "3 semaines" },
-    { "etape": "Funnel webinar", "duree": "1 semaine" },
     { "etape": "Stratégie d'acquisition & production vidéo", "duree": "3 semaines" },
+    { "etape": "Masterclass du 1er décembre", "duree": "objectif de lancement" },
     { "etape": "Démarrage acquisition (si retenu)", "duree": "à la livraison des Fondations" }
   ],
   "conditions": {
