@@ -471,21 +471,21 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .arr-item:nth-last-child(-n+3):hover .arr-tip{transform:translateX(0) translateY(0)}
 
 /* TEAM REDESIGN */
-.team-orgs{display:grid;grid-template-columns:3fr 1.1fr;gap:20px;align-items:start}
-.team-org{border:2px solid var(--ink);border-radius:24px;padding:clamp(20px,3vw,32px)}
+.team-orgs{display:grid;grid-template-columns:3fr 1.1fr;gap:20px;align-items:stretch}
+.team-org{border:2px solid var(--ink);border-radius:24px;padding:clamp(20px,3vw,32px);display:flex;flex-direction:column}
 .team-org-lbl{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
 .team-org-lbl strong{background:var(--yellow);font-weight:700;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:999px}
 .team-org-lbl span{font-size:.82rem;color:var(--muted);font-weight:600}
-.team-persons{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.team-org.solo .team-persons{grid-template-columns:1fr}
-.pcard{display:flex;flex-direction:column;gap:0}
-.pcard-photo{width:100%;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:var(--cream);margin-bottom:12px}
+.team-persons{display:flex;gap:18px;align-items:flex-end;margin-top:auto;padding-top:20px;flex-wrap:wrap}
+.team-org.solo .team-persons{gap:0}
+.pcard{display:flex;flex-direction:column;align-items:center;gap:0;text-align:center}
+.pcard-photo{width:90px;height:90px;border-radius:50%;overflow:hidden;background:var(--cream);margin-bottom:10px;flex-shrink:0}
 .pcard-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .4s}
-.pcard:hover .pcard-photo img{transform:scale(1.04)}
-.pcard-name{font-family:"Anton",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(1.05rem,1.8vw,1.4rem);line-height:1;margin-bottom:4px}
-.pcard-role{font-size:.82rem;color:var(--muted);font-weight:600}
-@media(max-width:900px){.team-orgs{grid-template-columns:1fr}.team-org.solo .team-persons{grid-template-columns:1fr}}
-@media(max-width:600px){.team-persons{grid-template-columns:repeat(2,1fr)}}
+.pcard:hover .pcard-photo img{transform:scale(1.06)}
+.pcard-name{font-family:"Anton",sans-serif;font-weight:400;text-transform:uppercase;font-size:.95rem;line-height:1;margin-bottom:3px}
+.pcard-role{font-size:.76rem;color:var(--muted);font-weight:600}
+@media(max-width:900px){.team-orgs{grid-template-columns:1fr}}
+@media(max-width:600px){.team-persons{gap:14px}}
 
 /* COMM TIMELINE — VERTICAL SCROLL INTERNE */
 .comm-tl-wrap{
