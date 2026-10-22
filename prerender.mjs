@@ -1,6 +1,6 @@
 import { createServer } from 'vite';
 import { fileURLToPath } from 'url';
-import { readFile, writeFile, mkdir, readdir } from 'fs/promises';
+import { readFile, writeFile, mkdir, readdir, unlink } from 'fs/promises';
 import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -254,6 +254,11 @@ async function prerenderDevis(vite) {
   await mkdir(outIndex, { recursive: true });
   await writeFile(path.join(outIndex, 'index.html'), devisIndexHtml(index));
   console.log(`✓ Index /devis/`);
+
+  /* Supprime le shell SPA devis.html — il n'est utile qu'en tant que template pendant le build.
+     Sans cette suppression, Netlify le sert à /devis/ à la place de dist/devis/index.html. */
+  await unlink(path.join(__dirname, 'dist/devis.html')).catch(() => {});
+  console.log(`✓ dist/devis.html supprimé (template de build uniquement)`);
 
   /* index lu par netlify/functions/devis-validation.mjs (bundlé après le build) */
   await writeFile(path.join(__dirname, 'netlify/functions/devis-data.generated.json'), JSON.stringify(index));
