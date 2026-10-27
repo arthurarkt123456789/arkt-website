@@ -167,43 +167,6 @@
       "prix_unitaire": 800
     }
   ],
-  "faq": [
-    {
-      "q": "Quels livrables pour la plateforme de marque ?",
-      "ref": "Poste 01",
-      "reponse": "L'étape 1 livre la promesse, les messages parents et athlètes, 2 pistes créatives, 15 accroches et le pitch en 3 longueurs, format PDF et restitution en visio. L'étape 2, déclenchée par Anne-Sophie, finalise la signature, l'architecture de nom, le lexique et la fiche partenaires."
-    },
-    {
-      "q": "L'identité est-elle resserrée par rapport à la V1 ?",
-      "ref": "Poste 02",
-      "reponse": "Le poste 02 couvre un logo professionnel, un habillage vidéo et 4 gabarits modifiables dans Canva et CapCut. L'identité peut être enrichie en Phase 2 sur la même base, sans tout reconstruire."
-    },
-    {
-      "q": "Qui prend en charge le paramétrage, la mesure et le pilotage ?",
-      "ref": "Poste 04",
-      "reponse": "Le tableau Qui fait quoi dans le poste 04 précise la répartition entre ARKT, Anne-Sophie et Liberty Webi. ARKT assure le paramétrage, la mesure et le pilotage uniquement si l'option Premier test Meta est retenue."
-    },
-    {
-      "q": "À quoi correspondent les 15 formats de la V1 ?",
-      "ref": "Poste 03",
-      "reponse": "Dans la V2, la production est réorganisée en deux lots. Lot A : 3 vidéos originales, 3 variantes d'accroche, formats 9:16 et 4:5. Lot B : 6 vidéos sur les angles gagnants. Total : 9 vidéos originales et leurs déclinaisons de format."
-    },
-    {
-      "q": "Est-il possible de commencer par un lot resserré ?",
-      "ref": "Poste 03",
-      "reponse": "Le lot A peut être commandé seul pour 1 400 EUR HT. Il permet de tester les messages avant d'engager la production étendue du lot B."
-    },
-    {
-      "q": "Moyens de production, corrections, droits, fichiers et actualisation ?",
-      "ref": "Poste 03",
-      "reponse": "Tout le détail figure dans l'encadré Ce qui est inclus du poste 03 : moyens de production, 2 rounds de corrections (script et montage), fichiers livrés, droits d'utilisation et conditions d'actualisation."
-    },
-    {
-      "q": "Pourquoi 2 800 EUR / mois en V1 et un détail à 3 500 EUR / mois ?",
-      "ref": "Phase 2",
-      "reponse": "[À COMPLÉTER PAR ARTHUR]"
-    }
-  ],
   "phase2_titre": "Phase 2 · Après bilan de la cohorte test",
   "phase2_note": "Ces prestations sont proposées à titre indicatif, sans engagement. Leur périmètre et les prix seront précisés après le bilan de fin de cohorte, fin avril 2027.",
   "phase2": [
