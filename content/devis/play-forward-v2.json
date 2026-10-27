@@ -194,7 +194,7 @@
         { "label": "LinkedIn fondatrice", "prix": 800, "unite": "mois" },
         { "label": "Pilotage Meta", "prix": 800, "unite": "mois" }
       ],
-      "note": "[À COMPLÉTER PAR ARTHUR : clarification sur l'écart avec les 2 800 EUR / mois de la V1]",
+      "note": "La V1 incluait une remise de 20 % sur l'ensemble de la proposition, ce qui ramenait le total à 2 800 EUR HT / mois. Le tarif affiché ici est le tarif catalogue.",
       "prix_indicatif": null
     },
     {
