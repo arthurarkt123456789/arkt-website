@@ -904,7 +904,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @media(max-width:900px){.story-2col{grid-template-columns:1fr}.mani-img{display:none}}
 /* ── Marseille dans les alpages card ─────────────────────────────────────── */
 .ftl-step--alpages{
-  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cellipse cx='45' cy='35' rx='38' ry='25' fill='%23111'/%3E%3Cellipse cx='160' cy='70' rx='28' ry='36' fill='%23111'/%3E%3Cellipse cx='90' cy='120' rx='44' ry='28' fill='%23111'/%3E%3Cellipse cx='215' cy='150' rx='30' ry='40' fill='%23111'/%3E%3Cellipse cx='35' cy='200' rx='34' ry='22' fill='%23111'/%3E%3Cellipse cx='185' cy='25' rx='20' ry='28' fill='%23111'/%3E%3Cellipse cx='130' cy='220' rx='36' ry='20' fill='%23111'/%3E%3Cellipse cx='250' cy='210' rx='22' ry='30' fill='%23111'/%3E%3C/svg%3E") repeat!important;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cpath d='M15,45 Q55,8 95,30 Q130,55 115,90 Q98,125 55,118 Q12,110 15,45Z' fill='%23111'/%3E%3Cpath d='M275,15 Q325,0 360,38 Q392,75 372,120 Q350,158 305,148 Q262,138 255,98 Q248,55 275,15Z' fill='%23111'/%3E%3Cpath d='M60,195 Q112,162 162,188 Q205,215 198,272 Q190,322 140,332 Q88,342 62,300 Q35,258 60,195Z' fill='%23111'/%3E%3Cpath d='M305,155 Q338,138 368,160 Q395,185 382,220 Q368,252 335,248 Q300,244 292,215 Q285,185 305,155Z' fill='%23111'/%3E%3Cpath d='M248,295 Q288,270 328,292 Q362,316 356,358 Q350,396 308,398 Q265,400 248,372 Q230,344 248,295Z' fill='%23111'/%3E%3Cpath d='M18,148 Q52,128 78,150 Q100,172 88,205 Q75,234 42,228 Q9,222 5,192 Q2,162 18,148Z' fill='%23111'/%3E%3Cpath d='M155,30 Q182,12 210,28 Q232,48 225,78 Q218,105 190,108 Q160,110 148,88 Q138,65 155,30Z' fill='%23111'/%3E%3C/svg%3E") repeat!important;
   width:auto!important;
   min-width:auto!important;
   flex-direction:row!important;
@@ -914,6 +914,19 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   gap:clamp(10px,1.2vw,20px)!important;
   border-left:none!important;
 }
+.alpages-info{
+  flex-shrink:0;
+  width:clamp(180px,18vw,260px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:8px;
+  padding:0 clamp(8px,1vw,16px) 0 0;
+}
+.alpages-info h3{font-size:clamp(.9rem,1.4vw,1.2rem);margin:4px 0}
+.alpages-info p{font-size:clamp(.72rem,.9vw,.85rem);line-height:1.45;margin:0}
+.alpages-info .ctv-when{font-size:clamp(.62rem,.75vw,.72rem);opacity:.7}
+.alpages-info .ctv-tags{flex-wrap:wrap;margin-top:6px}
 .alpages-iphones{display:flex;gap:clamp(10px,1.2vw,20px);align-items:center;height:100%}
 .iph-big{height:calc(70svh * 0.8);flex-shrink:0}
 .iphone-mock--big{
@@ -962,10 +975,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .story-ov-arr--left{left:clamp(6px,1.5vw,18px)}
 .story-ov-arr--right{right:clamp(6px,1.5vw,18px)}
 /* ── Panels split ───────────────────────────────────────────────────────── */
-.sp-text{min-width:clamp(260px,32vw,420px)}
-.sp-photo{padding:0!important;overflow:hidden;height:100%;width:auto;flex-shrink:0;display:flex;align-items:stretch}
-.sp-photo img{height:100%;width:auto;display:block;flex-shrink:0;border-radius:0!important}
-.sp-bullets{min-width:clamp(240px,28vw,380px);display:flex;align-items:center}
+.sp-text{width:clamp(240px,30vw,400px)!important;min-width:0!important;max-width:clamp(240px,30vw,400px)!important}
+.sp-photo{padding:0!important;overflow:visible;flex-shrink:0;width:auto;min-width:0!important;align-self:stretch}
+.sp-photo img{display:block;height:100%;width:auto;max-width:none;vertical-align:top}
+.sp-bullets{width:clamp(220px,28vw,360px)!important;min-width:0!important;max-width:clamp(220px,28vw,360px)!important;display:flex;align-items:center}
 .sp-bullets .wrap{width:100%}
 .sp-bullets .reasons{margin-top:0}
 
@@ -1243,6 +1256,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
     <!-- ── Étape 3 ──────────────────────────────────────────────────── -->
     <div class="ftl-card ftl-step ftl-step--alpages">
+      <div class="ftl-info alpages-info">
+        <span class="ctv-when">Début 2027 · production — Avril/Mai · diffusion</span>
+        <h3>Montée en puissance</h3>
+        <p>Des personnages iconiques de Marseille — tous âges, tous univers — partent fabriquer leur propre raclette dans les alpages. Ils rentrent avec leur fromage et le font déguster le Jour J. Un dispositif créateurs de contenu sur plusieurs mois qui génère un buzz organique massif avant l'ouverture de la billetterie.</p>
+        <div class="ctv-tags"><span>Créateurs de contenu</span><span>Instagram</span><span>TikTok</span><span>YouTube</span></div>
+      </div>
       <div class="alpages-iphones">
         <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><video src="./videos/v1.mp4" autoplay muted loop playsinline></video></div></div>
         <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><video src="./videos/v2.mp4" autoplay muted loop playsinline></video></div></div>
