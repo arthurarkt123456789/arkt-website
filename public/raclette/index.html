@@ -493,59 +493,62 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @media(max-width:600px){.team-persons{gap:14px}}
 
 /* COMM TIMELINE — VERTICAL SCROLL INTERNE */
-.comm-tl-wrap{
-  height:680px;
-  overflow-y:auto;
-  overflow-x:hidden;
-  border-radius:20px;
-  border:2px solid var(--line);
-  padding:0 32px;
-  margin-top:clamp(40px,5vw,60px);
-  scrollbar-width:thin;
-  scrollbar-color:var(--blue) var(--line)
-}
-.comm-tl-wrap::-webkit-scrollbar{width:4px}
-.comm-tl-wrap::-webkit-scrollbar-track{background:var(--line)}
-.comm-tl-wrap::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px}
+.comm-tl-wrap{margin-top:clamp(32px,4vw,48px)}
+/* ─── Frise horizontale ───────────────────────────────────────────────── */
 .comm-tl-v{
+  display:flex;
+  flex-direction:row;
+  gap:0;
+  padding:20px 0 28px;
+  overflow-x:auto;
+  overscroll-behavior-x:contain;
+  scrollbar-width:none;
   position:relative;
-  padding:36px 0 20px 56px
 }
-/* La ligne unique continue du début à la fin */
+.comm-tl-v::-webkit-scrollbar{display:none}
+/* ligne horizontale qui passe sur les dots */
 .comm-tl-v::before{
   content:"";
   position:absolute;
-  left:18px;
-  top:52px;
-  bottom:20px;
-  width:3px;
-  background:linear-gradient(to bottom,var(--blue) 0%,var(--blue) 80%,var(--yellow) 100%)
+  top:calc(190px + 10px + 8px);
+  left:80px;
+  right:80px;
+  height:3px;
+  width:auto;
+  background:linear-gradient(to right,var(--blue) 0%,var(--blue) 85%,var(--yellow) 100%);
+  pointer-events:none;
+  z-index:0
 }
 .ctv-step{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:170px;
+  flex-shrink:0;
+  padding:0 10px;
   position:relative;
-  display:grid;
-  grid-template-columns:110px 1fr;
-  gap:20px;
-  align-items:flex-start;
-  margin-bottom:48px
+  margin-bottom:0
 }
 .ctv-step:last-child{margin-bottom:0}
 .ctv-dot{
-  position:absolute;
-  left:-47px;
-  top:20px;
-  width:18px;height:18px;
+  order:2;
+  position:relative;
+  left:auto;
+  top:auto;
+  width:16px;height:16px;
   border-radius:50%;
   background:var(--blue);
   border:3px solid #fff;
   box-shadow:0 0 0 3px var(--blue);
-  z-index:2
+  z-index:2;
+  flex-shrink:0;
+  margin:10px 0
 }
 .ctv-step:last-child .ctv-dot{
   background:var(--yellow);
   box-shadow:0 0 0 3px var(--ink);
-  width:22px;height:22px;
-  left:-49px;top:18px
+  width:20px;height:20px;
+  left:auto;top:auto
 }
 /* Mini iPhone */
 .ctv-phone .iphone-mock{
@@ -576,11 +579,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .ctv-phone .iph-play{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;margin:0 auto}
 .ctv-phone .iph-play::after{content:"";border-left:8px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px}
 /* Info */
-.ctv-info{}
+.ctv-phone{order:1}
+.ctv-info{order:3;text-align:center}
 .ctv-when{font-weight:800;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:6px}
 .ctv-step:last-child .ctv-when{color:var(--ink)}
 .ctv-info h3{font-family:"Inter",sans-serif;font-weight:800;text-transform:uppercase;font-size:1.15rem;line-height:1.05;margin-bottom:6px}
-.ctv-info p{font-size:.84rem;color:var(--muted);max-width:38ch}
+.ctv-info p{font-size:.78rem;color:var(--muted);max-width:none}
 .ctv-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
 .ctv-tags span{background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:.68rem;font-weight:600;color:var(--muted)}
 /* Scroll indicator */
@@ -883,19 +887,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   display:flex;
   overflow-x:scroll;
   overflow-y:hidden;
-  scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
+  scroll-behavior:smooth;
 }
 .story-carousel-outer::-webkit-scrollbar{display:none}
 .story-panel{
   min-width:100vw;
   flex-shrink:0;
-  scroll-snap-align:start;
   padding:clamp(40px,5vw,72px) var(--gutter) clamp(32px,4vw,56px);
   box-sizing:border-box;
   overflow-y:auto;
-  overscroll-behavior-x:none;
+  overflow-x:hidden;
 }
 .story-panel--pink{background:var(--pink)}
 .story-2col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,60px);align-items:start;margin-top:clamp(28px,3.5vw,44px)}
