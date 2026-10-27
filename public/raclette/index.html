@@ -902,6 +902,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .story-lbl{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);opacity:0;max-width:0;white-space:nowrap;transition:opacity .3s,max-width .3s}
 .story-lbl.active{opacity:1;max-width:200px}
 @media(max-width:900px){.story-2col{grid-template-columns:1fr}.mani-img{display:none}}
+/* ── Overrides scopés pour 70svh ────────────────────────────────────────── */
+.story-panel .h2{font-size:clamp(1.5rem,3.6vw,3rem)!important}
+.story-panel .big-half{font-size:clamp(3.5rem,10vw,8rem)}
+.story-panel .social-grid{gap:clamp(16px,2.5vw,36px)}
+.story-panel .story-2col{gap:clamp(16px,2.5vw,36px);margin-top:clamp(10px,1.4vw,18px)}
+.story-panel .lead{font-size:clamp(.82rem,1vw,.96rem)!important;max-width:none}
+.story-panel .reasons{margin-top:12px;gap:8px}
+.story-panel .reasons li{font-size:.78rem}
+.story-panel .arr{margin-top:10px;gap:5px}
+.story-panel .arr span{width:30px;height:30px;font-size:.6rem}
+.story-panel .arr-tip{font-size:.64rem}
+.story-panel .script{font-size:clamp(.9rem,1.4vw,1.2rem)!important}
 /* Inspiration cards */
 .inspo-row{margin-top:20px;border-top:1px solid rgba(0,0,0,.1);padding-top:16px}
 .inspo-label-txt{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
