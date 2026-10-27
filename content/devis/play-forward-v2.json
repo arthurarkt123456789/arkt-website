@@ -106,7 +106,7 @@
         "sections": [
           {
             "label": "Moyens de production",
-            "items": ["[À COMPLÉTER PAR ARTHUR : motion design / images sous licence / tournage / IA]"]
+            "items": ["Tournage avec 3 acteurs UGC (profils définis selon le concept créatif)", "Montage et incrustations de vidéos de banques d'images", "Musiques libres de droit", "Rémunération acteurs UGC : 150 EUR HT par profil, refacturée au réel (voir bas de page)"]
           },
           {
             "label": "Corrections",
@@ -118,7 +118,7 @@
           },
           {
             "label": "Droits",
-            "items": ["Usage publicitaire et organique, tous canaux, durée illimitée", "Musiques et images sous licence couvrant ces usages", "Autorisation de droit à l'image d'Anaëlle recueillie par écrit avant tournage ou montage"]
+            "items": ["Usage publicitaire et organique, tous canaux, 10 ans à l'international", "Musiques et images sous licence couvrant ces usages", "Autorisation de droit à l'image d'Anaëlle recueillie par écrit avant tournage ou montage", "Autorisation de droit à l'image des acteurs UGC recueillie par écrit avant tournage"]
           },
           {
             "label": "Actualisation",
@@ -208,7 +208,8 @@
     "prix": 1400
   },
   "refacturations": [
-    { "label": "Budget média Meta Ads (si option Premier test Meta activée)", "estimation": null }
+    { "label": "Budget média Meta Ads (si option Premier test Meta activée)", "estimation": null },
+    { "label": "Rémunération acteurs UGC (3 profils × 150 EUR HT)", "estimation": 450 }
   ],
   "planning": [
     { "etape": "Signature", "duree": "[DATE DE SIGNATURE]" },
