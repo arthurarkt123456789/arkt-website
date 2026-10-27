@@ -61,12 +61,12 @@
       "titre": "Concepts créatifs & production vidéo",
       "phase": "Phase 1",
       "tarif_id": "pack-video-lancement",
-      "description": "3 concepts créatifs distincts, sans Anne-Sophie à l'image. Chaque concept est une idée narrative forte : univers visuel, ton, structure. À partir de ces 3 concepts, 8 formats finalisés, prêts à diffuser en paid et en organique. Scripts basés sur les preuves disponibles aujourd'hui : expérience et expertise d'Anne-Sophie, témoignage du parcours d'Anaëlle (sous réserve de son accord). Contenus evergreen : sans date, avec CTAs facilement modifiables pour chaque masterclass.",
+      "description": "3 angles créatifs distincts, sans Anne-Sophie à l'image. Chaque angle est une idée narrative forte : univers visuel, ton, structure. 3 vidéos produites par angle = 9 vidéos originales, déclinées en 1:1 et 9:16, soit 18 formats livrés. Scripts basés sur les preuves disponibles : expérience et expertise d'Anne-Sophie, témoignage du parcours d'Anaëlle (sous réserve de son accord). Contenus evergreen : sans date, CTAs facilement modifiables pour chaque masterclass.",
       "livrables": [
-        "3 concepts créatifs distincts : univers, ton, structure narrative",
-        "8 formats vidéo finalisés : 2 Reels 15 s, 2 Reels 30 s, 2 stories 6 s, 2 carrousels",
-        "Déclinaisons 9/16 et 1/1 selon les placements",
-        "Sous-titres et accroches testables en A/B (2 versions par format)",
+        "3 angles créatifs : univers, ton, structure narrative",
+        "3 vidéos par angle = 9 vidéos originales",
+        "Déclinaison 1:1 et 9:16 = 18 formats livrés",
+        "Sous-titres et accroches testables en A/B",
         "1 round de corrections inclus",
         "Droits d'utilisation publicitaire et organique, durée illimitée",
         "Fichiers exportés : MP4, formats Meta Ads ready"
@@ -129,85 +129,9 @@
       "prix_indicatif": 1500
     }
   ],
-  "meta_ads": {
-    "axes": [
-      {
-        "titre": "Paid ciblé parents",
-        "detail": "Campagnes Meta Ads exclusivement orientées vers les parents 35-50 ans, CSP+, enfants pratiquant un sport. Pas de ciblage publicitaire sur les mineurs : les parents décident, on s'adresse à eux."
-      },
-      {
-        "titre": "Organique et relais pour les jeunes",
-        "detail": "Toucher les athlètes via les clubs, CREPS, sections sport-études et témoignages de parcours. Contenus organiques adaptés à leur code, relais institutionnels à fort potentiel de volume."
-      },
-      {
-        "titre": "Retargeting et nurturing",
-        "detail": "Récupérer les visiteurs et inscrits non convertis avec des messages adaptés à leur stade de réflexion. Séquences courtes, ton direct, CTA vers la masterclass suivante."
-      }
-    ],
-    "ciblages": [
-      "Parents 35-50 ans, CSP+, enfants de 14-18 ans pratiquant un sport, France entière",
-      "Intérêts : bourses sportives, études à l'étranger, NCAA, sport universitaire US",
-      "Lookalike 1-2% basé sur les inscrits et conversions de la masterclass",
-      "Géociblage zones prioritaires : Île-de-France, Auvergne-Rhône-Alpes, PACA, Bretagne",
-      "Retargeting visiteurs site et inscrits masterclass non convertis"
-    ],
-    "storyboards": [
-      {
-        "format": "Reel 15 s - Parcours réel",
-        "script": "Images de terrain, d'entraînement, de campus américain. Texte à l'écran : « Elle s'entraînait en France. Elle étudie aujourd'hui aux États-Unis. » Voix off neutre : « Play Forward. Le programme qui trace la voie. » CTA : « Je découvre la masterclass. » Aucune présence d'Anne-Sophie à l'image."
-      },
-      {
-        "format": "Carrousel - POV parent",
-        "script": "Slide 1 : « Et si votre enfant pouvait concilier sport de haut niveau et études aux États-Unis ? » Slide 2 : « On ne savait pas que c'était possible. » Slide 3 : « Le 1er décembre, on vous explique exactement comment ça marche. » Slide CTA : « Réservez votre place. »"
-      },
-      {
-        "format": "Reel 30 s - Expertise fondatrice",
-        "script": "Voix off d'Anne-Sophie sur visuels campus, tableaux NCAA, carte des universités : « Il y a des centaines de bourses disponibles chaque année pour des athlètes français. La plupart ne savent même pas qu'elles existent. » CTA : « Le 1er décembre, on vous donne toutes les clés. »"
-      },
-      {
-        "format": "Story 6 s - Retargeting",
-        "script": "Fond sombre. Texte : « Vous avez regardé. Pas encore sauté le pas. » Accent : « Masterclass le 1er décembre. Places limitées. » CTA swipe up : « Je m'inscris. »"
-      }
-    ]
-  },
-  "partenaires": {
-    "athletes": [
-      {
-        "profil": "Joël Ayayi",
-        "pourquoi": "Formé en France, Joël Ayayi a rejoint Gonzaga University en NCAA Division I avant de signer en NBA puis en EuroLeague. Son parcours est exactement la promesse Play Forward : une voie concrète, tracée, accessible depuis la France."
-      },
-      {
-        "profil": "Béryl Gastaldello",
-        "pourquoi": "Nageuse internationale, Béryl Gastaldello a entraîné à LSU (Louisiana State University, NCAA D1) tout en représentant la France. La natation est le sport le plus doté en bourses NCAA, son profil crédibilise immédiatement le programme auprès des familles."
-      },
-      {
-        "profil": "Anthony Mouyokolo",
-        "pourquoi": "Figure majeure du football américain en France, Anthony Mouyokolo a une communauté engagée et incarne le profil pionnier : quelqu'un qui a choisi une voie atypique et réussi. Parfait pour parler à la génération de jeunes qui veulent sortir des rails classiques."
-      }
-    ],
-    "ecoles": [
-      {
-        "profil": "Sections sport-études des lycées d'Île-de-France (Lakanal, pôle France INSEP)",
-        "pourquoi": "Concentration maximale d'athlètes au profil exact, avec des conseillers d'orientation en recherche active d'alternatives aux filières classiques."
-      },
-      {
-        "profil": "CREPS régionaux (Centres de Ressources, d'Expertise et de Performance Sportive)",
-        "pourquoi": "Présents dans 14 régions, ils accueillent les espoirs nationaux et représentent un canal de prescription institutionnel à très fort potentiel de volume."
-      },
-      {
-        "profil": "Classes prépa STAPS et BTS Sport",
-        "pourquoi": "Jeunes qui ont le niveau sportif mais pas la filière académique classique. Play Forward est exactement l'alternative qu'ils cherchent sans savoir qu'elle existe."
-      }
-    ]
-  },
   "refacturations": [
     { "label": "Budget média Meta Ads (si Premier test Meta Ads activé)", "estimation": null }
   ],
-  "remise": {
-    "label": "Remise lancement cohorte test",
-    "type": "absolu",
-    "valeur": 600
-  },
   "planning": [
     { "etape": "Plateforme de marque : positionnement + concept créatif", "duree": "2 semaines" },
     { "etape": "Identité lancement (en parallèle)", "duree": "2 semaines" },
