@@ -321,6 +321,26 @@ export default function DevisPage({ devis }) {
                 })}
               </div>
             )}
+
+            {d.phase2?.length > 0 && (
+              <div className="dv-phase2 dv-reveal">
+                <div className="dv-phase2-head">
+                  <h3 className="dv-sub">Phase 2 · Horizon scale</h3>
+                  <p className="dv-phase2-note">Ces prestations sont pensées pour la suite, après le bilan de la cohorte test. Elles sont listées ici pour que vous ayez une vision complète du chemin, sans engagement immédiat.</p>
+                </div>
+                <div className="dv-phase2-list">
+                  {d.phase2.map((p, i) => (
+                    <div key={i} className="dv-phase2-item">
+                      <span className="dv-phase2-title">{p.titre}</span>
+                      {p.description && <span className="dv-phase2-desc">{p.description}</span>}
+                      <span className="dv-phase2-price">
+                        {p.prix_indicatif ? `env. ${eur(p.prix_indicatif)} HT` : "Sur devis"}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
 

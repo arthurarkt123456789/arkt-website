@@ -1,0 +1,228 @@
+{
+  "slug": "play-forward-v2",
+  "numero": "D-2026-002",
+  "date": "2026-10-27",
+  "validite_jours": 30,
+  "client": {
+    "societe": "Play Forward",
+    "secteur": "Programme sport-études USA, athlètes 15-18 ans",
+    "contact": "Anne-Sophie Dutat",
+    "fonction": "Fondatrice",
+    "email": ""
+  },
+  "accroche": "Des fondations créatives solides pour le lancement du 1er décembre, des actifs qui durent au-delà de la première cohorte.",
+  "contexte": "Play Forward prépare des athlètes de 15 à 18 ans aux études sportives aux États-Unis. Le dispositif opérationnel est en place : funnel, webinar, séquences email. La masterclass du 1er décembre lancera la première cohorte test de 6 à 8 familles, avec un démarrage prévu le 1er février 2027. Ce que nous construisons ensemble : la marque, l'identité et les contenus qui font de cette cohorte test un premier acte fort, et qui posent les bases du scale.",
+  "enjeux": [
+    "Anne-Sophie a déjà construit le dispositif opérationnel. C'est la base la plus difficile à poser. On s'appuie dessus, on ne le refait pas. Notre terrain : la marque et les contenus.",
+    "La cohorte test de 6 à 8 familles est une décision stratégique brillante. Elle va générer les preuves, les témoignages et les retours qui rendront la phase de scale beaucoup plus puissante.",
+    "Des vidéos qui ne reposent pas sur Anne-Sophie à l'image, c'est construire des actifs réutilisables à l'infini, indépendants d'un format ou d'une présence. C'est exactement ce brief qu'on sait relever.",
+    "Parents et athlètes n'ont pas les mêmes déclencheurs. Les parents décident, les jeunes adhèrent. Une stratégie paid sur les parents, un dispositif organique et de relais pour les athlètes.",
+    "La procédure INPI sur Play Forward est une opportunité de séquencer intelligemment : on pose le positionnement et le concept créatif d'abord, on valide avant de finaliser les éléments liés au nom.",
+    "Chaque euro investi en Phase 1 construit un actif durable. Les vidéos, l'identité et la plateforme de marque seront exploités sur plusieurs cohortes, pas consommés en un lancement."
+  ],
+  "site_preview": {
+    "label": "Notre vision de votre prochain site",
+    "url": "/devis-assets/play-forward-maquette.html",
+    "description": "Une maquette conçue pour vous montrer concrètement ce que pourrait être votre site : une page d'accueil orientée conversion, avec les bons messages aux bons endroits. La refonte est placée en Phase 2, mais la vision est déjà là."
+  },
+  "lots": [
+    {
+      "titre": "Plateforme de marque",
+      "phase": "Phase 1",
+      "tarif_id": "strategie-marque",
+      "description": "Clarifier la promesse centrale, l'articulation entre la marque Play Forward et le nom du programme, et faire émerger un concept de communication fort directement réutilisable dans les vidéos, les masterclasses et les supports partenaires. Séquencé en deux temps pour respecter la procédure INPI : positionnement et pistes créatives d'abord, finalisation des éléments liés au nom après validation.",
+      "livrables": [
+        "Positionnement et promesse centrale (différenciation vs agences de placement)",
+        "Messages par cible : parents (décision d'investissement) et athlètes (aspiration, projet de vie)",
+        "Concept de communication central : territoire visuel et narratif de Play Forward",
+        "Éléments directement réutilisables : vidéos, masterclasses, site, supports partenaires",
+        "Étape 1 : positionnement + pistes créatives / Étape 2 : finalisation après validation INPI"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 2000
+    },
+    {
+      "titre": "Identité lancement",
+      "phase": "Phase 1",
+      "tarif_id": "identite-lancement",
+      "description": "Une identité opérationnelle pour le lancement : logo professionnel, habillage vidéo et gabarits modifiables. Pensée pour être enrichie en Phase 2 sans tout reconstruire.",
+      "livrables": [
+        "Logo et déclinaisons (horizontal, carré, monochrome)",
+        "Habillage vidéo : intro/outro, lower thirds, templates modifiables (CapCut ou After Effects)",
+        "4 gabarits réseaux modifiables : post, story, couverture, carrousel",
+        "Fichiers sources livrés : SVG, PNG, formats vidéo"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 1800
+    },
+    {
+      "titre": "Concepts créatifs & production vidéo",
+      "phase": "Phase 1",
+      "tarif_id": "pack-video-lancement",
+      "description": "3 concepts créatifs distincts, sans Anne-Sophie à l'image. Chaque concept est une idée narrative forte : univers visuel, ton, structure. À partir de ces 3 concepts, 8 formats finalisés, prêts à diffuser en paid et en organique. Scripts basés sur les preuves disponibles aujourd'hui : expérience et expertise d'Anne-Sophie, témoignage du parcours d'Anaëlle (sous réserve de son accord). Contenus evergreen : sans date, avec CTAs facilement modifiables pour chaque masterclass.",
+      "livrables": [
+        "3 concepts créatifs distincts : univers, ton, structure narrative",
+        "8 formats vidéo finalisés : 2 Reels 15 s, 2 Reels 30 s, 2 stories 6 s, 2 carrousels",
+        "Déclinaisons 9/16 et 1/1 selon les placements",
+        "Sous-titres et accroches testables en A/B (2 versions par format)",
+        "1 round de corrections inclus",
+        "Droits d'utilisation publicitaire et organique, durée illimitée",
+        "Fichiers exportés : MP4, formats Meta Ads ready"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 3200
+    },
+    {
+      "titre": "Stratégie créative & cadrage publicitaire",
+      "phase": "Phase 1",
+      "tarif_id": "strat-cadrage",
+      "description": "Brief créatif complet pour orienter la production vidéo, stratégie de diffusion et architecture de campagnes recommandée. Le cadrage, pas le pilotage : vous gardez la main sur l'activation, nous posons le cap. Inclut l'approche complémentaire pour toucher les jeunes sans ciblage publicitaire sur les mineurs.",
+      "livrables": [
+        "Brief créatif détaillé : axes, narration, univers pour chaque concept vidéo",
+        "Stratégie paid : ciblage parents (35-50 ans, CSP+), lookalike inscrits",
+        "Stratégie organique et relais : clubs, CREPS, sections sport-études, témoignages de parcours",
+        "Architecture de campagnes recommandée (cadrage stratégique, sans pilotage technique)",
+        "Tableau de suivi simplifié : inscrits, présents, RDV, conversions masterclass"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 1200
+    }
+  ],
+  "options": [
+    {
+      "titre": "Premier test Meta Ads",
+      "tarif_id": "test-meta",
+      "description": "Accompagnement au lancement de la première campagne pour la masterclass du 1er décembre : activation des campagnes, suivi quotidien pendant 3 semaines, recommandations d'optimisation et bilan de performance. Budget média non inclus.",
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 800
+    }
+  ],
+  "phase2": [
+    {
+      "titre": "Identité visuelle enrichie",
+      "description": "Extension de l'identité lancement : charte complète, règles photo, gabarits supplémentaires. Construit sur la Phase 1 sans tout refaire.",
+      "prix_indicatif": 1400
+    },
+    {
+      "titre": "Extension pack vidéo",
+      "description": "7 formats supplémentaires basés sur les enseignements du premier test : messages affinés, nouvelles preuves, témoignages de la cohorte test.",
+      "prix_indicatif": 2200
+    },
+    {
+      "titre": "Site refonte",
+      "description": "Refonte des pages clés orientée conversion. Prix, preuves et différenciation face aux agences de placement. Tracking complet.",
+      "prix_indicatif": 4000
+    },
+    {
+      "titre": "Accompagnement acquisition",
+      "description": "Community management, LinkedIn fondatrice, pilotage campagnes Meta Ads. Démarrage après bilan cohorte test.",
+      "prix_indicatif": null
+    },
+    {
+      "titre": "Kit prescription clubs et CREPS",
+      "description": "Deck et supports de présentation pour les sections sport-études, CREPS et clubs. Nourri par les retours de la première cohorte.",
+      "prix_indicatif": 1500
+    }
+  ],
+  "meta_ads": {
+    "axes": [
+      {
+        "titre": "Paid ciblé parents",
+        "detail": "Campagnes Meta Ads exclusivement orientées vers les parents 35-50 ans, CSP+, enfants pratiquant un sport. Pas de ciblage publicitaire sur les mineurs : les parents décident, on s'adresse à eux."
+      },
+      {
+        "titre": "Organique et relais pour les jeunes",
+        "detail": "Toucher les athlètes via les clubs, CREPS, sections sport-études et témoignages de parcours. Contenus organiques adaptés à leur code, relais institutionnels à fort potentiel de volume."
+      },
+      {
+        "titre": "Retargeting et nurturing",
+        "detail": "Récupérer les visiteurs et inscrits non convertis avec des messages adaptés à leur stade de réflexion. Séquences courtes, ton direct, CTA vers la masterclass suivante."
+      }
+    ],
+    "ciblages": [
+      "Parents 35-50 ans, CSP+, enfants de 14-18 ans pratiquant un sport, France entière",
+      "Intérêts : bourses sportives, études à l'étranger, NCAA, sport universitaire US",
+      "Lookalike 1-2% basé sur les inscrits et conversions de la masterclass",
+      "Géociblage zones prioritaires : Île-de-France, Auvergne-Rhône-Alpes, PACA, Bretagne",
+      "Retargeting visiteurs site et inscrits masterclass non convertis"
+    ],
+    "storyboards": [
+      {
+        "format": "Reel 15 s - Parcours réel",
+        "script": "Images de terrain, d'entraînement, de campus américain. Texte à l'écran : « Elle s'entraînait en France. Elle étudie aujourd'hui aux États-Unis. » Voix off neutre : « Play Forward. Le programme qui trace la voie. » CTA : « Je découvre la masterclass. » Aucune présence d'Anne-Sophie à l'image."
+      },
+      {
+        "format": "Carrousel - POV parent",
+        "script": "Slide 1 : « Et si votre enfant pouvait concilier sport de haut niveau et études aux États-Unis ? » Slide 2 : « On ne savait pas que c'était possible. » Slide 3 : « Le 1er décembre, on vous explique exactement comment ça marche. » Slide CTA : « Réservez votre place. »"
+      },
+      {
+        "format": "Reel 30 s - Expertise fondatrice",
+        "script": "Voix off d'Anne-Sophie sur visuels campus, tableaux NCAA, carte des universités : « Il y a des centaines de bourses disponibles chaque année pour des athlètes français. La plupart ne savent même pas qu'elles existent. » CTA : « Le 1er décembre, on vous donne toutes les clés. »"
+      },
+      {
+        "format": "Story 6 s - Retargeting",
+        "script": "Fond sombre. Texte : « Vous avez regardé. Pas encore sauté le pas. » Accent : « Masterclass le 1er décembre. Places limitées. » CTA swipe up : « Je m'inscris. »"
+      }
+    ]
+  },
+  "partenaires": {
+    "athletes": [
+      {
+        "profil": "Joël Ayayi",
+        "pourquoi": "Formé en France, Joël Ayayi a rejoint Gonzaga University en NCAA Division I avant de signer en NBA puis en EuroLeague. Son parcours est exactement la promesse Play Forward : une voie concrète, tracée, accessible depuis la France."
+      },
+      {
+        "profil": "Béryl Gastaldello",
+        "pourquoi": "Nageuse internationale, Béryl Gastaldello a entraîné à LSU (Louisiana State University, NCAA D1) tout en représentant la France. La natation est le sport le plus doté en bourses NCAA, son profil crédibilise immédiatement le programme auprès des familles."
+      },
+      {
+        "profil": "Anthony Mouyokolo",
+        "pourquoi": "Figure majeure du football américain en France, Anthony Mouyokolo a une communauté engagée et incarne le profil pionnier : quelqu'un qui a choisi une voie atypique et réussi. Parfait pour parler à la génération de jeunes qui veulent sortir des rails classiques."
+      }
+    ],
+    "ecoles": [
+      {
+        "profil": "Sections sport-études des lycées d'Île-de-France (Lakanal, pôle France INSEP)",
+        "pourquoi": "Concentration maximale d'athlètes au profil exact, avec des conseillers d'orientation en recherche active d'alternatives aux filières classiques."
+      },
+      {
+        "profil": "CREPS régionaux (Centres de Ressources, d'Expertise et de Performance Sportive)",
+        "pourquoi": "Présents dans 14 régions, ils accueillent les espoirs nationaux et représentent un canal de prescription institutionnel à très fort potentiel de volume."
+      },
+      {
+        "profil": "Classes prépa STAPS et BTS Sport",
+        "pourquoi": "Jeunes qui ont le niveau sportif mais pas la filière académique classique. Play Forward est exactement l'alternative qu'ils cherchent sans savoir qu'elle existe."
+      }
+    ]
+  },
+  "refacturations": [
+    { "label": "Budget média Meta Ads (si Premier test Meta Ads activé)", "estimation": null }
+  ],
+  "remise": {
+    "label": "Remise lancement cohorte test",
+    "type": "absolu",
+    "valeur": 600
+  },
+  "planning": [
+    { "etape": "Plateforme de marque : positionnement + concept créatif", "duree": "2 semaines" },
+    { "etape": "Identité lancement (en parallèle)", "duree": "2 semaines" },
+    { "etape": "Stratégie créa & brief vidéo", "duree": "1 semaine" },
+    { "etape": "Production vidéo : 8 formats", "duree": "2 semaines" },
+    { "etape": "Masterclass du 1er décembre", "duree": "objectif de lancement" },
+    { "etape": "Démarrage cohorte test", "duree": "1er février 2027" },
+    { "etape": "Bilan et Phase 2", "duree": "mars 2027" }
+  ],
+  "conditions": {
+    "paiement": "50 % à la signature, 50 % à la livraison.",
+    "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
+  },
+  "projets_refs": ["racine", "airbnb", "palauma"],
+  "equipe": ["Arthur Barret", "Tobias Simon", "Sacha Bassili"],
+  "pdf_url": null,
+  "tva": 0.2
+}

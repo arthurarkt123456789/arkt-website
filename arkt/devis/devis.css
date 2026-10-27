@@ -177,6 +177,18 @@ html.js .dv-reveal.in { opacity: 1; transform: none; }
 .dv-plan-arrow-r { right: 0; }
 .dv-plan-arrow-off { opacity: 0; pointer-events: none; }
 
+/* ---------- phase 2 ---------- */
+.dv-phase2 { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line-dark); }
+.dv-phase2-head { margin-bottom: 28px; }
+.dv-phase2-note { font-size: 15px; color: var(--on-dark-dim); margin: 10px 0 0; max-width: 58ch; line-height: 1.55; }
+.dv-phase2-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.dv-phase2-item { border: 1px solid var(--line-dark); border-radius: 14px; padding: 20px 22px; opacity: 0.52; display: flex; flex-direction: column; gap: 6px; }
+.dv-phase2-title { font-weight: 600; font-size: 16px; color: var(--on-dark); }
+.dv-phase2-desc { font-size: 13px; color: var(--on-dark-dim); line-height: 1.5; flex: 1; }
+.dv-phase2-price { font-size: 13px; color: var(--on-dark-dim); margin-top: 4px; }
+@media (max-width: 960px) { .dv-phase2-list { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .dv-phase2-list { grid-template-columns: 1fr; } }
+
 /* ---------- totals ---------- */
 .dv-totals { width: 100%; border-collapse: collapse; margin-top: 28px; font-size: 16px; }
 .dv-totals th, .dv-totals td { padding: 12px 0; border-bottom: 1px solid var(--line); font-weight: 400; }
