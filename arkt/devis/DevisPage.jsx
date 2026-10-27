@@ -164,7 +164,7 @@ export default function DevisPage({ devis }) {
           <a href="/" className="dv-brand" aria-label="ARKT Conseil">
             <img src="/arkt/logo-arkt.png" alt="ARKT Conseil" />
           </a>
-          <span className="dv-top-ref">Proposition commerciale</span>
+          <span className="dv-top-ref">Proposition commerciale{d.numero ? ` · ${d.numero}` : ""}</span>
         </div>
       </header>
 
@@ -173,7 +173,7 @@ export default function DevisPage({ devis }) {
         <section className="dv-hero">
           <div className="dv-halo" aria-hidden="true" />
           <div className="dv-wrap dv-hero-in">
-            <Eyebrow>Proposition commerciale</Eyebrow>
+            <Eyebrow>Proposition commerciale{d.numero ? ` · ${d.numero}` : ""}</Eyebrow>
             <h1 className="dv-display dv-hero-title">{d.client?.societe}</h1>
             {d.accroche && <p className="dv-hero-lead">{d.accroche}</p>}
             <dl className="dv-hero-meta">
@@ -273,6 +273,72 @@ export default function DevisPage({ devis }) {
                     {l.livrables?.length > 0 && (
                       <ul className="dv-chips">{l.livrables.map((x, j) => <li key={j}>{x}</li>)}</ul>
                     )}
+                    {l.etapes?.length > 0 && (
+                      <div className="dv-lot-etapes">
+                        {l.etapes.map((e, j) => (
+                          <div key={j} className="dv-lot-etape">
+                            <div className="dv-lot-etape-titre">{e.titre}</div>
+                            {e.livrables?.length > 0 && (
+                              <ul className="dv-chips dv-chips-sm">{e.livrables.map((x, k) => <li key={k}>{x}</li>)}</ul>
+                            )}
+                            {e.note_validation && <p className="dv-lot-etape-note">{e.note_validation}</p>}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {l.sous_lots?.length > 0 && (
+                      <div className="dv-lot-sous">
+                        {l.sous_lots.map((sl, j) => (
+                          <div key={j} className="dv-lot-sous-item">
+                            <div className="dv-lot-sous-titre">{sl.titre}</div>
+                            {sl.livrables?.length > 0 && (
+                              <ul className="dv-chips dv-chips-sm">{sl.livrables.map((x, k) => <li key={k}>{x}</li>)}</ul>
+                            )}
+                            {sl.note && <p className="dv-lot-sous-note">{sl.note}</p>}
+                          </div>
+                        ))}
+                        {l.note_commande && <p className="dv-lot-note-cmd">{l.note_commande}</p>}
+                      </div>
+                    )}
+                    {l.encadre && (
+                      <div className="dv-encadre">
+                        <div className="dv-encadre-titre">{l.encadre.titre}</div>
+                        <div className="dv-encadre-body">
+                          {l.encadre.sections.map((s, j) => (
+                            <div key={j} className="dv-encadre-section">
+                              <span className="dv-encadre-label">{s.label}</span>
+                              <ul className="dv-encadre-list">
+                                {s.items.map((item, k) => <li key={k}>{item}</li>)}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {l.note && <p className="dv-lot-note">{l.note}</p>}
+                    {l.table_repartition && (
+                      <div className="dv-qfq-wrap">
+                        <div className="dv-qfq-label">Qui fait quoi</div>
+                        <table className="dv-qfq">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              {l.table_repartition.colonnes.map((c, j) => <th key={j}>{c}</th>)}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {l.table_repartition.lignes.map((ligne, j) => (
+                              <tr key={j}>
+                                {ligne.map((cell, k) => k === 0
+                                  ? <td key={k} className="dv-qfq-row">{cell}</td>
+                                  : <td key={k}>{cell}</td>
+                                )}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
                   </div>
                   <div className="dv-lot-price">
                     <strong>{eur(lineTotal(l))} <small>HT</small></strong>
@@ -325,17 +391,31 @@ export default function DevisPage({ devis }) {
             {d.phase2?.length > 0 && (
               <div className="dv-phase2 dv-reveal">
                 <div className="dv-phase2-head">
-                  <h3 className="dv-sub">Phase 2 · Horizon scale</h3>
-                  <p className="dv-phase2-note">Ces prestations sont pensées pour la suite, après le bilan de la cohorte test. Elles sont listées ici pour que vous ayez une vision complète du chemin, sans engagement immédiat.</p>
+                  <h3 className="dv-sub">{d.phase2_titre || "Phase 2 · Horizon scale"}</h3>
+                  <p className="dv-phase2-note">{d.phase2_note || "Ces prestations sont proposées à titre indicatif, sans engagement."}</p>
                 </div>
                 <div className="dv-phase2-list">
                   {d.phase2.map((p, i) => (
                     <div key={i} className="dv-phase2-item">
                       <span className="dv-phase2-title">{p.titre}</span>
                       {p.description && <span className="dv-phase2-desc">{p.description}</span>}
+                      {p.items?.length > 0 && (
+                        <ul className="dv-phase2-sub">
+                          {p.items.map((item, j) => (
+                            <li key={j} className="dv-phase2-sub-item">
+                              <span className="dv-phase2-sub-label">{item.label}</span>
+                              {item.prix && <span className="dv-phase2-sub-prix">{eur(item.prix)} HT{item.unite ? ` / ${item.unite}` : ""}</span>}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {p.note && <span className="dv-phase2-item-note">{p.note}</span>}
                       <span className="dv-phase2-price">
                         {p.prix_indicatif ? `env. ${eur(p.prix_indicatif)} HT` : "Sur devis"}
                       </span>
+                      {p.url && (
+                        <a href={p.url} target="_blank" rel="noopener" className="dv-phase2-link">Voir la maquette</a>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -446,6 +526,30 @@ export default function DevisPage({ devis }) {
                 <h2 className="dv-display dv-h2">Les étapes</h2>
               </div>
               <PlanSlider steps={d.planning} />
+              {d.planning_note && <p className="dv-plan-note dv-reveal">{d.planning_note}</p>}
+            </div>
+          </section>
+        )}
+
+        {/* ---------- VOS QUESTIONS ---------- */}
+        {d.faq?.length > 0 && (
+          <section className="dv-section dv-alt">
+            <div className="dv-wrap">
+              <div className="dv-head dv-reveal">
+                <Eyebrow>Vos questions</Eyebrow>
+                <h2 className="dv-display dv-h2">Les réponses</h2>
+              </div>
+              <dl className="dv-faq">
+                {d.faq.map((f, i) => (
+                  <div key={i} className="dv-faq-item dv-reveal" style={{ transitionDelay: `${i * 50}ms` }}>
+                    <dt>
+                      <span>{f.q}</span>
+                      {f.ref && <span className="dv-faq-ref">{f.ref}</span>}
+                    </dt>
+                    <dd>{f.reponse}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </section>
         )}
@@ -458,14 +562,25 @@ export default function DevisPage({ devis }) {
               <h2 className="dv-display dv-h2">{eur(totals.ht)} HT</h2>
               <table className="dv-totals">
                 <tbody>
-                  <tr><th>Prestations</th><td>{eur(totals.lots)}</td></tr>
+                  {(d.lots || []).map((l, i) => (
+                    <tr key={i} className="dv-tot-lot">
+                      <th>{String(i + 1).padStart(2, "0")} · {l.titre}</th>
+                      <td>{eur(lineTotal(l))}</td>
+                    </tr>
+                  ))}
                   {totals.opts > 0 && <tr><th>Options retenues</th><td>{eur(totals.opts)}</td></tr>}
                   {totals.remise > 0 && <tr><th>{d.remise?.label || "Remise"}</th><td>− {eur(totals.remise)}</td></tr>}
-                  <tr className="dv-tot-ht"><th>Total HT</th><td>{eur(totals.ht)}</td></tr>
+                  <tr className="dv-tot-ht"><th>Total Phase 1 HT</th><td>{eur(totals.ht)}</td></tr>
                   <tr><th>TVA {Math.round(totals.taux * 100)} %</th><td>{eur(totals.tva)}</td></tr>
                   <tr className="dv-tot-ttc"><th>Total TTC</th><td>{eur(totals.ttc)}</td></tr>
                 </tbody>
               </table>
+              {d.entry_point && (
+                <div className="dv-entry-point">
+                  <span>{d.entry_point.label}</span>
+                  <span>{eur(d.entry_point.prix)} HT</span>
+                </div>
+              )}
               {selected.some((i) => d.options?.[i]?.mensuel) && (
                 <div className="dv-refact">
                   <div className="dv-sub-s">Engagement mensuel, hors total</div>

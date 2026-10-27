@@ -1,6 +1,6 @@
 {
   "slug": "play-forward-v2",
-  "numero": "D-2026-002",
+  "numero": "D-2026-002-v2",
   "date": "2026-10-27",
   "validite_jours": 30,
   "client": {
@@ -10,117 +10,228 @@
     "fonction": "Fondatrice",
     "email": ""
   },
-  "accroche": "Des fondations créatives solides pour le lancement du 1er décembre, des actifs qui durent au-delà de la première cohorte.",
-  "contexte": "Play Forward prépare des athlètes de 15 à 18 ans aux études sportives aux États-Unis. Le dispositif opérationnel est en place : funnel, webinar, séquences email. La masterclass du 1er décembre lancera la première cohorte test de 6 à 8 familles, avec un démarrage prévu le 1er février 2027. Ce que nous construisons ensemble : la marque, l'identité et les contenus qui font de cette cohorte test un premier acte fort, et qui posent les bases du scale.",
+  "accroche": "Des actifs de marque et des contenus vidéo construits pour la cohorte test et réutilisables sur les cohortes suivantes.",
+  "contexte": "Play Forward prépare des athlètes de 15 à 18 ans aux études sportives aux États-Unis. La proposition est structurée en deux phases distinctes. Phase 1 : les fondations créatives pour la masterclass du 1er décembre 2026 et la cohorte test. Phase 2 : le scale, après bilan de la cohorte, fin avril 2027.",
   "enjeux": [
-    "Anne-Sophie a déjà construit le dispositif opérationnel. C'est la base la plus difficile à poser. On s'appuie dessus, on ne le refait pas. Notre terrain : la marque et les contenus.",
-    "La cohorte test de 6 à 8 familles est une décision stratégique brillante. Elle va générer les preuves, les témoignages et les retours qui rendront la phase de scale beaucoup plus puissante.",
-    "Des vidéos qui ne reposent pas sur Anne-Sophie à l'image, c'est construire des actifs réutilisables à l'infini, indépendants d'un format ou d'une présence. C'est exactement ce brief qu'on sait relever.",
-    "Parents et athlètes n'ont pas les mêmes déclencheurs. Les parents décident, les jeunes adhèrent. Une stratégie paid sur les parents, un dispositif organique et de relais pour les athlètes.",
-    "La procédure INPI sur Play Forward est une opportunité de séquencer intelligemment : on pose le positionnement et le concept créatif d'abord, on valide avant de finaliser les éléments liés au nom.",
-    "Chaque euro investi en Phase 1 construit un actif durable. Les vidéos, l'identité et la plateforme de marque seront exploités sur plusieurs cohortes, pas consommés en un lancement."
+    "Masterclass le 1er décembre 2026. Première cohorte test de 6 à 8 familles, douze semaines, démarrage le 1er février 2027. Cohorte suivante après bilan, date à préciser.",
+    "Le dispositif opérationnel est en place : webinar, tunnel sur Systeme.io et séquences email, portés par Liberty Webi.",
+    "Les vidéos sont produites sans Anne-Sophie à l'image.",
+    "Les campagnes payantes ciblent les parents. La réglementation Meta interdit le ciblage publicitaire des 15-17 ans par centres d'intérêt ou profil.",
+    "La procédure de dépôt Play Forward à l'INPI est en cours. La finalisation des éléments liés au nom attend la confirmation du calendrier avec l'avocate d'Anne-Sophie.",
+    "Le site est géré par Anne-Sophie. La refonte est hors périmètre de cette proposition."
   ],
-  "site_preview": {
-    "label": "Notre vision de votre prochain site",
-    "url": "/devis-assets/play-forward-maquette.html",
-    "description": "Une maquette conçue pour vous montrer concrètement ce que pourrait être votre site : une page d'accueil orientée conversion, avec les bons messages aux bons endroits. La refonte est placée en Phase 2, mais la vision est déjà là."
-  },
   "lots": [
     {
       "titre": "Plateforme de marque",
-      "phase": "Phase 1",
       "tarif_id": "strategie-marque",
-      "description": "Clarifier la promesse centrale, l'articulation entre la marque Play Forward et le nom du programme, et faire émerger un concept de communication fort directement réutilisable dans les vidéos, les masterclasses et les supports partenaires. Séquencé en deux temps pour respecter la procédure INPI : positionnement et pistes créatives d'abord, finalisation des éléments liés au nom après validation.",
-      "livrables": [
-        "Positionnement et promesse centrale (différenciation vs agences de placement)",
-        "Messages par cible : parents (décision d'investissement) et athlètes (aspiration, projet de vie)",
-        "Concept de communication central : territoire visuel et narratif de Play Forward",
-        "Éléments directement réutilisables : vidéos, masterclasses, site, supports partenaires",
-        "Étape 1 : positionnement + pistes créatives / Étape 2 : finalisation après validation INPI"
-      ],
+      "description": "Clarifier la promesse, les messages parents et athlètes, et faire émerger un concept de communication directement réutilisable dans les vidéos, les masterclasses et les supports partenaires. Séquencé en deux étapes pour respecter la procédure INPI.",
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 2000
+      "prix_unitaire": 2000,
+      "etapes": [
+        {
+          "titre": "Étape 1 · Positionnement et concept · 1 400 EUR HT",
+          "prix": 1400,
+          "livrables": [
+            "Promesse centrale en une phrase",
+            "Positionnement face aux agences de placement",
+            "Messages parents : 3 messages clés avec preuves associées",
+            "Messages athlètes : 3 messages clés avec preuves associées",
+            "Concept de communication : territoire narratif et visuel",
+            "2 pistes créatives",
+            "Banque de 15 accroches réutilisables (vidéo, site, masterclass)",
+            "Pitch en 3 longueurs : 1 phrase, 30 secondes, 1 paragraphe",
+            "Format : document PDF et restitution en visio"
+          ],
+          "note_validation": "Point de validation : Anne-Sophie valide l'articulation Play Forward / nom du programme après confirmation du calendrier INPI avec son avocate. Le déclencheur est sa validation."
+        },
+        {
+          "titre": "Étape 2 · Finalisation des éléments liés au nom · 600 EUR HT",
+          "prix": 600,
+          "livrables": [
+            "Signature de marque",
+            "Architecture de nom finalisée",
+            "Lexique",
+            "Fiche de synthèse réutilisable pour partenaires"
+          ]
+        }
+      ]
     },
     {
       "titre": "Identité lancement",
-      "phase": "Phase 1",
       "tarif_id": "identite-lancement",
-      "description": "Une identité opérationnelle pour le lancement : logo professionnel, habillage vidéo et gabarits modifiables. Pensée pour être enrichie en Phase 2 sans tout reconstruire.",
+      "description": "Une identité opérationnelle pour le lancement. Le logo est livré après le point de validation du poste 01. En amont, les vidéos utilisent un habillage typographique provisoire. Elles sont ré-exportées avec l'habillage final une fois le logo validé. Inclus.",
       "livrables": [
         "Logo et déclinaisons (horizontal, carré, monochrome)",
-        "Habillage vidéo : intro/outro, lower thirds, templates modifiables (CapCut ou After Effects)",
-        "4 gabarits réseaux modifiables : post, story, couverture, carrousel",
-        "Fichiers sources livrés : SVG, PNG, formats vidéo"
+        "Habillage vidéo : intro, outro, lower thirds, templates modifiables dans CapCut",
+        "4 gabarits réseaux modifiables dans Canva et CapCut : post, story, couverture, carrousel",
+        "Fichiers sources livrés : SVG, PNG, fichiers projet"
       ],
       "quantite": 1,
       "unite": "forfait",
       "prix_unitaire": 1800
     },
     {
-      "titre": "Concepts créatifs & production vidéo",
-      "phase": "Phase 1",
+      "titre": "Concepts créatifs et vidéo",
       "tarif_id": "pack-video-lancement",
-      "description": "3 angles créatifs distincts, sans Anne-Sophie à l'image. Chaque angle est une idée narrative forte : univers visuel, ton, structure. 3 vidéos produites par angle = 9 vidéos originales, déclinées en 1:1 et 9:16, soit 18 formats livrés. Scripts basés sur les preuves disponibles : expérience et expertise d'Anne-Sophie, témoignage du parcours d'Anaëlle (sous réserve de son accord). Contenus evergreen : sans date, CTAs facilement modifiables pour chaque masterclass.",
-      "livrables": [
-        "3 angles créatifs : univers, ton, structure narrative",
-        "3 vidéos par angle = 9 vidéos originales",
-        "Déclinaison 1:1 et 9:16 = 18 formats livrés",
-        "Sous-titres et accroches testables en A/B",
-        "1 round de corrections inclus",
-        "Droits d'utilisation publicitaire et organique, durée illimitée",
-        "Fichiers exportés : MP4, formats Meta Ads ready"
-      ],
+      "description": "3 angles créatifs distincts, sans Anne-Sophie à l'image. Scripts basés sur les preuves disponibles : expérience et expertise d'Anne-Sophie, témoignage du parcours d'Anaëlle (sous réserve de son accord). Contenus sans date, CTAs modifiables pour chaque masterclass.",
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 3200
+      "prix_unitaire": 3200,
+      "sous_lots": [
+        {
+          "titre": "Lot A · Test des messages · 1 400 EUR HT",
+          "prix": 1400,
+          "livrables": [
+            "3 angles créatifs : univers, ton, structure narrative",
+            "1 vidéo originale par angle = 3 vidéos",
+            "3 variantes d'accroche par vidéo = 9 versions",
+            "Formats 9:16 et 4:5",
+            "Objectif : identifier les messages qui performent avant de produire plus"
+          ]
+        },
+        {
+          "titre": "Lot B · Production étendue · 1 800 EUR HT",
+          "prix": 1800,
+          "note": "Déclenché après les premiers résultats du lot A.",
+          "livrables": [
+            "6 vidéos originales sur les angles gagnants",
+            "Formats 9:16 et 4:5"
+          ]
+        }
+      ],
+      "note_commande": "Le lot A peut être commandé seul.",
+      "encadre": {
+        "titre": "Ce qui est inclus",
+        "sections": [
+          {
+            "label": "Moyens de production",
+            "items": ["[À COMPLÉTER PAR ARTHUR : motion design / images sous licence / tournage / IA]"]
+          },
+          {
+            "label": "Corrections",
+            "items": ["1 aller-retour sur script", "1 aller-retour sur montage"]
+          },
+          {
+            "label": "Fichiers livrés",
+            "items": ["MP4 prêts Meta et réseaux", "Version sans CTA", "Carton CTA séparé et modifiable dans CapCut", "Fichiers projet"]
+          },
+          {
+            "label": "Droits",
+            "items": ["Usage publicitaire et organique, tous canaux, durée illimitée", "Musiques et images sous licence couvrant ces usages", "Autorisation de droit à l'image d'Anaëlle recueillie par écrit avant tournage ou montage"]
+          },
+          {
+            "label": "Actualisation",
+            "items": ["Changement de CTA ou de date par Anne-Sophie via le carton modifiable dans CapCut", "Modification de contenu par ARKT : 80 EUR HT par vidéo"]
+          },
+          {
+            "label": "Preuves mobilisées",
+            "items": ["Expérience d'Anne-Sophie", "Parcours d'Anaëlle, sous réserve de son accord", "Les témoignages d'élèves Play Forward seront intégrés après la cohorte test"]
+          }
+        ]
+      }
     },
     {
-      "titre": "Stratégie créative & cadrage publicitaire",
-      "phase": "Phase 1",
+      "titre": "Stratégie créative publicitaire",
       "tarif_id": "strat-cadrage",
-      "description": "Brief créatif complet pour orienter la production vidéo, stratégie de diffusion et architecture de campagnes recommandée. Le cadrage, pas le pilotage : vous gardez la main sur l'activation, nous posons le cap. Inclut l'approche complémentaire pour toucher les jeunes sans ciblage publicitaire sur les mineurs.",
+      "description": "Brief créatif par angle, plan de test des messages, recommandations d'audiences et stratégie de relais pour toucher les jeunes athlètes.",
       "livrables": [
-        "Brief créatif détaillé : axes, narration, univers pour chaque concept vidéo",
-        "Stratégie paid : ciblage parents (35-50 ans, CSP+), lookalike inscrits",
-        "Stratégie organique et relais : clubs, CREPS, sections sport-études, témoignages de parcours",
-        "Architecture de campagnes recommandée (cadrage stratégique, sans pilotage technique)",
-        "Tableau de suivi simplifié : inscrits, présents, RDV, conversions masterclass"
+        "Brief créatif par angle pour orienter le lot A",
+        "Plan de test des messages : critères de performance, durée, seuils de décision",
+        "Recommandations d'audiences parents conformes aux règles Meta sur les mineurs",
+        "Stratégie organique et relais pour toucher les jeunes : clubs, CREPS, sections sport-études, témoignages de parcours"
       ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 1200
+      "prix_unitaire": 1200,
+      "table_repartition": {
+        "colonnes": ["ARKT", "Anne-Sophie", "Liberty Webi"],
+        "lignes": [
+          ["Stratégie créative", "Oui", "", ""],
+          ["Production des contenus", "Oui", "", ""],
+          ["Paramétrage technique (pixel, gestionnaire, tunnel)", "Si option", "", "Oui"],
+          ["Mesure et reporting", "Si option", "", ""],
+          ["Pilotage des campagnes", "Si option", "", ""],
+          ["Budget média", "", "Oui", ""]
+        ]
+      }
     }
   ],
   "options": [
     {
       "titre": "Premier test Meta Ads",
       "tarif_id": "test-meta",
-      "description": "Accompagnement au lancement de la première campagne pour la masterclass du 1er décembre : activation des campagnes, suivi quotidien pendant 3 semaines, recommandations d'optimisation et bilan de performance. Budget média non inclus.",
+      "description": "Mise en ligne des campagnes du lot A, suivi pendant 3 semaines, bilan écrit des messages gagnants pour orienter le lot B. Budget média non inclus.",
       "quantite": 1,
       "unite": "forfait",
       "prix_unitaire": 800
     }
   ],
+  "faq": [
+    {
+      "q": "Quels livrables pour la plateforme de marque ?",
+      "ref": "Poste 01",
+      "reponse": "L'étape 1 livre la promesse, les messages parents et athlètes, 2 pistes créatives, 15 accroches et le pitch en 3 longueurs, format PDF et restitution en visio. L'étape 2, déclenchée par Anne-Sophie, finalise la signature, l'architecture de nom, le lexique et la fiche partenaires."
+    },
+    {
+      "q": "L'identité est-elle resserrée par rapport à la V1 ?",
+      "ref": "Poste 02",
+      "reponse": "Le poste 02 couvre un logo professionnel, un habillage vidéo et 4 gabarits modifiables dans Canva et CapCut. L'identité peut être enrichie en Phase 2 sur la même base, sans tout reconstruire."
+    },
+    {
+      "q": "Qui prend en charge le paramétrage, la mesure et le pilotage ?",
+      "ref": "Poste 04",
+      "reponse": "Le tableau Qui fait quoi dans le poste 04 précise la répartition entre ARKT, Anne-Sophie et Liberty Webi. ARKT assure le paramétrage, la mesure et le pilotage uniquement si l'option Premier test Meta est retenue."
+    },
+    {
+      "q": "À quoi correspondent les 15 formats de la V1 ?",
+      "ref": "Poste 03",
+      "reponse": "Dans la V2, la production est réorganisée en deux lots. Lot A : 3 vidéos originales, 3 variantes d'accroche, formats 9:16 et 4:5. Lot B : 6 vidéos sur les angles gagnants. Total : 9 vidéos originales et leurs déclinaisons de format."
+    },
+    {
+      "q": "Est-il possible de commencer par un lot resserré ?",
+      "ref": "Poste 03",
+      "reponse": "Le lot A peut être commandé seul pour 1 400 EUR HT. Il permet de tester les messages avant d'engager la production étendue du lot B."
+    },
+    {
+      "q": "Moyens de production, corrections, droits, fichiers et actualisation ?",
+      "ref": "Poste 03",
+      "reponse": "Tout le détail figure dans l'encadré Ce qui est inclus du poste 03 : moyens de production, 2 rounds de corrections (script et montage), fichiers livrés, droits d'utilisation et conditions d'actualisation."
+    },
+    {
+      "q": "Pourquoi 2 800 EUR / mois en V1 et un détail à 3 500 EUR / mois ?",
+      "ref": "Phase 2",
+      "reponse": "[À COMPLÉTER PAR ARTHUR]"
+    }
+  ],
+  "phase2_titre": "Phase 2 · Après bilan de la cohorte test",
+  "phase2_note": "Ces prestations sont proposées à titre indicatif, sans engagement. Leur périmètre et les prix seront précisés après le bilan de fin de cohorte, fin avril 2027.",
   "phase2": [
     {
       "titre": "Identité visuelle enrichie",
-      "description": "Extension de l'identité lancement : charte complète, règles photo, gabarits supplémentaires. Construit sur la Phase 1 sans tout refaire.",
+      "description": "Extension de l'identité lancement : charte complète, règles photo, gabarits supplémentaires.",
       "prix_indicatif": 1400
     },
     {
-      "titre": "Extension pack vidéo",
-      "description": "7 formats supplémentaires basés sur les enseignements du premier test : messages affinés, nouvelles preuves, témoignages de la cohorte test.",
-      "prix_indicatif": 2200
+      "titre": "Extension vidéo",
+      "description": "4 vidéos originales supplémentaires, nourries par les témoignages de la cohorte test.",
+      "prix_indicatif": 1200
     },
     {
       "titre": "Site refonte",
-      "description": "Refonte des pages clés orientée conversion. Prix, preuves et différenciation face aux agences de placement. Tracking complet.",
+      "description": "Refonte des pages clés orientée conversion. Prix, preuves et différenciation dès la page d'accueil. Tracking complet.",
+      "url": "/devis-assets/play-forward-maquette.html",
       "prix_indicatif": 4000
     },
     {
-      "titre": "Accompagnement acquisition",
-      "description": "Community management, LinkedIn fondatrice, pilotage campagnes Meta Ads. Démarrage après bilan cohorte test.",
+      "titre": "Accompagnement acquisition mensuel",
+      "description": "Community management, LinkedIn fondatrice, pilotage Meta Ads.",
+      "items": [
+        { "label": "CM Instagram et TikTok", "prix": 1900, "unite": "mois" },
+        { "label": "LinkedIn fondatrice", "prix": 800, "unite": "mois" },
+        { "label": "Pilotage Meta", "prix": 800, "unite": "mois" }
+      ],
+      "note": "[À COMPLÉTER PAR ARTHUR : clarification sur l'écart avec les 2 800 EUR / mois de la V1]",
       "prix_indicatif": null
     },
     {
@@ -129,20 +240,27 @@
       "prix_indicatif": 1500
     }
   ],
+  "entry_point": {
+    "label": "Point d'entrée · Lot A vidéo commandé seul",
+    "prix": 1400
+  },
   "refacturations": [
-    { "label": "Budget média Meta Ads (si Premier test Meta Ads activé)", "estimation": null }
+    { "label": "Budget média Meta Ads (si option Premier test Meta activée)", "estimation": null }
   ],
   "planning": [
-    { "etape": "Plateforme de marque : positionnement + concept créatif", "duree": "2 semaines" },
-    { "etape": "Identité lancement (en parallèle)", "duree": "2 semaines" },
-    { "etape": "Stratégie créa & brief vidéo", "duree": "1 semaine" },
-    { "etape": "Production vidéo : 8 formats", "duree": "2 semaines" },
-    { "etape": "Masterclass du 1er décembre", "duree": "objectif de lancement" },
+    { "etape": "Signature", "duree": "[DATE DE SIGNATURE]" },
+    { "etape": "Étape 1 Plateforme et Stratégie créative (en parallèle)", "duree": "Semaines 1 et 2" },
+    { "etape": "Point de validation Anne-Sophie", "duree": "Dès son accord" },
+    { "etape": "Lot A vidéo · 3 vidéos, 9 versions", "duree": "Semaines 3 et 4" },
+    { "etape": "Test lot A (si option Meta prise)", "duree": "Semaines 5 à 7" },
+    { "etape": "Masterclass", "duree": "1er décembre 2026" },
+    { "etape": "Lot B et Étape 2 et Logo", "duree": "Après résultats lot A et validation INPI" },
     { "etape": "Démarrage cohorte test", "duree": "1er février 2027" },
-    { "etape": "Bilan et Phase 2", "duree": "mars 2027" }
+    { "etape": "Fin de cohorte et bilan Phase 2", "duree": "Fin avril 2027" }
   ],
+  "planning_note": "Livraisons avant le 1er décembre 2026 : Plateforme étape 1, Stratégie créative, Lot A. Livraisons après le 1er décembre : Lot B, Étape 2 et Logo (conditionnel à la validation INPI).",
   "conditions": {
-    "paiement": "50 % à la signature, 50 % à la livraison.",
+    "paiement": "50 % à la signature, solde à la livraison de chaque lot.",
     "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
   },
   "projets_refs": ["racine", "airbnb", "palauma"],
