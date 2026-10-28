@@ -919,13 +919,27 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   overflow:hidden;
 }
 .story-progress-wrap::before{
-  content:"›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›";
-  position:absolute;inset:0;
+  content:"›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›";
+  position:absolute;top:0;left:0;bottom:0;width:200vw;
   display:flex;align-items:center;
   padding:0 12px;
   color:rgba(255,255,255,.22);
   font-size:1.5rem;font-weight:900;letter-spacing:.18em;
-  white-space:nowrap;overflow:hidden;pointer-events:none
+  white-space:nowrap;pointer-events:none
+}
+.story-arrow-fill{
+  position:absolute;top:0;left:0;bottom:0;
+  width:0;overflow:hidden;
+  pointer-events:none;z-index:1;
+}
+.story-arrow-fill::before{
+  content:"›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›  ›";
+  position:absolute;top:0;left:0;bottom:0;width:200vw;
+  display:flex;align-items:center;
+  padding:0 12px;
+  color:var(--yellow);opacity:.7;
+  font-size:1.5rem;font-weight:900;letter-spacing:.18em;
+  white-space:nowrap;pointer-events:none
 }
 .story-range{
   -webkit-appearance:none;appearance:none;
@@ -934,6 +948,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   cursor:grab;
   position:relative;z-index:2;
   margin:0;padding:0;outline:none;border:none;
+  user-select:none;-webkit-user-select:none;
 }
 .story-range:active{cursor:grabbing}
 .story-range::-webkit-slider-runnable-track{background:transparent;height:52px;cursor:grab}
@@ -1398,6 +1413,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </div>
 
   <div class="story-progress-wrap">
+    <div id="storyArrowFill" class="story-arrow-fill"></div>
     <input type="range" id="storyRange" class="story-range" min="0" max="1000" value="0" step="1">
   </div>
 </section>
@@ -1898,23 +1914,50 @@ if(hamburger){hamburger.addEventListener('click',function(){
 (function(){
   var outer = document.getElementById('storyOuter');
   var range = document.getElementById('storyRange');
+  var fill  = document.getElementById('storyArrowFill');
   var ovPrev = document.getElementById('storyOvPrev');
   var ovNext = document.getElementById('storyOvNext');
 
+  function setFill(pct){
+    if(fill) fill.style.width = pct+'%';
+  }
   function updateRange(){
     if(!outer||!range) return;
     var max = outer.scrollWidth - outer.clientWidth;
-    range.value = max > 0 ? Math.round((outer.scrollLeft/max)*1000) : 0;
+    var pct = max > 0 ? (outer.scrollLeft/max)*100 : 0;
+    range.value = Math.round(pct*10);
+    setFill(pct);
   }
   function scrollFromRange(){
     if(!outer||!range) return;
     var max = outer.scrollWidth - outer.clientWidth;
     outer.scrollLeft = (range.value/1000)*max;
+    setFill(range.value/10);
   }
   if(outer) outer.addEventListener('scroll', updateRange, {passive:true});
   if(range) range.addEventListener('input', scrollFromRange);
   if(ovPrev) ovPrev.addEventListener('click', function(){ outer.scrollBy({left:-outer.clientWidth*.8,behavior:'smooth'}); });
   if(ovNext) ovNext.addEventListener('click', function(){ outer.scrollBy({left:outer.clientWidth*.8,behavior:'smooth'}); });
+
+  // Custom drag — makes the whole bar click-and-drag reliably
+  if(range){
+    range.addEventListener('mousedown', function(e){
+      function dragAt(ev){
+        var rect = range.getBoundingClientRect();
+        var pct = Math.max(0,Math.min(1,(ev.clientX-rect.left)/rect.width));
+        range.value = Math.round(pct*1000);
+        scrollFromRange();
+      }
+      dragAt(e);
+      document.addEventListener('mousemove', dragAt);
+      document.addEventListener('mouseup', function done(){
+        document.removeEventListener('mousemove', dragAt);
+        document.removeEventListener('mouseup', done);
+      });
+      e.preventDefault();
+    });
+  }
+
   updateRange();
 
   // Auto-scroll hint on load: peek right then back
@@ -1925,8 +1968,6 @@ if(hamburger){hamburger.addEventListener('click',function(){
       outer.scrollBy({ left: -hint, behavior: 'smooth' });
     }, 900);
   }, 1000);
-
-  updateUI(0);
 
   // Wheel: vertical → horizontal when mouse over carousel
   var mouseOver = false;
