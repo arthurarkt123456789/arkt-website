@@ -23,15 +23,14 @@
   --muted:#5B5B6B;
   --line:rgba(10,10,20,.12);
   --gutter:clamp(20px,5vw,80px);
-  --content-pad:clamp(20px,15vw,220px);
-  --maxw:1160px;
+  --maxw:min(70vw,1100px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%}*{touch-action:manipulation}
 body{font-family:"Inter",system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.55}
 img{display:block;max-width:100%}
 a{color:inherit}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--content-pad)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
 .display{font-family:"Inter",system-ui,sans-serif;text-transform:uppercase;line-height:.92;letter-spacing:-.03em;font-weight:900}
 .script{font-family:"Inter",sans-serif;text-transform:none;font-weight:500;font-style:italic}
 .kicker{font-weight:700;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase}.hero-txt .kicker{padding-left:3px}
@@ -887,6 +886,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   box-sizing:border-box;
   overflow:hidden;
 }
+/* Le panel gère lui-même son padding — .wrap ne doit pas en rajouter */
+.story-panel .wrap{padding:0;max-width:none;margin:0}
+/* Jamais de coupure de mot en milieu */
+.story-panel .h2,.story-panel .display{overflow-wrap:break-word;word-break:normal;hyphens:auto}
 .story-panel--pink{background:var(--pink)}
 .story-2col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,60px);align-items:start;margin-top:clamp(14px,1.8vw,24px)}
 .story-nav{
