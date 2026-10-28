@@ -1108,9 +1108,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 /* Partner suggest */
 .partner-suggest{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .ps-lbl{font-size:.74rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.ps-logos{display:flex;gap:10px;flex-wrap:wrap}
+.ps-logos{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .ps-logo{display:flex;align-items:center;gap:7px;background:var(--ink);color:#fff;border-radius:999px;padding:6px 14px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
 .ps-logo--dairy{background:var(--yellow);color:var(--ink)}
+.ps-logo-img{width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;background:#fff;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)}
+.ps-logo-img img{width:100%;height:100%;object-fit:contain;display:block}
 .concept-card{background:var(--cream);border:2px solid var(--ink);border-radius:20px;padding:clamp(16px,2.5vw,24px);margin-top:4px}
 .concept-card-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
 .concept-card-icon{font-size:2rem;flex-shrink:0;line-height:1}
@@ -1323,10 +1325,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="partner-suggest">
           <span class="ps-lbl">Partenaire institutionnel :</span>
           <div class="ps-logos">
-            <div class="ps-logo ps-logo--dairy">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><ellipse cx="11" cy="11" rx="10" ry="10" fill="#fff" stroke="#0A0A14" stroke-width="1.5"/><path d="M7 8c0-2.2 1.8-4 4-4s4 1.8 4 4c0 3-4 9-4 9S7 11 7 8z" fill="#0A0A14"/><circle cx="11" cy="8" r="1.5" fill="#fff"/></svg>
-              <span>Produits Laitiers</span>
-            </div>
+            <div class="ps-logo-img"><img src="./logo-ref1.jpg" alt="Référence partenaire 1"></div>
+            <div class="ps-logo-img"><img src="./logo-ref2.png" alt="Référence partenaire 2"></div>
           </div>
         </div>
       </div>
