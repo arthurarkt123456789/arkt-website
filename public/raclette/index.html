@@ -1966,7 +1966,7 @@ if(hamburger){hamburger.addEventListener('click',function(){
   if(range) range.addEventListener('input', scrollFromRange);
   function continuousScroll(btn, dir){
     var raf;
-    var speed = 8;
+    var speed = 24;
     function step(){ outer.scrollLeft += dir * speed; raf = requestAnimationFrame(step); }
     function start(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(step); }
     function stop(){ cancelAnimationFrame(raf); }
