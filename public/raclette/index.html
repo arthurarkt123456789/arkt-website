@@ -911,7 +911,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @media(max-width:900px){.story-2col{grid-template-columns:1fr}.mani-img{display:none}}
 /* ── Marseille dans les alpages card ─────────────────────────────────────── */
 .ftl-step--alpages{
-  background:linear-gradient(135deg, #8B6914 0%, #c8960c 40%, #f0c040 70%, #8B6914 100%)!important;
+  background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url('./cow.jpg') center/cover no-repeat!important;
   width:auto!important;
   min-width:auto!important;
   aspect-ratio:unset!important;
@@ -930,10 +930,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   justify-content:center;
   gap:8px;
   padding:0 clamp(8px,1vw,16px) 0 0;
+  color:#fff;
 }
-.alpages-info h3{font-size:clamp(.9rem,1.4vw,1.2rem);margin:4px 0}
-.alpages-info p{font-size:clamp(.72rem,.9vw,.85rem);line-height:1.45;margin:0}
-.alpages-info .ctv-when{font-size:clamp(.62rem,.75vw,.72rem);opacity:.7}
+.alpages-info h3{font-size:clamp(.9rem,1.4vw,1.2rem);margin:4px 0;color:#fff}
+.alpages-info p{font-size:clamp(.72rem,.9vw,.85rem);line-height:1.45;margin:0;color:rgba(255,255,255,.85)}
+.alpages-info .ctv-when{font-size:clamp(.62rem,.75vw,.72rem);opacity:.7;color:#fff}
 .alpages-info .ctv-tags{flex-wrap:wrap;margin-top:6px}
 .alpages-iphones{display:flex;gap:clamp(10px,1.2vw,20px);align-items:center;height:100%}
 .iph-big{height:calc(49svh * 0.8);flex-shrink:0}
