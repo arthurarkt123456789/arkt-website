@@ -72,71 +72,11 @@
       "prix_unitaire": 1800
     },
     {
-      "titre": "Concepts créatifs et vidéo",
-      "tarif_id": "pack-video-lancement",
-      "description": "3 angles créatifs distincts, sans Anne-Sophie à l'image. Scripts basés sur les preuves disponibles : expérience et expertise d'Anne-Sophie, témoignage du parcours d'Anaëlle (sous réserve de son accord). Contenus sans date, CTAs modifiables pour chaque masterclass.",
-      "quantite": 1,
-      "unite": "forfait",
-      "prix_unitaire": 3200,
-      "sous_lots": [
-        {
-          "titre": "Lot A · Test des messages · 1 400 EUR HT",
-          "prix": 1400,
-          "livrables": [
-            "3 angles créatifs : univers, ton, structure narrative",
-            "1 vidéo originale par angle = 3 vidéos",
-            "3 variantes d'accroche par vidéo = 9 versions",
-            "Formats 9:16 et 4:5",
-            "Objectif : identifier les messages qui performent avant de produire plus"
-          ]
-        },
-        {
-          "titre": "Lot B · Production étendue · 1 800 EUR HT",
-          "prix": 1800,
-          "note": "Déclenché après les premiers résultats du lot A.",
-          "livrables": [
-            "6 vidéos originales sur les angles gagnants",
-            "Formats 9:16 et 4:5"
-          ]
-        }
-      ],
-      "note_commande": "Le lot A peut être commandé seul.",
-      "encadre": {
-        "titre": "Ce qui est inclus",
-        "sections": [
-          {
-            "label": "Moyens de production",
-            "items": ["Tournage avec 3 acteurs UGC (profils définis selon le concept créatif)", "Montage et incrustations de vidéos de banques d'images", "Musiques libres de droit", "Rémunération acteurs UGC : 150 EUR HT par profil, refacturée au réel (voir bas de page)"]
-          },
-          {
-            "label": "Corrections",
-            "items": ["1 aller-retour sur script", "1 aller-retour sur montage"]
-          },
-          {
-            "label": "Fichiers livrés",
-            "items": ["MP4 prêts Meta et réseaux", "Version sans CTA", "Carton CTA séparé et modifiable dans CapCut", "Fichiers projet"]
-          },
-          {
-            "label": "Droits",
-            "items": ["Usage publicitaire et organique, tous canaux, 10 ans à l'international", "Musiques et images sous licence couvrant ces usages", "Autorisation de droit à l'image d'Anaëlle recueillie par écrit avant tournage ou montage", "Autorisation de droit à l'image des acteurs UGC recueillie par écrit avant tournage"]
-          },
-          {
-            "label": "Actualisation",
-            "items": ["Changement de CTA ou de date par Anne-Sophie via le carton modifiable dans CapCut", "Modification de contenu par ARKT : 80 EUR HT par vidéo"]
-          },
-          {
-            "label": "Preuves mobilisées",
-            "items": ["Expérience d'Anne-Sophie", "Parcours d'Anaëlle, sous réserve de son accord", "Les témoignages d'élèves Play Forward seront intégrés après la cohorte test"]
-          }
-        ]
-      }
-    },
-    {
       "titre": "Stratégie créative publicitaire",
       "tarif_id": "strat-cadrage",
       "description": "Brief créatif par angle, plan de test des messages, recommandations d'audiences et stratégie de relais pour toucher les jeunes athlètes.",
       "livrables": [
-        "Brief créatif par angle pour orienter le lot A",
+        "Brief créatif par angle",
         "Plan de test des messages : critères de performance, durée, seuils de décision",
         "Recommandations d'audiences parents conformes aux règles Meta sur les mineurs",
         "Stratégie organique et relais pour toucher les jeunes : clubs, CREPS, sections sport-études, témoignages de parcours"
@@ -155,13 +95,52 @@
           ["Budget média", "", "Oui", ""]
         ]
       }
+    },
+    {
+      "titre": "Concepts créatifs et vidéo",
+      "tarif_id": "pack-video-lancement",
+      "description": "3 angles créatifs distincts, sans Anne-Sophie à l'image. Scripts basés sur les preuves disponibles : expérience et expertise d'Anne-Sophie, témoignage du parcours d'Anaëlle (sous réserve de son accord). Contenus sans date, CTAs modifiables pour chaque masterclass.",
+      "livrables": [
+        "3 angles créatifs : univers, ton, structure narrative",
+        "9 vidéos originales (3 par angle)",
+        "Formats 9:16 et 4:5",
+        "Sous-titres et accroches testables en A/B"
+      ],
+      "quantite": 1,
+      "unite": "forfait",
+      "prix_unitaire": 3200,
+      "encadre": {
+        "titre": "Ce qui est inclus",
+        "sections": [
+          {
+            "label": "Moyens de production",
+            "items": ["Tournage avec 3 acteurs UGC (profils définis selon le concept créatif)", "Montage et incrustations de vidéos de banques d'images", "Musiques libres de droit", "Rémunération acteurs UGC : 150 EUR HT par profil, refacturée au réel (voir bas de page)"]
+          },
+          {
+            "label": "Corrections",
+            "items": ["1 aller-retour sur script", "1 aller-retour sur montage"]
+          },
+          {
+            "label": "Fichiers livrés",
+            "items": ["MP4 prêts Meta et réseaux", "Version sans CTA", "Carton CTA séparé et modifiable dans CapCut", "Fichiers projet"]
+          },
+          {
+            "label": "Droits",
+            "items": ["Usage publicitaire et organique, tous canaux, 10 ans à l'international", "Musiques et images sous licence couvrant ces usages", "Autorisation de droit à l'image des acteurs UGC et d'Anaëlle recueillie par écrit avant tournage"]
+          },
+          {
+            "label": "Actualisation",
+            "items": ["Changement de CTA ou de date par Anne-Sophie via le carton modifiable dans CapCut", "Modification de contenu par ARKT : 80 EUR HT par vidéo"]
+          }
+        ]
+      }
     }
   ],
   "options": [
     {
       "titre": "Premier test Meta Ads",
       "tarif_id": "test-meta",
-      "description": "Mise en ligne des campagnes du lot A, suivi pendant 3 semaines, bilan écrit des messages gagnants pour orienter le lot B. Budget média non inclus.",
+      "description": "Mise en ligne des campagnes, suivi pendant 3 semaines, bilan écrit des messages gagnants. Budget média non inclus.",
       "quantite": 1,
       "unite": "forfait",
       "prix_unitaire": 800
@@ -203,31 +182,15 @@
       "prix_indicatif": 1500
     }
   ],
-  "entry_point": {
-    "label": "Point d'entrée · Lot A vidéo commandé seul",
-    "prix": 1400
-  },
   "refacturations": [
     { "label": "Budget média Meta Ads (si option Premier test Meta activée)", "estimation": null },
     { "label": "Rémunération acteurs UGC (3 profils × 150 EUR HT)", "estimation": 450 }
   ],
-  "planning": [
-    { "etape": "Signature", "duree": "[DATE DE SIGNATURE]" },
-    { "etape": "Étape 1 Plateforme et Stratégie créative (en parallèle)", "duree": "Semaines 1 et 2" },
-    { "etape": "Point de validation Anne-Sophie", "duree": "Dès son accord" },
-    { "etape": "Lot A vidéo · 3 vidéos, 9 versions", "duree": "Semaines 3 et 4" },
-    { "etape": "Test lot A (si option Meta prise)", "duree": "Semaines 5 à 7" },
-    { "etape": "Masterclass", "duree": "1er décembre 2026" },
-    { "etape": "Lot B et Étape 2 et Logo", "duree": "Après résultats lot A et validation INPI" },
-    { "etape": "Démarrage cohorte test", "duree": "1er février 2027" },
-    { "etape": "Fin de cohorte et bilan Phase 2", "duree": "Fin avril 2027" }
-  ],
-  "planning_note": "Livraisons avant le 1er décembre 2026 : Plateforme étape 1, Stratégie créative, Lot A. Livraisons après le 1er décembre : Lot B, Étape 2 et Logo (conditionnel à la validation INPI).",
   "conditions": {
     "paiement": "50 % à la signature, solde à la livraison de chaque lot.",
     "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
   },
-  "projets_refs": ["racine", "airbnb", "palauma"],
+  "projets_refs": [],
   "equipe": ["Arthur Barret", "Tobias Simon", "Sacha Bassili"],
   "pdf_url": null,
   "tva": 0.2
