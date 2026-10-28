@@ -1068,6 +1068,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .story-side:hover{opacity:.85}
 .story-side-arrow{font-size:clamp(2.4rem,4vw,4rem);font-weight:900;color:var(--ink);line-height:1;display:block}
 .story-side-label{font-size:.54rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--ink);text-align:center;line-height:1.45}
+.pl-logo-box{background:#fff;border-radius:16px;padding:16px 24px;display:inline-flex;align-items:center;justify-content:center;margin-top:16px}
+.pl-logo-box img{height:80px;width:auto;display:block}
 .pink-big-stat{font-family:"Inter",sans-serif;font-size:clamp(2.8rem,5vw,4rem);font-weight:900;color:var(--ink);line-height:1;margin:0}
 .etendar-credit{display:flex;align-items:center;gap:8px;margin-top:4px}
 .etendar-credit svg{flex-shrink:0}
@@ -1155,12 +1157,36 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 #projet {
   height: 100svh !important;
   overflow: hidden !important;
-  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+  background: var(--cream);
 }
-.story-carousel-row { height: 100%; }
-.story-carousel-outer { overflow: hidden !important; height: 100%; }
-.story-carousel-inner { display: flex; height: 100%; will-change: transform; }
-.story-carousel-inner > * { flex-shrink: 0; box-sizing: border-box; }
+.story-carousel-row {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  display: block !important;
+}
+.story-carousel-outer {
+  display: block !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+.story-carousel-inner {
+  display: flex !important;
+  flex-direction: row !important;
+  height: 100% !important;
+  align-items: stretch !important;
+  will-change: transform;
+}
+.story-carousel-inner > * {
+  flex-shrink: 0 !important;
+  width: 100vw !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
 .story-progress-wrap { display: none !important; }
 .story-side { display: none !important; }
 </style>
@@ -1300,6 +1326,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="etendar-credit rv">
         <svg width="56" height="56" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--ink)"/><path d="M5 9h8M9 5l4 4-4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+      <div class="pl-logo-box rv">
+        <img src="../raclette/logo-ref2.png" alt="Les Produits Laitiers">
+      </div>
     </div>
 
     <!-- ── PANEL 3 : Dispositif de com. ──────────────────────────────────── -->
@@ -1349,28 +1378,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <span class="ftl-ref-ico">🎬</span>
           <span class="ftl-ref-lbl">Références éditoriales</span>
         </div>
-        <div class="inspo-cards">
-          <div class="inspo-card">
-            <div class="inspo-thumb" style="background:linear-gradient(135deg,#f5a623 0%,#e4006f 100%)">
-              <span class="inspo-emoji">🎀</span>
-              <span class="inspo-title-badge">The Simple Life</span>
-            </div>
-            <span class="inspo-sub">Contenu d'activation billetterie</span>
-          </div>
-          <div class="inspo-card">
-            <div class="inspo-thumb" style="background:linear-gradient(135deg,#e50914 0%,#1a1a2e 100%)">
-              <span class="inspo-emoji">🥛</span>
-              <span class="inspo-title-badge">Lait'flix</span>
-            </div>
-            <span class="inspo-sub">Série teaser décompte</span>
-          </div>
-        </div>
-        <div class="partner-suggest">
-          <span class="ps-lbl">Partenaire institutionnel :</span>
-          <div class="ps-logos">
-            <div class="ps-logo-img"><img src="../raclette/logo-ref1.jpg" alt="Référence partenaire 1"></div>
-            <div class="ps-logo-img"><img src="../raclette/logo-ref2.png" alt="Référence partenaire 2"></div>
-          </div>
+        <p class="lead rv" style="margin:16px 0 20px;max-width:30ch;color:var(--ink)">Inspiration du contenu produit par Les Produits Laitiers</p>
+        <div class="pl-logo-box rv">
+          <img src="../raclette/logo-ref1.jpg" alt="Les Produits Laitiers">
         </div>
       </div>
       <div class="alpages-iphones">
@@ -1939,7 +1949,7 @@ if(hamburger){hamburger.addEventListener('click',function(){
   document.body.style.overflow=open?'hidden':'';
 });}
 
-// V2: scroll hijack — freeze page scroll while driving carousel horizontally
+// V2: scroll hijack — freeze page while driving carousel horizontally
 (function(){
   var section = document.getElementById('projet');
   var outer   = document.getElementById('storyOuter');
@@ -1966,7 +1976,7 @@ if(hamburger){hamburger.addEventListener('click',function(){
     document.body.style.position = 'fixed';
     document.body.style.top      = '-' + docTop + 'px';
     document.body.style.width    = '100%';
-    section.style.cssText = 'position:fixed!important;top:0!important;left:0!important;right:0!important;height:100svh!important;overflow:hidden!important;z-index:200!important;width:100%!important;';
+    section.style.cssText = 'position:fixed;top:0;left:0;right:0;height:100svh;overflow:hidden;z-index:200;width:100%;display:flex;flex-direction:column;';
   }
 
   function deactivate(goForward){
