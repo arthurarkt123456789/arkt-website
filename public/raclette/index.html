@@ -1964,8 +1964,21 @@ if(hamburger){hamburger.addEventListener('click',function(){
   }
   if(outer) outer.addEventListener('scroll', updateRange, {passive:true});
   if(range) range.addEventListener('input', scrollFromRange);
-  if(ovPrev) ovPrev.addEventListener('click', function(){ outer.scrollBy({left:-outer.clientWidth*.8,behavior:'smooth'}); });
-  if(ovNext) ovNext.addEventListener('click', function(){ outer.scrollBy({left:outer.clientWidth*.8,behavior:'smooth'}); });
+  function continuousScroll(btn, dir){
+    var raf;
+    var speed = 8;
+    function step(){ outer.scrollLeft += dir * speed; raf = requestAnimationFrame(step); }
+    function start(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(step); }
+    function stop(){ cancelAnimationFrame(raf); }
+    btn.addEventListener('mousedown', start);
+    btn.addEventListener('mouseup', stop);
+    btn.addEventListener('mouseleave', stop);
+    btn.addEventListener('touchstart', start, {passive:true});
+    btn.addEventListener('touchend', stop);
+    btn.addEventListener('touchcancel', stop);
+  }
+  if(ovPrev) continuousScroll(ovPrev, -1);
+  if(ovNext) continuousScroll(ovNext, 1);
 
   // Custom drag — makes the whole bar click-and-drag reliably
   if(range){
