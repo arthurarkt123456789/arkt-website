@@ -506,13 +506,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .ftl-intro{
   width:clamp(280px,30vw,420px);
   justify-content:flex-start;
-  gap:8px;
+  gap:10px;
   background:var(--cream);
   padding-top:clamp(20px,5svh,52px)!important;
 }
 .ftl-intro .sec-head{margin-bottom:0}
 .ftl-intro .h2{font-size:clamp(1.3rem,2.4vw,2.1rem)!important;line-height:1.1}
-.ftl-intro .lead{margin-top:0!important;max-width:none;font-size:clamp(.88rem,1.1vw,1rem);display:block;overflow:visible}
+.ftl-intro .lead{margin-top:0!important;max-width:none;font-size:clamp(.97rem,1.21vw,1.1rem);display:block;overflow:visible}
 .ftl-step{
   width:clamp(200px,19vw,270px);
   align-items:center;
@@ -955,7 +955,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .story-range::-webkit-slider-thumb{
   -webkit-appearance:none;appearance:none;
   width:88px;height:40px;
-  background:var(--pink);
+  background:var(--pink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='40'%3E%3Ctext x='14' y='27' font-size='20' font-weight='900' fill='%230A0A14' font-family='sans-serif'%3E%E2%80%B9%3C/text%3E%3Ctext x='66' y='27' font-size='20' font-weight='900' fill='%230A0A14' font-family='sans-serif'%3E%E2%80%BA%3C/text%3E%3C/svg%3E") center/cover no-repeat;
   border-radius:6px;
   border:3px solid var(--ink);
   box-shadow:4px 4px 0 var(--ink);
@@ -1048,7 +1048,32 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 }
 /* ── Overlay arrows on carousel ─────────────────────────────────────────── */
 .story-scroll{position:relative}
-.story-ov-arr{
+.story-ov-arr{display:none!important}
+.story-carousel-row{display:flex;align-items:stretch;flex:1;min-height:0;overflow:hidden}
+.story-side{
+  width:clamp(72px,8vw,120px);
+  flex-shrink:0;
+  background:var(--yellow);
+  border:none;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:12px 6px;
+  transition:opacity .15s;
+  z-index:5;
+}
+.story-side:hover{opacity:.85}
+.story-side-arrow{font-size:clamp(2.4rem,4vw,4rem);font-weight:900;color:var(--ink);line-height:1;display:block}
+.story-side-label{font-size:.54rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--ink);text-align:center;line-height:1.45}
+.pink-big-stat{font-family:"Inter",sans-serif;font-size:clamp(2.8rem,5vw,4rem);font-weight:900;color:var(--ink);line-height:1;margin:0}
+.etendar-credit{display:flex;align-items:center;gap:8px;margin-top:4px}
+.etendar-credit svg{flex-shrink:0}
+.etendar-credit span{font-size:.78rem;font-weight:700;color:var(--ink);letter-spacing:.04em}
+/* ── legacy round arrows kept invisible ───────────────────────────────── */
+.story-ov-arr--old{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
@@ -1078,17 +1103,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .sp-bullets{width:clamp(440px,56vw,720px)!important;min-width:0!important;max-width:clamp(440px,56vw,720px)!important;display:flex;align-items:flex-start}
 .sp-bullets .wrap{width:100%}
 .sp-bullets .reasons{margin-top:0}
-.story-panel .sec-head{margin-bottom:8px!important}
-.story-panel .h2.display{margin-top:0!important;margin-bottom:8px!important}
+.story-panel .sec-head{margin-bottom:10px!important}
+.story-panel .h2.display{margin-top:0!important;margin-bottom:10px!important}
 .story-panel .lead{margin-top:0!important}
-.ftl-timeline-band{border-top:8px solid var(--cream)!important;border-bottom:8px solid var(--cream)!important}
+.ftl-timeline-band{border-top:16px solid var(--cream)!important;border-bottom:16px solid var(--cream)!important}
+.ftl-ref-vis{border-radius:16px!important}
 
 /* ── Overrides scopés pour 70svh ────────────────────────────────────────── */
 .story-panel .h2{font-size:clamp(1.1rem,2.6vw,2.2rem)!important}
 .story-panel .story-panel .big-half{font-size:clamp(2.2rem,5.5vw,4.5rem)}
 .story-panel .social-grid{gap:clamp(10px,1.8vw,24px);margin-top:0}
 .story-panel .story-2col{gap:clamp(12px,2vw,28px);margin-top:clamp(6px,1vw,12px);align-items:stretch}
-.story-panel .lead{font-size:clamp(.82rem,1vw,.96rem)!important;max-width:none;margin-top:6px!important}
+.story-panel .lead{font-size:clamp(.9rem,1.1vw,1.06rem)!important;max-width:none;margin-top:0!important}
 .story-panel .reasons{margin-top:8px;gap:5px}
 .story-panel .reasons li{font-size:.78rem}
 .story-panel .arr{margin-top:6px;gap:4px}
@@ -1214,9 +1240,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </div>
 
 <section class="story-scroll" id="projet">
-  <button class="story-ov-arr story-ov-arr--left" id="storyOvPrev" aria-label="Précédent">&#8592;</button>
-  <button class="story-ov-arr story-ov-arr--right" id="storyOvNext" aria-label="Suivant">&#8594;</button>
-  <div class="story-carousel-outer" id="storyOuter">
+  <div class="story-carousel-row">
+    <button class="story-side" id="storyOvPrev" aria-label="Précédent">
+      <span class="story-side-arrow">←</span>
+      <span class="story-side-label">cliquez ici<br>pour faire<br>défiler</span>
+    </button>
+    <div class="story-carousel-outer" id="storyOuter">
 
     <!-- ── PANEL 1 : Le projet ────────────────────────────────────────────── -->
     
@@ -1244,7 +1273,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
                 <li data-n="2"><span>Pour <b>faire rayonner Marseille</b> avec un record du monde inattendu.</span></li>
                 <li data-n="3"><span>Pour célébrer <b>l'artisanat français et le lait cru</b> — le fromage comme produit vivant, façonné par des passionnés dans des fromageries de territoire.</span></li>
                 <li data-n="4"><span>Pour faire <b>découvrir comment est fait le fromage</b> — une expérience sensorielle et pédagogique, populaire et accessible à tous.</span></li>
-                <li data-n="5"><span>Pour <b>réunir tous les enfants de Marseille</b>, sans condition de moyens, autour d'un même repas.</span></li>
+                <li data-n="5"><span>Pour <b>réunir tous les enfants de Marseille</b>, sans condition de moyens ni de lieu de vie, autour d'un même repas.</span></li>
               </ul>
     </div>
   </div>
@@ -1254,7 +1283,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="ftl-card ftl-intro" style="background:var(--pink)">
       <div class="sec-head rv"><span class="sec-num" style="color:var(--ink);border-color:var(--ink)">03</span><span class="kicker">La portée sociale</span></div>
       <h2 class="display h2 rv">La raclette, sans condition de moyens</h2>
-      <p class="lead rv" style="color:var(--ink)">50 % des places offertes aux Marseillais qui n'ont pas accès à ce repas, via les associations partenaires des 16 arrondissements de la ville.</p>
+      <p class="pink-big-stat rv">50%</p>
+      <p class="lead rv" style="color:var(--ink)">des places offertes aux Marseillais qui n'ont pas accès à ce repas, via les associations partenaires des 16 arrondissements de la ville.</p>
+      <div class="etendar-credit rv">
+        <svg width="28" height="28" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--ink)"/><path d="M5 9h8M9 5l4 4-4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>We Are Etendar</span>
+      </div>
     </div>
 
     <!-- ── PANEL 3 : Dispositif de com. ──────────────────────────────────── -->
@@ -1378,7 +1412,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
   
 
-  </div>
+    </div><!-- /story-carousel-outer -->
+    <button class="story-side" id="storyOvNext" aria-label="Suivant">
+      <span class="story-side-arrow">→</span>
+      <span class="story-side-label">cliquez ici<br>pour faire<br>défiler</span>
+    </button>
+  </div><!-- /story-carousel-row -->
 
   <div class="story-progress-wrap">
     <div id="storyArrowFill" class="story-arrow-fill"></div>
@@ -1646,7 +1685,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           </div>
 
           <div class="actor-panel">
-            <div class="ap-head"><span>Vous êtes l'interprofession laitière</span><h3>Le lait cru au cœur d'un record du monde</h3></div>
+            <div class="ap-head"><span>Vous êtes l'interprofession laitière</span><h3>Pourquoi c'est une opportunité pour Les Produits Laitiers&nbsp;?</h3><p style="font-size:.82rem;font-weight:500;color:rgba(255,255,255,.72);margin:12px 0 0;max-width:44ch;line-height:1.5">Un record du monde de raclette, c'est la filière lait cru mise sous les projecteurs nationaux : production vidéo, campagnes digitales, présence sur scène devant 5 000 convives. Une vitrine exceptionnelle pour valoriser le savoir-faire fromager français auprès du grand public.</p></div>
             <div class="ap-why">
               <div><b>4</b><span>documentaires filière produits</span></div>
               <div><b>1M+</b><span>de portée médias estimée</span></div>
