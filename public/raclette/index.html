@@ -22,8 +22,8 @@
   --cream:#FBF7E8;
   --muted:#5B5B6B;
   --line:rgba(10,10,20,.12);
-  --gutter:clamp(20px,5vw,80px);
-  --maxw:min(70vw,1100px);
+  --gutter:clamp(20px,8vw,120px);
+  --maxw:1160px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%}*{touch-action:manipulation}
@@ -111,12 +111,12 @@ section{position:relative}
 
 /* NUMBERS */
 .numbers{background:var(--ink);color:#fff}
-.num-grid{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid rgba(255,255,255,.18)}
-.num{padding:48px 24px 20px 24px;border-right:1px solid rgba(255,255,255,.18)}.num:last-child{border-right:0}
-.num:last-child{border-right:0}
-.num strong{font-family:"Inter",sans-serif;font-weight:900;font-size:clamp(2.6rem,5.2vw,4.8rem);line-height:1;color:var(--yellow);display:block}
-.num span{display:block;margin-top:10px;font-weight:600;font-size:.95rem;color:#d9d9e6;max-width:20ch}
-@media(max-width:900px){.num-grid{grid-template-columns:repeat(2,1fr)}.num{border-right:0;border-bottom:1px solid rgba(255,255,255,.18);padding-right:0}.num:last-child{grid-column:1/-1}}
+.num-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+.num{padding:40px 20px 24px;min-width:0;border-right:1px solid rgba(255,255,255,.12)}
+.num:first-child{border-left:1px solid rgba(255,255,255,.12)}
+.num strong{font-family:"Inter",sans-serif;font-weight:900;font-size:clamp(1.8rem,3.2vw,3rem);line-height:1;color:var(--yellow);display:block}
+.num span{display:block;margin-top:8px;font-weight:500;font-size:.82rem;line-height:1.35;color:#d9d9e6}
+@media(max-width:900px){.num-grid{grid-template-columns:repeat(2,1fr)}.num{border-right:0;border-left:0;border-bottom:1px solid rgba(255,255,255,.12)}.num:first-child{border-left:0}.num:last-child{grid-column:1/-1}}
 
 /* RECORD */
 .record{background:var(--blue);color:#fff;overflow:hidden}
@@ -890,21 +890,27 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .story-panel .wrap{padding:0;max-width:none;margin:0}
 /* Jamais de coupure de mot en milieu */
 .story-panel .h2,.story-panel .display{overflow-wrap:break-word;word-break:normal;hyphens:auto}
-.story-panel--pink{background:var(--pink)}
-.story-2col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,60px);align-items:start;margin-top:clamp(14px,1.8vw,24px)}
-.story-nav{
-  flex-shrink:0;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:8px var(--gutter) 10px;
-  border-top:1px solid rgba(0,0,0,.08);
+.story-panel--pink{
+  background:var(--pink);
+  min-width:0!important;
+  width:clamp(240px,26vw,360px)!important;
 }
-.story-arr{background:var(--ink);color:#fff;border:0;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.78rem;display:grid;place-items:center;transition:opacity .2s;flex-shrink:0}
-.story-arr:disabled{opacity:.25;cursor:default}
-.story-dots{display:flex;gap:7px;align-items:center}
-.story-dots span{width:7px;height:7px;border-radius:50%;background:var(--ink);opacity:.2;transition:opacity .3s,transform .3s;cursor:pointer}
-.story-dots span.active{opacity:1;transform:scale(1.3)}
+.story-panel--pink .wrap{
+  padding:clamp(16px,2vw,28px) clamp(14px,1.4vw,20px)!important;
+  display:flex!important;flex-direction:column!important;gap:8px!important;
+  height:100%!important;box-sizing:border-box!important;
+}
+.story-panel--pink .social-grid{display:flex!important;flex-direction:column!important;gap:10px!important}
+.story-panel--pink .big-half{font-size:clamp(1.8rem,4vw,3rem)!important;line-height:1.1!important;color:var(--ink)}
+.story-panel--pink .big-half small{font-size:clamp(.7rem,1vw,.85rem)!important;display:block;margin-top:4px;color:var(--ink)}
+.story-panel--pink .h2{font-size:clamp(1.1rem,2vw,1.8rem)!important}
+.story-panel--pink .lead{font-size:clamp(.82rem,1vw,.92rem)!important;color:var(--ink)!important;display:-webkit-box!important;-webkit-line-clamp:5!important;-webkit-box-orient:vertical!important;overflow:hidden!important}
+.story-panel--pink .arr{margin-top:8px}
+.story-2col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,60px);align-items:start;margin-top:clamp(14px,1.8vw,24px)}
+.story-ov-arr{display:none!important}
+.story-progress-wrap{width:100%;padding:10px 0 0;border-top:1px solid rgba(0,0,0,.08)}
+.story-progress-track{width:100%;height:3px;background:rgba(0,0,0,.1);position:relative}
+.story-progress-thumb{height:100%;background:var(--ink);border-radius:0;width:0%;transition:width .15s ease;pointer-events:none}
 .story-labels{display:flex;gap:0;margin-left:4px;overflow:hidden}
 .story-lbl{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);opacity:0;max-width:0;white-space:nowrap;transition:opacity .3s,max-width .3s}
 .story-lbl.active{opacity:1;max-width:200px}
@@ -1386,19 +1392,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
   </div>
 
-  <div class="story-nav wrap">
-    <button class="story-arr" id="storyPrev" aria-label="Précédent">←</button>
-    <div class="story-dots" id="storyDots">
-      <span class="active" title="Le projet"></span>
-      <span title="Portée sociale"></span>
-      <span title="Dispositif de com."></span>
-    </div>
-    <button class="story-arr" id="storyNext" aria-label="Suivant">→</button>
-    <div class="story-labels" aria-hidden="true">
-      <span class="story-lbl active">Le projet</span>
-      <span class="story-lbl">Portée sociale</span>
-      <span class="story-lbl">Dispositif de com.</span>
-    </div>
+  <div class="story-progress-wrap">
+    <div class="story-progress-track"><div id="storyProgress" class="story-progress-thumb"></div></div>
   </div>
 </section>
 
@@ -1897,42 +1892,16 @@ if(hamburger){hamburger.addEventListener('click',function(){
 // Story carousel — continuous horizontal scroll-snap
 (function(){
   var outer = document.getElementById('storyOuter');
-  var prev = document.getElementById('storyPrev');
-  var next = document.getElementById('storyNext');
-  var ovPrev = document.getElementById('storyOvPrev');
-  var ovNext = document.getElementById('storyOvNext');
-  var dots = document.querySelectorAll('#storyDots span');
-  var lbls = document.querySelectorAll('.story-lbl');
-  var panels = outer ? outer.querySelectorAll('.story-panel') : [];
-  var total = panels.length;
+  var progressThumb = document.getElementById('storyProgress');
 
-  function getIdx(){
-    var w = outer.clientWidth;
-    return Math.round(outer.scrollLeft / w);
+  function updateProgress(){
+    if(!outer || !progressThumb) return;
+    var max = outer.scrollWidth - outer.clientWidth;
+    var pct = max > 0 ? (outer.scrollLeft / max) * 100 : 0;
+    progressThumb.style.width = pct + '%';
   }
-  function updateUI(idx){
-    dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
-    lbls.forEach(function(l,i){ l.classList.toggle('active', i===idx); });
-    var atStart = outer.scrollLeft < 10;
-    var atEnd = outer.scrollLeft + outer.clientWidth >= outer.scrollWidth - 10;
-    if(prev){ prev.disabled = atStart; }
-    if(next){ next.disabled = atEnd; }
-    if(ovPrev){ ovPrev.disabled = atStart; }
-    if(ovNext){ ovNext.disabled = atEnd; }
-  }
-  function scrollBy(delta){
-    outer.scrollBy({ left: delta, behavior: 'smooth' });
-  }
-  function goTo(idx){
-    outer.scrollTo({ left: idx * outer.clientWidth, behavior: 'smooth' });
-  }
-
-  if(prev) prev.addEventListener('click', function(){ goTo(Math.max(0, getIdx()-1)); });
-  if(next) next.addEventListener('click', function(){ goTo(Math.min(total-1, getIdx()+1)); });
-  if(ovPrev) ovPrev.addEventListener('click', function(){ scrollBy(-outer.clientWidth * 0.85); });
-  if(ovNext) ovNext.addEventListener('click', function(){ scrollBy(outer.clientWidth * 0.85); });
-  dots.forEach(function(d,i){ d.addEventListener('click', function(){ goTo(i); }); });
-  outer.addEventListener('scroll', function(){ updateUI(getIdx()); }, { passive: true });
+  if(outer) outer.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
 
   // Auto-scroll hint on load: peek right then back
   setTimeout(function(){
