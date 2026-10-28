@@ -83,18 +83,7 @@
       ],
       "quantite": 1,
       "unite": "forfait",
-      "prix_unitaire": 1200,
-      "table_repartition": {
-        "colonnes": ["ARKT", "Anne-Sophie", "Liberty Webi"],
-        "lignes": [
-          ["Stratégie créative", "Oui", "", ""],
-          ["Production des contenus", "Oui", "", ""],
-          ["Paramétrage technique (pixel, gestionnaire, tunnel)", "Si option", "", "Oui"],
-          ["Mesure et reporting", "Si option", "", ""],
-          ["Pilotage des campagnes", "Si option", "", ""],
-          ["Budget média", "", "Oui", ""]
-        ]
-      }
+      "prix_unitaire": 1200
     },
     {
       "titre": "Concepts créatifs et vidéo",
