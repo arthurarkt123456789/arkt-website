@@ -58,7 +58,7 @@ a{color:inherit}
 
 /* HERO */
 .hero{min-height:100vh;min-height:100svh;display:grid;grid-template-columns:1.15fr .85fr;background:var(--blue);color:#fff;position:relative;overflow:hidden}
-.hero-txt{padding:80px var(--content-pad) 40px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;position:relative;z-index:2}
+.hero-txt{padding:80px var(--gutter) 40px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;position:relative;z-index:2}
 .hero h1{font-size:clamp(2.2rem,8vw,8rem)}
 /* .hero h1 .script removed — single font */
 .hero h1 .l2{display:block}
@@ -69,7 +69,7 @@ a{color:inherit}
 .hero-img{position:relative}
 .hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
 .hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--blue) 0%,rgba(0,0,255,0) 22%)}
-.badge{position:absolute;z-index:3;right:clamp(16px,4vw,48px);bottom:clamp(20px,5vw,56px);width:clamp(120px,13vw,170px);aspect-ratio:1;border-radius:50%;background:var(--yellow);color:var(--ink);display:grid;place-items:center;text-align:center;animation:spin 18s linear infinite}
+.badge{position:absolute;z-index:3;right:var(--gutter);bottom:clamp(20px,5vw,56px);width:clamp(120px,13vw,170px);aspect-ratio:1;border-radius:50%;background:var(--yellow);color:var(--ink);display:grid;place-items:center;text-align:center;animation:spin 18s linear infinite}
 .badge div{animation:spin 18s linear infinite reverse}
 .badge strong{font-family:"Inter",sans-serif;font-size:clamp(2rem,3.4vw,2.8rem);font-weight:900;display:block;line-height:1}
 .badge small{font-weight:700;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase}
