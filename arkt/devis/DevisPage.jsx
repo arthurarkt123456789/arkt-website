@@ -183,36 +183,41 @@ export default function DevisPage({ devis }) {
               <div><dt>Émise le</dt><dd>{fmtDate(d.date)}</dd></div>
               <div><dt>Valable jusqu'au</dt><dd>{fmtDate(exp)}</dd></div>
               <div><dt>Investissement</dt><dd>{eur(computeTotals(d, []).ht)} HT</dd></div>
+              {d.version_precedente && (
+                <div><dt>Révision</dt><dd>V2 · <a href={d.version_precedente} className="dv-hero-v-link">Voir la V1</a></dd></div>
+              )}
             </dl>
             <a href="#proposition" className="dv-btn dv-btn-light">Voir la proposition</a>
           </div>
         </section>
 
         {/* ---------- ARKT ---------- */}
-        <section className="dv-section">
-          <div className="dv-wrap">
-            <div className="dv-head dv-reveal">
-              <Eyebrow>ARKT</Eyebrow>
-              <h2 className="dv-display dv-h2">De l'idée à l'impact</h2>
-              <p className="dv-lead">{ARKT.offreLead}</p>
+        {!d.hide_arkt && (
+          <section className="dv-section">
+            <div className="dv-wrap">
+              <div className="dv-head dv-reveal">
+                <Eyebrow>ARKT</Eyebrow>
+                <h2 className="dv-display dv-h2">De l'idée à l'impact</h2>
+                <p className="dv-lead">{ARKT.offreLead}</p>
+              </div>
+              <div className="dv-offres">
+                {ARKT.offre.map((o, i) => (
+                  <article key={o.id} className="dv-offre dv-reveal" style={{ transitionDelay: `${i * 80}ms` }}>
+                    <div className="dv-offre-k">0{i + 1}</div>
+                    <h3 className="dv-display">{o.name}</h3>
+                    <div className="dv-offre-sub">{o.sub}</div>
+                    <p>{o.detail?.faire}</p>
+                  </article>
+                ))}
+              </div>
+              <div className="dv-logos dv-reveal" aria-label="Ils nous ont fait confiance">
+                {ARKT.clients.map((c) => (
+                  <img key={c.name} src={asset(c.logo)} alt={c.name} loading="lazy" />
+                ))}
+              </div>
             </div>
-            <div className="dv-offres">
-              {ARKT.offre.map((o, i) => (
-                <article key={o.id} className="dv-offre dv-reveal" style={{ transitionDelay: `${i * 80}ms` }}>
-                  <div className="dv-offre-k">0{i + 1}</div>
-                  <h3 className="dv-display">{o.name}</h3>
-                  <div className="dv-offre-sub">{o.sub}</div>
-                  <p>{o.detail?.faire}</p>
-                </article>
-              ))}
-            </div>
-            <div className="dv-logos dv-reveal" aria-label="Ils nous ont fait confiance">
-              {ARKT.clients.map((c) => (
-                <img key={c.name} src={asset(c.logo)} alt={c.name} loading="lazy" />
-              ))}
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* ---------- RÉFÉRENCES ---------- */}
         {projets.length > 0 && (

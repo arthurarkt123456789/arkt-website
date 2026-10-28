@@ -191,6 +191,8 @@
     "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
   },
   "projets_refs": [],
+  "hide_arkt": true,
+  "version_precedente": "/devis/play-forward/",
   "equipe": ["Arthur Barret", "Tobias Simon", "Sacha Bassili"],
   "pdf_url": null,
   "tva": 0.2
