@@ -1000,11 +1000,31 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   box-shadow:0 24px 48px -16px rgba(0,0,0,.5);
   background:#111;
 }
-.iphone-mock--big video{
+.iphone-mock--big video,.iphone-mock--big img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
+}
+.ftl-ref-vis{
+  background:var(--cream)!important;
+  width:auto!important;
+  min-width:auto!important;
+  aspect-ratio:unset!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:calc(58svh * 0.1) clamp(20px,2.5vw,40px)!important;
+  gap:clamp(10px,1.2vw,20px)!important;
+  border-left:none!important;
+}
+.ref-vis-text{
+  flex-shrink:0;
+  width:clamp(180px,20vw,280px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:10px;
 }
 .iphone-mock--big .iph-notch{
   position:absolute;top:0;left:50%;transform:translateX(-50%);
@@ -1299,36 +1319,43 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div>
     </div>
     <!-- ── Ref 4 ──────────────────────────────────────────────────────── -->
-    <div class="ftl-card ftl-ref">
-      <div class="ftl-ref-header">
-        <span class="ftl-ref-ico">✦</span>
-        <span class="ftl-ref-lbl">Références</span>
+    <div class="ftl-card ftl-ref ftl-ref-vis">
+      <div class="ref-vis-text">
+        <div class="ftl-ref-header">
+          <span class="ftl-ref-ico">✦</span>
+          <span class="ftl-ref-lbl">Références visuelles</span>
+        </div>
+        <div class="inspo-cards">
+          <div class="inspo-card">
+            <div class="inspo-thumb" style="background:linear-gradient(135deg,#f5a623 0%,#e4006f 100%)">
+              <span class="inspo-emoji">🎀</span>
+              <span class="inspo-title-badge">The Simple Life</span>
+            </div>
+            <span class="inspo-sub">Contenu d'activation billetterie</span>
+          </div>
+          <div class="inspo-card">
+            <div class="inspo-thumb" style="background:linear-gradient(135deg,#e50914 0%,#1a1a2e 100%)">
+              <span class="inspo-emoji">🥛</span>
+              <span class="inspo-title-badge">Lait'flix</span>
+            </div>
+            <span class="inspo-sub">Série teaser décompte</span>
+          </div>
+        </div>
+        <div class="partner-suggest">
+          <span class="ps-lbl">Partenaire institutionnel :</span>
+          <div class="ps-logos">
+            <div class="ps-logo ps-logo--dairy">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><ellipse cx="11" cy="11" rx="10" ry="10" fill="#fff" stroke="#0A0A14" stroke-width="1.5"/><path d="M7 8c0-2.2 1.8-4 4-4s4 1.8 4 4c0 3-4 9-4 9S7 11 7 8z" fill="#0A0A14"/><circle cx="11" cy="8" r="1.5" fill="#fff"/></svg>
+              <span>Produits Laitiers</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="inspo-cards">
-                    <div class="inspo-card">
-                      <div class="inspo-thumb" style="background:linear-gradient(135deg,#f5a623 0%,#e4006f 100%)">
-                        <span class="inspo-emoji">🎀</span>
-                        <span class="inspo-title-badge">The Simple Life</span>
-                      </div>
-                      <span class="inspo-sub">Contenu d'activation billetterie</span>
-                    </div>
-                    <div class="inspo-card">
-                      <div class="inspo-thumb" style="background:linear-gradient(135deg,#e50914 0%,#1a1a2e 100%)">
-                        <span class="inspo-emoji">🥛</span>
-                        <span class="inspo-title-badge">Lait'flix</span>
-                      </div>
-                      <span class="inspo-sub">Série teaser décompte</span>
-                    </div>
-                  </div>
-      <div class="partner-suggest">
-                    <span class="ps-lbl">Partenaire institutionnel :</span>
-                    <div class="ps-logos">
-                      <div class="ps-logo ps-logo--dairy">
-                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><ellipse cx="11" cy="11" rx="10" ry="10" fill="#fff" stroke="#0A0A14" stroke-width="1.5"/><path d="M7 8c0-2.2 1.8-4 4-4s4 1.8 4 4c0 3-4 9-4 9S7 11 7 8z" fill="#0A0A14"/><circle cx="11" cy="8" r="1.5" fill="#fff"/></svg>
-                        <span>Produits Laitiers</span>
-                      </div>
-                    </div>
-                  </div>
+      <div class="alpages-iphones">
+        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><img src="./ref-img1.jpg" alt="Référence visuelle 1"></div></div>
+        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><img src="./ref-img2.jpg" alt="Référence visuelle 2"></div></div>
+        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><img src="./ref-img3.jpg" alt="Référence visuelle 3"></div></div>
+      </div>
     </div>
     <!-- ── Étape 5 ──────────────────────────────────────────────────── -->
     <div class="ftl-card ftl-step">
