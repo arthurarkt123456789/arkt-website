@@ -1153,42 +1153,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </style>
 
 <style>
-/* V2 overrides */
-#projet {
-  height: 100svh !important;
-  overflow: hidden !important;
-  display: flex !important;
-  flex-direction: column !important;
-  background: var(--cream);
-}
-.story-carousel-row {
-  flex: 1 !important;
-  min-height: 0 !important;
-  overflow: hidden !important;
-  display: block !important;
-}
-.story-carousel-outer {
-  display: block !important;
-  overflow: hidden !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-.story-carousel-inner {
-  display: flex !important;
-  flex-direction: row !important;
-  height: 100% !important;
-  align-items: stretch !important;
-  will-change: transform;
-}
-.story-carousel-inner > * {
-  flex-shrink: 0 !important;
-  width: 100vw !important;
-  height: 100% !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
-}
-.story-progress-wrap { display: none !important; }
-.story-side { display: none !important; }
+#projet{height:100svh!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;background:var(--cream)}
+.story-carousel-row{flex:1!important;min-height:0!important;overflow:hidden!important;display:block!important}
+.story-carousel-outer{display:block!important;overflow:hidden!important;width:100%!important;height:100%!important}
+.story-carousel-inner{display:flex!important;flex-direction:row!important;height:100%!important;align-items:stretch!important;will-change:transform}
+.story-carousel-inner>*{flex-shrink:0!important;width:100vw!important;height:100%!important;overflow:hidden!important;box-sizing:border-box!important}
+.story-progress-wrap{display:none!important}
+.story-side{display:none!important}
 </style>
 </head>
 <body>
@@ -1328,6 +1299,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div>
       <div class="pl-logo-box rv">
         <img src="../raclette/logo-ref2.png" alt="Les Produits Laitiers">
+      </div>
+      <div class="secondaire-box rv" style="background:#fff;border-radius:16px;padding:20px 28px;display:inline-flex;align-items:center;justify-content:center;margin-top:16px">
+        <img src="../raclette/logo-secondaire.webp" alt="" style="height:90px;width:auto;display:block">
       </div>
     </div>
 
@@ -1949,91 +1923,38 @@ if(hamburger){hamburger.addEventListener('click',function(){
   document.body.style.overflow=open?'hidden':'';
 });}
 
-// V2: scroll hijack — freeze page while driving carousel horizontally
+// V2: scroll hijack
 (function(){
-  var section = document.getElementById('projet');
-  var outer   = document.getElementById('storyOuter');
-  var inner   = document.getElementById('storyInner');
-  if(!section || !inner) return;
-
-  var active    = false;
-  var cooldown  = false;
-  var carouselX = 0;
-  var docTop    = 0;
-
-  function getMax(){ return Math.max(0, inner.scrollWidth - outer.clientWidth); }
-
-  function setX(x){
-    carouselX = Math.max(0, Math.min(getMax(), x));
-    inner.style.transform = 'translateX(-' + carouselX + 'px)';
-  }
-
+  var section=document.getElementById('projet');
+  var outer=document.getElementById('storyOuter');
+  var inner=document.getElementById('storyInner');
+  if(!section||!inner)return;
+  var active=false,cooldown=false,carouselX=0,docTop=0;
+  function getMax(){return Math.max(0,inner.scrollWidth-outer.clientWidth);}
+  function setX(x){carouselX=Math.max(0,Math.min(getMax(),x));inner.style.transform='translateX(-'+carouselX+'px)';}
   function activate(){
-    if(active || cooldown) return;
-    active = true;
-    docTop = window.scrollY + section.getBoundingClientRect().top;
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.top      = '-' + docTop + 'px';
-    document.body.style.width    = '100%';
-    section.style.cssText = 'position:fixed;top:0;left:0;right:0;height:100svh;overflow:hidden;z-index:200;width:100%;display:flex;flex-direction:column;';
+    if(active||cooldown)return;
+    active=true;
+    docTop=window.scrollY+section.getBoundingClientRect().top;
+    document.body.style.overflow='hidden';document.body.style.position='fixed';document.body.style.top='-'+docTop+'px';document.body.style.width='100%';
+    section.style.cssText='position:fixed;top:0;left:0;right:0;height:100svh;overflow:hidden;z-index:200;width:100%;display:flex;flex-direction:column;';
   }
-
-  function deactivate(goForward){
-    if(!active) return;
-    active   = false;
-    cooldown = true;
-    section.style.cssText = '';
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.top      = '';
-    document.body.style.width    = '';
-    var target = goForward
-      ? docTop + window.innerHeight + 2
-      : Math.max(0, docTop - 10);
-    window.scrollTo(0, target);
-    setTimeout(function(){ cooldown = false; }, 400);
+  function deactivate(fwd){
+    if(!active)return;
+    active=false;cooldown=true;
+    section.style.cssText='';
+    document.body.style.overflow='';document.body.style.position='';document.body.style.top='';document.body.style.width='';
+    window.scrollTo(0,fwd?docTop+window.innerHeight+2:Math.max(0,docTop-10));
+    setTimeout(function(){cooldown=false;},400);
   }
-
-  window.addEventListener('scroll', function(){
-    if(active || cooldown) return;
-    var r = section.getBoundingClientRect();
-    if(r.top <= 1 && r.top > -window.innerHeight * 0.4){
-      activate();
-    }
-  }, {passive: true});
-
-  window.addEventListener('wheel', function(e){
-    if(!active) return;
-    var max = getMax();
-    if(e.deltaY > 0 && carouselX >= max){ deactivate(true);  return; }
-    if(e.deltaY < 0 && carouselX <= 0) { deactivate(false); return; }
-    e.preventDefault();
-    setX(carouselX + e.deltaY * 1.5);
-  }, {passive: false});
-
-  var ty0 = null;
-  window.addEventListener('touchstart', function(e){
-    if(active) ty0 = e.touches[0].clientY;
-  }, {passive: true});
-  window.addEventListener('touchmove', function(e){
-    if(!active || ty0 === null) return;
-    var dy = ty0 - e.touches[0].clientY;
-    ty0 = e.touches[0].clientY;
-    var max = getMax();
-    if(dy > 0 && carouselX >= max){ deactivate(true);  return; }
-    if(dy < 0 && carouselX <= 0) { deactivate(false); return; }
-    e.preventDefault();
-    setX(carouselX + dy * 2);
-  }, {passive: false});
-  window.addEventListener('touchend', function(){ ty0 = null; });
-
-  window.addEventListener('resize', function(){ if(active) setX(carouselX); });
-
-  setTimeout(function(){
-    var r = section.getBoundingClientRect();
-    if(r.top <= 1 && r.top > -window.innerHeight * 0.4) activate();
-  }, 200);
+  window.addEventListener('scroll',function(){if(active||cooldown)return;var r=section.getBoundingClientRect();if(r.top<=1&&r.top>-window.innerHeight*.4)activate();},{passive:true});
+  window.addEventListener('wheel',function(e){if(!active)return;var max=getMax();if(e.deltaY>0&&carouselX>=max){deactivate(true);return;}if(e.deltaY<0&&carouselX<=0){deactivate(false);return;}e.preventDefault();setX(carouselX+e.deltaY*1.5);},{passive:false});
+  var ty0=null;
+  window.addEventListener('touchstart',function(e){if(active)ty0=e.touches[0].clientY;},{passive:true});
+  window.addEventListener('touchmove',function(e){if(!active||ty0===null)return;var dy=ty0-e.touches[0].clientY;ty0=e.touches[0].clientY;var max=getMax();if(dy>0&&carouselX>=max){deactivate(true);return;}if(dy<0&&carouselX<=0){deactivate(false);return;}e.preventDefault();setX(carouselX+dy*2);},{passive:false});
+  window.addEventListener('touchend',function(){ty0=null;});
+  window.addEventListener('resize',function(){if(active)setX(carouselX);});
+  setTimeout(function(){var r=section.getBoundingClientRect();if(r.top<=1&&r.top>-window.innerHeight*.4)activate();},200);
 })();</script>
 </body>
 </html>
