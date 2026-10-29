@@ -287,6 +287,22 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .iphone{width:110px}.iphone.sm{width:92px}.plogo{width:90px;height:90px}
 }
 @media print{.acteurs{background-attachment:scroll}}
+
+/* ── MOBILE FIXES ── */
+@media(max-width:900px){
+  /* Hero: réduire l'excès de padding et d'écart quand l'image est au-dessus */
+  .hero-txt{padding-top:28px!important;gap:12px!important}
+  .hero-body{margin:0!important}
+  .hero-conf{margin-top:20px!important}
+}
+@media(max-width:600px){
+  /* Logo secondaire: centré sur mobile */
+  [style*="logo-secondaire"]{display:flex!important;margin-left:auto!important;margin-right:auto!important}
+  .secondaire-box{display:flex!important;margin:16px auto 0!important}
+  /* Plogo centré */
+  .plogos{justify-content:center}
+  .plogo{width:120px!important;height:120px!important}
+}
 </style>
 </head>
 <body>

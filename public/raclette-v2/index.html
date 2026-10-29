@@ -1150,6 +1150,35 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .concept-card-refs{margin-bottom:0}
 @media(max-width:900px){.story-2col{grid-template-columns:1fr}.mani-img{display:none}}
 @media(max-width:600px){.story-tab{font-size:.78rem;padding:8px 14px}}
+
+/* ── MOBILE FIXES ── */
+@media(max-width:768px){
+  /* Story side panels: moins larges, pas de label */
+  .story-side{width:44px!important;padding:8px 4px!important}
+  .story-side-label{display:none!important}
+  .story-side-arrow{font-size:clamp(1.4rem,5vw,2rem)!important}
+
+  /* Panels FTL : occupent toute la largeur disponible */
+  .ftl-intro,.ftl-card{width:100%!important;min-width:0!important;padding:clamp(16px,4vw,28px)!important}
+  .ftl-ref-vis{flex-direction:column!important;align-items:flex-start!important;border-radius:12px!important;gap:16px!important}
+  .ftl-intro .lead{font-size:.9rem!important;-webkit-line-clamp:unset!important;overflow:visible!important}
+
+  /* Logos centrés sur mobile */
+  .pl-logo-box,.secondaire-box{margin-left:auto!important;margin-right:auto!important;display:flex!important;width:auto!important}
+
+  /* Iphones dans la timeline */
+  .alpages-iphones{gap:8px!important}
+  .iph-big{height:calc(45svh * 0.8)!important}
+
+  /* Story scroll height un peu réduit */
+  .story-scroll{height:60svh!important}
+}
+@media(max-width:480px){
+  .story-side{width:36px!important}
+  .ftl-ref-vis .alpages-iphones{justify-content:center}
+  .iphone-mock--big{width:88px!important}
+  .pl-logo-box img,.secondaire-box img{height:64px!important}
+}
 </style>
 
 <style>
@@ -1932,21 +1961,8 @@ if(hamburger){hamburger.addEventListener('click',function(){
   var active=false,cooldown=false,carouselX=0,docTop=0;
   function getMax(){return Math.max(0,inner.scrollWidth-outer.clientWidth);}
   function setX(x){carouselX=Math.max(0,Math.min(getMax(),x));inner.style.transform='translateX(-'+carouselX+'px)';}
-  function activate(){
-    if(active||cooldown)return;
-    active=true;
-    docTop=window.scrollY+section.getBoundingClientRect().top;
-    document.body.style.overflow='hidden';document.body.style.position='fixed';document.body.style.top='-'+docTop+'px';document.body.style.width='100%';
-    section.style.cssText='position:fixed;top:0;left:0;right:0;height:100svh;overflow:hidden;z-index:200;width:100%;display:flex;flex-direction:column;';
-  }
-  function deactivate(fwd){
-    if(!active)return;
-    active=false;cooldown=true;
-    section.style.cssText='';
-    document.body.style.overflow='';document.body.style.position='';document.body.style.top='';document.body.style.width='';
-    window.scrollTo(0,fwd?docTop+window.innerHeight+2:Math.max(0,docTop-10));
-    setTimeout(function(){cooldown=false;},400);
-  }
+  function activate(){if(active||cooldown)return;active=true;docTop=window.scrollY+section.getBoundingClientRect().top;document.body.style.overflow='hidden';document.body.style.position='fixed';document.body.style.top='-'+docTop+'px';document.body.style.width='100%';section.style.cssText='position:fixed;top:0;left:0;right:0;height:100svh;overflow:hidden;z-index:200;width:100%;display:flex;flex-direction:column;';}
+  function deactivate(fwd){if(!active)return;active=false;cooldown=true;section.style.cssText='';document.body.style.overflow='';document.body.style.position='';document.body.style.top='';document.body.style.width='';window.scrollTo(0,fwd?docTop+window.innerHeight+2:Math.max(0,docTop-10));setTimeout(function(){cooldown=false;},400);}
   window.addEventListener('scroll',function(){if(active||cooldown)return;var r=section.getBoundingClientRect();if(r.top<=1&&r.top>-window.innerHeight*.4)activate();},{passive:true});
   window.addEventListener('wheel',function(e){if(!active)return;var max=getMax();if(e.deltaY>0&&carouselX>=max){deactivate(true);return;}if(e.deltaY<0&&carouselX<=0){deactivate(false);return;}e.preventDefault();setX(carouselX+e.deltaY*1.5);},{passive:false});
   var ty0=null;
