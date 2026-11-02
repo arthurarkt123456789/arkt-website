@@ -137,6 +137,7 @@ section{position:relative}
 .record-note h4{font-family:"Inter",sans-serif;font-weight:800;font-size:1.5rem;text-transform:uppercase;margin-bottom:6px}
 .record-note p{color:#dfe0ff;font-size:.95rem}
 @media(max-width:760px){.record-note{grid-template-columns:1fr}.labels{font-size:.68rem}.labels b{font-size:.78rem}}
+.guinness-logo{margin-top:48px;text-align:center}.guinness-logo img{max-width:260px;width:100%;opacity:.92;filter:drop-shadow(0 4px 16px rgba(0,0,0,.35))}
 
 /* LIEU */
 .lieu-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(32px,5vw,80px);align-items:center}
@@ -331,7 +332,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 }
 
 /* ACTOR SLIDER */
-.acteurs{background:linear-gradient(rgba(0,0,0,.62),rgba(0,0,0,.62)),url('../raclette/cow.jpg') center/cover no-repeat;color:#fff}
+.acteurs{background:linear-gradient(rgba(0,0,0,.62),rgba(0,0,0,.62)),url('./cow.jpg') center/cover no-repeat;color:#fff}
 .acteurs .script{color:var(--yellow)}
 .actor-slider-wrap{margin-top:clamp(36px,5vw,56px)}
 .actor-nav{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;justify-content:center}
@@ -585,7 +586,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .ftl-ref .ps-lbl{font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
 .ftl-ref .ps-logos{flex-wrap:nowrap}
 /* ACTOR SLIDER */
-.acteurs{background:linear-gradient(rgba(0,0,0,.62),rgba(0,0,0,.62)),url('../raclette/cow.jpg') center/cover no-repeat;color:#fff}
+.acteurs{background:linear-gradient(rgba(0,0,0,.62),rgba(0,0,0,.62)),url('./cow.jpg') center/cover no-repeat;color:#fff}
 .acteurs .script{color:var(--yellow)}
 .actor-slider-wrap{margin-top:clamp(36px,5vw,56px)}
 .actor-nav{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;justify-content:center}
@@ -978,7 +979,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @media(max-width:900px){.story-2col{grid-template-columns:1fr}.mani-img{display:none}}
 /* ── Marseille dans les alpages card ─────────────────────────────────────── */
 .ftl-step--alpages{
-  background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url('../raclette/cow.jpg') center/cover no-repeat!important;
+  background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url('./cow.jpg') center/cover no-repeat!important;
   width:auto!important;
   min-width:auto!important;
   aspect-ratio:unset!important;
@@ -1180,16 +1181,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .pl-logo-box img,.secondaire-box img{height:64px!important}
 }
 </style>
-
-<style>
-#projet{height:100svh!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;background:var(--cream)}
-.story-carousel-row{flex:1!important;min-height:0!important;overflow:hidden!important;display:block!important}
-.story-carousel-outer{display:block!important;overflow:hidden!important;width:100%!important;height:100%!important}
-.story-carousel-inner{display:flex!important;flex-direction:row!important;height:100%!important;align-items:stretch!important;will-change:transform}
-.story-carousel-inner>*{flex-shrink:0!important;width:100vw!important;height:100%!important;overflow:hidden!important;box-sizing:border-box!important}
-.story-progress-wrap{display:none!important}
-.story-side{display:none!important}
-</style>
 </head>
 <body>
 <div id="pw-gate" role="dialog" aria-label="Accès protégé">
@@ -1282,8 +1273,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <section class="story-scroll" id="projet">
   <div class="story-carousel-row">
+    <button class="story-side" id="storyOvPrev" aria-label="Précédent">
+      <span class="story-side-arrow">←</span>
+      <span class="story-side-label">cliquez ici<br>pour faire<br>défiler</span>
+    </button>
     <div class="story-carousel-outer" id="storyOuter">
-      <div class="story-carousel-inner" id="storyInner">
 
     <!-- ── PANEL 1 : Le projet ────────────────────────────────────────────── -->
     
@@ -1327,10 +1321,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <svg width="56" height="56" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="var(--ink)"/><path d="M5 9h8M9 5l4 4-4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div class="pl-logo-box rv">
-        <img src="../raclette/logo-ref2.png" alt="Les Produits Laitiers">
+        <img src="./logo-ref2.png" alt="Les Produits Laitiers">
       </div>
       <div class="secondaire-box rv" style="background:#fff;border-radius:16px;padding:20px 28px;display:inline-flex;align-items:center;justify-content:center;margin-top:16px">
-        <img src="../raclette/logo-secondaire.webp" alt="" style="height:90px;width:auto;display:block">
+        <img src="./logo-secondaire.webp" alt="" style="height:90px;width:auto;display:block">
       </div>
     </div>
 
@@ -1370,8 +1364,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="ctv-tags"><span>Créateurs de contenu</span><span>Instagram</span><span>TikTok</span><span>YouTube</span></div>
       </div>
       <div class="alpages-iphones">
-        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><video src="../raclette/videos/v3.mp4" autoplay muted loop playsinline></video></div></div>
-        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><video src="../raclette/videos/v4.mp4" autoplay muted loop playsinline></video></div></div>
+        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><video src="./videos/v3.mp4" autoplay muted loop playsinline></video></div></div>
+        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><video src="./videos/v4.mp4" autoplay muted loop playsinline></video></div></div>
       </div>
     </div>
     <!-- ── Réf. éditoriales ─────────────────────────────────────────── -->
@@ -1383,13 +1377,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         </div>
         <p class="lead rv" style="margin:16px 0 20px;max-width:30ch;color:var(--ink)">Inspiration du contenu produit par Les Produits Laitiers</p>
         <div class="pl-logo-box rv">
-          <img src="../raclette/logo-ref1.jpg" alt="Les Produits Laitiers">
+          <img src="./logo-ref1.jpg" alt="Les Produits Laitiers">
         </div>
       </div>
       <div class="alpages-iphones">
-        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><img src="../raclette/ref-img1.jpg" alt="Référence éditoriale 1"></div></div>
-        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><img src="../raclette/ref-img2.jpg" alt="Référence éditoriale 2"></div></div>
-        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><img src="../raclette/ref-img3.jpg" alt="Référence éditoriale 3"></div></div>
+        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><img src="./ref-img1.jpg" alt="Référence éditoriale 1"></div></div>
+        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><img src="./ref-img2.jpg" alt="Référence éditoriale 2"></div></div>
+        <div class="iph-big"><div class="iphone-mock iphone-mock--big"><div class="iph-notch"></div><img src="./ref-img3.jpg" alt="Référence éditoriale 3"></div></div>
       </div>
     </div>
     <!-- ── Ouverture Billetterie ─────────────────────────────────────── -->
@@ -1434,9 +1428,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
   
 
-      </div><!-- /story-carousel-inner -->
     </div><!-- /story-carousel-outer -->
+    <button class="story-side" id="storyOvNext" aria-label="Suivant">
+      <span class="story-side-arrow">→</span>
+      <span class="story-side-label">cliquez ici<br>pour faire<br>défiler</span>
+    </button>
   </div><!-- /story-carousel-row -->
+
+  <div class="story-progress-wrap">
+    <div id="storyArrowFill" class="story-arrow-fill"></div>
+    <input type="range" id="storyRange" class="story-range" min="0" max="1000" value="0" step="1">
+  </div>
 </section>
 
 <section class="numbers pad" style="padding-top:clamp(60px,8vw,100px);padding-bottom:clamp(60px,8vw,100px)">
@@ -1478,6 +1480,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="rv d1"><h4>Une homologation officielle</h4><p>Constat officiel du comptage le jour J. Homologation Guinness World Records visée, avec remise du titre en direct.</p></div>
       <div class="rv d2"><h4>Un public au rendez-vous</h4><p>À Martigny en 2025, l'intégralité des billets est partie en 1 heure 20.</p></div>
     </div>
+    <div class="guinness-logo"><img src="guinness-world-record.webp" alt="Guinness World Records"></div>
   </div>
 </section>
 
@@ -1952,25 +1955,88 @@ if(hamburger){hamburger.addEventListener('click',function(){
   document.body.style.overflow=open?'hidden':'';
 });}
 
-// V2: scroll hijack
+// Story carousel — continuous horizontal scroll-snap
 (function(){
-  var section=document.getElementById('projet');
-  var outer=document.getElementById('storyOuter');
-  var inner=document.getElementById('storyInner');
-  if(!section||!inner)return;
-  var active=false,cooldown=false,carouselX=0,docTop=0;
-  function getMax(){return Math.max(0,inner.scrollWidth-outer.clientWidth);}
-  function setX(x){carouselX=Math.max(0,Math.min(getMax(),x));inner.style.transform='translateX(-'+carouselX+'px)';}
-  function activate(){if(active||cooldown)return;active=true;docTop=window.scrollY+section.getBoundingClientRect().top;document.body.style.overflow='hidden';document.body.style.position='fixed';document.body.style.top='-'+docTop+'px';document.body.style.width='100%';section.style.cssText='position:fixed;top:0;left:0;right:0;height:100svh;overflow:hidden;z-index:200;width:100%;display:flex;flex-direction:column;';}
-  function deactivate(fwd){if(!active)return;active=false;cooldown=true;section.style.cssText='';document.body.style.overflow='';document.body.style.position='';document.body.style.top='';document.body.style.width='';window.scrollTo(0,fwd?docTop+window.innerHeight+2:Math.max(0,docTop-10));setTimeout(function(){cooldown=false;},400);}
-  window.addEventListener('scroll',function(){if(active||cooldown)return;var r=section.getBoundingClientRect();if(r.top<=1&&r.top>-window.innerHeight*.4)activate();},{passive:true});
-  window.addEventListener('wheel',function(e){if(!active)return;var max=getMax();if(e.deltaY>0&&carouselX>=max){deactivate(true);return;}if(e.deltaY<0&&carouselX<=0){deactivate(false);return;}e.preventDefault();setX(carouselX+e.deltaY*1.5);},{passive:false});
-  var ty0=null;
-  window.addEventListener('touchstart',function(e){if(active)ty0=e.touches[0].clientY;},{passive:true});
-  window.addEventListener('touchmove',function(e){if(!active||ty0===null)return;var dy=ty0-e.touches[0].clientY;ty0=e.touches[0].clientY;var max=getMax();if(dy>0&&carouselX>=max){deactivate(true);return;}if(dy<0&&carouselX<=0){deactivate(false);return;}e.preventDefault();setX(carouselX+dy*2);},{passive:false});
-  window.addEventListener('touchend',function(){ty0=null;});
-  window.addEventListener('resize',function(){if(active)setX(carouselX);});
-  setTimeout(function(){var r=section.getBoundingClientRect();if(r.top<=1&&r.top>-window.innerHeight*.4)activate();},200);
+  var outer = document.getElementById('storyOuter');
+  var range = document.getElementById('storyRange');
+  var fill  = document.getElementById('storyArrowFill');
+  var ovPrev = document.getElementById('storyOvPrev');
+  var ovNext = document.getElementById('storyOvNext');
+
+  function setFill(pct){
+    if(fill) fill.style.width = pct+'%';
+  }
+  function updateRange(){
+    if(!outer||!range) return;
+    var max = outer.scrollWidth - outer.clientWidth;
+    var pct = max > 0 ? (outer.scrollLeft/max)*100 : 0;
+    range.value = Math.round(pct*10);
+    setFill(pct);
+  }
+  function scrollFromRange(){
+    if(!outer||!range) return;
+    var max = outer.scrollWidth - outer.clientWidth;
+    outer.scrollLeft = (range.value/1000)*max;
+    setFill(range.value/10);
+  }
+  if(outer) outer.addEventListener('scroll', updateRange, {passive:true});
+  if(range) range.addEventListener('input', scrollFromRange);
+  function continuousScroll(btn, dir){
+    var raf;
+    var speed = 48;
+    function step(){ outer.scrollLeft += dir * speed; raf = requestAnimationFrame(step); }
+    function start(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(step); }
+    function stop(){ cancelAnimationFrame(raf); }
+    btn.addEventListener('mousedown', start);
+    btn.addEventListener('mouseup', stop);
+    btn.addEventListener('mouseleave', stop);
+    btn.addEventListener('touchstart', start, {passive:true});
+    btn.addEventListener('touchend', stop);
+    btn.addEventListener('touchcancel', stop);
+  }
+  if(ovPrev) continuousScroll(ovPrev, -1);
+  if(ovNext) continuousScroll(ovNext, 1);
+
+  // Custom drag — makes the whole bar click-and-drag reliably
+  if(range){
+    range.addEventListener('mousedown', function(e){
+      function dragAt(ev){
+        var rect = range.getBoundingClientRect();
+        var pct = Math.max(0,Math.min(1,(ev.clientX-rect.left)/rect.width));
+        range.value = Math.round(pct*1000);
+        scrollFromRange();
+      }
+      dragAt(e);
+      document.addEventListener('mousemove', dragAt);
+      document.addEventListener('mouseup', function done(){
+        document.removeEventListener('mousemove', dragAt);
+        document.removeEventListener('mouseup', done);
+      });
+      e.preventDefault();
+    });
+  }
+
+  updateRange();
+
+  // Auto-scroll hint on load: peek right then back
+  setTimeout(function(){
+    var hint = 220;
+    outer.scrollBy({ left: hint, behavior: 'smooth' });
+    setTimeout(function(){
+      outer.scrollBy({ left: -hint, behavior: 'smooth' });
+    }, 900);
+  }, 1000);
+
+  // Wheel: vertical → horizontal when mouse over carousel
+  var mouseOver = false;
+  outer.addEventListener('mouseenter', function(){ mouseOver = true; });
+  outer.addEventListener('mouseleave', function(){ mouseOver = false; });
+  document.addEventListener('wheel', function(e){
+    if(!mouseOver) return;
+    if(Math.abs(e.deltaX) > Math.abs(e.deltaY) * 0.5) return;
+    e.preventDefault();
+    outer.scrollLeft += e.deltaY;
+  }, { passive: false });
 })();</script>
 </body>
 </html>
