@@ -290,13 +290,14 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 /* ---------- Partenaires ---------- */
 .partners { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px 28px; color: var(--white); text-align: center; background: var(--blue-dark); border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: clamp(18px, 3vw, 28px); }
 .partner-row p { font-weight: 600; font-size: .9rem; margin-bottom: 12px; opacity: .9; }
-.partner-logos { display: flex; justify-content: center; align-items: center; gap: 22px; min-height: 64px; }
+.partner-logos { display: flex; justify-content: center; align-items: center; gap: 22px; min-height: 96px; }
 .partner-logos a { display: block; opacity: .95; transition: opacity .15s; }
 .partner-logos a:hover { opacity: 1; }
 .pl { display: block; height: auto; }
 .pl--wide { width: 170px; }
 .pl--tall { height: 64px; width: auto; }
 .pl--square { height: 70px; width: auto; }
+.pl--origamy { height: 96px; width: auto; }
 
 /* ---------- Sections ---------- */
 .section { padding: 26px 0; }
