@@ -94,14 +94,15 @@
       "prix_unitaire": 2000
     },
     {
-      "titre": "Refonte du site Webflow : conversion et référencement",
+      "titre": "Nouveau site : conversion et référencement",
       "tarif_id": "site-vitrine",
-      "description": "On reste sur votre Webflow et on retravaille les pages qui comptent, dans la nouvelle identité. Prix, dates et places visibles dès l'accueil et les listes, sans avoir à cliquer. Un parcours de réservation qui parle comme une agence. Deux entrées nettes, femmes et entreprises. Une place pour vos preuves : presse, podcasts, partenaires, témoignages. Des pages destinations et thèmes pensées pour le référencement. Mailchimp et le CRM reliés au site.",
+      "description": "On reconstruit le site sur une base développée sur mesure, sans les limites d'un éditeur type Webflow : plus rapide, plus souple à faire évoluer, et pensée pour la réservation. Prix, dates et places visibles dès l'accueil et les listes, sans avoir à cliquer. Un parcours de réservation qui parle comme une agence. Deux entrées nettes, femmes et entreprises. Une place pour vos preuves : presse, podcasts, partenaires, témoignages. Des pages destinations et thèmes pensées pour le référencement. Mailchimp et le CRM reliés au site.",
       "livrables": [
+        "Site développé sur mesure, hébergement inclus dans la mise en place, reprise des contenus existants",
         "Page d'accueil orientée réservation, entrées femmes et entreprises",
         "Listes et fiches expérience : prix, dates, places et inclus visibles dès le premier écran",
         "Page preuves : presse, podcasts, partenaires, références entreprises",
-        "Pages référencement destinations et thèmes",
+        "Pages référencement destinations et thèmes, redirections depuis l'ancien site",
         "Connexion Mailchimp et CRM, formulaires, automatisations",
         "Mesure des conversions Meta et GA4"
       ],
@@ -235,7 +236,7 @@
       "estimation": null
     },
     {
-      "label": "Abonnements Webflow, Mailchimp, CRM",
+      "label": "Hébergement, nom de domaine, Mailchimp, CRM",
       "estimation": null
     },
     {
@@ -262,8 +263,8 @@
       "duree": "2 semaines, en parallèle"
     },
     {
-      "etape": "Refonte du site Webflow",
-      "duree": "4 semaines"
+      "etape": "Nouveau site",
+      "duree": "5 semaines"
     },
     {
       "etape": "Mise en ligne avant la saison 2027",
