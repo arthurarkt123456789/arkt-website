@@ -42,6 +42,9 @@ body {
 .mountains .m-snow { fill: var(--cream); }
 @media (max-width: 640px) { .mountains { height: 40vh; } .sea-bg .sun { top: 20%; } }
 
+img { display: block; max-width: 100%; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; border: 0; background: none; }
 a { color: inherit; }
 
 .wrap { width: min(1080px, 100% - 32px); margin: 0 auto; }
