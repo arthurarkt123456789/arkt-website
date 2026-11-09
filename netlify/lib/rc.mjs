@@ -19,7 +19,12 @@ export const CONFIG = {
 };
 
 /** Message d'erreur court et sans secret, renvoyé au client pour diagnostiquer la config. */
-export const errDetail = (e) => String(e?.message || e).replace(/sb_secret_\S+|eyJ\S+/g, "***").slice(0, 300);
+export const errDetail = (e) => {
+  let host = "?"; try { host = new URL(process.env.SUPABASE_URL).host; } catch { host = "URL invalide"; }
+  const k = (process.env.SUPABASE_SERVICE_KEY || "").trim();
+  const kind = k.startsWith("sb_secret_") ? "sb_secret" : k.startsWith("sb_publishable_") ? "sb_publishable (mauvaise clé)" : k.startsWith("eyJ") ? "jwt" : `inconnu (${k.length} car.)`;
+  return `${String(e?.message || e?.cause?.message || e)} | host=${host} key=${kind}`.replace(/sb_secret_\S+|eyJ\S+/g, "***").slice(0, 400);
+};
 
 export const json = (statusCode, body, headers = {}) => ({
   statusCode,
@@ -79,7 +84,7 @@ export async function sbRpc(fn, args) {
   if (!r.ok) {
     let msg = text;
     try { msg = JSON.parse(text).message || text; } catch {}
-    const e = new Error(msg); e.status = r.status; throw e;
+    const e = new Error(`Supabase rpc/${fn} HTTP ${r.status} ${r.statusText} ${String(msg).slice(0, 200)}`.trim()); e.status = r.status; throw e;
   }
   return text ? JSON.parse(text) : null;
 }
