@@ -42,6 +42,11 @@ body {
 .mountains .m-snow { fill: var(--cream); }
 @media (max-width: 640px) { .mountains { height: 40vh; } .sea-bg .sun { top: 20%; } }
 
+a { color: inherit; }
+
+.wrap { width: min(1080px, 100% - 32px); margin: 0 auto; }
+.wrap--narrow { width: min(720px, 100% - 32px); }
+
 /* ---------- Typo ---------- */
 h1, h2, h3, .display { font-weight: 900; letter-spacing: -.03em; line-height: 1; }
 h1 { font-size: clamp(2.6rem, 8vw, 5.2rem); }
