@@ -56,14 +56,17 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 .header { padding: 22px 0 10px; color: var(--white); }
 .header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-.brand img { height: auto; width: clamp(220px, 40vw, 420px); }
+.brand img { height: auto; width: clamp(150px, 24vw, 210px); }
 .brand .wordmark { font-weight: 900; font-size: clamp(1.1rem, 3vw, 1.6rem); line-height: .95; letter-spacing: -.02em; text-transform: uppercase; }
 .brand .wordmark small { display: block; font-size: .55em; font-weight: 800; letter-spacing: .14em; opacity: .9; }
 .header-meta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .partner img { height: 54px; width: auto; filter: brightness(0) invert(1); opacity: .95; }
 
 /* ---------- Hero ---------- */
-.hero { padding: 26px 0 30px; color: var(--white); text-align: center; }
+.hero { padding: 0 0 30px; color: var(--white); text-align: center; }
+.hero-visual { margin: 6px 0 28px; border-top: var(--border); border-bottom: var(--border); background: var(--yellow); }
+.hero-visual img { width: 100%; height: clamp(300px, 52vw, 620px); object-fit: cover; object-position: center; display: block; }
+@media (max-width: 640px) { .hero-visual img { height: 92vw; } }
 .hero h1 { margin: 10px 0 14px; text-shadow: 6px 6px 0 var(--ink); }
 .hero h1 .y { color: var(--yellow); }
 .hero p { max-width: 640px; margin: 0 auto 22px; font-weight: 600; font-size: clamp(1rem, 2.3vw, 1.2rem); }
