@@ -171,36 +171,116 @@ export async function sendEmail({ to, subject, html, replyTo, bcc }) {
   return r.ok;
 }
 
-export const emailHeader = () =>
-  `<p style="margin:0 0 18px"><img src="${CONFIG.SITE}${CONFIG.BASE_PATH}/assets/logo-raclette-club.png" alt="La Meulerie Raclette Club" width="260" style="display:block;width:260px;max-width:100%;height:auto" /></p>
-  <p style="margin:0 0 20px;color:#333;font-weight:600">Les Terrasses du Port, Marseille</p>`;
+const LOGO_URL = () => `${CONFIG.SITE}${CONFIG.BASE_PATH}/assets/logo-raclette-club-blanc.png`;
+const MAPS_URL = "https://maps.google.com/?q=Les+Terrasses+du+Port,+9+quai+du+Lazaret,+13002+Marseille";
+export const hhmm = (service) => service.replace(":", "h");
 
-export function bookingEmailHtml(b, { cancelUrl } = {}) {
-  const tickets = [
-    b.adults ? `${b.adults} menu${b.adults > 1 ? "s" : ""} adulte` : null,
-    b.kids ? `${b.kids} menu${b.kids > 1 ? "s" : ""} enfant` : null,
-  ].filter(Boolean).join(" + ");
-  const priv = b.seats >= CONFIG.PRIVATE_MIN ? `<p style="margin:6px 0"><strong>Bulle privatisée</strong>${b.seats > CONFIG.SHARED_MAX ? ` à ${b.seats} : capacité réduite à 8 cette année pour plus de confort, l'espace sera plus serré qu'à 8.` : ""}</p>` : `<p style="margin:6px 0;color:#555">Bulle partagée : vous pourrez être installés avec d'autres convives.</p>`;
-  return `
-<div style="font-family:Poppins,Arial,sans-serif;max-width:560px;margin:0 auto;background:#F0EBDA;padding:28px;border-radius:24px;color:#111">
-  ${emailHeader()}
-  <div style="background:#fff;border-radius:18px;padding:20px;margin-bottom:16px">
-    <p style="margin:0 0 10px;font-size:18px"><strong>${esc(fmtDate(b.date))} à ${esc(b.service.replace(":", "h"))}</strong></p>
-    <p style="margin:6px 0">${esc(tickets)} · ${b.seats} place${b.seats > 1 ? "s" : ""} · bulle n°${b.bubble}</p>
-    ${priv}
-    <p style="margin:6px 0">Au nom de <strong>${esc(b.name)}</strong></p>
-    ${b.notes ? `<p style="margin:6px 0;color:#555">Remarques : ${esc(b.notes)}</p>` : ""}
-    <p style="margin:12px 0 0;font-size:18px"><strong>${b.amount_cents ? eur(b.amount_cents) + " réglés" : "Réservation enregistrée"}</strong></p>
-    <p style="margin:4px 0 0;color:#555;font-size:13px">Référence : ${esc(b.id.slice(0, 8).toUpperCase())}</p>
-  </div>
-  <div style="background:#F7F65C;border-radius:18px;padding:16px 20px;margin-bottom:16px">
-    <p style="margin:0 0 6px"><strong>Au menu (36 € adulte, 24 € enfant)</strong></p>
-    <p style="margin:0;color:#222;font-size:14px">Fromage à raclette (nature, ail des ours, 3 poivres, truffe), charcuteries (option veggie ou halal sur place), pommes de terre, condiments, salade verte, eau minérale à discrétion. Boissons et desserts se règlent sur place.</p>
-  </div>
-  <p style="font-size:14px;color:#333;margin:0 0 6px">Merci d'arriver 10 minutes avant le début du service.</p>
-  ${cancelUrl ? `<p style="font-size:14px;color:#333;margin:0 0 6px">Annulation possible jusqu'à 48 h avant le service, remboursement intégral : <a href="${cancelUrl}" style="color:#0000FF">annuler ma réservation</a>.</p>` : ""}
-  <p style="font-size:13px;color:#666;margin:18px 0 0">La Meulerie · hello@lameulerie.com</p>
-</div>`;
+/** Lien "Ajouter à Google Agenda" pour un service (durée indicative 2 h). */
+export function calendarUrl(b) {
+  const [h, m] = b.service.split(":").map(Number);
+  const d = b.date.replace(/-/g, "");
+  const pad = (n) => String(n).padStart(2, "0");
+  const start = `${d}T${pad(h)}${pad(m)}00`, end = `${d}T${pad(h + 2)}${pad(m)}00`;
+  const q = new URLSearchParams({ action: "TEMPLATE", text: "La Meulerie Raclette Club", dates: `${start}/${end}`, ctz: "Europe/Paris",
+    details: `Raclette Club · ${b.seats} place(s) · bulle n°${b.bubble} · réf. ${b.id.slice(0, 8).toUpperCase()}`, location: "Les Terrasses du Port, 9 quai du Lazaret, 13002 Marseille" });
+  return `https://calendar.google.com/calendar/render?${q}`;
+}
+
+/**
+ * Gabarit commun des emails : bandeau bleu + logo, carte principale, blocs, pied.
+ * @param {object} o  { kicker, title, lead, rows:[[label,value]], blocks:[html], buttons:[{label,url,primary}], logoSrc }
+ */
+export function emailLayout(o) {
+  const rows = (o.rows || []).map(([k, v]) => `
+      <tr><td style="padding:9px 0;border-bottom:1px solid #EDE8D6;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#777;font-weight:700;width:38%">${esc(k)}</td>
+          <td style="padding:9px 0;border-bottom:1px solid #EDE8D6;font-size:15px;color:#0B0B14;font-weight:600">${v}</td></tr>`).join("");
+  const buttons = (o.buttons || []).map((b) => `<a href="${b.url}" style="display:inline-block;margin:4px 6px 4px 0;padding:13px 22px;border-radius:999px;font-weight:800;font-size:14px;text-decoration:none;${b.primary ? "background:#F7F65C;color:#0B0B14;" : "background:#fff;color:#0000FF;border:2px solid #0000FF;"}">${esc(b.label)}</a>`).join("");
+  return `<!doctype html><html lang="fr"><body style="margin:0;padding:0;background:#F0EBDA">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#F0EBDA"><tr><td align="center" style="padding:24px 12px">
+<table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;font-family:Poppins,'Helvetica Neue',Arial,sans-serif">
+  <tr><td style="background:#0000FF;border-radius:24px 24px 0 0;padding:30px 32px 26px;text-align:center">
+    <img src="${o.logoSrc || LOGO_URL()}" alt="La Meulerie Raclette Club" width="240" style="display:block;margin:0 auto;width:240px;max-width:80%;height:auto;border:0" />
+    <p style="margin:14px 0 0;color:#F7F65C;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:800">Les Terrasses du Port · Marseille</p>
+  </td></tr>
+  <tr><td style="background:#fff;padding:30px 32px 10px">
+    ${o.kicker ? `<p style="margin:0 0 8px;color:#FF5CA8;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800">${esc(o.kicker)}</p>` : ""}
+    <h1 style="margin:0 0 10px;color:#0000FF;font-size:30px;line-height:1.05;letter-spacing:-.02em;font-weight:900">${o.title}</h1>
+    ${o.lead ? `<p style="margin:0 0 18px;color:#333;font-size:15px;line-height:1.5">${o.lead}</p>` : ""}
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">${rows}</table>
+    ${buttons ? `<p style="margin:22px 0 10px">${buttons}</p>` : ""}
+  </td></tr>
+  ${(o.blocks || []).map((html) => `<tr><td style="background:#fff;padding:0 32px 22px">${html}</td></tr>`).join("")}
+  <tr><td style="background:#fff;border-radius:0 0 24px 24px;padding:4px 32px 28px;border-top:1px solid #EDE8D6">
+    <p style="margin:16px 0 0;color:#666;font-size:12px;line-height:1.6">La Meulerie Raclette Club est une proposition de <strong>La Meulerie</strong>, fromageries ensoleillées à Marseille.<br>
+    Une question ? <a href="mailto:hello@lameulerie.com" style="color:#0000FF">hello@lameulerie.com</a> · <a href="https://www.instagram.com/lameulerie" style="color:#0000FF">@lameulerie</a> · <a href="https://www.lameulerie.com" style="color:#0000FF">lameulerie.com</a></p>
+  </td></tr>
+</table></td></tr></table></body></html>`;
+}
+
+const block = (bg, title, html) => `<div style="background:${bg};border-radius:16px;padding:16px 18px"><p style="margin:0 0 6px;font-weight:800;font-size:14px;color:#0B0B14">${title}</p><div style="font-size:14px;line-height:1.55;color:#222">${html}</div></div>`;
+
+const MENU_BLOCK = block("#F7F65C", "Au menu, 36 € adulte · 24 € enfant",
+  "Fromage à raclette <strong>nature, ail des ours, 3 poivres et truffe</strong>, charcuteries (option veggie ou halal), pommes de terre et condiments, salade verte, eau minérale à discrétion. Desserts, vin chaud et boissons se commandent et se règlent sur place.");
+
+const INFOS_BLOCK = block("#F0EBDA", "Bon à savoir",
+  `Rendez-vous <strong>10 minutes avant</strong> le début du service, aux Terrasses du Port, <a href="${MAPS_URL}" style="color:#0000FF">9 quai du Lazaret, 13002 Marseille</a> (métro Joliette, parking du centre commercial). Les bulles sont face à la mer, prévoyez une petite laine pour l'arrivée.`);
+
+export const tickets = (b) => [b.adults ? `${b.adults} adulte${b.adults > 1 ? "s" : ""}` : null, b.kids ? `${b.kids} enfant${b.kids > 1 ? "s" : ""}` : null].filter(Boolean).join(" + ");
+const bubbleLine = (b) => b.seats >= CONFIG.PRIVATE_MIN
+  ? `Bulle n°${b.bubble} · <strong>privatisée</strong>${b.seats > CONFIG.SHARED_MAX ? ` (${b.seats} convives : capacité réduite à 8 cette année pour plus de confort, l'espace sera plus serré qu'à 8)` : ""}`
+  : `Bulle n°${b.bubble} · partagée, vous pourrez être installés avec d'autres convives`;
+
+export function bookingEmailHtml(b, { cancelUrl, logoSrc } = {}) {
+  return emailLayout({
+    logoSrc, kicker: "Réservation confirmée", title: "C'est réservé !",
+    lead: `Votre table est prête pour le <strong>${esc(fmtDate(b.date))} à ${hhmm(b.service)}</strong>. On s'occupe du fromage.`,
+    rows: [
+      ["Date", `${esc(fmtDate(b.date))} à <strong>${hhmm(b.service)}</strong>`],
+      ["Forfaits", `${esc(tickets(b))} · ${b.seats} place${b.seats > 1 ? "s" : ""}`],
+      ["Bulle", bubbleLine(b)],
+      ["Au nom de", esc(b.name)],
+      ...(b.notes ? [["Remarques", esc(b.notes)]] : []),
+      ["Réglé", `<strong>${eur(b.amount_cents)}</strong> par carte`],
+      ["Référence", esc(b.id.slice(0, 8).toUpperCase())],
+    ],
+    buttons: [{ label: "Ajouter à mon agenda", url: calendarUrl(b), primary: true }, { label: "Itinéraire", url: MAPS_URL }],
+    blocks: [INFOS_BLOCK, MENU_BLOCK, ...(cancelUrl ? [`<p style="margin:0;color:#555;font-size:13px;line-height:1.5">Un empêchement ? Annulation gratuite jusqu'à 48 h avant le service, remboursement intégral : <a href="${cancelUrl}" style="color:#0000FF">annuler ma réservation</a>.</p>`] : [])],
+  });
+}
+
+export function holdEmailHtml(b, { logoSrc } = {}) {
+  const until = new Date(b.expires_at).toLocaleString("fr-FR", { timeZone: "Europe/Paris", weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
+  return emailLayout({
+    logoSrc, kicker: "Table bloquée pour vous", title: "Confirmez votre table",
+    lead: `Nous vous avons réservé une table le <strong>${esc(fmtDate(b.date))} à ${hhmm(b.service)}</strong>. Elle est bloquée jusqu'au <strong>${esc(until)}</strong> : réglez le menu en ligne pour la confirmer.`,
+    rows: [
+      ["Date", `${esc(fmtDate(b.date))} à <strong>${hhmm(b.service)}</strong>`],
+      ["Forfaits", `${esc(tickets(b))} · ${b.seats} place${b.seats > 1 ? "s" : ""}`],
+      ["Bulle", bubbleLine(b)],
+      ["Au nom de", esc(b.name)],
+      ["À régler", `<strong>${eur(b.amount_cents)}</strong>`],
+    ],
+    buttons: [{ label: "Payer et confirmer ma table", url: payUrlFor(b), primary: true }],
+    blocks: [MENU_BLOCK, `<p style="margin:0;color:#555;font-size:13px;line-height:1.5">Sans paiement avant l'échéance, les places sont remises en vente. Le paiement est sécurisé par Stripe.</p>`],
+  });
+}
+
+export function cancelEmailHtml(b, { byVenue = false, refunded = false, logoSrc } = {}) {
+  return emailLayout({
+    logoSrc, kicker: "Annulation", title: "Réservation annulée",
+    lead: byVenue
+      ? `Votre table du <strong>${esc(fmtDate(b.date))} à ${hhmm(b.service)}</strong> a été annulée par La Meulerie. Nous sommes désolés pour la gêne occasionnée.`
+      : `Votre table du <strong>${esc(fmtDate(b.date))} à ${hhmm(b.service)}</strong> est annulée, comme demandé.`,
+    rows: [
+      ["Date", `${esc(fmtDate(b.date))} à <strong>${hhmm(b.service)}</strong>`],
+      ["Forfaits", `${esc(tickets(b))} · ${b.seats} place${b.seats > 1 ? "s" : ""}`],
+      ["Au nom de", esc(b.name)],
+      ["Référence", esc(b.id.slice(0, 8).toUpperCase())],
+      ...(refunded ? [["Remboursement", `<strong>${eur(b.amount_cents)}</strong>, visible sur votre compte sous 5 à 10 jours ouvrés`]] : []),
+    ],
+    buttons: [{ label: "Réserver une autre date", url: `${CONFIG.SITE}${CONFIG.BASE_PATH}/`, primary: true }],
+    blocks: [],
+  });
 }
 
 /**
@@ -224,12 +304,12 @@ export async function confirmPaidBooking(sessionId, paymentIntent) {
 
 export async function notifyConfirmation(b) {
   const html = bookingEmailHtml(b, { cancelUrl: b.email ? cancelUrlFor(b) : null });
-  const subject = `Votre table au Raclette Club · ${fmtDate(b.date)} ${b.service}`;
+  const subject = `C'est réservé ! Raclette Club · ${fmtDate(b.date)} à ${hhmm(b.service)}`;
   if (b.email) await sendEmail({ to: b.email, subject, html });
   await sendEmail({
     to: CONFIG.NOTIFY_EMAIL,
-    subject: `[Raclette Club] ${b.source === "admin" ? "Résa manuelle" : "Nouvelle résa"} ${b.date} ${b.service} · bulle ${b.bubble} · ${b.seats} pers. · ${b.name}`,
-    html: `<p>${esc(b.name)} · ${esc(b.email || "")} · ${esc(b.phone || "")}</p>` + html,
+    subject: `[Raclette Club] ${b.source === "admin" ? "Résa manuelle" : "Nouvelle résa"} ${b.date} ${hhmm(b.service)} · bulle ${b.bubble} · ${b.seats} pers. · ${b.name}`,
+    html: `<p style="font-family:Arial,sans-serif;font-size:14px;background:#fff;padding:12px 16px;margin:0"><strong>${esc(b.name)}</strong> · <a href="mailto:${esc(b.email || "")}">${esc(b.email || "")}</a> · <a href="tel:${esc(b.phone || "")}">${esc(b.phone || "")}</a>${b.notes ? ` · ${esc(b.notes)}` : ""} · ${b.source === "admin" ? "manuel" : "web"} · ${eur(b.amount_cents)}</p>` + html,
     replyTo: b.email || undefined,
   });
 }
@@ -256,24 +336,6 @@ export async function createCheckoutForBooking(b, expiresInMin = CONFIG.HOLD_MIN
   }, `rc-checkout-${b.id}-${Date.now()}`);
   await sbPatch("rc_bookings", `id=eq.${b.id}`, { stripe_session_id: session.id });
   return session;
-}
-
-export function holdEmailHtml(b) {
-  const tickets = [b.adults ? `${b.adults} menu${b.adults > 1 ? "s" : ""} adulte` : null, b.kids ? `${b.kids} menu${b.kids > 1 ? "s" : ""} enfant` : null].filter(Boolean).join(" + ");
-  const until = new Date(b.expires_at).toLocaleString("fr-FR", { timeZone: "Europe/Paris", weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
-  return `
-<div style="font-family:Poppins,Arial,sans-serif;max-width:560px;margin:0 auto;background:#F0EBDA;padding:28px;border-radius:24px;color:#111">
-  ${emailHeader()}
-  <div style="background:#fff;border-radius:18px;padding:20px;margin-bottom:16px">
-    <p style="margin:0 0 10px;font-size:18px"><strong>Votre table est bloquée</strong></p>
-    <p style="margin:6px 0"><strong>${esc(fmtDate(b.date))} à ${esc(b.service.replace(":", "h"))}</strong> · ${esc(tickets)} · ${b.seats} place${b.seats > 1 ? "s" : ""}${b.seats >= CONFIG.PRIVATE_MIN ? " · bulle privatisée" : ""}</p>
-    <p style="margin:6px 0">Au nom de <strong>${esc(b.name)}</strong></p>
-    <p style="margin:12px 0 0;font-size:18px"><strong>${eur(b.amount_cents)}</strong> à régler en ligne</p>
-  </div>
-  <p style="text-align:center;margin:22px 0"><a href="${payUrlFor(b)}" style="display:inline-block;background:#F7F65C;color:#0B0B14;font-weight:900;padding:16px 28px;border-radius:999px;text-decoration:none;border:3px solid #0B0B14">Payer et confirmer ma table</a></p>
-  <p style="font-size:14px;color:#333;margin:0 0 6px">Les places vous sont réservées jusqu'au <strong>${esc(until)}</strong>. Sans paiement d'ici là, elles sont remises en vente.</p>
-  <p style="font-size:13px;color:#666;margin:18px 0 0">La Meulerie · hello@lameulerie.com</p>
-</div>`;
 }
 
 export function cancelUrlFor(b) {
