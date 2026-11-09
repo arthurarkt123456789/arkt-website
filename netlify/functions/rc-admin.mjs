@@ -8,7 +8,7 @@
 // POST { action: 'manual',  date, service, adults, kids, name, email, phone, notes, sendEmail }
 // POST { action: 'cancel',  id, refund:true|false }
 // POST { action: 'move',    id, bubble }     -> déplace une résa vers une autre bulle du même service
-import { CONFIG, json, checkAdmin, sbRpc, sbSelect, sbPatch, stripe, notifyConfirmation, sendEmail, fmtDate, esc, eur, payUrlFor, holdEmailHtml } from "../lib/rc.mjs";
+import { CONFIG, json, checkAdmin, sbRpc, sbSelect, sbPatch, stripe, notifyConfirmation, sendEmail, fmtDate, esc, eur, payUrlFor, holdEmailHtml, emailHeader } from "../lib/rc.mjs";
 
 const csvCell = (v) => { const s = String(v ?? ""); return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
 
@@ -142,8 +142,8 @@ export const handler = async (event) => {
             to: nb.email,
             subject: `Annulation · Raclette Club ${fmtDate(nb.date)} ${nb.service}`,
             html: `<div style="font-family:Poppins,Arial,sans-serif;max-width:560px;margin:0 auto;background:#F0EBDA;padding:28px;border-radius:24px;color:#111">
-              <h1 style="color:#0000FF;font-size:24px;margin:0 0 12px">Réservation annulée</h1>
-              <p>Votre table du <strong>${esc(fmtDate(nb.date))} à ${esc(nb.service)}</strong> a été annulée par La Meulerie.</p>
+              ${emailHeader()}<h1 style="color:#0000FF;font-size:24px;margin:0 0 12px">Réservation annulée</h1>
+              <p>Votre table du <strong>${esc(fmtDate(nb.date))} à ${esc(nb.service.replace(":", "h"))}</strong> a été annulée par La Meulerie.</p>
               ${refundId ? `<p>Le remboursement de <strong>${eur(nb.amount_cents)}</strong> est lancé (5 à 10 jours ouvrés).</p>` : ""}
               <p>Une question : hello@lameulerie.com</p></div>`,
           });

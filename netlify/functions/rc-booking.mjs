@@ -1,7 +1,7 @@
 // GET /.netlify/functions/rc-booking?session_id=cs_...   -> page merci
 // GET /.netlify/functions/rc-booking?id=<uuid>&t=<token>  -> page annulation (lecture)
 // POST /.netlify/functions/rc-booking { id, t }           -> annulation client + remboursement Stripe
-import { CONFIG, json, sbSelect, sbPatch, stripe, confirmPaidBooking, createCheckoutForBooking, minutesUntil, sendEmail, fmtDate, esc, eur } from "../lib/rc.mjs";
+import { CONFIG, json, sbSelect, sbPatch, stripe, confirmPaidBooking, createCheckoutForBooking, minutesUntil, sendEmail, fmtDate, esc, eur, emailHeader } from "../lib/rc.mjs";
 
 const publicView = (b) => ({
   id: b.id, ref: b.id.slice(0, 8).toUpperCase(), date: b.date, service: b.service, bubble: b.bubble,
@@ -70,8 +70,8 @@ export const handler = async (event) => {
       const nb = upd[0] || b;
 
       const html = `<div style="font-family:Poppins,Arial,sans-serif;max-width:560px;margin:0 auto;background:#F0EBDA;padding:28px;border-radius:24px;color:#111">
-        <h1 style="color:#0000FF;font-size:24px;margin:0 0 12px">Réservation annulée</h1>
-        <p>Votre table du <strong>${esc(fmtDate(nb.date))} à ${esc(nb.service)}</strong> (${nb.seats} place${nb.seats > 1 ? "s" : ""}) est annulée.</p>
+        ${emailHeader()}<h1 style="color:#0000FF;font-size:24px;margin:0 0 12px">Réservation annulée</h1>
+        <p>Votre table du <strong>${esc(fmtDate(nb.date))} à ${esc(nb.service.replace(":", "h"))}</strong> (${nb.seats} place${nb.seats > 1 ? "s" : ""}) est annulée.</p>
         ${refundId ? `<p>Le remboursement de <strong>${eur(nb.amount_cents)}</strong> est lancé. Il apparaît sur votre compte sous 5 à 10 jours ouvrés selon votre banque.</p>` : ""}
         <p style="color:#555;font-size:13px">Référence ${esc(nb.id.slice(0, 8).toUpperCase())} · La Meulerie · hello@lameulerie.com</p></div>`;
       if (nb.email) await sendEmail({ to: nb.email, subject: `Annulation confirmée · Raclette Club ${fmtDate(nb.date)} ${nb.service}`, html });

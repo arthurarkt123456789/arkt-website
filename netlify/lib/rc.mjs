@@ -171,6 +171,10 @@ export async function sendEmail({ to, subject, html, replyTo, bcc }) {
   return r.ok;
 }
 
+export const emailHeader = () =>
+  `<p style="margin:0 0 18px"><img src="${CONFIG.SITE}${CONFIG.BASE_PATH}/assets/logo-raclette-club.png" alt="La Meulerie Raclette Club" width="260" style="display:block;width:260px;max-width:100%;height:auto" /></p>
+  <p style="margin:0 0 20px;color:#333;font-weight:600">Les Terrasses du Port, Marseille</p>`;
+
 export function bookingEmailHtml(b, { cancelUrl } = {}) {
   const tickets = [
     b.adults ? `${b.adults} menu${b.adults > 1 ? "s" : ""} adulte` : null,
@@ -179,8 +183,7 @@ export function bookingEmailHtml(b, { cancelUrl } = {}) {
   const priv = b.seats >= CONFIG.PRIVATE_MIN ? `<p style="margin:6px 0"><strong>Bulle privatisée</strong>${b.seats > CONFIG.SHARED_MAX ? ` à ${b.seats} : capacité réduite à 8 cette année pour plus de confort, l'espace sera plus serré qu'à 8.` : ""}</p>` : `<p style="margin:6px 0;color:#555">Bulle partagée : vous pourrez être installés avec d'autres convives.</p>`;
   return `
 <div style="font-family:Poppins,Arial,sans-serif;max-width:560px;margin:0 auto;background:#F0EBDA;padding:28px;border-radius:24px;color:#111">
-  <h1 style="color:#0000FF;font-size:26px;margin:0 0 4px;letter-spacing:-.02em">La Meulerie Raclette Club</h1>
-  <p style="margin:0 0 20px;color:#333">Les Terrasses du Port, Marseille</p>
+  ${emailHeader()}
   <div style="background:#fff;border-radius:18px;padding:20px;margin-bottom:16px">
     <p style="margin:0 0 10px;font-size:18px"><strong>${esc(fmtDate(b.date))} à ${esc(b.service.replace(":", "h"))}</strong></p>
     <p style="margin:6px 0">${esc(tickets)} · ${b.seats} place${b.seats > 1 ? "s" : ""} · bulle n°${b.bubble}</p>
@@ -260,8 +263,7 @@ export function holdEmailHtml(b) {
   const until = new Date(b.expires_at).toLocaleString("fr-FR", { timeZone: "Europe/Paris", weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
   return `
 <div style="font-family:Poppins,Arial,sans-serif;max-width:560px;margin:0 auto;background:#F0EBDA;padding:28px;border-radius:24px;color:#111">
-  <h1 style="color:#0000FF;font-size:26px;margin:0 0 4px;letter-spacing:-.02em">La Meulerie Raclette Club</h1>
-  <p style="margin:0 0 20px;color:#333">Les Terrasses du Port, Marseille</p>
+  ${emailHeader()}
   <div style="background:#fff;border-radius:18px;padding:20px;margin-bottom:16px">
     <p style="margin:0 0 10px;font-size:18px"><strong>Votre table est bloquée</strong></p>
     <p style="margin:6px 0"><strong>${esc(fmtDate(b.date))} à ${esc(b.service.replace(":", "h"))}</strong> · ${esc(tickets)} · ${b.seats} place${b.seats > 1 ? "s" : ""}${b.seats >= CONFIG.PRIVATE_MIN ? " · bulle privatisée" : ""}</p>
