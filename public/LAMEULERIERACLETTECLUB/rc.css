@@ -260,6 +260,17 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 .knit img { width: 100%; height: clamp(260px, 42vw, 520px); object-fit: cover; object-position: center; display: block; }
 @media (max-width: 640px) { .knit img { height: 100vw; } }
 
+/* ---------- Galerie ---------- */
+.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; align-items: start; }
+.shot { margin: 0; background: var(--white); border: var(--border); border-radius: 22px; box-shadow: var(--shadow); padding: 12px 12px 14px; }
+.shot img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; display: block; }
+.shot figcaption { margin-top: 10px; font-weight: 800; font-size: .9rem; text-align: center; }
+.shot--wide { grid-column: 1 / -1; transform: rotate(-1.2deg); }
+.shot--wide img { aspect-ratio: 16 / 8; }
+.shot--a { transform: rotate(1.6deg); }
+.shot--b { transform: rotate(-1.4deg) translateY(10px); }
+@media (max-width: 640px) { .gallery { grid-template-columns: 1fr; } .shot--b { transform: rotate(-1.4deg); } .shot--wide img { aspect-ratio: 4 / 3; } }
+
 /* ---------- Sections ---------- */
 .section { padding: 26px 0; }
 .section-title { color: var(--white); text-align: center; margin-bottom: 20px; text-shadow: 4px 4px 0 var(--ink); }
