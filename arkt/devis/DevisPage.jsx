@@ -435,8 +435,8 @@ export default function DevisPage({ devis }) {
             <div className="dv-wrap">
               <div className="dv-head dv-reveal">
                 <Eyebrow>Recommandations</Eyebrow>
-                <h2 className="dv-display dv-h2">Notre approche Meta Ads</h2>
-                <p className="dv-lead">Une stratégie publicitaire en trois temps, pensée pour le cycle de décision propre au programme : de la découverte à l'inscription.</p>
+                <h2 className="dv-display dv-h2">{d.meta_ads.section_titre || "Notre approche Meta Ads"}</h2>
+                <p className="dv-lead">{d.meta_ads.section_lead || "Une stratégie publicitaire en trois temps, pensée pour le cycle de décision propre au programme : de la découverte à l'inscription."}</p>
               </div>
 
               <div className="dv-ads-axes">
@@ -450,7 +450,7 @@ export default function DevisPage({ devis }) {
               </div>
 
               <div className="dv-ads-block dv-reveal">
-                <div className="dv-ads-block-label">Ciblages</div>
+                <div className="dv-ads-block-label">{d.meta_ads.ciblages_label || "Ciblages"}</div>
                 <ul className="dv-ads-list">
                   {d.meta_ads.ciblages.map((c, i) => (
                     <li key={i}>{c}</li>
@@ -459,7 +459,7 @@ export default function DevisPage({ devis }) {
               </div>
 
               <div className="dv-ads-block dv-reveal">
-                <div className="dv-ads-block-label">Storyboards type</div>
+                <div className="dv-ads-block-label">{d.meta_ads.storyboards_label || "Storyboards type"}</div>
                 <div className="dv-ads-boards">
                   {d.meta_ads.storyboards.map((sb, i) => (
                     <div key={i} className="dv-ads-board dv-reveal" style={{ transitionDelay: `${i * 70}ms` }}>
@@ -479,12 +479,28 @@ export default function DevisPage({ devis }) {
             <div className="dv-wrap">
               <div className="dv-head dv-reveal">
                 <Eyebrow>Pour aller plus loin</Eyebrow>
-                <h2 className="dv-display dv-h2">Profils à activer</h2>
-                <p className="dv-lead">Des partenariats ciblés pour amplifier la crédibilité du programme et accéder à un recrutement à volume.</p>
+                <h2 className="dv-display dv-h2">{d.partenaires.section_titre || "Profils à activer"}</h2>
+                <p className="dv-lead">{d.partenaires.section_lead || "Des partenariats ciblés pour amplifier la crédibilité du programme et accéder à un recrutement à volume."}</p>
               </div>
 
               <div className="dv-partner-cols">
-                {d.partenaires.athletes?.length > 0 && (
+                {d.partenaires.cols?.map((col, ci) => (
+                  <div key={ci} className="dv-partner-col dv-reveal" style={ci > 0 ? { transitionDelay: "120ms" } : undefined}>
+                    <div className="dv-partner-col-label">{col.label}</div>
+                    <ol className="dv-partner-list">
+                      {col.items.map((item, i) => (
+                        <li key={i} className="dv-partner-item">
+                          <div className="dv-partner-k">0{i + 1}</div>
+                          <div>
+                            <div className="dv-partner-title">{item.profil}</div>
+                            <p className="dv-partner-why">{item.pourquoi}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                ))}
+                {!d.partenaires.cols && d.partenaires.athletes?.length > 0 && (
                   <div className="dv-partner-col dv-reveal">
                     <div className="dv-partner-col-label">Athlètes ambassadeurs</div>
                     <ol className="dv-partner-list">
@@ -500,8 +516,7 @@ export default function DevisPage({ devis }) {
                     </ol>
                   </div>
                 )}
-
-                {d.partenaires.ecoles?.length > 0 && (
+                {!d.partenaires.cols && d.partenaires.ecoles?.length > 0 && (
                   <div className="dv-partner-col dv-reveal" style={{ transitionDelay: "120ms" }}>
                     <div className="dv-partner-col-label">Écoles et institutions sport</div>
                     <ol className="dv-partner-list">
