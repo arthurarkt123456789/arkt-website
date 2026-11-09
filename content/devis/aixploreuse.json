@@ -43,7 +43,7 @@
     },
     {
       "titre": "Le site raconte bien, il ne fait pas assez réserver",
-      "texte": "Pas de prix visibles, des disponibilités difficiles à lire, un parcours qui hésite entre boutique et agence. Mailchimp et le CRM sont là mais ne servent pas encore à faire revenir. Avec 500 € de média par mois, c'est ce socle qu'il faut consolider d'abord."
+      "texte": "Les fiches sont complètes : prix, dates, ce qui est compris, un bouton pour réserver. Mais il faut cliquer pour y arriver. Sur l'accueil et les listes, pas de prix ni de dates, des places restantes difficiles à lire, un vocabulaire de boutique (panier, « commander ») pour une agence. Mailchimp et le CRM sont là mais ne servent pas encore à faire revenir. Avec 500 € de média par mois, c'est ce socle qu'il faut consolider d'abord."
     }
   ],
   "lots": [
@@ -96,10 +96,10 @@
     {
       "titre": "Refonte du site Webflow : conversion et référencement",
       "tarif_id": "site-vitrine",
-      "description": "On reste sur votre Webflow et on retravaille les pages qui comptent, dans la nouvelle identité. Prix, dates et places visibles. Un parcours de réservation clair. Deux entrées nettes, femmes et entreprises. Une place pour vos preuves : presse, podcasts, partenaires, témoignages. Des pages destinations et thèmes pensées pour le référencement. Mailchimp et le CRM reliés au site.",
+      "description": "On reste sur votre Webflow et on retravaille les pages qui comptent, dans la nouvelle identité. Prix, dates et places visibles dès l'accueil et les listes, sans avoir à cliquer. Un parcours de réservation qui parle comme une agence. Deux entrées nettes, femmes et entreprises. Une place pour vos preuves : presse, podcasts, partenaires, témoignages. Des pages destinations et thèmes pensées pour le référencement. Mailchimp et le CRM reliés au site.",
       "livrables": [
         "Page d'accueil orientée réservation, entrées femmes et entreprises",
-        "Fiches expérience : prix, dates, places, inclus, réservation",
+        "Listes et fiches expérience : prix, dates, places et inclus visibles dès le premier écran",
         "Page preuves : presse, podcasts, partenaires, références entreprises",
         "Pages référencement destinations et thèmes",
         "Connexion Mailchimp et CRM, formulaires, automatisations",
