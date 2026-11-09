@@ -75,7 +75,7 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 .partner img { height: 54px; width: auto; filter: brightness(0) invert(1); opacity: .95; }
 
 /* ---------- Hero ---------- */
-.hero { padding: 0 0 30px; color: var(--white); text-align: center; }
+.hero { padding: 26px 0 30px; color: var(--white); text-align: center; }
 .hero-grid { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: clamp(20px, 5vw, 70px); text-align: left; }
 .hero-grid .hero-text h1 { text-align: left; }
 .hero-grid .hero-text p { margin-left: 0; }
