@@ -56,11 +56,11 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 .header { padding: 22px 0 10px; color: var(--white); }
 .header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-.brand img { height: clamp(64px, 12vw, 110px); width: auto; }
+.brand img { height: auto; width: clamp(220px, 40vw, 420px); }
 .brand .wordmark { font-weight: 900; font-size: clamp(1.1rem, 3vw, 1.6rem); line-height: .95; letter-spacing: -.02em; text-transform: uppercase; }
 .brand .wordmark small { display: block; font-size: .55em; font-weight: 800; letter-spacing: .14em; opacity: .9; }
 .header-meta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-.partner img { height: 34px; width: auto; filter: brightness(0) invert(1); opacity: .95; }
+.partner img { height: 54px; width: auto; filter: brightness(0) invert(1); opacity: .95; }
 
 /* ---------- Hero ---------- */
 .hero { padding: 26px 0 30px; color: var(--white); text-align: center; }
@@ -234,7 +234,8 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 .footer { padding: 30px 0 48px; color: var(--white); text-align: center; font-weight: 600; font-size: .9rem; }
 .footer a { color: var(--yellow); }
 .footer .logos { display: flex; justify-content: center; gap: 24px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
-.footer .logos img { height: 40px; width: auto; filter: brightness(0) invert(1); }
+.footer .logos img { height: 44px; width: auto; filter: brightness(0) invert(1); }
+.footer .logos img:first-child { height: 60px; }
 
 /* ---------- Pages simples (merci, annulation, CGV) ---------- */
 .simple { padding: 30px 0 60px; }
