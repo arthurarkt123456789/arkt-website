@@ -222,7 +222,7 @@ const MENU_BLOCK = block("#F7F65C", "Au menu, 36 € adulte · 24 € enfant",
   "Fromage à raclette <strong>nature, ail des ours, 3 poivres et truffe</strong>, charcuteries (option veggie ou halal), pommes de terre et condiments, salade verte, eau minérale à discrétion. Desserts, vin chaud et boissons se commandent et se règlent sur place.");
 
 const INFOS_BLOCK = block("#F0EBDA", "Bon à savoir",
-  `Rendez-vous <strong>10 minutes avant</strong> le début du service, aux Terrasses du Port, <a href="${MAPS_URL}" style="color:#0000FF">9 quai du Lazaret, 13002 Marseille</a> (métro Joliette, parking du centre commercial). Les bulles sont face à la mer, prévoyez une petite laine pour l'arrivée.`);
+  `Rendez-vous <strong>10 minutes avant</strong> le début du service, aux Terrasses du Port, <a href="${MAPS_URL}" style="color:#0000FF">9 quai du Lazaret, 13002 Marseille</a> (métro Joliette, parking du centre commercial). Les bulles sont sur la terrasse du centre commercial, en plein air : prévoyez une petite laine pour l'arrivée.`);
 
 export const tickets = (b) => [b.adults ? `${b.adults} adulte${b.adults > 1 ? "s" : ""}` : null, b.kids ? `${b.kids} enfant${b.kids > 1 ? "s" : ""}` : null].filter(Boolean).join(" + ");
 const bubbleLine = (b) => b.seats >= CONFIG.PRIVATE_MIN
