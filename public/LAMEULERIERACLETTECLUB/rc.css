@@ -96,7 +96,7 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 .card--white { background: var(--white); }
 .card--yellow { background: var(--yellow); }
 .card--pink { background: var(--pink); color: var(--white); }
-.card + .card { margin-top: 22px; }
+.menu-grid .card, .howto .card { margin-top: 0; }
 
 /* ---------- Booking ---------- */
 .booking { padding: 10px 0 40px; }
@@ -214,7 +214,7 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 /* ---------- Sections ---------- */
 .section { padding: 26px 0; }
 .section-title { color: var(--white); text-align: center; margin-bottom: 20px; text-shadow: 4px 4px 0 var(--ink); }
-.menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; align-items: start; }
 .menu-block h3 { margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
 .menu-block ul { list-style: none; }
 .menu-block li { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 2px dashed rgba(11,11,20,.2); font-weight: 600; font-size: .95rem; }
@@ -225,7 +225,7 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 .menu-hero .sub { font-weight: 800; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; }
 .menu-hero ul { list-style: none; margin-top: 14px; font-weight: 600; }
 .menu-hero li { padding: 5px 0; }
-.howto { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.howto { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: start; }
 .howto .card { padding: 22px; }
 .howto .ico { font-size: 2.2rem; line-height: 1; margin-bottom: 10px; }
 .howto h3 { margin-bottom: 6px; }
