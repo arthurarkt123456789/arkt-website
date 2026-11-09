@@ -2,6 +2,10 @@
   publish = "dist"
   command = "npm run build"
 
+[build.environment]
+  # Valeurs non secrètes présentes dans les pages (emails, URL Supabase) : exclues du scan de secrets Netlify
+  SECRETS_SCAN_OMIT_KEYS = "RC_NOTIFY_EMAIL,RC_REPLY_TO,SUPABASE_URL,URL"
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
