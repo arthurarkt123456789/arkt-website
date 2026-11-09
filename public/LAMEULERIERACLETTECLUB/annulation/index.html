@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Annuler ma réservation · La Meulerie Raclette Club</title>
+  <meta name="robots" content="noindex" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../rc.css" />
+</head>
+<body>
+<header class="header"><div class="wrap"><a class="brand" href="../"><img src="../assets/logo-raclette-club.png" alt="" onerror="this.remove()" /><span class="wordmark">La Meulerie<br>Raclette Club<small>Les Terrasses du Port</small></span></a></div></header>
+<main class="simple"><div class="wrap wrap--narrow">
+  <div class="card" id="box"><h1>Un instant…</h1></div>
+</div></main>
+<script>
+(async () => {
+  const box = document.getElementById('box');
+  const q = new URLSearchParams(location.search);
+  const id = q.get('id'), t = q.get('t');
+  const fmt = (d) => new Date(d + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const eur = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+  if (!id || !t) { box.innerHTML = '<h1>Lien invalide</h1>'; return; }
+  const r = await fetch(`/.netlify/functions/rc-booking?id=${encodeURIComponent(id)}&t=${encodeURIComponent(t)}`);
+  if (!r.ok) { box.innerHTML = '<h1>Lien invalide</h1><p>Écrivez-nous à <a href="mailto:hello@lameulerie.com">hello@lameulerie.com</a>.</p>'; return; }
+  const { booking: b } = await r.json();
+  const recap = `<div class="recap">
+      <div><span>Date</span>${fmt(b.date)}</div><div><span>Service</span>${b.service.replace(':', 'h')}</div>
+      <div><span>Places</span>${b.seats}</div><div><span>Au nom de</span>${b.name}</div>
+      <div><span>Montant</span>${eur(b.amount_cents)}</div><div><span>Référence</span>${b.ref}</div></div>`;
+  if (b.status === 'cancelled') { box.innerHTML = `<h1>Déjà annulée</h1><p>Cette réservation a déjà été annulée.</p>${recap}`; return; }
+  if (!b.cancellable) {
+    box.innerHTML = `<h1>Annulation impossible en ligne</h1><p>${b.status !== 'paid' ? 'Cette réservation n’est pas annulable en ligne.' : 'Le délai de 48 h avant le service est dépassé.'} Pour toute question : <a href="mailto:hello@lameulerie.com">hello@lameulerie.com</a>.</p>${recap}`; return;
+  }
+  box.innerHTML = `<h1>Annuler ma réservation ?</h1><p>Le remboursement de <b>${eur(b.amount_cents)}</b> sera lancé immédiatement et apparaîtra sur votre compte sous 5 à 10 jours ouvrés.</p>${recap}
+    <div id="err" class="error hidden"></div>
+    <p style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px"><button class="btn btn--pink" id="go">Oui, j'annule</button><a class="btn btn--white" href="../">Non, je garde ma table</a></p>`;
+  document.getElementById('go').addEventListener('click', async (e) => {
+    e.target.disabled = true; e.target.textContent = 'Annulation…';
+    const rr = await fetch('/.netlify/functions/rc-booking', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, t }) });
+    const d = await rr.json();
+    if (!rr.ok) { const er = document.getElementById('err'); er.textContent = d.error; er.classList.remove('hidden'); e.target.disabled = false; e.target.textContent = 'Oui, j’annule'; return; }
+    box.innerHTML = `<h1>Réservation annulée</h1><p>${d.refunded ? 'Le remboursement est lancé. Un email de confirmation vous est envoyé.' : 'Un email de confirmation vous est envoyé.'}</p>${recap}<p style="margin-top:18px"><a class="btn btn--blue" href="../">Réserver une autre date</a></p>`;
+  });
+})();
+</script>
+</body>
+</html>

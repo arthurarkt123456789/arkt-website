@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Raclette Club</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root { --blue:#0000FF; --yellow:#F7F65C; --cream:#F0EBDA; --pink:#FF5CA8; --ink:#0B0B14; --green:#28C76F; --orange:#FF9F43; --red:#FF3B5C; --grey:#D9D6CC; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Poppins,system-ui,sans-serif;background:var(--cream);color:var(--ink);min-height:100svh;font-size:14px}
+    button,input,select,textarea{font:inherit;color:inherit}
+    button{cursor:pointer;border:2px solid var(--ink);border-radius:999px;padding:8px 14px;background:#fff;font-weight:800;box-shadow:2px 2px 0 var(--ink)}
+    button:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+    button.primary{background:var(--yellow)} button.danger{background:var(--red);color:#fff} button.ghost{box-shadow:none;background:transparent} button.blue{background:var(--blue);color:#fff}
+    button[disabled]{opacity:.45;cursor:not-allowed}
+    input,select,textarea{border:2px solid var(--ink);border-radius:12px;padding:9px 12px;background:#fff;width:100%}
+    .top{background:var(--blue);color:#fff;padding:14px 0}
+    .wrap{width:min(1180px,100% - 28px);margin:0 auto}
+    .top .wrap{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .top h1{font-size:1.15rem;font-weight:900;letter-spacing:-.02em}
+    .top .nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .top input[type=date]{width:auto;padding:7px 10px;color:var(--ink)}
+    .top button{color:var(--ink)} .top button.ghost{color:#fff}
+    .login{max-width:360px;margin:60px auto;background:#fff;border:3px solid var(--ink);border-radius:22px;padding:28px;box-shadow:5px 5px 0 var(--ink)}
+    .login h2{margin-bottom:14px;font-weight:900}
+    main{padding:18px 0 60px}
+    .kpis{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+    .kpi{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:10px 14px;font-weight:700}
+    .kpi b{display:block;font-size:1.4rem;font-weight:900;line-height:1.1}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+    .svc{background:#fff;border:3px solid var(--ink);border-radius:20px;padding:14px;box-shadow:4px 4px 0 var(--ink)}
+    .svc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
+    .svc-head h3{font-size:1.4rem;font-weight:900}
+    .svc-head small{display:block;font-size:.72rem;font-weight:700;opacity:.65;text-transform:uppercase;letter-spacing:.08em}
+    .bubbles{display:grid;gap:8px}
+    .bubble{border:2px solid var(--ink);border-radius:14px;padding:8px 10px;background:#fff;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+    .bubble.blocked{background:var(--grey);color:#555}
+    .bubble .num{font-weight:900;font-size:1.1rem;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--ink);background:var(--yellow)}
+    .bubble.blocked .num{background:#bbb}
+    .seats{display:flex;gap:3px;flex-wrap:wrap}
+    .seat{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--ink);background:#fff}
+    .seat.paid{background:var(--green)} .seat.manual{background:var(--blue)} .seat.hold{background:var(--orange)}
+    .bubble .acts{display:flex;gap:4px}
+    .bubble .acts button{padding:4px 8px;font-size:.75rem;box-shadow:none}
+    .names{grid-column:1/-1;font-size:.78rem;font-weight:600;color:#333}
+    .names span{display:inline-block;margin:2px 6px 0 0;padding:1px 7px;border-radius:999px;border:1.5px solid var(--ink)}
+    .names span.paid{background:#dff7e8} .names span.manual{background:#e3e3ff} .names span.hold{background:#ffe8cc} .names span.cancelled{background:#eee;text-decoration:line-through;opacity:.7}
+    .svc-foot{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+    .svc-foot button{font-size:.78rem;padding:6px 10px}
+    table{width:100%;border-collapse:collapse;background:#fff;border:3px solid var(--ink);border-radius:16px;overflow:hidden;margin-top:22px}
+    th,td{padding:9px 10px;text-align:left;border-bottom:1.5px solid #ddd;vertical-align:top}
+    th{background:var(--yellow);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+    tr.cancelled td{opacity:.5;text-decoration:line-through}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1.5px solid var(--ink);font-size:.72rem;font-weight:800}
+    .pill.paid{background:var(--green)} .pill.manual{background:var(--blue);color:#fff} .pill.hold{background:var(--orange)} .pill.cancelled{background:#ddd}
+    .legend{display:flex;gap:14px;font-size:.78rem;font-weight:700;margin:10px 0 16px;flex-wrap:wrap}
+    .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink);margin-right:5px;vertical-align:-1px}
+    dialog{border:3px solid var(--ink);border-radius:22px;padding:22px;max-width:460px;width:calc(100% - 28px);box-shadow:6px 6px 0 var(--ink);background:#fff}
+    dialog::backdrop{background:rgba(0,0,255,.35)}
+    dialog h3{font-weight:900;font-size:1.2rem;margin-bottom:12px}
+    .f{display:grid;gap:10px}
+    .f label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .acts-row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+    .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+    .toast.on{opacity:1}
+    .toast.err{background:var(--red)}
+    .overview{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin-bottom:18px}
+    .ov{border:2px solid var(--ink);border-radius:10px;padding:6px 4px;text-align:center;font-weight:800;font-size:.8rem;background:#fff;cursor:pointer}
+    .ov small{display:block;font-weight:600;font-size:.65rem;opacity:.7}
+    .ov.sel{background:var(--yellow)}
+    .hidden{display:none!important}
+    @media(max-width:600px){.row2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <h1>Raclette Club · Admin</h1>
+  <div class="nav" id="nav">
+    <button class="ghost" style="color:#fff;border-color:#fff" id="prev">◀</button>
+    <input type="date" id="date" min="2026-11-27" max="2026-12-30" />
+    <button class="ghost" style="color:#fff;border-color:#fff" id="next">▶</button>
+    <button class="primary" id="today">Aujourd'hui</button>
+    <button id="export">Export CSV</button>
+    <button class="ghost" style="color:#fff;border-color:#fff" id="logout">Quitter</button>
+  </div>
+</div></div>
+
+<main class="wrap">
+  <div class="login" id="login">
+    <h2>Accès équipe</h2>
+    <div class="f"><label>Mot de passe</label><input type="password" id="pwd" autocomplete="current-password" /><button class="primary" id="loginBtn">Entrer</button></div>
+    <p id="loginErr" style="color:var(--red);font-weight:700;margin-top:8px"></p>
+  </div>
+
+  <div id="app" class="hidden">
+    <div class="overview" id="overview"></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="legend"><span><i style="background:var(--green)"></i>Payé</span><span><i style="background:var(--blue)"></i>Manuel</span><span><i style="background:var(--orange)"></i>Paiement en cours</span><span><i style="background:#fff"></i>Libre</span><span><i style="background:var(--grey)"></i>Bloqué</span></div>
+    <div class="grid" id="grid"></div>
+    <table id="table"><thead><tr><th>Service</th><th>Bulle</th><th>Nom</th><th>Contact</th><th>Forfaits</th><th>Remarques</th><th>Statut</th><th></th></tr></thead><tbody></tbody></table>
+  </div>
+</main>
+
+<dialog id="dlgManual">
+  <h3>Réservation manuelle</h3>
+  <form class="f" method="dialog" id="formManual">
+    <div class="row2"><div><label>Date</label><input type="date" name="date" required min="2026-11-27" max="2026-12-30" /></div><div><label>Service</label><select name="service"><option>12:00</option><option>14:00</option><option>19:00</option><option>21:00</option></select></div></div>
+    <div class="row2"><div><label>Adultes</label><input type="number" name="adults" min="0" max="8" value="2" /></div><div><label>Enfants</label><input type="number" name="kids" min="0" max="8" value="0" /></div></div>
+    <div><label>Nom</label><input name="name" required /></div>
+    <div class="row2"><div><label>Email</label><input name="email" type="email" /></div><div><label>Téléphone</label><input name="phone" /></div></div>
+    <div><label>Remarques</label><input name="notes" placeholder="Invités, presse, payé sur place…" /></div>
+    <div><label>Montant encaissé (€, 0 si offert)</label><input name="amount" type="number" step="0.01" min="0" value="0" /></div>
+    <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="sendEmail" style="width:auto" /> Envoyer l'email de confirmation au client</label>
+    <div class="acts-row"><button type="button" class="ghost" onclick="dlgManual.close()">Annuler</button><button class="primary" type="submit">Enregistrer</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgCancel">
+  <h3>Annuler cette réservation ?</h3>
+  <p id="cancelInfo" style="font-weight:600;margin-bottom:12px"></p>
+  <label style="display:flex;gap:8px;align-items:center;font-weight:700;margin-bottom:6px"><input type="checkbox" id="cancelRefund" checked style="width:auto" /> Rembourser via Stripe</label>
+  <label style="display:flex;gap:8px;align-items:center;font-weight:700"><input type="checkbox" id="cancelNotify" checked style="width:auto" /> Prévenir le client par email</label>
+  <div class="acts-row"><button class="ghost" onclick="dlgCancel.close()">Retour</button><button class="danger" id="cancelGo">Annuler la résa</button></div>
+</dialog>
+
+<dialog id="dlgMove">
+  <h3>Déplacer vers une autre bulle</h3>
+  <p id="moveInfo" style="font-weight:600;margin-bottom:12px"></p>
+  <div class="f"><label>Bulle</label><select id="moveBubble"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+  <div class="acts-row"><button class="ghost" onclick="dlgMove.close()">Retour</button><button class="primary" id="moveGo">Déplacer</button></div>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  const API = '/.netlify/functions/rc-admin';
+  const SERVICES = ['12:00', '14:00', '19:00', '21:00'];
+  const $ = (id) => document.getElementById(id);
+  let key = sessionStorage.getItem('rc_admin_key') || '';
+  let current = null; // date affichée
+  let day = null;     // données du jour
+  let overview = [];
+
+  const toast = (m, err) => { const t = $('toast'); t.textContent = m; t.className = 'toast on' + (err ? ' err' : ''); setTimeout(() => t.className = 'toast', 2600); };
+  const api = async (method, payload, query) => {
+    const r = await fetch(API + (query ? '?' + new URLSearchParams(query) : ''), { method, headers: { 'x-admin-key': key, 'Content-Type': 'application/json' }, body: payload ? JSON.stringify(payload) : undefined });
+    if (r.status === 401) { logout(); throw new Error('Session expirée'); }
+    const ct = r.headers.get('content-type') || '';
+    const data = ct.includes('json') ? await r.json() : await r.text();
+    if (!r.ok) throw new Error(data.error || 'Erreur');
+    return data;
+  };
+  const fmtLong = (d) => new Date(d + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  const fmtShort = (d) => { const x = new Date(d + 'T12:00:00'); return { dow: x.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', ''), num: x.getDate() }; };
+  const parisToday = () => new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Paris' }).format(new Date());
+  const clamp = (d) => d < '2026-11-27' ? '2026-11-27' : d > '2026-12-30' ? '2026-12-30' : d;
+  const addDays = (d, n) => { const x = new Date(d + 'T12:00:00'); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
+
+  // ---------- Auth ----------
+  function showApp() { $('login').classList.add('hidden'); $('app').classList.remove('hidden'); }
+  function logout() { sessionStorage.removeItem('rc_admin_key'); key = ''; $('login').classList.remove('hidden'); $('app').classList.add('hidden'); }
+  $('loginBtn').addEventListener('click', login);
+  $('pwd').addEventListener('keydown', (e) => e.key === 'Enter' && login());
+  async function login() {
+    key = $('pwd').value.trim(); $('loginErr').textContent = '';
+    try { await api('POST', { action: 'login' }); sessionStorage.setItem('rc_admin_key', key); showApp(); boot(); }
+    catch { $('loginErr').textContent = 'Mot de passe incorrect'; key = ''; }
+  }
+  $('logout').addEventListener('click', logout);
+
+  // ---------- Navigation ----------
+  $('date').addEventListener('change', () => load($('date').value));
+  $('prev').addEventListener('click', () => load(clamp(addDays(current, -1))));
+  $('next').addEventListener('click', () => load(clamp(addDays(current, 1))));
+  $('today').addEventListener('click', () => load(clamp(parisToday())));
+  $('export').addEventListener('click', async () => {
+    const r = await fetch(API + '?action=export', { headers: { 'x-admin-key': key } });
+    const blob = await r.blob(); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'raclette-club-reservations.csv'; a.click();
+  });
+
+  async function boot() { await loadOverview(); load(clamp(parisToday())); }
+
+  async function loadOverview() {
+    const { days } = await api('GET', null, { action: 'overview' });
+    overview = days;
+    const el = $('overview'); el.innerHTML = '';
+    days.forEach((d) => {
+      const s = fmtShort(d.date); const b = document.createElement('div'); b.className = 'ov' + (d.date === current ? ' sel' : ''); b.dataset.date = d.date;
+      b.innerHTML = `${s.num}<small>${s.dow}</small><small><b>${d.used_total}</b> couv.</small>`; b.title = `${d.free_total} places libres`;
+      b.addEventListener('click', () => load(d.date)); el.appendChild(b);
+    });
+  }
+
+  async function load(date) {
+    current = date; $('date').value = date;
+    document.querySelectorAll('.ov').forEach((o) => o.classList.toggle('sel', o.dataset.date === date));
+    try { day = await api('GET', null, { action: 'day', date }); render(); } catch (e) { toast(e.message, true); }
+  }
+
+  // ---------- Rendu ----------
+  function render() {
+    const active = day.bookings.filter((b) => b.status !== 'cancelled');
+    const seats = active.reduce((n, b) => n + b.seats, 0);
+    const paidSeats = active.filter((b) => b.status === 'paid').reduce((n, b) => n + b.seats, 0);
+    const revenue = active.reduce((n, b) => n + b.amount_cents, 0) / 100;
+    const open = day.slots.filter((s) => s.status === 'open');
+    $('kpis').innerHTML = `<div class="kpi">${fmtLong(current)}</div><div class="kpi"><b>${seats}</b>couverts</div><div class="kpi"><b>${paidSeats}</b>payés en ligne</div><div class="kpi"><b>${open.reduce((n, s) => n + s.free, 0)}</b>places libres</div><div class="kpi"><b>${revenue.toLocaleString('fr-FR')} €</b>encaissés</div><div class="kpi"><button class="primary" id="addManual">+ Résa manuelle</button></div>`;
+    $('addManual').addEventListener('click', () => openManual());
+
+    const grid = $('grid'); grid.innerHTML = '';
+    SERVICES.forEach((svc) => {
+      const slots = day.slots.filter((s) => s.service === svc).sort((a, b) => a.bubble - b.bubble);
+      const card = document.createElement('div'); card.className = 'svc';
+      if (!slots.length) { card.innerHTML = `<div class="svc-head"><h3>${svc.replace(':', 'h')}</h3></div><p style="font-weight:700;opacity:.6">Service fermé ce jour</p>`; grid.appendChild(card); return; }
+      const allBlocked = slots.every((s) => s.status === 'blocked');
+      const free = slots.filter((s) => s.status === 'open').reduce((n, s) => n + s.free, 0);
+      card.innerHTML = `<div class="svc-head"><div><h3>${svc.replace(':', 'h')}</h3><small>${allBlocked ? 'Service bloqué' : free + ' places libres'}</small></div>
+        <button class="${allBlocked ? 'blue' : ''}" style="font-size:.75rem;padding:5px 10px" data-block-service="${svc}" data-blocked="${!allBlocked}">${allBlocked ? 'Rouvrir' : 'Bloquer'} le service</button></div><div class="bubbles"></div>
+        <div class="svc-foot"><button data-manual="${svc}">+ Résa manuelle</button></div>`;
+      const bl = card.querySelector('.bubbles');
+      slots.forEach((s) => {
+        const bs = day.bookings.filter((b) => b.slot_id === s.slot_id);
+        const cells = []; bs.filter((b) => b.status !== 'cancelled').forEach((b) => { for (let i = 0; i < b.seats; i++) cells.push(b.status); });
+        while (cells.length < s.capacity) cells.push('free');
+        const el = document.createElement('div'); el.className = 'bubble' + (s.status === 'blocked' ? ' blocked' : '');
+        el.innerHTML = `<div class="num">${s.bubble}</div><div class="seats">${cells.map((c) => `<span class="seat ${c}"></span>`).join('')}</div>
+          <div class="acts"><button data-block="${s.slot_id}" data-blocked="${s.status === 'open'}">${s.status === 'open' ? 'Bloquer' : 'Rouvrir'}</button></div>
+          ${bs.length ? `<div class="names">${bs.map((b) => `<span class="${b.status}">${esc(b.name)} · ${b.seats}</span>`).join('')}</div>` : ''}`;
+        bl.appendChild(el);
+      });
+      grid.appendChild(card);
+    });
+
+    grid.querySelectorAll('[data-block]').forEach((b) => b.addEventListener('click', async () => {
+      try { await api('POST', { action: 'block', slotIds: [Number(b.dataset.block)], blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); } catch (e) { toast(e.message, true); }
+    }));
+    grid.querySelectorAll('[data-block-service]').forEach((b) => b.addEventListener('click', async () => {
+      try { await api('POST', { action: 'block_service', date: current, service: b.dataset.blockService, blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); } catch (e) { toast(e.message, true); }
+    }));
+    grid.querySelectorAll('[data-manual]').forEach((b) => b.addEventListener('click', () => openManual(b.dataset.manual)));
+
+    const tb = $('table').querySelector('tbody'); tb.innerHTML = '';
+    day.bookings.forEach((b) => {
+      const tr = document.createElement('tr'); tr.className = b.status;
+      const tickets = [b.adults ? b.adults + ' ad.' : '', b.kids ? b.kids + ' enf.' : ''].filter(Boolean).join(' + ');
+      tr.innerHTML = `<td><b>${b.service.replace(':', 'h')}</b></td><td>${b.bubble}</td><td><b>${esc(b.name)}</b><br><small>${b.id.slice(0, 8).toUpperCase()} · ${b.source === 'admin' ? 'manuel' : 'web'}</small></td>
+        <td>${b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a><br>` : ''}${b.phone ? `<a href="tel:${esc(b.phone)}">${esc(b.phone)}</a>` : ''}</td>
+        <td>${tickets}<br><small>${(b.amount_cents / 100).toLocaleString('fr-FR')} €</small></td><td style="max-width:220px">${esc(b.notes || '')}</td>
+        <td><span class="pill ${b.status}">${{ paid: 'Payé', manual: 'Manuel', hold: 'En cours', cancelled: 'Annulé', expired: 'Expiré' }[b.status] || b.status}</span>${b.refund_id ? '<br><small>remboursé</small>' : ''}</td>
+        <td style="white-space:nowrap">${b.status !== 'cancelled' ? `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-move="${b.id}">Bulle</button> <button class="danger" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-cancel="${b.id}">Annuler</button>` : ''}</td>`;
+      tb.appendChild(tr);
+    });
+    tb.querySelectorAll('[data-cancel]').forEach((b) => b.addEventListener('click', () => openCancel(b.dataset.cancel)));
+    tb.querySelectorAll('[data-move]').forEach((b) => b.addEventListener('click', () => openMove(b.dataset.move)));
+  }
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // ---------- Résa manuelle ----------
+  function openManual(svc) {
+    const f = $('formManual'); f.reset(); f.date.value = current; if (svc) f.service.value = svc; $('dlgManual').showModal();
+  }
+  $('formManual').addEventListener('submit', async (e) => {
+    e.preventDefault(); const f = e.target;
+    try {
+      await api('POST', { action: 'manual', date: f.date.value, service: f.service.value, adults: Number(f.adults.value), kids: Number(f.kids.value), name: f.name.value, email: f.email.value, phone: f.phone.value, notes: f.notes.value, amountCents: Math.round(Number(f.amount.value || 0) * 100), sendEmail: f.sendEmail.checked });
+      $('dlgManual').close(); toast('Réservation enregistrée'); load(f.date.value); loadOverview();
+    } catch (err) { toast(err.message, true); }
+  });
+
+  // ---------- Annulation ----------
+  let cancelId = null;
+  function openCancel(id) {
+    const b = day.bookings.find((x) => x.id === id); cancelId = id;
+    $('cancelInfo').textContent = `${b.name} · ${b.service.replace(':', 'h')} · bulle ${b.bubble} · ${b.seats} place(s) · ${(b.amount_cents / 100).toLocaleString('fr-FR')} €`;
+    $('cancelRefund').checked = Boolean(b.stripe_payment_intent) && b.amount_cents > 0; $('cancelRefund').disabled = !b.stripe_payment_intent;
+    $('cancelNotify').checked = Boolean(b.email); $('cancelNotify').disabled = !b.email;
+    $('dlgCancel').showModal();
+  }
+  $('cancelGo').addEventListener('click', async () => {
+    try { const r = await api('POST', { action: 'cancel', id: cancelId, refund: $('cancelRefund').checked, notify: $('cancelNotify').checked }); $('dlgCancel').close(); toast(r.refunded ? 'Annulée et remboursée' : 'Annulée'); load(current); loadOverview(); }
+    catch (e) { toast(e.message, true); }
+  });
+
+  // ---------- Déplacement ----------
+  let moveId = null;
+  function openMove(id) {
+    const b = day.bookings.find((x) => x.id === id); moveId = id;
+    $('moveInfo').textContent = `${b.name} · ${b.service.replace(':', 'h')} · actuellement bulle ${b.bubble} · ${b.seats} place(s)`;
+    $('moveBubble').value = String(b.bubble); $('dlgMove').showModal();
+  }
+  $('moveGo').addEventListener('click', async () => {
+    try { await api('POST', { action: 'move', id: moveId, bubble: Number($('moveBubble').value) }); $('dlgMove').close(); toast('Déplacée'); load(current); }
+    catch (e) { toast(e.message, true); }
+  });
+
+  if (key) { showApp(); boot(); }
+})();
+</script>
+</body>
+</html>
