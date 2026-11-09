@@ -194,30 +194,29 @@ export function emailLayout(o) {
   const rows = (o.rows || []).map(([k, v]) => `
       <tr><td style="padding:9px 0;border-bottom:1px solid #EDE8D6;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#777;font-weight:700;width:38%">${esc(k)}</td>
           <td style="padding:9px 0;border-bottom:1px solid #EDE8D6;font-size:15px;color:#0B0B14;font-weight:600">${v}</td></tr>`).join("");
-  const buttons = (o.buttons || []).map((b) => `<a href="${b.url}" style="display:inline-block;margin:4px 6px 4px 0;padding:13px 22px;border-radius:999px;font-weight:800;font-size:14px;text-decoration:none;${b.primary ? "background:#F7F65C;color:#0B0B14;" : "background:#fff;color:#0000FF;border:2px solid #0000FF;"}">${esc(b.label)}</a>`).join("");
+  const buttons = (o.buttons || []).map((b) => `<a href="${b.url}" style="display:inline-block;margin:4px 6px 4px 0;padding:13px 22px;border-radius:999px;font-weight:800;font-size:14px;text-decoration:none;${b.primary ? "background:#0000FF;color:#FFFFFF;border:2px solid #0000FF;" : "background:#fff;color:#0000FF;border:2px solid #0000FF;"}">${esc(b.label)}</a>`).join("");
   return `<!doctype html><html lang="fr"><body style="margin:0;padding:0;background:#F0EBDA">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#F0EBDA"><tr><td align="center" style="padding:24px 12px">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#F0EBDA" style="background:#F0EBDA"><tr><td align="center" style="padding:24px 12px">
 <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;font-family:Poppins,'Helvetica Neue',Arial,sans-serif">
-  <tr><td style="background:#0000FF;border-radius:24px 24px 0 0;padding:30px 32px 26px;text-align:center">
-    <img src="${o.logoSrc || LOGO_URL()}" alt="La Meulerie Raclette Club" width="240" style="display:block;margin:0 auto;width:240px;max-width:80%;height:auto;border:0" />
-    <p style="margin:14px 0 0;color:#F7F65C;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:800">Les Terrasses du Port · Marseille</p>
+  <tr><td bgcolor="#FFFFFF" style="background:#fff;border-radius:24px 24px 0 0;padding:30px 32px 0;text-align:center">
+    <p style="margin:0;color:#0000FF;font-size:15px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;line-height:1.4">La Meulerie Raclette Club · Les Terrasses du Port</p>
   </td></tr>
-  <tr><td style="background:#fff;padding:30px 32px 10px">
+  <tr><td bgcolor="#FFFFFF" style="background:#fff;padding:22px 32px 10px">
     ${o.kicker ? `<p style="margin:0 0 8px;color:#FF5CA8;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800">${esc(o.kicker)}</p>` : ""}
     <h1 style="margin:0 0 10px;color:#0000FF;font-size:30px;line-height:1.05;letter-spacing:-.02em;font-weight:900">${o.title}</h1>
     ${o.lead ? `<p style="margin:0 0 18px;color:#333;font-size:15px;line-height:1.5">${o.lead}</p>` : ""}
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0">${rows}</table>
     ${buttons ? `<p style="margin:22px 0 10px">${buttons}</p>` : ""}
   </td></tr>
-  ${(o.blocks || []).map((html) => `<tr><td style="background:#fff;padding:0 32px 22px">${html}</td></tr>`).join("")}
-  <tr><td style="background:#fff;border-radius:0 0 24px 24px;padding:4px 32px 28px;border-top:1px solid #EDE8D6">
+  ${(o.blocks || []).map((html) => `<tr><td bgcolor="#FFFFFF" style="background:#fff;padding:0 32px 22px">${html}</td></tr>`).join("")}
+  <tr><td bgcolor="#FFFFFF" style="background:#fff;border-radius:0 0 24px 24px;padding:4px 32px 28px;border-top:1px solid #EDE8D6">
     <p style="margin:16px 0 0;color:#666;font-size:12px;line-height:1.6">La Meulerie Raclette Club est une proposition de <strong>La Meulerie</strong>, fromageries ensoleillées à Marseille.<br>
     Une question ? <a href="mailto:hello@lameulerie.com" style="color:#0000FF">hello@lameulerie.com</a> · <a href="https://www.instagram.com/lameulerie" style="color:#0000FF">@lameulerie</a> · <a href="https://www.lameulerie.com" style="color:#0000FF">lameulerie.com</a></p>
   </td></tr>
 </table></td></tr></table></body></html>`;
 }
 
-const block = (bg, title, html) => `<div style="background:${bg};border-radius:16px;padding:16px 18px"><p style="margin:0 0 6px;font-weight:800;font-size:14px;color:#0B0B14">${title}</p><div style="font-size:14px;line-height:1.55;color:#222">${html}</div></div>`;
+const block = (bg, title, html) => `<table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td bgcolor="${bg}" style="background:${bg};border-radius:16px;padding:16px 18px"><p style="margin:0 0 6px;font-weight:800;font-size:14px;color:#0B0B14">${title}</p><div style="font-size:14px;line-height:1.55;color:#222">${html}</div></td></tr></table>`;
 
 const MENU_BLOCK = block("#F7F65C", "Au menu, 36 € adulte · 24 € enfant",
   "Fromage à raclette <strong>nature, ail des ours, 3 poivres et truffe</strong>, charcuteries (option veggie ou halal), pommes de terre et condiments, salade verte, eau minérale à discrétion. Desserts, vin chaud et boissons se commandent et se règlent sur place.");
