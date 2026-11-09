@@ -38,27 +38,18 @@
 </head>
 <body>
 
-<!-- Décor parallaxe : soleil, montagnes, mer, bulles -->
+<!-- Décor : fond marin fixe, montagnes qui remontent au scroll -->
 <div class="scene" aria-hidden="true">
-  <div class="layer l-sun" data-speed="0.06"><div class="sun"></div></div>
-  <div class="layer l-mtn-back" data-speed="0.12">
-    <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0 320 L0 230 L120 150 L210 190 L330 90 L420 140 L520 60 L640 160 L760 110 L880 170 L1000 80 L1120 150 L1230 100 L1340 170 L1440 120 L1440 320 Z"/></svg>
+  <div class="sea-bg">
+    <div class="sun"></div>
+    <div class="horizon"></div>
   </div>
-  <div class="layer l-mtn-front" data-speed="0.2">
-    <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0 320 L0 260 L90 210 L180 240 L300 160 L400 220 L520 140 L620 230 L740 180 L860 250 L980 170 L1100 240 L1210 200 L1320 250 L1440 210 L1440 320 Z"/></svg>
-    <svg class="snow" viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M300 160 L330 185 L345 172 L365 190 L380 176 L400 220 L380 200 L360 205 L340 190 L320 200 Z M520 140 L545 165 L560 152 L580 172 L600 158 L620 230 L600 190 L580 195 L560 178 L540 188 Z M980 170 L1005 195 L1020 182 L1040 202 L1060 188 L1100 240 L1070 215 L1050 220 L1030 206 L1010 215 Z"/></svg>
-  </div>
-  <div class="layer l-sea" data-speed="0.3">
-    <div class="sea"></div>
-    <svg class="waves w1" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0 30 Q60 10 120 30 T240 30 T360 30 T480 30 T600 30 T720 30 T840 30 T960 30 T1080 30 T1200 30 T1320 30 T1440 30 L1440 60 L0 60 Z"/></svg>
-    <svg class="waves w2" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0 35 Q45 20 90 35 T180 35 T270 35 T360 35 T450 35 T540 35 T630 35 T720 35 T810 35 T900 35 T990 35 T1080 35 T1170 35 T1260 35 T1350 35 T1440 35 L1440 60 L0 60 Z"/></svg>
-  </div>
-  <div class="layer l-bubbles" data-speed="0.45">
-    <span class="bub" style="left:8%;top:18%;width:120px;height:120px"></span>
-    <span class="bub" style="left:78%;top:10%;width:70px;height:70px"></span>
-    <span class="bub" style="left:62%;top:46%;width:160px;height:160px"></span>
-    <span class="bub" style="left:20%;top:64%;width:90px;height:90px"></span>
-    <span class="bub" style="left:88%;top:70%;width:130px;height:130px"></span>
+  <div class="mountains" id="mountains">
+    <svg viewBox="0 0 1440 420" preserveAspectRatio="none">
+      <path class="m-back" d="M0 420 L0 300 L120 220 L210 260 L330 150 L420 210 L520 120 L640 230 L760 180 L880 240 L1000 140 L1120 220 L1230 170 L1340 240 L1440 190 L1440 420 Z"/>
+      <path class="m-front" d="M0 420 L0 350 L90 300 L180 330 L300 240 L400 310 L520 220 L620 320 L740 270 L860 340 L980 250 L1100 330 L1210 290 L1320 340 L1440 300 L1440 420 Z"/>
+      <path class="m-snow" d="M300 240 L330 265 L345 252 L365 270 L380 256 L400 310 L380 285 L360 290 L340 275 L320 285 Z M520 220 L545 245 L560 232 L580 252 L600 238 L620 320 L600 275 L580 280 L560 262 L540 272 Z M980 250 L1005 275 L1020 262 L1040 282 L1060 268 L1100 330 L1070 300 L1050 305 L1030 290 L1010 298 Z"/>
+    </svg>
   </div>
 </div>
 
@@ -85,7 +76,7 @@
   <div class="wrap">
     <span class="tag tag--pink">Restaurant éphémère · Marseille</span>
     <h1>Réserve<br>ta <span class="y">bulle</span></h1>
-    <p>Une raclette qui coule à flots, dans une bulle, avec la mer en face. 5 bulles aux Terrasses du Port, 4 services par jour. On réserve ses places en ligne, on arrive, on fond.</p>
+    <p><strong>La Meulerie Raclette Club est de retour aux Terrasses du Port !</strong><br>Une raclette qui coule à flots, dans une bulle, avec la mer en face. 5 bulles aux Terrasses du Port, 4 services par jour. On réserve ses places en ligne, on arrive, on fond.</p>
     <ul class="facts">
       <li>Menu raclette <b>36 €</b></li>
       <li>Enfant <b>24 €</b></li>
@@ -399,17 +390,21 @@
   });
 
 
-  // ---------- Parallaxe ----------
+  // ---------- Montagnes qui remontent au scroll ----------
   (() => {
-    const layers = [...document.querySelectorAll('.scene .layer')];
-    if (!layers.length || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const m = document.getElementById('mountains');
+    if (!m) return;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let ticking = false;
     const update = () => {
-      const y = window.scrollY;
-      layers.forEach((l) => { l.style.transform = `translate3d(0, ${-y * Number(l.dataset.speed)}px, 0)`; });
+      const range = Math.max(600, innerHeight * 1.6);          // distance de scroll pour la montée complète
+      const t = reduce ? 1 : Math.min(1, window.scrollY / range);
+      const eased = 1 - Math.pow(1 - t, 2);
+      m.style.transform = `translate3d(0, ${(1 - eased) * 100}%, 0)`;
       ticking = false;
     };
     addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+    addEventListener('resize', update);
     update();
   })();
 

@@ -28,33 +28,19 @@ body {
 }
 .header, .hero, .booking, .section, .footer, .simple { position: relative; z-index: 1; }
 
-/* ---------- Décor parallaxe ---------- */
+/* ---------- Décor : fond marin fixe + montagnes au scroll ---------- */
 .scene { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-.scene .layer { position: absolute; inset: 0; will-change: transform; }
-.scene svg { position: absolute; left: 0; width: 100%; display: block; }
-.l-sun .sun { position: absolute; right: 9%; top: 9%; width: clamp(110px, 16vw, 220px); aspect-ratio: 1; border-radius: 50%; background: var(--yellow); border: var(--border); box-shadow: 8px 8px 0 var(--ink), 0 0 0 26px rgba(247,246,92,.12), 0 0 0 60px rgba(247,246,92,.06); }
-.l-mtn-back svg { bottom: 22vh; height: 34vh; fill: #3A3AFF; }
-.l-mtn-front svg { bottom: 14vh; height: 36vh; fill: #0000B8; }
-.l-mtn-front svg path { stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
-.l-mtn-front .snow { fill: var(--cream); }
-.l-mtn-front .snow path { stroke: none; }
-.l-sea .sea { position: absolute; left: 0; right: 0; bottom: 0; height: 18vh; background: #2F6BFF; border-top: var(--border); }
-.l-sea .waves { bottom: 0; height: 18vh; fill: #4F84FF; animation: drift 9s ease-in-out infinite alternate; }
-.l-sea .w2 { fill: #6E9CFF; height: 12vh; animation-duration: 13s; animation-direction: alternate-reverse; }
-@keyframes drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
-.l-bubbles .bub { position: absolute; border-radius: 50%; border: 3px solid rgba(255,255,255,.55); background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.45), rgba(255,255,255,.06) 60%); box-shadow: inset -8px -8px 0 rgba(255,255,255,.12); animation: float 7s ease-in-out infinite; }
-.l-bubbles .bub:nth-child(2n) { animation-duration: 9s; animation-delay: -3s; }
-.l-bubbles .bub:nth-child(3n) { animation-duration: 11s; animation-delay: -5s; }
-@keyframes float { from { translate: 0 0; } to { translate: 0 -18px; } }
-@media (prefers-reduced-motion: reduce) { .scene * { animation: none !important; } }
-@media (max-width: 640px) { .l-mtn-back svg { bottom: 16vh; height: 24vh; } .l-mtn-front svg { bottom: 10vh; height: 26vh; } .l-sea .sea, .l-sea .waves { height: 12vh; } .l-sea .w2 { height: 8vh; } .l-bubbles .bub { transform: scale(.6); } }
-img { display: block; max-width: 100%; }
-button, input, textarea, select { font: inherit; color: inherit; }
-button { cursor: pointer; border: 0; background: none; }
-a { color: inherit; }
-
-.wrap { width: min(1080px, 100% - 32px); margin: 0 auto; }
-.wrap--narrow { width: min(720px, 100% - 32px); }
+.sea-bg { position: absolute; inset: 0; background: linear-gradient(180deg, #0000FF 0%, #1C1CFF 48%, #2D5BFF 56%, #3F7BFF 72%, #5B93FF 100%); }
+.sea-bg .horizon { position: absolute; left: 0; right: 0; top: 56%; height: 3px; background: rgba(255,255,255,.35); }
+.sea-bg::after { content: ''; position: absolute; left: 0; right: 0; top: 56%; bottom: 0;
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,.07) 0 2px, transparent 2px 26px); }
+.sea-bg .sun { position: absolute; right: 5%; top: 14%; width: clamp(110px, 16vw, 220px); aspect-ratio: 1; border-radius: 50%; background: var(--yellow); border: var(--border); box-shadow: 8px 8px 0 var(--ink), 0 0 0 26px rgba(247,246,92,.12), 0 0 0 60px rgba(247,246,92,.06); }
+.mountains { position: absolute; left: 0; right: 0; bottom: 0; height: 58vh; transform: translate3d(0, 100%, 0); will-change: transform; }
+.mountains svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.mountains .m-back { fill: #0000B8; }
+.mountains .m-front { fill: #000080; stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.mountains .m-snow { fill: var(--cream); }
+@media (max-width: 640px) { .mountains { height: 40vh; } .sea-bg .sun { top: 20%; } }
 
 /* ---------- Typo ---------- */
 h1, h2, h3, .display { font-weight: 900; letter-spacing: -.03em; line-height: 1; }
