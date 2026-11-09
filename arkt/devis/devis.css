@@ -134,6 +134,11 @@ html.js .dv-reveal.in { opacity: 1; transform: none; }
 .dv-enjeux li { display: grid; grid-template-columns: 52px 1fr; gap: 12px; padding: 22px 0; border-top: 1px solid var(--line); font-size: clamp(18px, 1.8vw, 22px); line-height: 1.35; font-weight: 500; }
 .dv-enjeux li:last-child { border-bottom: 1px solid var(--line); }
 .dv-enjeu-k { color: var(--accent); font-size: 14px; font-weight: 600; padding-top: 4px; }
+.dv-enjeux-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(32px, 5vw, 72px); border-top: 1px solid var(--line); }
+.dv-enjeux-grid li { grid-template-columns: 40px 1fr; gap: 16px; padding: 26px 0; border-top: 0; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 400; line-height: 1.55; }
+.dv-enjeux-grid li:last-child { border-bottom: 1px solid var(--line); }
+.dv-enjeu-t { font-size: clamp(18px, 1.6vw, 21px); font-weight: 600; line-height: 1.3; margin: 2px 0 8px; letter-spacing: -0.01em; }
+.dv-enjeu-p { margin: 0; color: var(--ink-dim); max-width: 46ch; }
 
 /* ---------- lots ---------- */
 .dv-lots { border-top: 1px solid var(--line-dark); }
@@ -325,7 +330,7 @@ html.js .dv-reveal.in { opacity: 1; transform: none; }
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
   .dv-offres { grid-template-columns: 1fr; }
-  .dv-split, .dv-quotes { grid-template-columns: 1fr; }
+  .dv-split, .dv-quotes, .dv-enjeux-grid { grid-template-columns: 1fr; }
   .dv-form-wrap { position: static; }
   .dv-logos { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .dv-hero-meta { grid-template-columns: 1fr 1fr; }

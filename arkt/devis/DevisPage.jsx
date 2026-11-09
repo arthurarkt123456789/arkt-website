@@ -239,27 +239,38 @@ export default function DevisPage({ devis }) {
         )}
 
         {/* ---------- VOTRE PROJET ---------- */}
-        {(d.contexte || d.enjeux?.length) && (
-          <section className="dv-section">
-            <div className="dv-wrap dv-split">
-              <div className="dv-reveal">
-                <Eyebrow>Votre projet</Eyebrow>
-                <h2 className="dv-display dv-h2">Ce que nous avons compris</h2>
-                {d.contexte && <p className="dv-lead">{d.contexte}</p>}
+        {(d.contexte || d.enjeux?.length) && (() => {
+          const rich = d.enjeux?.some((e) => e && typeof e === "object");
+          const list = d.enjeux?.length > 0 && (
+            <ol className={`dv-enjeux${rich ? " dv-enjeux-grid" : ""}`}>
+              {d.enjeux.map((e, i) => (
+                <li key={i} className="dv-reveal" style={{ transitionDelay: `${(i % 4) * 70}ms` }}>
+                  <span className="dv-enjeu-k">0{i + 1}</span>
+                  {rich ? (
+                    <div>
+                      {e.titre && <h3 className="dv-enjeu-t">{e.titre}</h3>}
+                      <p className="dv-enjeu-p">{e.texte || (typeof e === "string" ? e : "")}</p>
+                    </div>
+                  ) : (
+                    <span>{e}</span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          );
+          return (
+            <section className="dv-section">
+              <div className={`dv-wrap${rich ? "" : " dv-split"}`}>
+                <div className={`dv-reveal${rich ? " dv-head" : ""}`}>
+                  <Eyebrow>Votre projet</Eyebrow>
+                  <h2 className="dv-display dv-h2">Ce que nous avons compris</h2>
+                  {d.contexte && <p className="dv-lead">{d.contexte}</p>}
+                </div>
+                {list}
               </div>
-              {d.enjeux?.length > 0 && (
-                <ol className="dv-enjeux">
-                  {d.enjeux.map((e, i) => (
-                    <li key={i} className="dv-reveal" style={{ transitionDelay: `${i * 70}ms` }}>
-                      <span className="dv-enjeu-k">0{i + 1}</span>
-                      <span>{e}</span>
-                    </li>
-                  ))}
-                </ol>
-              )}
-            </div>
-          </section>
-        )}
+            </section>
+          );
+        })()}
 
         {/* ---------- PROPOSITION ---------- */}
         <section className="dv-section dv-dark" id="proposition">

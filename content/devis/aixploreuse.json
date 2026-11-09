@@ -13,14 +13,38 @@
   "accroche": "Donner à Aixploreuse les moyens de ce que vous construisez depuis 2019 : une marque qui tient à deux, une offre entreprises assumée, un site qui fait réserver et des canaux qui font revenir.",
   "contexte": "Aixploreuse est née d'une conviction : les femmes ont besoin d'un espace d'évasion à elles, sans logique de performance. En trois saisons, l'offre s'est construite par étapes : les demi-journées, puis les séjours et les voyages, puis les séminaires pour entreprises. 2027 est l'année où l'agence change de dimension, avec Charlotte au capital et l'objectif de tripler l'activité. Ce qui suit, c'est ce qu'on a compris de votre situation et ce qu'on propose pour y arriver sans perdre ce qui fait Aixploreuse.",
   "enjeux": [
-    "Vous avez déjà beaucoup construit. Une agence certifiée, un diplôme d'accompagnatrice en moyenne montagne, une équipe d'encadrantes, des séjours sans classement par niveau, des partenaires comme Samaya, des séminaires menés pour Thales, Ponant ou Sanofi, des podcasts et des portraits dans la presse. Rien de tout cela n'apparaît assez sur le site. La première chose à faire est de montrer ce qui existe.",
-    "Aixploreuse, pour vos clientes, c'est Émilie. C'est une force : elles reviennent pour la façon dont vous les accueillez, le tour de table du premier soir, le déjeuner de bilan. Vous avez déjà commencé à distinguer la personne de l'entreprise. L'étape suivante consiste à mettre des mots sur ce que vous transmettez, pour que d'autres puissent le porter à vos côtés sans que la chaleur se perde.",
-    "Charlotte arrive avec Peach Pilates Club, un studio reformer à Aubagne cofondé avec une kinésithérapeute, et un projet de reformer mobile dans les hôtels. Pilates et Aixploreuse se croisent déjà, d'Hossegor à « Novembre pour soi ». Il faut maintenant dire clairement ce qui relève d'Aixploreuse, ce qui relève de Charlotte, et où les deux se retrouvent : séjours, hôtels, entreprises.",
-    "L'offre entreprises existe, elle est mixte, et elle s'adresse à des acheteurs qui ne se reconnaissent pas dans « pour les femmes intrépides ». Marque à part, sous-marque ou simple déclinaison : on tranche ensemble, sur des critères concrets. Lisibilité pour un RH, crédibilité transférée depuis Aixploreuse, et ce que coûte d'animer deux marques quand on est deux.",
-    "Vos clientes ont entre 30 et 60 ans, souvent mamans, salariées ou entrepreneures à parts égales. Vous le dites mieux que nous : leur frein, c'est la peur. Peur de ralentir le groupe, de ne connaître personne, de dépenser pour soi. Tout ce qu'on écrira, sur le site comme en publicité, doit répondre à ces peurs avant de parler de dénivelé.",
-    "Face à vous, des acteurs installés (Terres d'Aventure, Copines de voyage) que vos clientes décrivent comme industriels : sentiers battus, groupes anonymes, logistique approximative. Votre différence est déjà là, dans la taille des groupes, l'encadrement féminin, les partenaires locaux et l'absence de niveaux. Elle mérite d'être écrite noir sur blanc.",
-    "Le chemin est chiffré : 200 k€ aujourd'hui, 600 k€ visés, avec 13 séminaires et 55 séjours ou voyages à 1 200 € de panier moyen. Tripler passe par plus de départs remplis, un panier moyen plus élevé et une part entreprises nettement plus forte. Le rachat possible d'un groupe plus gros s'ajoute à l'équation : la marque doit pouvoir l'accueillir.",
-    "Le site raconte bien, il ne fait pas assez réserver. Pas de prix visibles, des disponibilités difficiles à lire, un parcours de réservation qui hésite entre boutique et agence. Mailchimp et le CRM sont là mais ne servent pas encore à faire revenir. Avec 500 € de média par mois, c'est sur ce socle qu'il faut travailler d'abord."
+    {
+      "titre": "Vous avez déjà beaucoup construit",
+      "texte": "Une agence certifiée, un diplôme d'accompagnatrice en moyenne montagne, une équipe d'encadrantes, des séjours sans classement par niveau, un partenaire comme Samaya, des séminaires pour Thales, Ponant ou Sanofi, des podcasts et des portraits dans la presse. Presque rien de tout cela n'apparaît sur le site. La première chose à faire est de montrer ce qui existe."
+    },
+    {
+      "titre": "Émilie est la marque, et c'est une force",
+      "texte": "Vos clientes reviennent pour la façon dont vous les accueillez, le tour de table du premier soir, le déjeuner de bilan. Vous avez déjà commencé à distinguer la personne de l'entreprise. L'étape suivante : mettre des mots sur ce que vous transmettez, pour que d'autres puissent le porter à vos côtés sans que la chaleur se perde."
+    },
+    {
+      "titre": "Charlotte, le pilates et les hôtels",
+      "texte": "Charlotte arrive avec Peach Pilates Club, un studio reformer à Aubagne cofondé avec une kinésithérapeute, et un projet de reformer mobile dans les hôtels. Pilates et Aixploreuse se croisent déjà, d'Hossegor à « Novembre pour soi ». Il faut dire clairement ce qui relève d'Aixploreuse, ce qui relève de Charlotte, et où les deux se retrouvent."
+    },
+    {
+      "titre": "L'offre entreprises cherche son nom",
+      "texte": "Elle existe, elle est mixte, et elle s'adresse à des acheteurs qui ne se reconnaissent pas dans « pour les femmes intrépides ». Marque à part, sous-marque ou déclinaison : on tranche ensemble, sur des critères concrets. Lisibilité pour un RH, crédibilité transférée depuis Aixploreuse, et ce que coûte d'animer deux marques quand on est deux."
+    },
+    {
+      "titre": "Leur frein, c'est la peur",
+      "texte": "Vos clientes ont entre 30 et 60 ans, souvent mamans, salariées ou entrepreneures à parts égales. Vous le dites mieux que nous : peur de ralentir le groupe, de ne connaître personne, de dépenser pour soi. Tout ce qu'on écrira, sur le site comme en publicité, doit répondre à ces peurs avant de parler de dénivelé."
+    },
+    {
+      "titre": "Votre différence est déjà là",
+      "texte": "Face à vous, des acteurs installés (Terres d'Aventure, Copines de voyage) que vos clientes décrivent comme industriels : sentiers battus, groupes anonymes, logistique approximative. La taille de vos groupes, l'encadrement féminin, les partenaires locaux et l'absence de niveaux font la différence. Elle mérite d'être écrite noir sur blanc."
+    },
+    {
+      "titre": "De 200 à 600 k€",
+      "texte": "13 séminaires et 55 séjours ou voyages à 1 200 € de panier moyen aujourd'hui. Tripler passe par plus de départs remplis, un panier moyen plus élevé et une part entreprises nettement plus forte. Le rachat possible d'un groupe plus gros s'ajoute à l'équation : la marque doit pouvoir l'accueillir."
+    },
+    {
+      "titre": "Le site raconte bien, il ne fait pas assez réserver",
+      "texte": "Pas de prix visibles, des disponibilités difficiles à lire, un parcours qui hésite entre boutique et agence. Mailchimp et le CRM sont là mais ne servent pas encore à faire revenir. Avec 500 € de média par mois, c'est ce socle qu'il faut consolider d'abord."
+    }
   ],
   "lots": [
     {
@@ -206,9 +230,18 @@
     ]
   },
   "refacturations": [
-    { "label": "Budget média Meta Ads (500 € par mois)", "estimation": null },
-    { "label": "Abonnements Webflow, Mailchimp, CRM", "estimation": null },
-    { "label": "Production du merch (option)", "estimation": null }
+    {
+      "label": "Budget média Meta Ads (500 € par mois)",
+      "estimation": null
+    },
+    {
+      "label": "Abonnements Webflow, Mailchimp, CRM",
+      "estimation": null
+    },
+    {
+      "label": "Production du merch (option)",
+      "estimation": null
+    }
   ],
   "remise": {
     "label": "Remise pack complet (4 lots)",
@@ -216,19 +249,45 @@
     "valeur": 1000
   },
   "planning": [
-    { "etape": "Plateforme de marque et architecture", "duree": "2 semaines" },
-    { "etape": "Identité visuelle et déclinaison entreprises", "duree": "3 semaines" },
-    { "etape": "Stratégie de communication et plan de canaux", "duree": "2 semaines, en parallèle" },
-    { "etape": "Refonte du site Webflow", "duree": "4 semaines" },
-    { "etape": "Mise en ligne avant la saison 2027", "duree": "objectif mars 2027" },
-    { "etape": "Démarrage du pilotage (si retenu)", "duree": "à la mise en ligne" }
+    {
+      "etape": "Plateforme de marque et architecture",
+      "duree": "2 semaines"
+    },
+    {
+      "etape": "Identité visuelle et déclinaison entreprises",
+      "duree": "3 semaines"
+    },
+    {
+      "etape": "Stratégie de communication et plan de canaux",
+      "duree": "2 semaines, en parallèle"
+    },
+    {
+      "etape": "Refonte du site Webflow",
+      "duree": "4 semaines"
+    },
+    {
+      "etape": "Mise en ligne avant la saison 2027",
+      "duree": "objectif mars 2027"
+    },
+    {
+      "etape": "Démarrage du pilotage (si retenu)",
+      "duree": "à la mise en ligne"
+    }
   ],
   "conditions": {
     "paiement": "50 % à la signature, 50 % à la livraison. Les lots peuvent être engagés en deux temps pour lisser la trésorerie : marque d'abord (lots 01 et 02), croissance ensuite (lots 03 et 04). La remise reste acquise si les quatre lots sont engagés.",
     "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
   },
-  "projets_refs": ["racine", "airbnb", "palauma"],
-  "equipe": ["Arthur Barret", "Tobias Simon", "Sacha Bassili"],
+  "projets_refs": [
+    "racine",
+    "airbnb",
+    "palauma"
+  ],
+  "equipe": [
+    "Arthur Barret",
+    "Tobias Simon",
+    "Sacha Bassili"
+  ],
   "pdf_url": null,
   "tva": 0.2
 }
