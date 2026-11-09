@@ -23,13 +23,31 @@ body {
   color: var(--ink);
   min-height: 100svh;
   line-height: 1.45;
-  background-image:
-    radial-gradient(circle at 10% 15%, rgba(247,246,92,.18) 0 90px, transparent 91px),
-    radial-gradient(circle at 90% 10%, rgba(255,92,168,.22) 0 70px, transparent 71px),
-    radial-gradient(circle at 85% 80%, rgba(247,246,92,.14) 0 120px, transparent 121px),
-    radial-gradient(circle at 15% 85%, rgba(255,255,255,.10) 0 60px, transparent 61px);
+  background-image: linear-gradient(180deg, #0000FF 0%, #1414FF 60%, #0000D6 100%);
   background-attachment: fixed;
 }
+.header, .hero, .booking, .section, .footer, .simple { position: relative; z-index: 1; }
+
+/* ---------- Décor parallaxe ---------- */
+.scene { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.scene .layer { position: absolute; inset: 0; will-change: transform; }
+.scene svg { position: absolute; left: 0; width: 100%; display: block; }
+.l-sun .sun { position: absolute; right: 9%; top: 9%; width: clamp(110px, 16vw, 220px); aspect-ratio: 1; border-radius: 50%; background: var(--yellow); border: var(--border); box-shadow: 8px 8px 0 var(--ink), 0 0 0 26px rgba(247,246,92,.12), 0 0 0 60px rgba(247,246,92,.06); }
+.l-mtn-back svg { bottom: 22vh; height: 34vh; fill: #3A3AFF; }
+.l-mtn-front svg { bottom: 14vh; height: 36vh; fill: #0000B8; }
+.l-mtn-front svg path { stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.l-mtn-front .snow { fill: var(--cream); }
+.l-mtn-front .snow path { stroke: none; }
+.l-sea .sea { position: absolute; left: 0; right: 0; bottom: 0; height: 18vh; background: #2F6BFF; border-top: var(--border); }
+.l-sea .waves { bottom: 0; height: 18vh; fill: #4F84FF; animation: drift 9s ease-in-out infinite alternate; }
+.l-sea .w2 { fill: #6E9CFF; height: 12vh; animation-duration: 13s; animation-direction: alternate-reverse; }
+@keyframes drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+.l-bubbles .bub { position: absolute; border-radius: 50%; border: 3px solid rgba(255,255,255,.55); background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.45), rgba(255,255,255,.06) 60%); box-shadow: inset -8px -8px 0 rgba(255,255,255,.12); animation: float 7s ease-in-out infinite; }
+.l-bubbles .bub:nth-child(2n) { animation-duration: 9s; animation-delay: -3s; }
+.l-bubbles .bub:nth-child(3n) { animation-duration: 11s; animation-delay: -5s; }
+@keyframes float { from { translate: 0 0; } to { translate: 0 -18px; } }
+@media (prefers-reduced-motion: reduce) { .scene * { animation: none !important; } }
+@media (max-width: 640px) { .l-mtn-back svg { bottom: 16vh; height: 24vh; } .l-mtn-front svg { bottom: 10vh; height: 26vh; } .l-sea .sea, .l-sea .waves { height: 12vh; } .l-sea .w2 { height: 8vh; } .l-bubbles .bub { transform: scale(.6); } }
 img { display: block; max-width: 100%; }
 button, input, textarea, select { font: inherit; color: inherit; }
 button { cursor: pointer; border: 0; background: none; }
@@ -70,7 +88,11 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 .hero h1 { margin: 10px 0 14px; text-shadow: 6px 6px 0 var(--ink); }
 .hero h1 .y { color: var(--yellow); }
 .hero p { max-width: 640px; margin: 0 auto 22px; font-weight: 600; font-size: clamp(1rem, 2.3vw, 1.2rem); }
-.hero .pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.hero .facts { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 0; margin: 0 auto 24px; max-width: 760px; font-weight: 600; font-size: clamp(.95rem, 2vw, 1.1rem); color: rgba(255,255,255,.85); }
+.hero .facts li { padding: 0 14px; border-left: 2px solid var(--yellow); line-height: 1.2; }
+.hero .facts li:first-child { border-left: 0; }
+.hero .facts b { color: var(--yellow); font-weight: 900; }
+@media (max-width: 640px) { .hero .facts li { border-left: 0; padding: 2px 8px; } .hero .facts li::before { content: '· '; color: var(--yellow); } .hero .facts li:first-child::before { content: ''; } }
 .pill { padding: 10px 16px; border-radius: 999px; background: var(--white); color: var(--ink); font-weight: 800; border: var(--border); box-shadow: var(--shadow-sm); font-size: .95rem; }
 .pill--yellow { background: var(--yellow); }
 .pill--pink { background: var(--pink); color: var(--white); }

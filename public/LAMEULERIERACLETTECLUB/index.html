@@ -38,6 +38,30 @@
 </head>
 <body>
 
+<!-- Décor parallaxe : soleil, montagnes, mer, bulles -->
+<div class="scene" aria-hidden="true">
+  <div class="layer l-sun" data-speed="0.06"><div class="sun"></div></div>
+  <div class="layer l-mtn-back" data-speed="0.12">
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0 320 L0 230 L120 150 L210 190 L330 90 L420 140 L520 60 L640 160 L760 110 L880 170 L1000 80 L1120 150 L1230 100 L1340 170 L1440 120 L1440 320 Z"/></svg>
+  </div>
+  <div class="layer l-mtn-front" data-speed="0.2">
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0 320 L0 260 L90 210 L180 240 L300 160 L400 220 L520 140 L620 230 L740 180 L860 250 L980 170 L1100 240 L1210 200 L1320 250 L1440 210 L1440 320 Z"/></svg>
+    <svg class="snow" viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M300 160 L330 185 L345 172 L365 190 L380 176 L400 220 L380 200 L360 205 L340 190 L320 200 Z M520 140 L545 165 L560 152 L580 172 L600 158 L620 230 L600 190 L580 195 L560 178 L540 188 Z M980 170 L1005 195 L1020 182 L1040 202 L1060 188 L1100 240 L1070 215 L1050 220 L1030 206 L1010 215 Z"/></svg>
+  </div>
+  <div class="layer l-sea" data-speed="0.3">
+    <div class="sea"></div>
+    <svg class="waves w1" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0 30 Q60 10 120 30 T240 30 T360 30 T480 30 T600 30 T720 30 T840 30 T960 30 T1080 30 T1200 30 T1320 30 T1440 30 L1440 60 L0 60 Z"/></svg>
+    <svg class="waves w2" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0 35 Q45 20 90 35 T180 35 T270 35 T360 35 T450 35 T540 35 T630 35 T720 35 T810 35 T900 35 T990 35 T1080 35 T1170 35 T1260 35 T1350 35 T1440 35 L1440 60 L0 60 Z"/></svg>
+  </div>
+  <div class="layer l-bubbles" data-speed="0.45">
+    <span class="bub" style="left:8%;top:18%;width:120px;height:120px"></span>
+    <span class="bub" style="left:78%;top:10%;width:70px;height:70px"></span>
+    <span class="bub" style="left:62%;top:46%;width:160px;height:160px"></span>
+    <span class="bub" style="left:20%;top:64%;width:90px;height:90px"></span>
+    <span class="bub" style="left:88%;top:70%;width:130px;height:130px"></span>
+  </div>
+</div>
+
 <header class="header">
   <div class="wrap">
     <a class="brand" href="./">
@@ -61,13 +85,14 @@
   <div class="wrap">
     <span class="tag tag--pink">Restaurant éphémère · Marseille</span>
     <h1>Réserve<br>ta <span class="y">bulle</span></h1>
-    <p>5 bulles de 8 places aux Terrasses du Port, une raclette qui coule à flots, 4 services par jour. On réserve ses places en ligne, on arrive, on fond.</p>
-    <div class="pills">
-      <span class="pill pill--yellow">Menu raclette 36 €</span>
-      <span class="pill pill--pink">Enfant 24 €</span>
-      <span class="pill">12h · 14h · 19h · 21h</span>
-      <span class="pill">De 1 à 10 personnes</span>
-    </div>
+    <p>Une raclette qui coule à flots, dans une bulle, avec la mer en face. 5 bulles aux Terrasses du Port, 4 services par jour. On réserve ses places en ligne, on arrive, on fond.</p>
+    <ul class="facts">
+      <li>Menu raclette <b>36 €</b></li>
+      <li>Enfant <b>24 €</b></li>
+      <li><b>12h · 14h · 19h · 21h</b></li>
+      <li>De <b>1 à 10</b> personnes</li>
+      <li><b>Vue mer</b></li>
+    </ul>
     <a class="btn btn--lg" href="#reserver">Je réserve</a>
   </div>
 </section>
@@ -204,6 +229,7 @@
       <div class="card"><div class="ico">⏰</div><h3>4 services par jour</h3><p>12h, 14h, 19h et 21h, tous les jours du 27 novembre au 30 décembre. Fermé le 24 au soir et le 25 décembre.</p></div>
       <div class="card"><div class="ico">💳</div><h3>Menu payé en ligne</h3><p>Le menu se règle à la réservation. Boissons et desserts s'ajoutent sur place.</p></div>
       <div class="card"><div class="ico">↩️</div><h3>Annulation 48 h</h3><p>Un empêchement ? Annulez depuis le lien de votre email jusqu'à 48 h avant, remboursement intégral.</p></div>
+      <div class="card"><div class="ico">🌊</div><h3>Une bulle, vue mer</h3><p>Les bulles sont installées aux Terrasses du Port, face à la mer. La raclette fond, la rade s'étale, c'est la montagne qui est venue à Marseille.</p></div>
       <div class="card"><div class="ico">📍</div><h3>Les Terrasses du Port</h3><p>9 quai du Lazaret, 13002 Marseille. Métro Joliette, parking du centre commercial.</p></div>
       <div class="card card--yellow"><div class="ico">🥪</div><h3>Le chalet</h3><p>Pas de bulle ? Le chalet La Meulerie sert sandwiches et grilled cheese, sans réservation.</p></div>
     </div>
@@ -371,6 +397,21 @@
       if (/places/i.test(e.message)) selectDay(state.date);
     }
   });
+
+
+  // ---------- Parallaxe ----------
+  (() => {
+    const layers = [...document.querySelectorAll('.scene .layer')];
+    if (!layers.length || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      layers.forEach((l) => { l.style.transform = `translate3d(0, ${-y * Number(l.dataset.speed)}px, 0)`; });
+      ticking = false;
+    };
+    addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+    update();
+  })();
 
   loadDays();
 })();
