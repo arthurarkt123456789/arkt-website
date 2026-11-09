@@ -73,26 +73,19 @@
       <img src="assets/hero-knit.jpg" alt="La Meulerie Raclette Club, logo brodé sur maille jaune" fetchpriority="high" />
     </picture>
   </div>
-  <div class="wrap">
-    <span class="tag tag--pink">Restaurant éphémère · Marseille</span>
-    <h1>Réserve<br>ta <span class="y">bulle</span></h1>
-    <p><strong>La Meulerie Raclette Club est de retour aux Terrasses du Port !</strong><br>Une raclette qui coule à flots, dans une bulle, avec la mer en face. 5 bulles aux Terrasses du Port, 4 services par jour. On réserve ses places en ligne, on arrive, on fond.</p>
-    <ul class="facts">
-      <li>Menu raclette <b>36 €</b></li>
-      <li>Enfant <b>24 €</b></li>
-      <li><b>12h · 14h · 19h · 21h</b></li>
-      <li>De <b>1 à 10</b> personnes</li>
-      <li><b>Vue mer</b></li>
-    </ul>
-    <a class="btn btn--lg" href="#reserver">Je réserve</a>
-  </div>
-</section>
-
-<section class="section section--video" id="video">
-  <div class="wrap video-wrap">
-    <div class="video-text">
-      <h2 class="section-title" style="text-align:left;margin-bottom:12px">Le Raclette Club<br>en 20 secondes</h2>
-      <p>Le fromage qu'on tranche, l'esprit du club, la raclette qui arrive. Son coupé, appuyez sur la vidéo pour l'activer.</p>
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <span class="tag tag--pink">Restaurant éphémère · Marseille</span>
+      <h1>Réserve<br>ta <span class="y">bulle</span></h1>
+      <p><strong>La Meulerie Raclette Club est de retour aux Terrasses du Port !</strong><br>Une raclette qui coule à flots, dans une bulle, avec la mer en face. 5 bulles aux Terrasses du Port, 4 services par jour. On réserve ses places en ligne, on arrive, on fond.</p>
+      <ul class="facts">
+        <li>Menu raclette <b>36 €</b></li>
+        <li>Enfant <b>24 €</b></li>
+        <li><b>12h · 14h · 19h · 21h</b></li>
+        <li>De <b>1 à 10</b> personnes</li>
+        <li><b>Vue mer</b></li>
+      </ul>
+      <a class="btn btn--lg" href="#reserver">Je réserve</a>
     </div>
     <div class="phone" id="phone">
       <div class="phone-notch"></div>
@@ -417,6 +410,8 @@
       const t = reduce ? 1 : Math.min(1, window.scrollY / range);
       const eased = 1 - Math.pow(1 - t, 2);
       m.style.transform = `translate3d(0, ${(1 - eased) * 100}%, 0)`;
+      const ph = document.getElementById('phone');
+      if (ph) { const r = Math.min(1, window.scrollY / Math.max(300, innerHeight * 0.8)); ph.style.transform = `rotate(${-7 + 7 * r}deg)`; }
       ticking = false;
     };
     addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
