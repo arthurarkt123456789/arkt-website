@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Meulerie Raclette Club · Les Terrasses du Port · Réservation</title>
+  <meta name="description" content="Restaurant éphémère de La Meulerie aux Terrasses du Port, Marseille. 5 bulles de 8 places, raclette à volonté 36 €. Du 27 novembre au 30 décembre. Réservez votre bulle." />
+  <link rel="canonical" href="https://arkt-conseil.com/LAMEULERIERACLETTECLUB/" />
+  <link rel="icon" href="assets/favicon.png" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://arkt-conseil.com/LAMEULERIERACLETTECLUB/" />
+  <meta property="og:title" content="La Meulerie Raclette Club · Les Terrasses du Port" />
+  <meta property="og:description" content="5 bulles, 4 services par jour, raclette 36 €. Du 27 novembre au 30 décembre à Marseille. Réservez votre bulle." />
+  <meta property="og:image" content="https://arkt-conseil.com/LAMEULERIERACLETTECLUB/assets/og.jpg" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="rc.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FoodEstablishment",
+    "name": "La Meulerie Raclette Club",
+    "description": "Restaurant éphémère raclette en bulles aux Terrasses du Port, Marseille. Du 27 novembre au 30 décembre 2026.",
+    "url": "https://arkt-conseil.com/LAMEULERIERACLETTECLUB/",
+    "servesCuisine": "Raclette",
+    "priceRange": "36 €",
+    "acceptsReservations": "True",
+    "address": { "@type": "PostalAddress", "streetAddress": "Les Terrasses du Port, 9 quai du Lazaret", "postalCode": "13002", "addressLocality": "Marseille", "addressCountry": "FR" },
+    "parentOrganization": { "@type": "Organization", "name": "La Meulerie", "email": "hello@lameulerie.com" }
+  }
+  </script>
+</head>
+<body>
+
+<header class="header">
+  <div class="wrap">
+    <a class="brand" href="./">
+      <img src="assets/logo-raclette-club.png" alt="La Meulerie Raclette Club" onerror="this.remove()" />
+      <span class="wordmark">La Meulerie<br>Raclette Club<small>Les Terrasses du Port</small></span>
+    </a>
+    <div class="header-meta">
+      <span class="tag">27 nov → 30 déc</span>
+      <a class="partner" href="https://www.lesterrassesduport.com" target="_blank" rel="noopener"><img src="assets/logo-terrasses-du-port.png" alt="Les Terrasses du Port" onerror="this.parentNode.remove()" /></a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="tag tag--pink">Restaurant éphémère · Marseille</span>
+    <h1>Réserve<br>ta <span class="y">bulle</span></h1>
+    <p>5 bulles de 8 places aux Terrasses du Port, une raclette qui coule à flots, 4 services par jour. On réserve ses places en ligne, on arrive, on fond.</p>
+    <div class="pills">
+      <span class="pill pill--yellow">Menu raclette 36 €</span>
+      <span class="pill pill--pink">Enfant 24 €</span>
+      <span class="pill">12h · 14h · 19h · 21h</span>
+      <span class="pill">De 1 à 8 personnes</span>
+    </div>
+    <a class="btn btn--lg" href="#reserver">Je réserve</a>
+  </div>
+</section>
+
+<section class="booking" id="reserver">
+  <div class="wrap">
+    <div class="card" id="bookingCard">
+
+      <div id="returnMsg" class="info hidden" style="margin:0 0 10px"></div>
+
+      <!-- 1. Jour -->
+      <div class="step" id="stepDay">
+        <div class="step-head"><span class="step-num">1</span><h2>Quel jour ?</h2></div>
+        <div class="days" id="days"><div class="info">Chargement des disponibilités…</div></div>
+        <div class="legend"><span>Large</span><span class="l-mid">Il reste de la place</span><span class="l-low">Dernières places</span><span class="l-full">Complet</span></div>
+      </div>
+
+      <!-- 2. Service -->
+      <div class="step" id="stepService" aria-disabled="true">
+        <div class="step-head"><span class="step-num">2</span><h2>Quel service ?</h2></div>
+        <div class="services" id="services"></div>
+        <div class="card card--yellow chalet hidden" id="chaletTeaser" style="margin-top:16px">
+          <div class="big">🥪</div>
+          <div><h3>Complet ? Console-toi avec un grilled cheese.</h3><p style="font-weight:600">Le chalet La Meulerie est ouvert sans réservation. Sandwiches et grilled cheese, fromage qui file, zéro réservation.</p></div>
+        </div>
+      </div>
+
+      <!-- 3. Forfaits -->
+      <div class="step" id="stepTickets" aria-disabled="true">
+        <div class="step-head"><span class="step-num">3</span><h2>Combien de forfaits ?</h2></div>
+        <div class="tickets">
+          <div class="ticket">
+            <div>
+              <div class="t-name">Forfait Adulte</div>
+              <div class="t-desc">Raclette à volonté, charcuteries, pommes de terre, salade, eau</div>
+              <div class="t-price">36 <small>€ / pers.</small></div>
+            </div>
+            <div class="stepper"><button type="button" data-step="adults" data-dir="-1" aria-label="Moins d'adultes">−</button><output id="adultsOut">0</output><button type="button" data-step="adults" data-dir="1" aria-label="Plus d'adultes">+</button></div>
+          </div>
+          <div class="ticket ticket--kid">
+            <div>
+              <div class="t-name">Forfait Enfant</div>
+              <div class="t-desc">Menu raclette enfant, pommes de terre, salade, eau</div>
+              <div class="t-price">24 <small>€ / enfant</small></div>
+            </div>
+            <div class="stepper"><button type="button" data-step="kids" data-dir="-1" aria-label="Moins d'enfants">−</button><output id="kidsOut">0</output><button type="button" data-step="kids" data-dir="1" aria-label="Plus d'enfants">+</button></div>
+          </div>
+        </div>
+        <div class="group-note" id="groupNote"><span class="emoji">🫧</span><span>Une bulle accueille 8 personnes. À moins de 8, vous pourrez partager la bulle avec d'autres convives.</span></div>
+      </div>
+
+      <!-- 4. Coordonnées -->
+      <div class="step" id="stepForm" aria-disabled="true">
+        <div class="step-head"><span class="step-num">4</span><h2>Vos coordonnées</h2></div>
+        <form class="form" id="form" novalidate>
+          <div class="field"><label for="name">Nom et prénom</label><input id="name" name="name" autocomplete="name" required maxlength="120" /></div>
+          <div class="field"><label for="phone">Téléphone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required inputmode="tel" /></div>
+          <div class="field full"><label for="email">Email (confirmation + lien d'annulation)</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
+          <div class="field full"><label for="notes">Remarques : option veggie ou halal, allergies, anniversaire…</label><textarea id="notes" name="notes" maxlength="500"></textarea></div>
+          <label class="check full"><input type="checkbox" id="cgv" required /><span>J'ai lu et j'accepte les <a href="cgv/" target="_blank">conditions de réservation</a> : menu réglé en ligne, boissons et desserts sur place, annulation gratuite jusqu'à 48 h avant le service.</span></label>
+        </form>
+      </div>
+
+      <!-- 5. Paiement -->
+      <div class="step" id="stepPay" aria-disabled="true">
+        <div class="step-head"><span class="step-num">5</span><h2>On valide ?</h2></div>
+        <div class="card card--white summary">
+          <div class="lines" id="summaryLines"></div>
+          <div class="total"><span id="total">0 €</span><small>Paiement sécurisé par Stripe</small></div>
+        </div>
+        <div id="payError" class="error hidden"></div>
+        <button class="btn btn--pink btn--block btn--lg" id="payBtn" type="button" style="margin-top:16px">Payer et réserver</button>
+        <p style="font-weight:600;font-size:.85rem;margin-top:12px;text-align:center">Vos places sont bloquées 30 minutes le temps du paiement.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="menu">
+  <div class="wrap">
+    <h2 class="section-title">Au menu</h2>
+    <div class="card card--yellow menu-hero">
+      <div class="sub">Menu unique</div>
+      <div class="price">36 €</div>
+      <ul>
+        <li><b>Fromage à raclette</b> · nature, ail des ours, 3 poivres &amp; truffe</li>
+        <li><b>Charcuteries</b> · option veggie ou halal possible</li>
+        <li>Pommes de terre &amp; condiments</li>
+        <li>Salade verte &amp; sauce vinaigrette</li>
+        <li>Eau minérale à discrétion</li>
+      </ul>
+      <p style="margin-top:14px;font-weight:800">Menu enfant 24 € · Mi-cuit caramel beurre salé 4 €</p>
+    </div>
+    <div class="menu-grid" style="margin-top:16px">
+      <div class="card menu-block">
+        <h3>🍰 Desserts</h3>
+        <ul>
+          <li>Crumble aux pommes <b>10 €</b></li>
+          <li>Cheesecake citron &amp; navettes marseillaises <b>10 €</b></li>
+          <li>Gaufre nature <b>6 €</b></li>
+          <li>Gaufre Nutella <b>7 €</b></li>
+        </ul>
+      </div>
+      <div class="card menu-block">
+        <h3>🍷 Rafraîchissements</h3>
+        <ul>
+          <li>Verre de vin blanc ou rouge (12 cl) <b>6 €</b></li>
+          <li>Bouteille de vin blanc ou rouge (75 cl) <b>26 €</b></li>
+          <li>Coca, Coca zéro (33 cl) <b>3 €</b></li>
+          <li>Ice-tea (33 cl) <b>3 €</b></li>
+          <li>Jus pomme ou orange (20 cl) <b>3 €</b></li>
+        </ul>
+      </div>
+      <div class="card menu-block">
+        <h3>☕ Boissons chaudes</h3>
+        <ul>
+          <li>Vin chaud (12 cl) <b>4,50 €</b></li>
+          <li>Chocolat chaud <b>4 €</b></li>
+          <li>Thé <b>2,40 €</b></li>
+          <li>Café <b>2 €</b></li>
+        </ul>
+      </div>
+    </div>
+    <p style="color:#fff;text-align:center;font-weight:700;margin-top:14px">Desserts et boissons se commandent et se règlent sur place.</p>
+  </div>
+</section>
+
+<section class="section" id="infos">
+  <div class="wrap">
+    <h2 class="section-title">Comment ça marche</h2>
+    <div class="howto">
+      <div class="card"><div class="ico">🫧</div><h3>5 bulles, 8 places</h3><p>Réservez de 1 à 8 places. À 8, la bulle est à vous. En dessous, vous la partagez peut-être avec d'autres gourmands.</p></div>
+      <div class="card"><div class="ico">⏰</div><h3>4 services par jour</h3><p>12h, 14h, 19h et 21h, tous les jours du 27 novembre au 30 décembre. Fermé le 24 au soir et le 25 décembre.</p></div>
+      <div class="card"><div class="ico">💳</div><h3>Menu payé en ligne</h3><p>Le menu se règle à la réservation. Boissons et desserts s'ajoutent sur place.</p></div>
+      <div class="card"><div class="ico">↩️</div><h3>Annulation 48 h</h3><p>Un empêchement ? Annulez depuis le lien de votre email jusqu'à 48 h avant, remboursement intégral.</p></div>
+      <div class="card"><div class="ico">📍</div><h3>Les Terrasses du Port</h3><p>9 quai du Lazaret, 13002 Marseille. Métro Joliette, parking du centre commercial.</p></div>
+      <div class="card card--yellow"><div class="ico">🥪</div><h3>Le chalet</h3><p>Pas de bulle ? Le chalet La Meulerie sert sandwiches et grilled cheese, sans réservation.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="logos">
+      <img src="assets/logo-raclette-club.png" alt="La Meulerie Raclette Club" onerror="this.remove()" />
+      <img src="assets/logo-terrasses-du-port.png" alt="Les Terrasses du Port" onerror="this.remove()" />
+    </div>
+    <p>La Meulerie Raclette Club · Les Terrasses du Port · <a href="mailto:hello@lameulerie.com">hello@lameulerie.com</a></p>
+    <p style="margin-top:6px"><a href="cgv/">Conditions de réservation &amp; mentions légales</a></p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const API = '/.netlify/functions';
+  const SERVICES = { '12:00': 'Déjeuner', '14:00': 'Déjeuner', '19:00': 'Dîner', '21:00': 'Dîner' };
+  const PRICE = { adult: 3600, kid: 2400 };
+  const DOW = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'];
+  const MON = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+  const eur = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 });
+  const $ = (id) => document.getElementById(id);
+
+  const state = { date: null, service: null, adults: 0, kids: 0, maxGroup: 0, canPrivatize: false, services: [] };
+
+  const level = (free, maxGroup, closed) => closed ? 'closed' : (maxGroup < 1 ? 'full' : free <= 10 ? 'low' : free <= 24 ? 'mid' : 'high');
+  const setStep = (id, on) => $(id).setAttribute('aria-disabled', on ? 'false' : 'true');
+
+  // ---------- Retour depuis Stripe (annulation) ----------
+  const params = new URLSearchParams(location.search);
+  if (params.get('cancelled')) {
+    $('returnMsg').textContent = 'Le paiement n’a pas abouti. Vous pouvez relancer votre réservation.';
+    $('returnMsg').classList.remove('hidden');
+    history.replaceState(null, '', location.pathname + '#reserver');
+  }
+
+  // ---------- Jours ----------
+  async function loadDays() {
+    const r = await fetch(`${API}/rc-availability`);
+    if (!r.ok) { $('days').innerHTML = '<div class="error">Impossible de charger les disponibilités. Réessayez dans un instant.</div>'; return; }
+    const data = await r.json();
+    const el = $('days'); el.innerHTML = '';
+    let lastMonth = -1;
+    data.days.forEach((d) => {
+      const dt = new Date(d.date + 'T12:00:00');
+      if (dt.getMonth() !== lastMonth) {
+        lastMonth = dt.getMonth();
+        const sep = document.createElement('div'); sep.className = 'month-sep';
+        sep.textContent = dt.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }); el.appendChild(sep);
+      }
+      const lv = level(d.free, d.maxGroup, d.closed);
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'day'; b.dataset.level = lv; b.dataset.date = d.date;
+      b.disabled = lv === 'closed';
+      b.innerHTML = `<span class="dot"></span><span class="dow">${DOW[dt.getDay()]}</span><span class="num">${dt.getDate()}</span><span class="mon">${MON[dt.getMonth()]}</span>`;
+      b.addEventListener('click', () => selectDay(d.date));
+      el.appendChild(b);
+    });
+    const pre = params.get('date');
+    if (pre && data.days.some((d) => d.date === pre && !d.closed)) selectDay(pre, params.get('service'));
+  }
+
+  async function selectDay(date, preService) {
+    state.date = date; state.service = null;
+    document.querySelectorAll('.day').forEach((b) => b.setAttribute('aria-pressed', b.dataset.date === date));
+    setStep('stepService', true); setStep('stepTickets', false); setStep('stepForm', false); setStep('stepPay', false);
+    $('services').innerHTML = '<div class="info">Chargement…</div>'; $('chaletTeaser').classList.add('hidden');
+    const r = await fetch(`${API}/rc-availability?date=${date}`);
+    const data = await r.json();
+    state.services = data.services;
+    const el = $('services'); el.innerHTML = '';
+    let allFull = true;
+    data.services.forEach((s) => {
+      const lv = !s.exists ? 'closed' : s.closed ? 'closed' : level(s.free, s.maxGroup, false);
+      if (lv !== 'closed' && lv !== 'full') allFull = false;
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'service'; b.dataset.level = lv; b.dataset.service = s.service;
+      b.disabled = lv === 'closed' || lv === 'full';
+      const label = !s.exists ? 'Fermé' : s.closed ? 'Réservations closes' : lv === 'full' ? 'Complet' : `${s.free} place${s.free > 1 ? 's' : ''}`;
+      b.innerHTML = `<div class="time">${s.service.replace(':', 'h')}</div><div class="meal">${SERVICES[s.service]}</div><div class="avail">${label}</div>`;
+      b.addEventListener('click', () => selectService(s));
+      el.appendChild(b);
+    });
+    if (allFull) $('chaletTeaser').classList.remove('hidden');
+    if (preService) { const s = data.services.find((x) => x.service === preService && x.maxGroup > 0); if (s) selectService(s); }
+    $('stepService').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function selectService(s) {
+    state.service = s.service; state.maxGroup = s.maxGroup; state.canPrivatize = s.canPrivatize;
+    document.querySelectorAll('.service').forEach((b) => b.setAttribute('aria-pressed', b.dataset.service === s.service));
+    const total = state.adults + state.kids;
+    if (total > s.maxGroup) { state.adults = Math.min(state.adults, s.maxGroup); state.kids = Math.max(0, Math.min(state.kids, s.maxGroup - state.adults)); }
+    if (state.adults === 0) state.adults = Math.min(2, s.maxGroup);
+    setStep('stepTickets', true);
+    renderTickets();
+    $('stepTickets').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ---------- Forfaits ----------
+  document.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('click', () => {
+    const k = b.dataset.step, dir = Number(b.dataset.dir);
+    const total = state.adults + state.kids;
+    if (dir > 0 && total >= state.maxGroup) return;
+    if (dir < 0 && state[k] <= 0) return;
+    if (k === 'adults' && dir < 0 && state.adults === 1) return; // au moins un adulte
+    state[k] += dir; renderTickets();
+  }));
+
+  function renderTickets() {
+    const total = state.adults + state.kids;
+    $('adultsOut').textContent = state.adults; $('kidsOut').textContent = state.kids;
+    document.querySelectorAll('[data-step][data-dir="1"]').forEach((b) => b.disabled = total >= state.maxGroup);
+    document.querySelector('[data-step="adults"][data-dir="-1"]').disabled = state.adults <= 1;
+    document.querySelector('[data-step="kids"][data-dir="-1"]').disabled = state.kids <= 0;
+    const note = $('groupNote');
+    if (total === 8) { note.className = 'group-note priv'; note.innerHTML = '<span class="emoji">🎉</span><span><b>Bulle privatisée !</b> 8 places, la bulle est entièrement à vous.</span>'; }
+    else if (state.maxGroup < 8) { note.className = 'group-note'; note.innerHTML = `<span class="emoji">🫧</span><span>Sur ce service, il reste au mieux <b>${state.maxGroup} place${state.maxGroup > 1 ? 's' : ''} dans une même bulle</b>. Vous partagerez la bulle avec d'autres convives.</span>`; }
+    else { note.className = 'group-note'; note.innerHTML = '<span class="emoji">🫧</span><span>Une bulle accueille 8 personnes. À moins de 8, vous pourrez partager la bulle avec d’autres convives. À 8, elle est privatisée.</span>'; }
+    const ok = total >= 1 && state.adults >= 1;
+    setStep('stepForm', ok); setStep('stepPay', ok);
+    renderSummary();
+  }
+
+  function renderSummary() {
+    const dt = state.date ? new Date(state.date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
+    const lines = [];
+    if (state.date) lines.push(`<div>📅 ${dt} à ${state.service ? state.service.replace(':', 'h') : ''}</div>`);
+    if (state.adults) lines.push(`<div>🎫 ${state.adults} forfait${state.adults > 1 ? 's' : ''} adulte × 36 €</div>`);
+    if (state.kids) lines.push(`<div>🎫 ${state.kids} forfait${state.kids > 1 ? 's' : ''} enfant × 24 €</div>`);
+    const total = state.adults + state.kids;
+    if (total) lines.push(`<div>${total === 8 ? '🎉 Bulle privatisée' : `🫧 ${total} place${total > 1 ? 's' : ''}, bulle partagée`}</div>`);
+    $('summaryLines').innerHTML = lines.join('');
+    const amount = state.adults * PRICE.adult + state.kids * PRICE.kid;
+    $('total').textContent = eur(amount);
+    $('payBtn').textContent = amount ? `Payer ${eur(amount)} et réserver` : 'Payer et réserver';
+  }
+
+  // ---------- Paiement ----------
+  $('payBtn').addEventListener('click', async () => {
+    const err = $('payError'); err.classList.add('hidden');
+    const f = $('form');
+    const name = f.name.value.trim(), email = f.email.value.trim(), phone = f.phone.value.trim(), notes = f.notes.value.trim();
+    const fail = (m, focus) => { err.textContent = m; err.classList.remove('hidden'); if (focus) focus.focus(); };
+    if (!state.date || !state.service) return fail('Choisissez un jour et un service.');
+    if (state.adults < 1) return fail('Au moins un forfait adulte.');
+    if (name.length < 2) return fail('Indiquez votre nom.', f.name);
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Email invalide.', f.email);
+    if (phone.replace(/\D/g, '').length < 9) return fail('Téléphone invalide.', f.phone);
+    if (!$('cgv').checked) return fail('Merci d’accepter les conditions de réservation.');
+
+    const btn = $('payBtn'); btn.disabled = true; const old = btn.textContent; btn.textContent = 'Un instant…';
+    try {
+      const r = await fetch(`${API}/rc-checkout`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ date: state.date, service: state.service, adults: state.adults, kids: state.kids, name, email, phone, notes }) });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || 'Erreur');
+      location.href = data.url;
+    } catch (e) {
+      fail(e.message); btn.disabled = false; btn.textContent = old;
+      if (/places/i.test(e.message)) selectDay(state.date);
+    }
+  });
+
+  loadDays();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merci · La Meulerie Raclette Club</title>
+  <meta name="robots" content="noindex" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../rc.css" />
+</head>
+<body>
+<header class="header"><div class="wrap"><a class="brand" href="../"><img src="../assets/logo-raclette-club.png" alt="" onerror="this.remove()" /><span class="wordmark">La Meulerie<br>Raclette Club<small>Les Terrasses du Port</small></span></a></div></header>
+<main class="simple"><div class="wrap wrap--narrow">
+  <div class="card" id="box">
+    <h1>Un instant…</h1>
+    <p>On vérifie votre paiement.</p>
+  </div>
+</div></main>
+<script>
+(async () => {
+  const box = document.getElementById('box');
+  const sid = new URLSearchParams(location.search).get('session_id');
+  if (!sid) { box.innerHTML = '<h1>Lien invalide</h1><p><a href="../">Retour à la réservation</a></p>'; return; }
+  const fmt = (d) => new Date(d + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const eur = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+  let tries = 0;
+  async function load() {
+    const r = await fetch(`/.netlify/functions/rc-booking?session_id=${encodeURIComponent(sid)}`);
+    if (!r.ok) { box.innerHTML = '<h1>Réservation introuvable</h1><p>Si vous avez été débité, écrivez-nous à <a href="mailto:hello@lameulerie.com">hello@lameulerie.com</a> avec votre email de paiement.</p>'; return; }
+    const { booking: b, pending } = await r.json();
+    if (pending && tries++ < 6) { setTimeout(load, 2000); return; }
+    const tickets = [b.adults ? `${b.adults} adulte${b.adults > 1 ? 's' : ''}` : '', b.kids ? `${b.kids} enfant${b.kids > 1 ? 's' : ''}` : ''].filter(Boolean).join(' + ');
+    box.innerHTML = `
+      <span class="tag">${b.status === 'paid' ? 'Réservation confirmée' : 'Paiement en cours de validation'}</span>
+      <h1 style="margin-top:12px">${b.status === 'paid' ? 'C’est réservé !' : 'Presque…'}</h1>
+      <p>${b.status === 'paid' ? `Un email de confirmation part à <b>${b.email}</b>. Il contient votre lien d'annulation (jusqu'à 48 h avant).` : 'Votre banque finalise le paiement. Vous recevrez un email dès confirmation.'}</p>
+      <div class="recap">
+        <div><span>Date</span>${fmt(b.date)}</div>
+        <div><span>Service</span>${b.service.replace(':', 'h')}</div>
+        <div><span>Forfaits</span>${tickets}</div>
+        <div><span>Bulle</span>n°${b.bubble} · ${b.seats === 8 ? 'privatisée' : 'partagée'}</div>
+        <div><span>Au nom de</span>${b.name}</div>
+        <div><span>Montant</span>${eur(b.amount_cents)}</div>
+        <div><span>Référence</span>${b.ref}</div>
+      </div>
+      <p style="font-weight:600">Rendez-vous aux Terrasses du Port, 10 minutes avant le service. Boissons et desserts se règlent sur place.</p>
+      <p style="margin-top:18px"><a class="btn btn--blue" href="../">Retour au site</a></p>`;
+  }
+  load();
+})();
+</script>
+</body>
+</html>
