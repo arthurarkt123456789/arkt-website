@@ -18,8 +18,8 @@
       "texte": "Une agence certifiée, un diplôme d'accompagnatrice en moyenne montagne, une équipe d'encadrantes, des séjours sans classement par niveau, un partenaire comme Samaya, des séminaires pour Thales, Ponant ou Sanofi, des podcasts et des portraits dans la presse. Tout cela existe, mais reste dispersé : un article ici, un post là. La première chose à faire est de le rassembler et de le montrer."
     },
     {
-      "titre": "Émilie est la marque, et c'est une force",
-      "texte": "Vos clientes reviennent pour la façon dont vous les accueillez, le tour de table du premier soir, le déjeuner de bilan. Vous avez déjà commencé à distinguer la personne de l'entreprise. L'étape suivante : mettre des mots sur ce que vous transmettez, pour que d'autres puissent le porter à vos côtés sans que la chaleur se perde."
+      "titre": "Émilie est la marque, et la notoriété est là",
+      "texte": "Vos clientes reviennent pour la façon dont vous les accueillez, le tour de table du premier soir, le déjeuner de bilan. Cette notoriété s'est construite sur votre nom et votre visage. Vous avez déjà commencé à distinguer la personne de l'entreprise. L'étape suivante : faire évoluer la marque sans casser ce lien, en décidant ce qui reste, ce qui change, et comment on le raconte à celles qui vous suivent."
     },
     {
       "titre": "Charlotte, le pilates et l'hôtellerie",
@@ -48,13 +48,15 @@
   ],
   "lots": [
     {
-      "titre": "Plateforme de marque et architecture",
+      "titre": "Plateforme de marque, architecture et transition",
       "tarif_id": "strategie-marque",
-      "description": "On commence par vous deux. Un atelier pour poser ce qui fait Aixploreuse au-delà d'Émilie : ce que les femmes viennent chercher, ce qu'elles racontent en rentrant, ce qui doit rester quand l'équipe s'élargit. Puis on construit l'architecture : la place de Charlotte et du pilates, le statut de l'offre entreprises, le lien entre les deux. On termine par le positionnement face aux acteurs installés et les messages pour chaque public.",
+      "description": "On commence par vous deux. Un atelier pour poser ce qui fait Aixploreuse au-delà d'Émilie : ce que les femmes viennent chercher, ce qu'elles racontent en rentrant, ce qui doit rester quand l'équipe s'élargit. Puis trois décisions. L'architecture : la place de Charlotte et du pilates, et le statut de l'offre entreprises, marque à part, sous-marque ou déclinaison, avec un nom si besoin. La transition : ce qu'on garde, ce qu'on fait évoluer, et comment on l'annonce à la communauté pour que la notoriété acquise suive le changement au lieu de s'y perdre. Le nouveau format : le séjour autour d'une personnalité, né de la participation de Laure Manaudou, cadré comme un produit à part entière.",
       "livrables": [
         "Atelier fondatrices : ce que la marque transmet, et comment",
         "Architecture : Aixploreuse, offre entreprises, passerelles pilates et hôtels",
-        "Décision marque à part ou déclinaison, nom si besoin (pistes : Coévasion by Aixploreuse, Business Outdoor)",
+        "Décision marque à part ou déclinaison pour l'offre entreprises, nom si besoin (pistes : Coévasion by Aixploreuse, Business Outdoor)",
+        "Plan de transition : ce qui ne bouge pas, ce qui évolue, séquence d'annonce à la communauté, aux partenaires et à la presse",
+        "Format « séjour autour d'une personnalité » : thème, rôle de la personnalité, groupe, captation et mini-série, dossier d'approche (Cindy Poumeyrol en première piste)",
         "Positionnement face à Terres d'Aventure et Copines de voyage",
         "Messages par public : les femmes, les RH et dirigeants, les partenaires"
       ],
@@ -63,13 +65,14 @@
       "prix_unitaire": 2000
     },
     {
-      "titre": "Identité visuelle : évolution et déclinaison entreprises",
+      "titre": "Rebranding : évolution de l'identité et déclinaison entreprises",
       "tarif_id": "identite-complete",
-      "description": "Faire évoluer l'identité d'Aixploreuse pour qu'elle porte la marque à deux voix, et la décliner pour l'offre entreprises selon l'architecture retenue. On garde ce qui vous ressemble, on retravaille ce qui freine. Direction artistique ARKT, exécution par notre graphiste, et des gabarits que vous pourrez utiliser seules au quotidien.",
+      "description": "Faire évoluer l'identité d'Aixploreuse selon le plan de transition : assez pour porter la marque à deux voix et accueillir l'offre entreprises, pas au point que vos clientes ne la reconnaissent plus. Déclinaison entreprises selon l'architecture retenue, nouveau nom compris s'il y en a un. Direction artistique ARKT, exécution par notre graphiste, et des gabarits que vous pourrez utiliser seules au quotidien.",
       "livrables": [
         "Audit du logo et de l'univers actuels : ce qu'on garde, ce qu'on fait évoluer",
         "Système : couleurs, typographies, illustrations, règles photo",
-        "Déclinaison entreprises : logo ou endossement, palette, ton",
+        "Identité de l'offre entreprises : logo ou endossement, palette, ton",
+        "Kit d'annonce du rebranding : posts, newsletter, visuels de transition",
         "Gabarits réseaux sociaux et newsletter",
         "Présentation séminaires et fiche programme pour les RH"
       ],
@@ -112,14 +115,6 @@
     }
   ],
   "options": [
-    {
-      "titre": "Séjour autour d'une personnalité",
-      "tarif_id": "concept-recit",
-      "description": "Le format est né quand Laure Manaudou a participé à un départ. L'idée : un séjour construit autour d'une personnalité et d'un thème (mouvement, confiance en soi, argent, amour), un groupe de femmes comme les autres, une observatrice qui capte images et émotions, une mini-série à la sortie. Cadrage du format, dossier d'approche des personnalités et des marques partenaires.",
-      "quantite": 1,
-      "unite": "forfait",
-      "prix_unitaire": 1800
-    },
     {
       "titre": "Collection merch",
       "tarif_id": "merch",
@@ -251,11 +246,11 @@
   },
   "planning": [
     {
-      "etape": "Plateforme de marque et architecture",
+      "etape": "Plateforme de marque, architecture et transition",
       "duree": "2 semaines"
     },
     {
-      "etape": "Identité visuelle et déclinaison entreprises",
+      "etape": "Rebranding et déclinaison entreprises",
       "duree": "3 semaines"
     },
     {
