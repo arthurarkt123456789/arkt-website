@@ -176,13 +176,13 @@ export function bookingEmailHtml(b, { cancelUrl } = {}) {
     b.adults ? `${b.adults} menu${b.adults > 1 ? "s" : ""} adulte` : null,
     b.kids ? `${b.kids} menu${b.kids > 1 ? "s" : ""} enfant` : null,
   ].filter(Boolean).join(" + ");
-  const priv = b.seats >= CONFIG.PRIVATE_MIN ? `<p style="margin:6px 0"><strong>Bulle privatisée</strong>${b.seats > CONFIG.SHARED_MAX ? " · tablée serrée, prévoyez de jouer des coudes" : ""}</p>` : `<p style="margin:6px 0;color:#555">Bulle partagée : vous pourrez être installés avec d'autres convives.</p>`;
+  const priv = b.seats >= CONFIG.PRIVATE_MIN ? `<p style="margin:6px 0"><strong>Bulle privatisée</strong>${b.seats > CONFIG.SHARED_MAX ? ` à ${b.seats} : capacité réduite à 8 cette année pour plus de confort, l'espace sera plus serré qu'à 8.` : ""}</p>` : `<p style="margin:6px 0;color:#555">Bulle partagée : vous pourrez être installés avec d'autres convives.</p>`;
   return `
 <div style="font-family:Poppins,Arial,sans-serif;max-width:560px;margin:0 auto;background:#F0EBDA;padding:28px;border-radius:24px;color:#111">
   <h1 style="color:#0000FF;font-size:26px;margin:0 0 4px;letter-spacing:-.02em">La Meulerie Raclette Club</h1>
   <p style="margin:0 0 20px;color:#333">Les Terrasses du Port, Marseille</p>
   <div style="background:#fff;border-radius:18px;padding:20px;margin-bottom:16px">
-    <p style="margin:0 0 10px;font-size:18px"><strong>${esc(fmtDate(b.date))} à ${esc(b.service)}</strong></p>
+    <p style="margin:0 0 10px;font-size:18px"><strong>${esc(fmtDate(b.date))} à ${esc(b.service.replace(":", "h"))}</strong></p>
     <p style="margin:6px 0">${esc(tickets)} · ${b.seats} place${b.seats > 1 ? "s" : ""} · bulle n°${b.bubble}</p>
     ${priv}
     <p style="margin:6px 0">Au nom de <strong>${esc(b.name)}</strong></p>
@@ -264,7 +264,7 @@ export function holdEmailHtml(b) {
   <p style="margin:0 0 20px;color:#333">Les Terrasses du Port, Marseille</p>
   <div style="background:#fff;border-radius:18px;padding:20px;margin-bottom:16px">
     <p style="margin:0 0 10px;font-size:18px"><strong>Votre table est bloquée</strong></p>
-    <p style="margin:6px 0"><strong>${esc(fmtDate(b.date))} à ${esc(b.service)}</strong> · ${esc(tickets)} · ${b.seats} place${b.seats > 1 ? "s" : ""}${b.seats >= CONFIG.PRIVATE_MIN ? " · bulle privatisée" : ""}</p>
+    <p style="margin:6px 0"><strong>${esc(fmtDate(b.date))} à ${esc(b.service.replace(":", "h"))}</strong> · ${esc(tickets)} · ${b.seats} place${b.seats > 1 ? "s" : ""}${b.seats >= CONFIG.PRIVATE_MIN ? " · bulle privatisée" : ""}</p>
     <p style="margin:6px 0">Au nom de <strong>${esc(b.name)}</strong></p>
     <p style="margin:12px 0 0;font-size:18px"><strong>${eur(b.amount_cents)}</strong> à régler en ligne</p>
   </div>
