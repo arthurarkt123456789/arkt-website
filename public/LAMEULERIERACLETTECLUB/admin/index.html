@@ -67,6 +67,16 @@
     .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
     .toast.on{opacity:1}
     .toast.err{background:var(--red)}
+    .dash{display:grid;grid-template-columns:1fr 2fr 1fr;gap:12px;margin-bottom:18px}
+    .dash-card{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:14px 16px;box-shadow:4px 4px 0 var(--ink)}
+    .dash-card--yellow{background:var(--yellow)}
+    .dash-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.7}
+    .dash-val{font-size:2rem;font-weight:900;line-height:1.1;margin:4px 0 2px}
+    .dash-val small{font-size:.95rem;font-weight:800;opacity:.7}
+    .dash-sub{font-size:.78rem;font-weight:600;color:#333}
+    .gauge{height:16px;border:2px solid var(--ink);border-radius:999px;background:#fff;overflow:hidden;margin:8px 0}
+    .gauge-fill{height:100%;width:0;background:var(--green);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+    @media(max-width:760px){.dash{grid-template-columns:1fr}}
     .overview{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin-bottom:18px}
     .ov{border:2px solid var(--ink);border-radius:10px;padding:6px 4px;text-align:center;font-weight:800;font-size:.8rem;background:#fff;cursor:pointer}
     .ov small{display:block;font-weight:600;font-size:.65rem;opacity:.7}
@@ -96,6 +106,24 @@
   </div>
 
   <div id="app" class="hidden">
+    <section class="dash" id="dash">
+      <div class="dash-card">
+        <div class="dash-label">Places maximum</div>
+        <div class="dash-val" id="dCap">–</div>
+        <div class="dash-sub" id="dCapSub"></div>
+      </div>
+      <div class="dash-card dash-card--wide">
+        <div class="dash-label">Places vendues</div>
+        <div class="dash-val"><span id="dSold">–</span> <small id="dPct"></small></div>
+        <div class="gauge"><div class="gauge-fill" id="dGauge"></div></div>
+        <div class="dash-sub" id="dSoldSub"></div>
+      </div>
+      <div class="dash-card dash-card--yellow">
+        <div class="dash-label">C.A. généré à date</div>
+        <div class="dash-val" id="dRev">–</div>
+        <div class="dash-sub" id="dRevSub"></div>
+      </div>
+    </section>
     <div class="overview" id="overview"></div>
     <div class="kpis" id="kpis"></div>
     <div class="legend"><span><i style="background:var(--green)"></i>Payé</span><span><i style="background:var(--blue)"></i>Manuel</span><span><i style="background:var(--orange)"></i>Paiement en cours</span><span><i style="background:#fff"></i>Libre</span><span><i style="background:var(--grey)"></i>Bloqué</span></div>
@@ -182,7 +210,24 @@
     const blob = await r.blob(); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'raclette-club-reservations.csv'; a.click();
   });
 
-  async function boot() { await loadOverview(); load(clamp(parisToday())); }
+  async function boot() { loadStats(); await loadOverview(); load(clamp(parisToday())); }
+
+  async function loadStats() {
+    try {
+      const d = await api('GET', null, { action: 'stats' });
+      const eur = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+      const pct = d.capacity_total ? Math.round(100 * d.seats_sold / d.capacity_total) : 0;
+      $('dCap').textContent = d.capacity_total.toLocaleString('fr-FR');
+      $('dCapSub').textContent = d.capacity_open < d.capacity_total ? `${d.capacity_open.toLocaleString('fr-FR')} ouvertes à la vente, ${(d.capacity_total - d.capacity_open).toLocaleString('fr-FR')} bloquées` : '5 bulles × 8 places × services';
+      $('dSold').textContent = d.seats_sold.toLocaleString('fr-FR');
+      $('dPct').textContent = `${pct} %`;
+      $('dGauge').style.width = Math.min(100, pct) + '%';
+      $('dGauge').style.background = pct >= 85 ? 'var(--red)' : pct >= 60 ? 'var(--orange)' : 'var(--green)';
+      $('dSoldSub').textContent = `${d.seats_paid} payées en ligne · ${d.seats_manual} manuelles · ${d.bookings_count} réservations · ${d.seats_past} déjà servies`;
+      $('dRev').textContent = eur(d.revenue_cents);
+      $('dRevSub').textContent = `${eur(d.revenue_online_cents)} en ligne · ${eur(d.revenue_manual_cents)} manuel` + (d.refunded_cents ? ` · ${eur(d.refunded_cents)} remboursés (hors total)` : '');
+    } catch (e) { toast(e.message, true); }
+  }
 
   async function loadOverview() {
     const { days } = await api('GET', null, { action: 'overview' });
@@ -237,10 +282,10 @@
     });
 
     grid.querySelectorAll('[data-block]').forEach((b) => b.addEventListener('click', async () => {
-      try { await api('POST', { action: 'block', slotIds: [Number(b.dataset.block)], blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); } catch (e) { toast(e.message, true); }
+      try { await api('POST', { action: 'block', slotIds: [Number(b.dataset.block)], blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); loadStats(); } catch (e) { toast(e.message, true); }
     }));
     grid.querySelectorAll('[data-block-service]').forEach((b) => b.addEventListener('click', async () => {
-      try { await api('POST', { action: 'block_service', date: current, service: b.dataset.blockService, blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); } catch (e) { toast(e.message, true); }
+      try { await api('POST', { action: 'block_service', date: current, service: b.dataset.blockService, blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); loadStats(); } catch (e) { toast(e.message, true); }
     }));
     grid.querySelectorAll('[data-manual]').forEach((b) => b.addEventListener('click', () => openManual(b.dataset.manual)));
 
@@ -268,7 +313,7 @@
     e.preventDefault(); const f = e.target;
     try {
       await api('POST', { action: 'manual', date: f.date.value, service: f.service.value, adults: Number(f.adults.value), kids: Number(f.kids.value), name: f.name.value, email: f.email.value, phone: f.phone.value, notes: f.notes.value, amountCents: Math.round(Number(f.amount.value || 0) * 100), sendEmail: f.sendEmail.checked });
-      $('dlgManual').close(); toast('Réservation enregistrée'); load(f.date.value); loadOverview();
+      $('dlgManual').close(); toast('Réservation enregistrée'); load(f.date.value); loadOverview(); loadStats();
     } catch (err) { toast(err.message, true); }
   });
 
@@ -282,7 +327,7 @@
     $('dlgCancel').showModal();
   }
   $('cancelGo').addEventListener('click', async () => {
-    try { const r = await api('POST', { action: 'cancel', id: cancelId, refund: $('cancelRefund').checked, notify: $('cancelNotify').checked }); $('dlgCancel').close(); toast(r.refunded ? 'Annulée et remboursée' : 'Annulée'); load(current); loadOverview(); }
+    try { const r = await api('POST', { action: 'cancel', id: cancelId, refund: $('cancelRefund').checked, notify: $('cancelNotify').checked }); $('dlgCancel').close(); toast(r.refunded ? 'Annulée et remboursée' : 'Annulée'); load(current); loadOverview(); loadStats(); }
     catch (e) { toast(e.message, true); }
   });
 

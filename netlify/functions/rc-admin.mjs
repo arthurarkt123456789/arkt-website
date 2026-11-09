@@ -27,6 +27,28 @@ export const handler = async (event) => {
         const rows = await sbRpc("rc_availability_range", { p_from: CONFIG.FIRST_DAY, p_to: CONFIG.LAST_DAY });
         return json(200, { days: rows }, noStore);
       }
+      if (q.action === "stats") {
+        const [slots, sold, cancelled] = await Promise.all([
+          sbSelect("rc_slots", "select=capacity,status"),
+          sbSelect("rc_bookings", "select=seats,amount_cents,status,source,date&status=in.(paid,manual)"),
+          sbSelect("rc_bookings", "select=seats,amount_cents,refund_id&status=eq.cancelled"),
+        ]);
+        const sum = (arr, f) => arr.reduce((n, r) => n + f(r), 0);
+        const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Paris" });
+        return json(200, {
+          capacity_total: sum(slots, (r) => r.capacity),
+          capacity_open: sum(slots.filter((r) => r.status === "open"), (r) => r.capacity),
+          seats_sold: sum(sold, (r) => r.seats),
+          seats_paid: sum(sold.filter((r) => r.status === "paid"), (r) => r.seats),
+          seats_manual: sum(sold.filter((r) => r.status === "manual"), (r) => r.seats),
+          seats_past: sum(sold.filter((r) => r.date < today), (r) => r.seats),
+          revenue_cents: sum(sold, (r) => r.amount_cents),
+          revenue_online_cents: sum(sold.filter((r) => r.status === "paid"), (r) => r.amount_cents),
+          revenue_manual_cents: sum(sold.filter((r) => r.status === "manual"), (r) => r.amount_cents),
+          refunded_cents: sum(cancelled.filter((r) => r.refund_id), (r) => r.amount_cents),
+          bookings_count: sold.length,
+        }, noStore);
+      }
       if (q.action === "export") {
         const rows = await sbSelect("rc_bookings", `status=in.(paid,manual,cancelled)&order=date.asc,service.asc,bubble.asc`);
         const head = ["date", "service", "bulle", "statut", "source", "nom", "email", "telephone", "adultes", "enfants", "places", "montant_eur", "remarques", "reference", "creee_le", "stripe_payment_intent"];
