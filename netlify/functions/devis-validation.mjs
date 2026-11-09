@@ -67,7 +67,7 @@ export const handler = async (event) => {
 
   const interne = `
 <div style="font-family:sans-serif;max-width:620px;margin:0 auto;color:#15140F">
-  <h2 style="margin:0 0 4px">Devis ${esc(devis.numero)} validé</h2>
+  <h2 style="margin:0 0 4px">Devis ${esc(devis.numero || devis.client?.societe || '')} validé</h2>
   <p style="margin:0 0 20px;color:#666">${esc(devis.client?.societe || "")} · <a href="${lien}">${lien}</a></p>
   <p><strong>Signataire :</strong> ${esc(nom)}${fonction ? `, ${esc(fonction)}` : ""}<br>
      <strong>E-mail :</strong> <a href="mailto:${esc(email)}">${esc(email)}</a></p>
@@ -80,7 +80,7 @@ export const handler = async (event) => {
   const client = `
 <div style="font-family:sans-serif;max-width:620px;margin:0 auto;color:#15140F">
   <p>Bonjour ${esc(nom.split(" ")[0])},</p>
-  <p>Nous avons bien reçu votre validation de la proposition ${esc(devis.numero)}${devis.client?.societe ? ` pour ${esc(devis.client.societe)}` : ""}.</p>
+  <p>Nous avons bien reçu votre validation de la proposition${devis.numero ? ` ${esc(devis.numero)}` : ''}${devis.client?.societe ? ` pour ${esc(devis.client.societe)}` : ""}.</p>
   ${table}
   <p>La proposition reste consultable ici : <a href="${lien}">${lien}</a></p>
   <p>Nous revenons vers vous pour lancer le projet.</p>
@@ -97,7 +97,7 @@ export const handler = async (event) => {
     from: FROM,
     to: [DEST],
     reply_to: email,
-    subject: `[ARKT] Devis ${devis.numero} validé · ${devis.client?.societe || ""} · ${eur(t.ht)} HT`,
+    subject: `[ARKT] Devis${devis.numero ? ` ${devis.numero}` : ''} validé · ${devis.client?.societe || ""} · ${eur(t.ht)} HT`,
     html: interne,
   });
   if (!res.ok) {
@@ -109,7 +109,7 @@ export const handler = async (event) => {
     from: FROM,
     to: [email],
     reply_to: DEST,
-    subject: `Votre validation de la proposition ${devis.numero}`,
+    subject: `Votre validation de la proposition${devis.numero ? ` ${devis.numero}` : ''} ARKT`,
     html: client,
   });
   if (!resClient.ok) console.error("Resend error (client)", resClient.status, await resClient.text());

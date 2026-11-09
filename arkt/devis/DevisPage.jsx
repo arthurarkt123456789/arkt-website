@@ -153,7 +153,7 @@ export default function DevisPage({ devis }) {
       setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
     } catch {
       setState("error");
-      setError(`L'envoi n'a pas abouti. Écrivez-nous à ${ARKT.email} en mentionnant la proposition ${d.numero}.`);
+      setError(`L'envoi n'a pas abouti. Écrivez-nous à ${ARKT.email} en mentionnant la proposition${d.numero ? ` ${d.numero}` : ''} ${d.client?.societe || ''}.`);
     }
   }
 
@@ -635,14 +635,14 @@ export default function DevisPage({ devis }) {
                 <div className="dv-done" role="status">
                   <div className="dv-done-mark" aria-hidden="true">✓</div>
                   <h3 className="dv-display">Merci {form.nom.split(" ")[0]}</h3>
-                  <p>Votre validation de la proposition {d.numero} est enregistrée pour {eur(totals.ht)} HT.</p>
+                  <p>Votre validation de la proposition{d.numero ? ` ${d.numero}` : ""} est enregistrée pour {eur(totals.ht)} HT.</p>
                   <p>Un e-mail de confirmation vient de vous être envoyé. Nous revenons vers vous pour lancer le projet.</p>
                 </div>
               ) : expired ? (
                 <div className="dv-done">
                   <h3 className="dv-display">Proposition expirée</h3>
                   <p>Cette proposition n'est plus valable depuis le {fmtDate(exp)}.</p>
-                  <a className="dv-btn" href={`mailto:${ARKT.email}?subject=${encodeURIComponent(`Proposition ${d.numero}`)}`}>Nous contacter</a>
+                  <a className="dv-btn" href={`mailto:${ARKT.email}?subject=${encodeURIComponent(`Proposition ${d.numero || d.client?.societe || ''}`)}`}>Nous contacter</a>
                 </div>
               ) : (
                 <form className="dv-form" onSubmit={submit} noValidate>
@@ -660,7 +660,7 @@ export default function DevisPage({ devis }) {
                   <label className="dv-accept">
                     <input type="checkbox" checked={form.accepte} onChange={set("accepte")} />
                     <span>
-                      Je valide la proposition {d.numero} de {d.client?.societe ? `${d.client.societe} ` : ""}pour un montant de{" "}
+                      Je valide la proposition{d.numero ? ` ${d.numero}` : ""} de {d.client?.societe ? `${d.client.societe} ` : ""}pour un montant de{" "}
                       <strong>{eur(totals.ht)} HT</strong> ({eur(totals.ttc)} TTC) et j'en accepte les conditions.
                     </span>
                   </label>
@@ -721,7 +721,7 @@ export default function DevisPage({ devis }) {
             </div>
           </div>
           <div className="dv-foot-bottom">
-            <a href={`mailto:${ARKT.email}?subject=${encodeURIComponent(`Proposition ${d.numero}`)}`}>{ARKT.email}</a>
+            <a href={`mailto:${ARKT.email}?subject=${encodeURIComponent(`Proposition ${d.numero || d.client?.societe || ''}`)}`}>{ARKT.email}</a>
             <span>ARKT Conseil · Marseille / Paris</span>
           </div>
         </div>

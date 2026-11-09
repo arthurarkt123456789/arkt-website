@@ -237,7 +237,7 @@ async function prerenderDevis(vite) {
       devis.slug = slug;
       index[slug] = devis;
 
-      const title = `Proposition ARKT · ${devis.client?.societe || ''} · ${devis.numero || ''}`;
+      const title = ['Proposition ARKT', devis.client?.societe, devis.numero].filter(Boolean).join(' · ');
       const html = template
         .replace(/<title>[^<]*<\/title>/, `<title>${escAttr(title)}</title>`)
         .replace('<div id="root"></div>', `<div id="root">${renderDevis(devis)}</div><script>window.__DEVIS__=${safeJson(devis)}</script>`)

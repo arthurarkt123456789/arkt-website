@@ -1,37 +1,38 @@
 {
   "slug": "aixploreuse",
-  "numero": "D-2026-003",
+  "numero": "",
   "date": "2026-11-09",
   "validite_jours": 30,
   "client": {
     "societe": "Aixploreuse",
-    "secteur": "Voyages et séjours outdoor féminins, séminaires entreprises",
-    "contact": "Émilie, Fondatrice · Charlotte Duarte, Associée",
+    "secteur": "Voyages et séjours outdoor pour femmes, séminaires entreprises",
+    "contact": "Émilie Robert, Fondatrice · Charlotte Duarte, Associée",
     "fonction": "",
     "email": ""
   },
-  "accroche": "Faire d'Aixploreuse une marque qui dépasse sa fondatrice, poser l'offre entreprises, et construire le site et les canaux qui font passer de 200 à 600 k€.",
-  "contexte": "Aixploreuse a construit son offre en trois ans : les journées, puis les séjours et voyages, et désormais les projets pour entreprises. 2027 est l'année du changement d'échelle, avec une associée au capital. Ce qui manque : une marque qui tient sans reposer sur une seule personne, une réponse claire sur l'offre entreprises, un site qui convertit et un plan de canaux qui tient dans la durée.",
+  "accroche": "Donner à Aixploreuse les moyens de ce que vous construisez depuis 2019 : une marque qui tient à deux, une offre entreprises assumée, un site qui fait réserver et des canaux qui font revenir.",
+  "contexte": "Aixploreuse est née d'une conviction : les femmes ont besoin d'un espace d'évasion à elles, sans logique de performance. En trois saisons, l'offre s'est construite par étapes : les demi-journées, puis les séjours et les voyages, puis les séminaires pour entreprises. 2027 est l'année où l'agence change de dimension, avec Charlotte au capital et l'objectif de tripler l'activité. Ce qui suit, c'est ce qu'on a compris de votre situation et ce qu'on propose pour y arriver sans perdre ce qui fait Aixploreuse.",
   "enjeux": [
-    "Émilie porte Aixploreuse seule depuis des années. Les clientes sont attachées à elle, et pour beaucoup Aixploreuse, c'est elle. Pour grandir, la marque doit pouvoir exister sans qu'Émilie soit sur chaque départ, sans perdre ce lien qui fait revenir.",
-    "Charlotte Duarte entre au capital. Fondatrice de Peach Pilates Club, elle développe un projet de pilates reformer mobile dans sa propre structure. L'architecture doit dire ce qui relève d'Aixploreuse, ce qui relève de Charlotte, et où les deux se croisent : séjours, hôtels, entreprises.",
-    "Deux publics. Aixploreuse reste la marque dédiée aux femmes. L'offre entreprises est mixte. Marque à part ou déclinaison : la question est ouverte. On la tranche dans le lot 01 sur des critères précis : lisibilité pour l'acheteur RH, crédibilité transférée, coût d'animation de deux marques.",
-    "L'objectif est chiffré : passer de 200 à 600 k€. Aujourd'hui, 13 séminaires B2B et 55 séjours ou voyages B2C à 1 200 € de panier moyen. Tripler suppose plus de départs, un panier moyen plus élevé et une part B2B nettement plus forte. Le rachat possible d'un groupe deux à trois fois plus gros s'ajoute à l'équation.",
-    "Votre cliente : salariée ou entrepreneure à parts égales, souvent maman, pas toujours célibataire, sportive sans être compétitrice. Elle cherche une parenthèse, un groupe et une organisation irréprochable. Les acteurs installés (Terres d'Aventure, Copines de voyage) sont perçus comme industriels, sentiers battus, logistique limitée. La place du voyage outdoor féminin, soigné et à taille humaine, est ouverte.",
-    "Le site Webflow existe mais ne vend pas : pas de prix visibles, disponibilités illisibles, pas de parcours de réservation clair. Mailchimp et le CRM sont en place mais ne servent aucun plan de fidélisation.",
-    "Le budget média est de 500 € par mois. À ce niveau, chaque euro va sur des campagnes précises, portées par des contenus forts et par les canaux gratuits : SEO, emailing, communauté, partenariats, et le voyage-récit autour d'une personnalité."
+    "Vous avez déjà beaucoup construit. Une agence certifiée, un diplôme d'accompagnatrice en moyenne montagne, une équipe d'encadrantes, des séjours sans classement par niveau, des partenaires comme Samaya, des séminaires menés pour Thales, Ponant ou Sanofi, des podcasts et des portraits dans la presse. Rien de tout cela n'apparaît assez sur le site. La première chose à faire est de montrer ce qui existe.",
+    "Aixploreuse, pour vos clientes, c'est Émilie. C'est une force : elles reviennent pour la façon dont vous les accueillez, le tour de table du premier soir, le déjeuner de bilan. Vous avez déjà commencé à distinguer la personne de l'entreprise. L'étape suivante consiste à mettre des mots sur ce que vous transmettez, pour que d'autres puissent le porter à vos côtés sans que la chaleur se perde.",
+    "Charlotte arrive avec Peach Pilates Club, un studio reformer à Aubagne cofondé avec une kinésithérapeute, et un projet de reformer mobile dans les hôtels. Pilates et Aixploreuse se croisent déjà, d'Hossegor à « Novembre pour soi ». Il faut maintenant dire clairement ce qui relève d'Aixploreuse, ce qui relève de Charlotte, et où les deux se retrouvent : séjours, hôtels, entreprises.",
+    "L'offre entreprises existe, elle est mixte, et elle s'adresse à des acheteurs qui ne se reconnaissent pas dans « pour les femmes intrépides ». Marque à part, sous-marque ou simple déclinaison : on tranche ensemble, sur des critères concrets. Lisibilité pour un RH, crédibilité transférée depuis Aixploreuse, et ce que coûte d'animer deux marques quand on est deux.",
+    "Vos clientes ont entre 30 et 60 ans, souvent mamans, salariées ou entrepreneures à parts égales. Vous le dites mieux que nous : leur frein, c'est la peur. Peur de ralentir le groupe, de ne connaître personne, de dépenser pour soi. Tout ce qu'on écrira, sur le site comme en publicité, doit répondre à ces peurs avant de parler de dénivelé.",
+    "Face à vous, des acteurs installés (Terres d'Aventure, Copines de voyage) que vos clientes décrivent comme industriels : sentiers battus, groupes anonymes, logistique approximative. Votre différence est déjà là, dans la taille des groupes, l'encadrement féminin, les partenaires locaux et l'absence de niveaux. Elle mérite d'être écrite noir sur blanc.",
+    "Le chemin est chiffré : 200 k€ aujourd'hui, 600 k€ visés, avec 13 séminaires et 55 séjours ou voyages à 1 200 € de panier moyen. Tripler passe par plus de départs remplis, un panier moyen plus élevé et une part entreprises nettement plus forte. Le rachat possible d'un groupe plus gros s'ajoute à l'équation : la marque doit pouvoir l'accueillir.",
+    "Le site raconte bien, il ne fait pas assez réserver. Pas de prix visibles, des disponibilités difficiles à lire, un parcours de réservation qui hésite entre boutique et agence. Mailchimp et le CRM sont là mais ne servent pas encore à faire revenir. Avec 500 € de média par mois, c'est sur ce socle qu'il faut travailler d'abord."
   ],
   "lots": [
     {
       "titre": "Plateforme de marque et architecture",
       "tarif_id": "strategie-marque",
-      "description": "On commence par ce qui fait Aixploreuse au-delà d'Émilie : ce que les clientes viennent chercher, ce qu'elles racontent en rentrant, ce qui doit rester quand l'équipe s'élargit. Puis on tranche l'architecture : la place de Charlotte et de son activité pilates, et le statut de l'offre entreprises, marque à part ou déclinaison. On pose le positionnement face aux acteurs installés et les messages par cible.",
+      "description": "On commence par vous deux. Un atelier pour poser ce qui fait Aixploreuse au-delà d'Émilie : ce que les femmes viennent chercher, ce qu'elles racontent en rentrant, ce qui doit rester quand l'équipe s'élargit. Puis on construit l'architecture : la place de Charlotte et du pilates, le statut de l'offre entreprises, le lien entre les deux. On termine par le positionnement face aux acteurs installés et les messages pour chaque public.",
       "livrables": [
-        "Atelier fondatrices : ce qui fait la marque hors de la personne",
-        "Architecture : Aixploreuse, offre entreprises, passerelles pilates",
+        "Atelier fondatrices : ce que la marque transmet, et comment",
+        "Architecture : Aixploreuse, offre entreprises, passerelles pilates et hôtels",
         "Décision marque à part ou déclinaison, nom si besoin (pistes : Coévasion by Aixploreuse, Business Outdoor)",
         "Positionnement face à Terres d'Aventure et Copines de voyage",
-        "Messages par cible : femmes B2C, RH et dirigeants B2B"
+        "Messages par public : les femmes, les RH et dirigeants, les partenaires"
       ],
       "quantite": 1,
       "unite": "forfait",
@@ -40,9 +41,9 @@
     {
       "titre": "Identité visuelle : évolution et déclinaison entreprises",
       "tarif_id": "identite-complete",
-      "description": "Faire évoluer l'identité Aixploreuse pour qu'elle porte la marque sans le visage de sa fondatrice, et la décliner pour l'offre entreprises selon l'architecture retenue au lot 01. Direction artistique ARKT, exécution par notre graphiste. Livré avec les gabarits dont vous avez besoin au quotidien.",
+      "description": "Faire évoluer l'identité d'Aixploreuse pour qu'elle porte la marque à deux voix, et la décliner pour l'offre entreprises selon l'architecture retenue. On garde ce qui vous ressemble, on retravaille ce qui freine. Direction artistique ARKT, exécution par notre graphiste, et des gabarits que vous pourrez utiliser seules au quotidien.",
       "livrables": [
-        "Audit du logo actuel : conservé, retouché ou redessiné",
+        "Audit du logo et de l'univers actuels : ce qu'on garde, ce qu'on fait évoluer",
         "Système : couleurs, typographies, illustrations, règles photo",
         "Déclinaison entreprises : logo ou endossement, palette, ton",
         "Gabarits réseaux sociaux et newsletter",
@@ -55,11 +56,11 @@
     {
       "titre": "Stratégie de communication et plan de canaux",
       "tarif_id": "strat-acquisition",
-      "description": "Cartographie de tous les canaux à activer pour rester dans la tête de vos clientes et des entreprises, calendrier annuel calé sur les saisons de départ, programme de fidélisation, et stratégie Meta Ads dimensionnée pour 500 € par mois. Un tableau de bord simple pour suivre réservations, panier moyen et coût par réservation.",
+      "description": "La liste complète des canaux pour rester présentes dans la tête de vos clientes et des entreprises, avec un rôle pour chacun. Un calendrier annuel calé sur vos saisons de départ. Un programme pour faire revenir celles qui sont déjà parties. Une stratégie Meta Ads taillée pour 500 € par mois. Et un tableau de bord simple : réservations, panier moyen, coût par réservation.",
       "livrables": [
-        "Cartographie des canaux : owned, earned, paid, B2C et B2B",
+        "Cartographie des canaux, femmes et entreprises, avec leur rôle",
         "Calendrier éditorial annuel par saison",
-        "Programme de fidélisation : parrainage, avant-première, club",
+        "Programme de fidélisation : parrainage, avant-première, club des Aixploreuses",
         "Passerelles avec la communauté Peach Pilates Club",
         "Stratégie Meta Ads : axes, ciblages, répartition des 500 €",
         "Tableau de bord de pilotage"
@@ -69,15 +70,16 @@
       "prix_unitaire": 2000
     },
     {
-      "titre": "Refonte du site Webflow : conversion et SEO",
+      "titre": "Refonte du site Webflow : conversion et référencement",
       "tarif_id": "site-vitrine",
-      "description": "Refonte des pages clés sur votre Webflow actuel, dans la nouvelle identité. Prix, dates et places restantes visibles, parcours de réservation clair, séparation nette des parcours femmes et entreprises. Pages destinations et thèmes conçues pour le référencement. Mailchimp et CRM reliés au site. Tracking complet.",
+      "description": "On reste sur votre Webflow et on retravaille les pages qui comptent, dans la nouvelle identité. Prix, dates et places visibles. Un parcours de réservation clair. Deux entrées nettes, femmes et entreprises. Une place pour vos preuves : presse, podcasts, partenaires, témoignages. Des pages destinations et thèmes pensées pour le référencement. Mailchimp et le CRM reliés au site.",
       "livrables": [
-        "Page d'accueil orientée réservation, entrée B2C / B2B",
+        "Page d'accueil orientée réservation, entrées femmes et entreprises",
         "Fiches expérience : prix, dates, places, inclus, réservation",
-        "Pages SEO destinations et thèmes",
+        "Page preuves : presse, podcasts, partenaires, références entreprises",
+        "Pages référencement destinations et thèmes",
         "Connexion Mailchimp et CRM, formulaires, automatisations",
-        "Tracking Meta, GA4, conversions"
+        "Mesure des conversions Meta et GA4"
       ],
       "quantite": 1,
       "unite": "forfait",
@@ -88,7 +90,7 @@
     {
       "titre": "Concept « voyage-récit »",
       "tarif_id": "concept-recit",
-      "description": "Cadrage du format autour d'une personnalité : grille de thèmes (mouvement, confiance en soi, argent, amour), dispositif de captation par un observateur, découpage en mini-série, dossier d'approche personnalités et marques partenaires.",
+      "description": "Cadrage du format imaginé avec Charlotte : un voyage autour d'une personnalité et d'un thème (mouvement, confiance en soi, argent, amour), un groupe de femmes comme les autres, une observatrice qui capte images et émotions, une mini-série à la sortie. Dossier d'approche personnalités et marques partenaires inclus.",
       "quantite": 1,
       "unite": "forfait",
       "prix_unitaire": 1800
@@ -96,7 +98,7 @@
     {
       "titre": "Collection merch",
       "tarif_id": "merch",
-      "description": "Direction créative d'une première capsule de 3 à 5 pièces, sourcing fournisseurs, mise en vente sur le site et remise aux participantes.",
+      "description": "Direction créative d'une première capsule de 3 à 5 pièces, sourcing fournisseurs, mise en vente sur le site et remise aux participantes en fin de séjour.",
       "quantite": 1,
       "unite": "forfait",
       "prix_unitaire": 1500
@@ -104,7 +106,7 @@
     {
       "titre": "Pilotage Meta Ads et emailing, 6 mois",
       "tarif_id": "acquisition",
-      "description": "Gestion des campagnes Meta Ads (budget média de 500 € par mois non inclus), newsletter mensuelle Mailchimp, automatisations avant et après départ. Démarrage à la mise en ligne du site.",
+      "description": "Gestion des campagnes Meta Ads (budget média de 500 € par mois non inclus), newsletter mensuelle, automatisations avant et après départ. Démarrage à la mise en ligne du site.",
       "quantite": 6,
       "unite": "mois",
       "prix_unitaire": 800,
@@ -113,7 +115,7 @@
     {
       "titre": "Community management Instagram, 6 mois",
       "tarif_id": "cm-instagram",
-      "description": "Ligne éditoriale, production des contenus depuis vos départs et rushes, publication, animation de la communauté et des messages privés.",
+      "description": "Ligne éditoriale, production des contenus à partir de vos départs et de vos rushes, publication, réponses aux messages. Vous restez la voix, on tient le rythme.",
       "quantite": 6,
       "unite": "mois",
       "prix_unitaire": 1900,
@@ -126,32 +128,32 @@
     "axes": [
       {
         "titre": "Rester dans la tête",
-        "detail": "Instagram comme vitrine des départs, newsletter mensuelle, articles SEO destinations et thèmes, groupe WhatsApp des anciennes participantes, LinkedIn de la fondatrice pour le B2B."
+        "detail": "Instagram comme journal des départs, newsletter mensuelle, pages référencement destinations et thèmes, groupe WhatsApp des anciennes participantes, LinkedIn d'Émilie et de Charlotte pour les entreprises."
       },
       {
         "titre": "Faire venir",
-        "detail": "Meta Ads sur les prochains départs, partenariats avec des marques outdoor et de sport féminin, presse et médias locaux, personnalités invitées, prospection directe des entreprises et CSE pour les séminaires."
+        "detail": "Meta Ads sur les prochains départs, partenariats avec des marques outdoor et de sport féminin dans la lignée de Samaya, presse et podcasts où vous êtes déjà présentes, personnalités invitées, prospection directe des entreprises et CSE."
       },
       {
         "titre": "Faire revenir",
-        "detail": "Parrainage, accès en avant-première aux nouvelles dates, club des Aixploreuses avec avantages, merch remis en fin de séjour, relances automatisées après chaque départ."
+        "detail": "Parrainage entre participantes, accès en avant-première aux nouvelles dates, club des Aixploreuses, merch remis en fin de séjour, message personnel après chaque départ."
       }
     ],
     "ciblages_label": "Répartition des 500 € média",
     "ciblages": [
-      "70 % sur la conversion : départs à venir, retargeting des visiteuses du site et des inscrites newsletter, audiences similaires aux clientes",
-      "30 % sur la notoriété : femmes 30 à 50 ans, région Sud et grandes villes, centres d'intérêt randonnée, yoga, voyage, bien-être",
-      "B2B sans média payant : LinkedIn organique, prospection directe, réseaux d'entreprises"
+      "70 % sur la conversion : départs à venir, visiteuses du site et inscrites à la newsletter, audiences similaires à vos clientes",
+      "30 % sur la notoriété : femmes 30 à 60 ans, région Sud et grandes villes, centres d'intérêt randonnée, yoga, pilates, voyage, bien-être",
+      "Entreprises sans média payant : LinkedIn, prospection directe, réseaux d'entreprises et CSE"
     ],
     "storyboards_label": "Formats type",
     "storyboards": [
       {
         "format": "Reel 20 s - Une journée avec les Aixploreuses",
-        "script": "Lever du jour, sac sur le dos, rires du groupe, bivouac. Texte à l'écran : « Elles ne se connaissaient pas vendredi. » Fin : prochain départ, date, places restantes."
+        "script": "Lever du jour, sacs sur le dos, rires du groupe, bivouac. Texte à l'écran : « Elles ne se connaissaient pas vendredi. » Fin : prochain départ, date, places restantes."
       },
       {
         "format": "Carrousel - Témoignage participante",
-        "script": "Slide 1 : « J'avais peur de partir seule. » Slides 2 à 4 : trois moments du séjour, en photo. Slide 5 : « Rejoindre le prochain départ. »"
+        "script": "Slide 1 : « J'avais peur de ralentir le groupe. » Slides 2 à 4 : trois moments du séjour, en photo. Slide 5 : « Personne ne reste derrière. Prochain départ le 14 mars. »"
       },
       {
         "format": "Story 6 s - Places restantes",
@@ -159,28 +161,28 @@
       },
       {
         "format": "Vidéo 45 s - Séminaire entreprises",
-        "script": "Une équipe en extérieur, un atelier, un repas. Voix off de la fondatrice sur ce qu'un séminaire outdoor change dans une équipe. Fin : demande de devis."
+        "script": "Une équipe en extérieur, un atelier, un repas partagé. Voix off d'Émilie sur ce qu'une journée dehors change dans une équipe. Fin : demande de devis."
       }
     ]
   },
   "partenaires": {
     "section_titre": "Personnalités et partenaires",
-    "section_lead": "Des alliances qui donnent au voyage-récit sa portée et à l'offre entreprises ses premiers clients.",
+    "section_lead": "Des alliances qui donnent au voyage-récit sa portée et à l'offre entreprises ses prochains clients.",
     "cols": [
       {
         "label": "Personnalités invitées",
         "items": [
           {
             "profil": "Laure Manaudou",
-            "pourquoi": "Championne olympique de natation. Une figure du dépassement qui parle à des femmes sportives sans être compétitrices. Piste évoquée pour un premier voyage-récit."
+            "pourquoi": "Championne olympique de natation. Une figure du dépassement qui parle à des femmes sportives sans être compétitrices. Piste évoquée par Charlotte pour un premier voyage-récit."
           },
           {
             "profil": "Cindy Poumerol",
-            "pourquoi": "Seconde piste évoquée en réunion. Profil et angle à cadrer dans le dossier d'approche."
+            "pourquoi": "Seconde piste évoquée par Charlotte. On cadre l'angle avec vous dans le dossier d'approche."
           },
           {
             "profil": "Une voix par thème",
-            "pourquoi": "Pour chaque thème de société retenu (mouvement, confiance en soi, argent, amour), une personnalité légitime sur le sujet, autour d'un groupe de femmes « comme les autres »."
+            "pourquoi": "Pour chaque thème retenu (mouvement, confiance en soi, argent, amour), une personnalité légitime sur le sujet, autour d'un groupe de femmes comme les autres."
           }
         ]
       },
@@ -189,15 +191,15 @@
         "items": [
           {
             "profil": "Entreprises et CSE de la région",
-            "pourquoi": "Premier vivier de séminaires. Une cible accessible en prospection directe, sans budget média."
+            "pourquoi": "Thales, Ponant, Sanofi vous font déjà confiance. Ces références ouvrent les portes des suivantes, en prospection directe, sans budget média."
           },
           {
             "profil": "Marques outdoor et sport féminin",
-            "pourquoi": "Dotation des participantes, co-branding du merch, visibilité croisée sur les contenus des voyages."
+            "pourquoi": "Dans la lignée de Samaya : dotation des participantes, co-branding du merch, visibilité croisée sur les contenus des voyages."
           },
           {
             "profil": "Réseaux de femmes entrepreneures",
-            "pourquoi": "La moitié de vos clientes sont entrepreneures. Ces réseaux sont un canal de recrutement direct pour les séjours et un relais pour l'offre entreprises."
+            "pourquoi": "La moitié de vos clientes sont entrepreneures. Ces réseaux recrutent pour les séjours et relaient l'offre entreprises."
           }
         ]
       }
@@ -222,7 +224,7 @@
     { "etape": "Démarrage du pilotage (si retenu)", "duree": "à la mise en ligne" }
   ],
   "conditions": {
-    "paiement": "50 % à la signature, 50 % à la livraison. Possibilité d'échelonner en deux temps : lots 01 et 02 (marque), puis lots 03 et 04 (croissance), la remise restant acquise si les quatre lots sont engagés.",
+    "paiement": "50 % à la signature, 50 % à la livraison. Les lots peuvent être engagés en deux temps pour lisser la trésorerie : marque d'abord (lots 01 et 02), croissance ensuite (lots 03 et 04). La remise reste acquise si les quatre lots sont engagés.",
     "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
   },
   "projets_refs": ["racine", "airbnb", "palauma"],
