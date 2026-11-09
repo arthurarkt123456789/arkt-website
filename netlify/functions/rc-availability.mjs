@@ -1,6 +1,6 @@
 // GET /.netlify/functions/rc-availability            -> calendrier (toute la période)
 // GET /.netlify/functions/rc-availability?date=YYYY-MM-DD -> détail des 4 services
-import { CONFIG, json, sbRpc, isValidDate, minutesUntil } from "../lib/rc.mjs";
+import { CONFIG, json, sbRpc, isValidDate, minutesUntil, errDetail } from "../lib/rc.mjs";
 
 export const handler = async (event) => {
   if (event.httpMethod !== "GET") return json(405, { error: "Method Not Allowed" });
@@ -39,6 +39,6 @@ export const handler = async (event) => {
     return json(200, { date, services }, noStore);
   } catch (e) {
     console.error(e);
-    return json(500, { error: "Disponibilités indisponibles" });
+    return json(500, { error: "Disponibilités indisponibles", detail: errDetail(e), env: { SUPABASE_URL: Boolean(process.env.SUPABASE_URL), SUPABASE_SERVICE_KEY: Boolean(process.env.SUPABASE_SERVICE_KEY) } });
   }
 };

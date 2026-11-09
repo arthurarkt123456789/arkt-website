@@ -18,6 +18,9 @@ export const CONFIG = {
   REPLY_TO: process.env.RC_REPLY_TO || "hello@lameulerie.com",
 };
 
+/** Message d'erreur court et sans secret, renvoyé au client pour diagnostiquer la config. */
+export const errDetail = (e) => String(e?.message || e).replace(/sb_secret_\S+|eyJ\S+/g, "***").slice(0, 300);
+
 export const json = (statusCode, body, headers = {}) => ({
   statusCode,
   headers: { "Content-Type": "application/json; charset=utf-8", ...headers },
@@ -57,11 +60,15 @@ export const isValidService = (s) => CONFIG.SERVICES.includes(s);
 
 // ---------- Supabase ----------
 function sbHeaders(extra = {}) {
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  return { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json", ...extra };
+  const key = (process.env.SUPABASE_SERVICE_KEY || "").trim();
+  if (!key) throw new Error("SUPABASE_SERVICE_KEY manquant");
+  // Clé legacy service_role (JWT) : apikey + Authorization. Nouvelle clé sb_secret_… : apikey suffit.
+  const h = { apikey: key, "Content-Type": "application/json", ...extra };
+  if (key.startsWith("eyJ")) h.Authorization = `Bearer ${key}`;
+  return h;
 }
 function sbUrl(path) {
-  const base = (process.env.SUPABASE_URL || "").replace(/\/$/, "");
+  const base = (process.env.SUPABASE_URL || "").trim().replace(/\/+$/, "");
   if (!base) throw new Error("SUPABASE_URL manquant");
   return `${base}/rest/v1${path}`;
 }
