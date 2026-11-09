@@ -83,10 +83,9 @@
     </div>
     <div class="phone" id="phone">
       <div class="phone-notch"></div>
-      <video id="tdpVideo" muted loop playsinline preload="none" poster="assets/video-tdp-poster.jpg" aria-label="Vidéo La Meulerie x Les Terrasses du Port">
+      <video id="tdpVideo" muted loop playsinline disablepictureinpicture preload="none" poster="assets/video-tdp-poster.jpg" aria-label="Vidéo La Meulerie x Les Terrasses du Port">
         <source src="assets/video-tdp.mp4" type="video/mp4" />
       </video>
-      <button class="phone-sound" id="soundBtn" type="button" aria-label="Activer le son">🔇</button>
     </div>
   </div>
 </section>
@@ -425,7 +424,7 @@
 
   // ---------- Vidéo iPhone : chargement quand visible, son au clic ----------
   (() => {
-    const v = document.getElementById('tdpVideo'), btn = document.getElementById('soundBtn');
+    const v = document.getElementById('tdpVideo');
     if (!v) return;
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
@@ -434,9 +433,6 @@
       });
     }, { threshold: 0.35 });
     io.observe(v);
-    const toggle = () => { v.muted = !v.muted; btn.textContent = v.muted ? '🔇' : '🔊'; btn.setAttribute('aria-label', v.muted ? 'Activer le son' : 'Couper le son'); if (!v.muted) v.play().catch(() => {}); };
-    btn.addEventListener('click', toggle);
-    v.addEventListener('click', toggle);
   })();
 
   loadDays();
