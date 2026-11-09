@@ -12,7 +12,7 @@ export const CONFIG = {
   PRIVATE_MIN: 8,           // à partir de 8, la bulle est privatisée
   PRIVATE_MAX: 10,          // jusqu'à 10 pour un seul groupe
   FIRST_DAY: "2026-11-27",
-  LAST_DAY: "2026-12-30",
+  LAST_DAY: "2026-12-24",
   HOLD_MINUTES: 30,
   BOOKING_CLOSE_MIN: 60,       // fermeture des résas en ligne : 60 min avant le service
   CANCEL_HOURS: 48,            // annulation client possible jusqu'à 48 h avant

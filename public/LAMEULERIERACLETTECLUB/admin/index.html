@@ -80,7 +80,7 @@
   <h1>Raclette Club · Admin</h1>
   <div class="nav" id="nav">
     <button class="ghost" style="color:#fff;border-color:#fff" id="prev">◀</button>
-    <input type="date" id="date" min="2026-11-27" max="2026-12-30" />
+    <input type="date" id="date" min="2026-11-27" max="2026-12-24" />
     <button class="ghost" style="color:#fff;border-color:#fff" id="next">▶</button>
     <button class="primary" id="today">Aujourd'hui</button>
     <button id="export">Export CSV</button>
@@ -107,7 +107,7 @@
 <dialog id="dlgManual">
   <h3>Réservation manuelle</h3>
   <form class="f" method="dialog" id="formManual">
-    <div class="row2"><div><label>Date</label><input type="date" name="date" required min="2026-11-27" max="2026-12-30" /></div><div><label>Service</label><select name="service"><option>12:00</option><option>14:00</option><option>19:00</option><option>21:00</option></select></div></div>
+    <div class="row2"><div><label>Date</label><input type="date" name="date" required min="2026-11-27" max="2026-12-24" /></div><div><label>Service</label><select name="service"><option>12:00</option><option>14:00</option><option>19:00</option><option>21:00</option></select></div></div>
     <div class="row2"><div><label>Adultes</label><input type="number" name="adults" min="0" max="10" value="2" /></div><div><label>Enfants</label><input type="number" name="kids" min="0" max="10" value="0" /></div></div>
     <div><label>Nom</label><input name="name" required /></div>
     <div class="row2"><div><label>Email</label><input name="email" type="email" /></div><div><label>Téléphone</label><input name="phone" /></div></div>
@@ -157,7 +157,7 @@
   const fmtLong = (d) => new Date(d + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
   const fmtShort = (d) => { const x = new Date(d + 'T12:00:00'); return { dow: x.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', ''), num: x.getDate() }; };
   const parisToday = () => new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Paris' }).format(new Date());
-  const clamp = (d) => d < '2026-11-27' ? '2026-11-27' : d > '2026-12-30' ? '2026-12-30' : d;
+  const clamp = (d) => d < '2026-11-27' ? '2026-11-27' : d > '2026-12-24' ? '2026-12-24' : d;
   const addDays = (d, n) => { const x = new Date(d + 'T12:00:00'); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
 
   // ---------- Auth ----------

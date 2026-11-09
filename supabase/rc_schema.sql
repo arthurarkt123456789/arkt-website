@@ -47,11 +47,11 @@ create index if not exists rc_bookings_slot_idx on rc_bookings(slot_id);
 create index if not exists rc_bookings_date_idx on rc_bookings(date);
 create index if not exists rc_bookings_email_idx on rc_bookings(email);
 
--- ---------- Génération des créneaux : 27/11 -> 30/12/2026 ----------
+-- ---------- Génération des créneaux : 27/11 -> 24/12/2026 (dernier service le 24 à 14h) ----------
 -- Exceptions : 24/12 soir (19h, 21h) et 25/12 toute la journée.
 insert into rc_slots (date, service, bubble)
 select d::date, s, b
-from generate_series('2026-11-27'::date, '2026-12-30'::date, interval '1 day') d
+from generate_series('2026-11-27'::date, '2026-12-24'::date, interval '1 day') d
 cross join unnest(array['12:00','14:00','19:00','21:00']) s
 cross join generate_series(1,5) b
 where not (d::date = '2026-12-25')

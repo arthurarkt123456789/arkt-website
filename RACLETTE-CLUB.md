@@ -27,7 +27,7 @@ Page publique : `/LAMEULERIERACLETTECLUB/` · Admin : `/LAMEULERIERACLETTECLUB/a
 
 ## Règles métier
 
-- 5 bulles × 8 places, services 12h, 14h, 19h, 21h, du 27/11 au 30/12. Fermé le 24 au soir et le 25.
+- 5 bulles × 8 places, services 12h, 14h, 19h, 21h, du 27/11 au 24/12, dernier service le 24 à 14h.
 - 1 à 7 places : placé dans la bulle ouverte la plus remplie qui peut l'accueillir (8 places vendues par bulle en partagé). 8 à 10 places en une seule réservation : privatisation, bulle vide obligatoire.
 - Adulte 36 €, enfant 24 €, au moins un adulte par réservation.
 - Places bloquées 30 min pendant le paiement (expiration automatique, pas de cron).

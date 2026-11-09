@@ -20,7 +20,7 @@ const PUBLIC = path.join(ROOT, "public");
 // ---------- Base en mémoire ----------
 const SERVICES = ["12:00", "14:00", "19:00", "21:00"];
 const slots = []; let slotId = 1;
-for (let d = new Date("2026-11-27T12:00:00Z"); d <= new Date("2026-12-30T12:00:00Z"); d.setUTCDate(d.getUTCDate() + 1)) {
+for (let d = new Date("2026-11-27T12:00:00Z"); d <= new Date("2026-12-24T12:00:00Z"); d.setUTCDate(d.getUTCDate() + 1)) {
   const date = d.toISOString().slice(0, 10);
   for (const s of SERVICES) for (let b = 1; b <= 5; b++) {
     if (date === "2026-12-25") continue;
