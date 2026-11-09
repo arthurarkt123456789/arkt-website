@@ -10,24 +10,24 @@
     "fonction": "",
     "email": ""
   },
-  "accroche": "Donner à Aixploreuse les moyens de ce que vous construisez depuis 2019 : une marque qui tient à deux, une offre entreprises assumée, un site qui fait réserver et des canaux qui font revenir.",
-  "contexte": "Aixploreuse est née d'une conviction : les femmes ont besoin d'un espace d'évasion à elles, sans logique de performance. En trois saisons, l'offre s'est construite par étapes : les demi-journées, puis les séjours et les voyages, puis les séminaires pour entreprises. 2027 est l'année où l'agence change de dimension, avec Charlotte au capital et l'objectif de tripler l'activité. Ce qui suit, c'est ce qu'on a compris de votre situation et ce qu'on propose pour y arriver sans perdre ce qui fait Aixploreuse.",
+  "accroche": "Faire passer Aixploreuse à l'étape suivante : une marque qui se porte à deux, une offre entreprises assumée, un site qui fait réserver et des canaux qui font revenir.",
+  "contexte": "Aixploreuse est née d'une conviction : les femmes ont besoin d'un espace d'évasion à elles, sans logique de performance. L'offre s'est construite par étapes : les demi-journées, puis les séjours et les voyages, puis les séminaires pour entreprises. 2027 est l'année où l'agence change de dimension, avec Charlotte au capital et l'objectif de tripler l'activité. Voici ce que nous avons compris de votre situation, et ce que nous proposons pour y arriver sans perdre ce qui fait Aixploreuse.",
   "enjeux": [
     {
       "titre": "Vous avez déjà beaucoup construit",
-      "texte": "Une agence certifiée, un diplôme d'accompagnatrice en moyenne montagne, une équipe d'encadrantes, des séjours sans classement par niveau, un partenaire comme Samaya, des séminaires pour Thales, Ponant ou Sanofi, des podcasts et des portraits dans la presse. Presque rien de tout cela n'apparaît sur le site. La première chose à faire est de montrer ce qui existe."
+      "texte": "Une agence certifiée, un diplôme d'accompagnatrice en moyenne montagne, une équipe d'encadrantes, des séjours sans classement par niveau, un partenaire comme Samaya, des séminaires pour Thales, Ponant ou Sanofi, des podcasts et des portraits dans la presse. Tout cela existe, mais reste dispersé : un article ici, un post là. La première chose à faire est de le rassembler et de le montrer."
     },
     {
       "titre": "Émilie est la marque, et c'est une force",
       "texte": "Vos clientes reviennent pour la façon dont vous les accueillez, le tour de table du premier soir, le déjeuner de bilan. Vous avez déjà commencé à distinguer la personne de l'entreprise. L'étape suivante : mettre des mots sur ce que vous transmettez, pour que d'autres puissent le porter à vos côtés sans que la chaleur se perde."
     },
     {
-      "titre": "Charlotte, le pilates et les hôtels",
+      "titre": "Charlotte, le pilates et l'hôtellerie",
       "texte": "Charlotte arrive avec Peach Pilates Club, un studio reformer à Aubagne, et un projet de reformer mobile dans les hôtels. Pilates et Aixploreuse se croisent déjà, d'Hossegor à « Novembre pour soi ». Il faut dire clairement ce qui relève d'Aixploreuse, ce qui relève de Charlotte, et où les deux se retrouvent."
     },
     {
       "titre": "L'offre entreprises cherche son nom",
-      "texte": "Elle existe, elle est mixte, et elle s'adresse à des acheteurs qui ne se reconnaissent pas dans « pour les femmes intrépides ». Marque à part, sous-marque ou déclinaison : on tranche ensemble, sur des critères concrets. Lisibilité pour un RH, crédibilité transférée depuis Aixploreuse, et ce que coûte d'animer deux marques quand on est deux."
+      "texte": "Elle existe, elle est mixte, et elle s'adresse à des acheteurs qui ne se reconnaissent pas dans « pour les femmes intrépides ». Marque à part, sous-marque ou déclinaison : on tranche ensemble, sur des critères concrets. Lisibilité pour un RH, crédibilité transférée depuis Aixploreuse, et ce que représente l'animation de deux marques pour une équipe de deux."
     },
     {
       "titre": "Leur frein, c'est la peur",
@@ -39,7 +39,7 @@
     },
     {
       "titre": "De 200 à 600 k€",
-      "texte": "13 séminaires et 55 séjours ou voyages à 1 200 € de panier moyen aujourd'hui. Tripler passe par plus de départs remplis, un panier moyen plus élevé et une part entreprises nettement plus forte. Le rachat possible d'un groupe plus gros s'ajoute à l'équation : la marque doit pouvoir l'accueillir."
+      "texte": "13 séminaires et 55 séjours ou voyages à 1 200 € de panier moyen aujourd'hui. Tripler passe par plus de départs remplis, un panier moyen plus élevé et une part entreprises nettement plus forte. L'hypothèse d'une croissance externe s'ajoute à l'équation : la marque doit pouvoir l'accueillir."
     },
     {
       "titre": "Le site raconte bien, il ne fait pas assez réserver",
@@ -112,9 +112,9 @@
   ],
   "options": [
     {
-      "titre": "Concept « voyage-récit »",
+      "titre": "Séjour autour d'une personnalité",
       "tarif_id": "concept-recit",
-      "description": "Le format est né quand Laure Manaudou a participé à un départ. L'idée : un séjour construit autour d'une personnalité et d'un thème (mouvement, confiance en soi, argent, amour), un groupe de femmes comme les autres, une observatrice qui capte images et émotions, une mini-série à la sortie. Dossier d'approche personnalités et marques partenaires inclus.",
+      "description": "Le format est né quand Laure Manaudou a participé à un départ. L'idée : un séjour construit autour d'une personnalité et d'un thème (mouvement, confiance en soi, argent, amour), un groupe de femmes comme les autres, une observatrice qui capte images et émotions, une mini-série à la sortie. Cadrage du format, dossier d'approche des personnalités et des marques partenaires.",
       "quantite": 1,
       "unite": "forfait",
       "prix_unitaire": 1800
@@ -177,11 +177,11 @@
       },
       {
         "format": "Carrousel - Témoignage participante",
-        "script": "Slide 1 : « J'avais peur de ralentir le groupe. » Slides 2 à 4 : trois moments du séjour, en photo. Slide 5 : « Personne ne reste derrière. Prochain départ le 14 mars. »"
+        "script": "Slide 1 : « J'avais peur de ralentir le groupe. » Slides 2 à 4 : trois moments du séjour, en photo. Slide 5 : « Personne ne reste derrière. » Prochain départ, date, places restantes."
       },
       {
         "format": "Story 6 s - Places restantes",
-        "script": "Fond photo du lieu. Texte : « Plus que 3 places pour le week-end du 14 mars. » Lien direct vers la fiche de réservation."
+        "script": "Fond photo du lieu. Texte : « Plus que 3 places pour le prochain week-end. » Lien direct vers la fiche de réservation."
       },
       {
         "format": "Vidéo 45 s - Séminaire entreprises",
@@ -201,8 +201,8 @@
             "pourquoi": "Figure de Koh-Lanta, première personnalité pressentie pour un séjour « centré sur » elle : son parcours, un thème, un groupe de femmes, un récit filmé."
           },
           {
-            "profil": "Laure Manaudou, la preuve que ça marche",
-            "pourquoi": "Sa participation à un départ a montré ce qu'une personnalité change dans un groupe. Le format part de cette expérience vécue, pas d'une idée sur le papier."
+            "profil": "Laure Manaudou, le format déjà testé",
+            "pourquoi": "Sa participation à un départ a montré ce qu'une personnalité change dans un groupe. Le séjour autour d'une personnalité part de cette expérience vécue."
           },
           {
             "profil": "Une voix par thème",
@@ -223,7 +223,7 @@
           },
           {
             "profil": "Réseaux de femmes entrepreneures et dirigeantes",
-            "pourquoi": "Un canal direct vers des femmes qui décident vite pour elles-mêmes, et un relais naturel vers l'offre entreprises."
+            "pourquoi": "Des femmes habituées à organiser leur temps et à investir sur elles. Un canal de recrutement pour les séjours et un relais naturel vers l'offre entreprises."
           }
         ]
       }
@@ -275,7 +275,7 @@
     }
   ],
   "conditions": {
-    "paiement": "50 % à la signature, 50 % à la livraison. Les lots peuvent être engagés en deux temps pour lisser la trésorerie : marque d'abord (lots 01 et 02), croissance ensuite (lots 03 et 04). La remise reste acquise si les quatre lots sont engagés.",
+    "paiement": "50 % à la signature, 50 % à la livraison. Les lots peuvent être engagés en deux temps pour répartir l'investissement : marque d'abord (lots 01 et 02), croissance ensuite (lots 03 et 04). La remise reste acquise si les quatre lots sont engagés.",
     "hors_brief": "Toute demande hors du périmètre décrit fait l'objet d'un avenant chiffré."
   },
   "projets_refs": [
