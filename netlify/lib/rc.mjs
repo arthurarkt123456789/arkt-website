@@ -231,6 +231,49 @@ export async function notifyConfirmation(b) {
   });
 }
 
+export function payUrlFor(b) {
+  return `${CONFIG.SITE}${CONFIG.BASE_PATH}/payer/?id=${b.id}&t=${b.cancel_token}`;
+}
+
+/** Crée une session Stripe Checkout pour une réservation en attente (hold). */
+export async function createCheckoutForBooking(b, expiresInMin = CONFIG.HOLD_MINUTES) {
+  const base = `${CONFIG.SITE}${CONFIG.BASE_PATH}`;
+  const label = `${fmtDate(b.date)} à ${b.service}`;
+  const lineItems = [];
+  if (b.adults) lineItems.push({ quantity: b.adults, price_data: { currency: "eur", unit_amount: CONFIG.ADULT_CENTS, product_data: { name: "Menu Raclette adulte", description: `Raclette Club · ${label}` } } });
+  if (b.kids) lineItems.push({ quantity: b.kids, price_data: { currency: "eur", unit_amount: CONFIG.KID_CENTS, product_data: { name: "Menu Raclette enfant", description: `Raclette Club · ${label}` } } });
+  const session = await stripe("POST", "/checkout/sessions", {
+    mode: "payment", locale: "fr", customer_email: b.email || undefined, client_reference_id: b.id, line_items: lineItems,
+    expires_at: Math.floor(Date.now() / 1000) + Math.max(30, expiresInMin) * 60,
+    success_url: `${base}/merci/?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: b.source === "admin" ? payUrlFor(b) : `${base}/?date=${b.date}&service=${encodeURIComponent(b.service)}&cancelled=1`,
+    metadata: { booking_id: b.id, date: b.date, service: b.service, bubble: b.bubble, adults: b.adults, kids: b.kids, name: b.name, phone: b.phone || "" },
+    payment_intent_data: { description: `Raclette Club ${label} · ${b.seats} pers. · ${b.name}`, metadata: { booking_id: b.id, date: b.date, service: b.service } },
+    custom_text: { submit: { message: "Boissons et desserts se règlent sur place. Annulation gratuite jusqu'à 48 h avant." } },
+  }, `rc-checkout-${b.id}-${Date.now()}`);
+  await sbPatch("rc_bookings", `id=eq.${b.id}`, { stripe_session_id: session.id });
+  return session;
+}
+
+export function holdEmailHtml(b) {
+  const tickets = [b.adults ? `${b.adults} menu${b.adults > 1 ? "s" : ""} adulte` : null, b.kids ? `${b.kids} menu${b.kids > 1 ? "s" : ""} enfant` : null].filter(Boolean).join(" + ");
+  const until = new Date(b.expires_at).toLocaleString("fr-FR", { timeZone: "Europe/Paris", weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
+  return `
+<div style="font-family:Poppins,Arial,sans-serif;max-width:560px;margin:0 auto;background:#F0EBDA;padding:28px;border-radius:24px;color:#111">
+  <h1 style="color:#0000FF;font-size:26px;margin:0 0 4px;letter-spacing:-.02em">La Meulerie Raclette Club</h1>
+  <p style="margin:0 0 20px;color:#333">Les Terrasses du Port, Marseille</p>
+  <div style="background:#fff;border-radius:18px;padding:20px;margin-bottom:16px">
+    <p style="margin:0 0 10px;font-size:18px"><strong>Votre table est bloquée</strong></p>
+    <p style="margin:6px 0"><strong>${esc(fmtDate(b.date))} à ${esc(b.service)}</strong> · ${esc(tickets)} · ${b.seats} place${b.seats > 1 ? "s" : ""}${b.seats >= CONFIG.PRIVATE_MIN ? " · bulle privatisée" : ""}</p>
+    <p style="margin:6px 0">Au nom de <strong>${esc(b.name)}</strong></p>
+    <p style="margin:12px 0 0;font-size:18px"><strong>${eur(b.amount_cents)}</strong> à régler en ligne</p>
+  </div>
+  <p style="text-align:center;margin:22px 0"><a href="${payUrlFor(b)}" style="display:inline-block;background:#F7F65C;color:#0B0B14;font-weight:900;padding:16px 28px;border-radius:999px;text-decoration:none;border:3px solid #0B0B14">Payer et confirmer ma table</a></p>
+  <p style="font-size:14px;color:#333;margin:0 0 6px">Les places vous sont réservées jusqu'au <strong>${esc(until)}</strong>. Sans paiement d'ici là, elles sont remises en vente.</p>
+  <p style="font-size:13px;color:#666;margin:18px 0 0">La Meulerie · hello@lameulerie.com</p>
+</div>`;
+}
+
 export function cancelUrlFor(b) {
   return `${CONFIG.SITE}${CONFIG.BASE_PATH}/annulation/?id=${b.id}&t=${b.cancel_token}`;
 }

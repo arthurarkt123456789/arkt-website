@@ -27,7 +27,8 @@ export const handler = async (event) => {
       }
       case "checkout.session.expired":
       case "checkout.session.async_payment_failed": {
-        await sbPatch("rc_bookings", `stripe_session_id=eq.${encodeURIComponent(session.id)}&status=eq.hold`, { status: "expired" });
+        // Les holds posés par l'admin (24 h) gardent leur propre échéance ; seuls les holds web expirent avec la session.
+        await sbPatch("rc_bookings", `stripe_session_id=eq.${encodeURIComponent(session.id)}&status=eq.hold&source=eq.web`, { status: "expired" });
         break;
       }
       default:

@@ -8,7 +8,7 @@
 // POST { action: 'manual',  date, service, adults, kids, name, email, phone, notes, sendEmail }
 // POST { action: 'cancel',  id, refund:true|false }
 // POST { action: 'move',    id, bubble }     -> déplace une résa vers une autre bulle du même service
-import { CONFIG, json, checkAdmin, sbRpc, sbSelect, sbPatch, stripe, notifyConfirmation, sendEmail, fmtDate, esc, eur } from "../lib/rc.mjs";
+import { CONFIG, json, checkAdmin, sbRpc, sbSelect, sbPatch, stripe, notifyConfirmation, sendEmail, fmtDate, esc, eur, payUrlFor, holdEmailHtml } from "../lib/rc.mjs";
 
 const csvCell = (v) => { const s = String(v ?? ""); return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
 
@@ -94,6 +94,35 @@ export const handler = async (event) => {
         }
         if (d.sendEmail && b.email) await notifyConfirmation(b);
         return json(200, { booking: b });
+      }
+
+      case "hold": {
+        // Bloque les places 24 h et renvoie un lien de paiement à transmettre au client
+        const adults = Number.parseInt(d.adults, 10) || 0, kids = Number.parseInt(d.kids, 10) || 0;
+        if (adults + kids < 1) return json(400, { error: "Au moins une place" });
+        const hours = Number(d.hours) > 0 ? Number(d.hours) : 24;
+        let b;
+        try {
+          b = await sbRpc("rc_hold", {
+            p_date: d.date, p_service: d.service, p_adults: adults, p_kids: kids,
+            p_name: String(d.name || "Réservation").trim(), p_email: String(d.email || "").trim(), p_phone: String(d.phone || "").trim(),
+            p_notes: String(d.notes || "").trim(), p_amount_cents: adults * CONFIG.ADULT_CENTS + kids * CONFIG.KID_CENTS,
+            p_hold_minutes: Math.round(hours * 60), p_source: "admin", p_status: "hold",
+          });
+        } catch (e) {
+          if (/NO_CAPACITY/.test(e.message)) return json(409, { error: "Pas de bulle ouverte avec assez de places" });
+          throw e;
+        }
+        const url = payUrlFor(b);
+        if (d.sendEmail && b.email) await sendEmail({ to: b.email, subject: `Votre table au Raclette Club est bloquée · ${fmtDate(b.date)} ${b.service}`, html: holdEmailHtml(b) });
+        return json(200, { booking: b, url });
+      }
+
+      case "extend": {
+        const hours = Number(d.hours) > 0 ? Number(d.hours) : 24;
+        const upd = await sbPatch("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&status=eq.hold&source=eq.admin`, { status: "hold", expires_at: new Date(Date.now() + hours * 3600000).toISOString() });
+        if (!upd.length) return json(404, { error: "Introuvable" });
+        return json(200, { booking: upd[0], url: payUrlFor(upd[0]) });
       }
 
       case "cancel": {

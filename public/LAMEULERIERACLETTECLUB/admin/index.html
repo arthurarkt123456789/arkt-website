@@ -64,6 +64,10 @@
     .f label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
     .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .acts-row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+    .modes{display:grid;gap:8px}
+    .mode{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--ink);border-radius:12px;padding:10px 12px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:.85rem;font-weight:600}
+    .mode input{width:auto;margin-top:3px}
+    .mode:has(input:checked){background:var(--yellow)}
     .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
     .toast.on{opacity:1}
     .toast.err{background:var(--red)}
@@ -126,7 +130,7 @@
     </section>
     <div class="overview" id="overview"></div>
     <div class="kpis" id="kpis"></div>
-    <div class="legend"><span><i style="background:var(--green)"></i>Payé</span><span><i style="background:var(--blue)"></i>Manuel</span><span><i style="background:var(--orange)"></i>Paiement en cours</span><span><i style="background:#fff"></i>Libre</span><span><i style="background:var(--grey)"></i>Bloqué</span></div>
+    <div class="legend"><span><i style="background:var(--green)"></i>Payé</span><span><i style="background:var(--blue)"></i>Manuel</span><span><i style="background:var(--orange)"></i>En attente de paiement</span><span><i style="background:#fff"></i>Libre</span><span><i style="background:var(--grey)"></i>Bloqué</span></div>
     <div class="grid" id="grid"></div>
     <table id="table"><thead><tr><th>Service</th><th>Bulle</th><th>Nom</th><th>Contact</th><th>Forfaits</th><th>Remarques</th><th>Statut</th><th></th></tr></thead><tbody></tbody></table>
   </div>
@@ -140,10 +144,21 @@
     <div><label>Nom</label><input name="name" required /></div>
     <div class="row2"><div><label>Email</label><input name="email" type="email" /></div><div><label>Téléphone</label><input name="phone" /></div></div>
     <div><label>Remarques</label><input name="notes" placeholder="Invités, presse, payé sur place…" /></div>
-    <div><label>Montant encaissé (€, 0 si offert)</label><input name="amount" type="number" step="0.01" min="0" value="0" /></div>
-    <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="sendEmail" style="width:auto" /> Envoyer l'email de confirmation au client</label>
-    <div class="acts-row"><button type="button" class="ghost" onclick="dlgManual.close()">Annuler</button><button class="primary" type="submit">Enregistrer</button></div>
+    <div class="modes">
+      <label class="mode"><input type="radio" name="mode" value="hold" checked /> <span><b>Bloquer 24 h + lien de paiement</b><br><small>Les places sont réservées 24 h. Le client paie via le lien que tu lui envoies.</small></span></label>
+      <label class="mode"><input type="radio" name="mode" value="manual" /> <span><b>Enregistrer directement</b><br><small>Payé sur place, offert, invité. Aucun paiement en ligne.</small></span></label>
+    </div>
+    <div id="manualOnly" class="hidden"><label>Montant encaissé (€, 0 si offert)</label><input name="amount" type="number" step="0.01" min="0" value="0" /></div>
+    <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="sendEmail" style="width:auto" /> <span id="sendEmailLabel">Envoyer le lien de paiement par email au client</span></label>
+    <div class="acts-row"><button type="button" class="ghost" onclick="dlgManual.close()">Annuler</button><button class="primary" type="submit" id="manualSubmit">Bloquer et générer le lien</button></div>
   </form>
+</dialog>
+
+<dialog id="dlgLink">
+  <h3>Table bloquée</h3>
+  <p id="linkInfo" style="font-weight:600;margin-bottom:12px"></p>
+  <div class="f"><label>Lien de paiement à envoyer au client</label><input id="linkUrl" readonly onclick="this.select()" /></div>
+  <div class="acts-row"><button class="ghost" onclick="dlgLink.close()">Fermer</button><button class="primary" id="linkCopy">Copier le lien</button></div>
 </dialog>
 
 <dialog id="dlgCancel">
@@ -296,26 +311,44 @@
       tr.innerHTML = `<td><b>${b.service.replace(':', 'h')}</b></td><td>${b.bubble}</td><td><b>${esc(b.name)}</b><br><small>${b.id.slice(0, 8).toUpperCase()} · ${b.source === 'admin' ? 'manuel' : 'web'}</small></td>
         <td>${b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a><br>` : ''}${b.phone ? `<a href="tel:${esc(b.phone)}">${esc(b.phone)}</a>` : ''}</td>
         <td>${tickets}<br><small>${(b.amount_cents / 100).toLocaleString('fr-FR')} €</small></td><td style="max-width:220px">${esc(b.notes || '')}</td>
-        <td><span class="pill ${b.status}">${{ paid: 'Payé', manual: 'Manuel', hold: 'En cours', cancelled: 'Annulé', expired: 'Expiré' }[b.status] || b.status}</span>${b.refund_id ? '<br><small>remboursé</small>' : ''}</td>
-        <td style="white-space:nowrap">${b.status !== 'cancelled' ? `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-move="${b.id}">Bulle</button> <button class="danger" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-cancel="${b.id}">Annuler</button>` : ''}</td>`;
+        <td><span class="pill ${b.status}">${b.status === 'hold' ? (b.source === 'admin' ? 'Attente paiement' : 'En cours') : ({ paid: 'Payé', manual: 'Manuel', cancelled: 'Annulé', expired: 'Expiré' }[b.status] || b.status)}</span>${b.status === 'hold' && b.expires_at ? `<br><small>jusqu'au ${new Date(b.expires_at).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</small>` : ''}${b.refund_id ? '<br><small>remboursé</small>' : ''}</td>
+        <td style="white-space:nowrap">${b.status === 'hold' && b.source === 'admin' ? `<button class="primary" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-link="${b.id}">Lien</button> <button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-extend="${b.id}">+24 h</button> ` : ''}${b.status !== 'cancelled' ? `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-move="${b.id}">Bulle</button> <button class="danger" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-cancel="${b.id}">Annuler</button>` : ''}</td>`;
       tb.appendChild(tr);
     });
     tb.querySelectorAll('[data-cancel]').forEach((b) => b.addEventListener('click', () => openCancel(b.dataset.cancel)));
     tb.querySelectorAll('[data-move]').forEach((b) => b.addEventListener('click', () => openMove(b.dataset.move)));
+    tb.querySelectorAll('[data-link]').forEach((b) => b.addEventListener('click', () => { const bk = day.bookings.find((x) => x.id === b.dataset.link); showLink(bk, `${location.origin}/LAMEULERIERACLETTECLUB/payer/?id=${bk.id}&t=${bk.cancel_token}`); }));
+    tb.querySelectorAll('[data-extend]').forEach((b) => b.addEventListener('click', async () => { try { const r = await api('POST', { action: 'extend', id: b.dataset.extend, hours: 24 }); toast('Prolongé de 24 h'); load(current); } catch (e) { toast(e.message, true); } }));
   }
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   // ---------- Résa manuelle ----------
   function openManual(svc) {
-    const f = $('formManual'); f.reset(); f.date.value = current; if (svc) f.service.value = svc; $('dlgManual').showModal();
+    const f = $('formManual'); f.reset(); f.date.value = current; if (svc) f.service.value = svc; syncMode(); $('dlgManual').showModal();
   }
+  const syncMode = () => {
+    const f = $('formManual'); const hold = f.mode.value === 'hold';
+    $('manualOnly').classList.toggle('hidden', hold);
+    $('manualSubmit').textContent = hold ? 'Bloquer et générer le lien' : 'Enregistrer';
+    $('sendEmailLabel').textContent = hold ? 'Envoyer le lien de paiement par email au client' : "Envoyer l'email de confirmation au client";
+  };
+  $('formManual').addEventListener('change', (e) => { if (e.target.name === 'mode') syncMode(); });
   $('formManual').addEventListener('submit', async (e) => {
-    e.preventDefault(); const f = e.target;
+    e.preventDefault(); const f = e.target; const hold = f.mode.value === 'hold';
+    const payload = { action: hold ? 'hold' : 'manual', date: f.date.value, service: f.service.value, adults: Number(f.adults.value), kids: Number(f.kids.value), name: f.name.value, email: f.email.value, phone: f.phone.value, notes: f.notes.value, sendEmail: f.sendEmail.checked };
+    if (!hold) payload.amountCents = Math.round(Number(f.amount.value || 0) * 100);
     try {
-      await api('POST', { action: 'manual', date: f.date.value, service: f.service.value, adults: Number(f.adults.value), kids: Number(f.kids.value), name: f.name.value, email: f.email.value, phone: f.phone.value, notes: f.notes.value, amountCents: Math.round(Number(f.amount.value || 0) * 100), sendEmail: f.sendEmail.checked });
-      $('dlgManual').close(); toast('Réservation enregistrée'); load(f.date.value); loadOverview(); loadStats();
+      const r = await api('POST', payload);
+      $('dlgManual').close(); load(f.date.value); loadOverview(); loadStats();
+      if (hold) showLink(r.booking, r.url); else toast('Réservation enregistrée');
     } catch (err) { toast(err.message, true); }
   });
+
+  function showLink(b, url) {
+    $('linkInfo').textContent = `${b.name} · ${fmtLong(b.date)} ${b.service.replace(':', 'h')} · bulle ${b.bubble} · ${b.seats} place(s) · ${(b.amount_cents / 100).toLocaleString('fr-FR')} € · places bloquées jusqu'au ${new Date(b.expires_at).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}`;
+    $('linkUrl').value = url; $('dlgLink').showModal();
+  }
+  $('linkCopy').addEventListener('click', async () => { try { await navigator.clipboard.writeText($('linkUrl').value); toast('Lien copié'); } catch { $('linkUrl').select(); document.execCommand('copy'); toast('Lien copié'); } });
 
   // ---------- Annulation ----------
   let cancelId = null;

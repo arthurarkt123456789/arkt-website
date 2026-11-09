@@ -33,7 +33,7 @@ Page publique : `/LAMEULERIERACLETTECLUB/` · Admin : `/LAMEULERIERACLETTECLUB/a
 - Places bloquées 30 min pendant le paiement (expiration automatique, pas de cron).
 - Réservation en ligne fermée 60 min avant le service.
 - Annulation client via le lien de l'email jusqu'à 48 h avant, remboursement Stripe automatique.
-- Admin : bloquer une bulle ou un service, réservation manuelle (avec ou sans email), annulation avec ou sans remboursement, déplacement de bulle, export CSV.
+- Admin : bloquer une bulle ou un service, réservation manuelle (avec ou sans email), blocage 24 h avec lien de paiement client (`/payer/?id=…&t=…`, prolongeable), annulation avec ou sans remboursement, déplacement de bulle, export CSV, dashboard (capacité, jauge, C.A.).
 
 Constantes modifiables dans `netlify/lib/rc.mjs` (`CONFIG`).
 

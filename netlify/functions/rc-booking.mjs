@@ -1,13 +1,14 @@
 // GET /.netlify/functions/rc-booking?session_id=cs_...   -> page merci
 // GET /.netlify/functions/rc-booking?id=<uuid>&t=<token>  -> page annulation (lecture)
 // POST /.netlify/functions/rc-booking { id, t }           -> annulation client + remboursement Stripe
-import { CONFIG, json, sbSelect, sbPatch, stripe, confirmPaidBooking, minutesUntil, sendEmail, fmtDate, esc, eur } from "../lib/rc.mjs";
+import { CONFIG, json, sbSelect, sbPatch, stripe, confirmPaidBooking, createCheckoutForBooking, minutesUntil, sendEmail, fmtDate, esc, eur } from "../lib/rc.mjs";
 
 const publicView = (b) => ({
   id: b.id, ref: b.id.slice(0, 8).toUpperCase(), date: b.date, service: b.service, bubble: b.bubble,
   adults: b.adults, kids: b.kids, seats: b.seats, name: b.name, email: b.email, amount_cents: b.amount_cents,
-  status: b.status, notes: b.notes,
+  status: b.status, notes: b.notes, expires_at: b.expires_at, source: b.source,
   cancellable: b.status === "paid" && minutesUntil(b.date, b.service) >= CONFIG.CANCEL_HOURS * 60,
+  payable: b.status === "hold" && b.source === "admin" && b.expires_at && new Date(b.expires_at) > new Date() && minutesUntil(b.date, b.service) > 0,
 });
 
 export const handler = async (event) => {
@@ -43,6 +44,15 @@ export const handler = async (event) => {
       const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id || "")}&cancel_token=eq.${encodeURIComponent(d.t || "")}&limit=1`);
       const b = rows[0];
       if (!b) return json(404, { error: "Lien invalide" });
+
+      if (d.action === "pay") {
+        const v = publicView(b);
+        if (b.status === "paid") return json(409, { error: "Cette réservation est déjà réglée." });
+        if (!v.payable) return json(409, { error: "Ce lien de paiement a expiré. Contactez-nous à hello@lameulerie.com." });
+        const remaining = Math.floor((new Date(b.expires_at) - Date.now()) / 60000);
+        const session = await createCheckoutForBooking(b, Math.min(remaining, 24 * 60));
+        return json(200, { url: session.url });
+      }
       if (b.status === "cancelled") return json(200, { booking: publicView(b), already: true });
       if (b.status !== "paid") return json(409, { error: "Cette réservation ne peut pas être annulée en ligne" });
       if (minutesUntil(b.date, b.service) < CONFIG.CANCEL_HOURS * 60) {
