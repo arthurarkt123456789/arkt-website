@@ -23,7 +23,7 @@
     },
     {
       "titre": "Charlotte, le pilates et les hôtels",
-      "texte": "Charlotte arrive avec Peach Pilates Club, un studio reformer à Aubagne cofondé avec une kinésithérapeute, et un projet de reformer mobile dans les hôtels. Pilates et Aixploreuse se croisent déjà, d'Hossegor à « Novembre pour soi ». Il faut dire clairement ce qui relève d'Aixploreuse, ce qui relève de Charlotte, et où les deux se retrouvent."
+      "texte": "Charlotte arrive avec Peach Pilates Club, un studio reformer à Aubagne, et un projet de reformer mobile dans les hôtels. Pilates et Aixploreuse se croisent déjà, d'Hossegor à « Novembre pour soi ». Il faut dire clairement ce qui relève d'Aixploreuse, ce qui relève de Charlotte, et où les deux se retrouvent."
     },
     {
       "titre": "L'offre entreprises cherche son nom",
@@ -31,7 +31,7 @@
     },
     {
       "titre": "Leur frein, c'est la peur",
-      "texte": "Vos clientes ont entre 30 et 60 ans, souvent mamans, salariées ou entrepreneures à parts égales. Vous le dites mieux que nous : peur de ralentir le groupe, de ne connaître personne, de dépenser pour soi. Tout ce qu'on écrira, sur le site comme en publicité, doit répondre à ces peurs avant de parler de dénivelé."
+      "texte": "Des femmes actives, souvent mamans, qui s'accordent rarement du temps pour elles. Vous le dites mieux que nous : leur frein, c'est la peur. Peur de ralentir le groupe, de ne connaître personne, de dépenser pour soi. Tout ce qu'on écrira, sur le site comme en publicité, doit répondre à ces peurs avant de parler de dénivelé."
     },
     {
       "titre": "Votre différence est déjà là",
@@ -114,7 +114,7 @@
     {
       "titre": "Concept « voyage-récit »",
       "tarif_id": "concept-recit",
-      "description": "Cadrage du format imaginé avec Charlotte : un voyage autour d'une personnalité et d'un thème (mouvement, confiance en soi, argent, amour), un groupe de femmes comme les autres, une observatrice qui capte images et émotions, une mini-série à la sortie. Dossier d'approche personnalités et marques partenaires inclus.",
+      "description": "Le format est né quand Laure Manaudou a participé à un départ. L'idée : un séjour construit autour d'une personnalité et d'un thème (mouvement, confiance en soi, argent, amour), un groupe de femmes comme les autres, une observatrice qui capte images et émotions, une mini-série à la sortie. Dossier d'approche personnalités et marques partenaires inclus.",
       "quantite": 1,
       "unite": "forfait",
       "prix_unitaire": 1800
@@ -166,7 +166,7 @@
     "ciblages_label": "Répartition des 500 € média",
     "ciblages": [
       "70 % sur la conversion : départs à venir, visiteuses du site et inscrites à la newsletter, audiences similaires à vos clientes",
-      "30 % sur la notoriété : femmes 30 à 60 ans, région Sud et grandes villes, centres d'intérêt randonnée, yoga, pilates, voyage, bien-être",
+      "30 % sur la notoriété : femmes actives, région Sud et grandes villes, centres d'intérêt randonnée, yoga, pilates, voyage, bien-être",
       "Entreprises sans média payant : LinkedIn, prospection directe, réseaux d'entreprises et CSE"
     ],
     "storyboards_label": "Formats type",
@@ -191,18 +191,18 @@
   },
   "partenaires": {
     "section_titre": "Personnalités et partenaires",
-    "section_lead": "Des alliances qui donnent au voyage-récit sa portée et à l'offre entreprises ses prochains clients.",
+    "section_lead": "Des alliances qui donnent au séjour autour d'une personnalité sa portée, et à l'offre entreprises ses prochains clients.",
     "cols": [
       {
-        "label": "Personnalités invitées",
+        "label": "Séjours autour d'une personnalité",
         "items": [
           {
-            "profil": "Laure Manaudou",
-            "pourquoi": "Championne olympique de natation. Une figure du dépassement qui parle à des femmes sportives sans être compétitrices. Piste évoquée par Charlotte pour un premier voyage-récit."
+            "profil": "Cindy Poumeyrol",
+            "pourquoi": "Figure de Koh-Lanta, première personnalité pressentie pour un séjour « centré sur » elle : son parcours, un thème, un groupe de femmes, un récit filmé."
           },
           {
-            "profil": "Cindy Poumerol",
-            "pourquoi": "Seconde piste évoquée par Charlotte. On cadre l'angle avec vous dans le dossier d'approche."
+            "profil": "Laure Manaudou, la preuve que ça marche",
+            "pourquoi": "Sa participation à un départ a montré ce qu'une personnalité change dans un groupe. Le format part de cette expérience vécue, pas d'une idée sur le papier."
           },
           {
             "profil": "Une voix par thème",
@@ -222,8 +222,8 @@
             "pourquoi": "Dans la lignée de Samaya : dotation des participantes, co-branding du merch, visibilité croisée sur les contenus des voyages."
           },
           {
-            "profil": "Réseaux de femmes entrepreneures",
-            "pourquoi": "La moitié de vos clientes sont entrepreneures. Ces réseaux recrutent pour les séjours et relaient l'offre entreprises."
+            "profil": "Réseaux de femmes entrepreneures et dirigeantes",
+            "pourquoi": "Un canal direct vers des femmes qui décident vite pour elles-mêmes, et un relais naturel vers l'offre entreprises."
           }
         ]
       }
