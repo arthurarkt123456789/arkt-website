@@ -44,9 +44,9 @@ function seed() {
 
 function hold(a) {
   const seats = a.p_adults + a.p_kids;
-  if (seats < 1 || seats > 8) throw Object.assign(new Error("SEATS_OUT_OF_RANGE"), { code: 400 });
+  if (seats < 1 || seats > 10) throw Object.assign(new Error("SEATS_OUT_OF_RANGE"), { code: 400 });
   bookings.forEach((b) => { if (b.status === "hold" && new Date(b.expires_at) <= new Date()) b.status = "expired"; });
-  const cands = slots.filter((s) => s.date === a.p_date && s.service === a.p_service && s.status === "open").map(usage).filter((u) => u.free >= seats).sort((x, y) => x.free - y.free || x.bubble - y.bubble);
+  const cands = slots.filter((s) => s.date === a.p_date && s.service === a.p_service && s.status === "open").map(usage).filter((u) => seats >= 8 ? u.used === 0 : u.free >= seats).sort((x, y) => x.free - y.free || x.bubble - y.bubble);
   if (!cands.length) throw Object.assign(new Error("NO_CAPACITY"), { code: 400 });
   const u = cands[0];
   const b = { id: randomUUID(), slot_id: u.slot_id, date: a.p_date, service: a.p_service, bubble: u.bubble, adults: a.p_adults, kids: a.p_kids, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: a.p_amount_cents, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null };
@@ -73,10 +73,10 @@ async function mockSupabase(url, init) {
     try {
       if (fn === "rc_hold") return ok(hold(body));
       if (fn === "rc_availability") {
-        return ok(SERVICES.map((s) => { const us = slots.filter((x) => x.date === body.p_date && x.service === s).map(usage); if (!us.length) return null; const open = us.filter((x) => x.status === "open"); return { service: s, free_total: open.reduce((n, x) => n + x.free, 0), max_group: Math.max(0, ...open.map((x) => x.free)), open_bubbles: open.length, empty_bubbles: open.filter((x) => x.free === x.capacity).length }; }).filter(Boolean));
+        return ok(SERVICES.map((s) => { const us = slots.filter((x) => x.date === body.p_date && x.service === s).map(usage); if (!us.length) return null; const open = us.filter((x) => x.status === "open"); const empty = open.filter((x) => x.used === 0).length; return { service: s, free_total: open.reduce((n, x) => n + Math.max(0, x.free), 0), max_group: empty > 0 ? 10 : Math.max(0, ...open.map((x) => x.free)), open_bubbles: open.length, empty_bubbles: empty }; }).filter(Boolean));
       }
       if (fn === "rc_availability_range") {
-        const days = {}; slots.filter((s) => s.date >= body.p_from && s.date <= body.p_to).map(usage).forEach((x) => { const d = days[x.date] ||= { date: x.date, free_total: 0, max_group: 0, used_total: 0 }; d.used_total += x.used; if (x.status === "open") { d.free_total += x.free; d.max_group = Math.max(d.max_group, x.free); } });
+        const days = {}; slots.filter((s) => s.date >= body.p_from && s.date <= body.p_to).map(usage).forEach((x) => { const d = days[x.date] ||= { date: x.date, free_total: 0, max_group: 0, used_total: 0 }; d.used_total += x.used; if (x.status === "open") { d.free_total += Math.max(0, x.free); d.max_group = x.used === 0 ? 10 : Math.max(d.max_group, x.free); } });
         return ok(Object.values(days));
       }
       if (fn === "rc_day") return ok({ slots: slots.filter((s) => s.date === body.p_date).map(usage), bookings: bookings.filter((b) => b.date === body.p_date && (["paid", "manual", "cancelled"].includes(b.status) || active(b))) });

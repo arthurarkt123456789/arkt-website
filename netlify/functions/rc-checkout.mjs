@@ -20,7 +20,7 @@ export const handler = async (event) => {
   const notes = String(d.notes || "").trim().slice(0, 500);
 
   if (!isValidDate(date) || !isValidService(service)) return json(400, { error: "Créneau invalide" });
-  if (seats < 1 || seats > 8 || adults < 0 || kids < 0) return json(400, { error: "Entre 1 et 8 places" });
+  if (seats < 1 || seats > CONFIG.PRIVATE_MAX || adults < 0 || kids < 0) return json(400, { error: `Entre 1 et ${CONFIG.PRIVATE_MAX} places` });
   if (adults < 1) return json(400, { error: "Au moins un adulte par réservation" });
   if (name.length < 2) return json(400, { error: "Nom requis" });
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return json(400, { error: "Email invalide" });
@@ -38,7 +38,7 @@ export const handler = async (event) => {
       p_amount_cents: amount, p_hold_minutes: CONFIG.HOLD_MINUTES, p_source: "web", p_status: "hold",
     });
   } catch (e) {
-    if (/NO_CAPACITY/.test(e.message)) return json(409, { error: "Plus assez de places sur ce service pour ce groupe" });
+    if (/NO_CAPACITY/.test(e.message)) return json(409, { error: seats >= CONFIG.PRIVATE_MIN ? "Plus de bulle libre à privatiser sur ce service" : "Plus assez de places sur ce service pour ce groupe" });
     console.error("hold", e);
     return json(500, { error: "Réservation impossible pour le moment" });
   }

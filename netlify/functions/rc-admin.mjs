@@ -108,7 +108,7 @@ export const handler = async (event) => {
         const usage = await sbSelect("rc_slot_usage", `date=eq.${b.date}&service=eq.${encodeURIComponent(b.service)}&bubble=eq.${bubble}&limit=1`);
         const target = usage[0];
         if (!target) return json(404, { error: "Bulle introuvable" });
-        if (target.free < b.seats) return json(409, { error: `Bulle ${bubble} : ${target.free} place(s) libre(s), il en faut ${b.seats}` });
+        if (b.seats >= CONFIG.PRIVATE_MIN ? target.used > 0 : target.free < b.seats) return json(409, { error: b.seats >= CONFIG.PRIVATE_MIN ? `Bulle ${bubble} déjà occupée, une privatisation exige une bulle vide` : `Bulle ${bubble} : ${target.free} place(s) libre(s), il en faut ${b.seats}` });
         const upd = await sbPatch("rc_bookings", `id=eq.${b.id}`, { slot_id: target.slot_id, bubble });
         return json(200, { booking: upd[0] });
       }

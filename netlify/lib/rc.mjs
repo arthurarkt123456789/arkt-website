@@ -8,6 +8,9 @@ export const CONFIG = {
   ADULT_CENTS: 3600,
   KID_CENTS: 2400,
   SERVICES: ["12:00", "14:00", "19:00", "21:00"],
+  SHARED_MAX: 8,            // places vendues par bulle en partagé
+  PRIVATE_MIN: 8,           // à partir de 8, la bulle est privatisée
+  PRIVATE_MAX: 10,          // jusqu'à 10 pour un seul groupe
   FIRST_DAY: "2026-11-27",
   LAST_DAY: "2026-12-30",
   HOLD_MINUTES: 30,
@@ -173,7 +176,7 @@ export function bookingEmailHtml(b, { cancelUrl } = {}) {
     b.adults ? `${b.adults} menu${b.adults > 1 ? "s" : ""} adulte` : null,
     b.kids ? `${b.kids} menu${b.kids > 1 ? "s" : ""} enfant` : null,
   ].filter(Boolean).join(" + ");
-  const priv = b.seats === 8 ? `<p style="margin:6px 0"><strong>Bulle privatisée</strong></p>` : `<p style="margin:6px 0;color:#555">Bulle partagée : vous pourrez être installés avec d'autres convives.</p>`;
+  const priv = b.seats >= CONFIG.PRIVATE_MIN ? `<p style="margin:6px 0"><strong>Bulle privatisée</strong>${b.seats > CONFIG.SHARED_MAX ? " · tablée serrée, prévoyez de jouer des coudes" : ""}</p>` : `<p style="margin:6px 0;color:#555">Bulle partagée : vous pourrez être installés avec d'autres convives.</p>`;
   return `
 <div style="font-family:Poppins,Arial,sans-serif;max-width:560px;margin:0 auto;background:#F0EBDA;padding:28px;border-radius:24px;color:#111">
   <h1 style="color:#0000FF;font-size:26px;margin:0 0 4px;letter-spacing:-.02em">La Meulerie Raclette Club</h1>

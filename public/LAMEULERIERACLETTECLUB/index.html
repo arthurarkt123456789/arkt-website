@@ -60,7 +60,7 @@
       <span class="pill pill--yellow">Menu raclette 36 €</span>
       <span class="pill pill--pink">Enfant 24 €</span>
       <span class="pill">12h · 14h · 19h · 21h</span>
-      <span class="pill">De 1 à 8 personnes</span>
+      <span class="pill">De 1 à 10 personnes</span>
     </div>
     <a class="btn btn--lg" href="#reserver">Je réserve</a>
   </div>
@@ -110,7 +110,7 @@
             <div class="stepper"><button type="button" data-step="kids" data-dir="-1" aria-label="Moins d'enfants">−</button><output id="kidsOut">0</output><button type="button" data-step="kids" data-dir="1" aria-label="Plus d'enfants">+</button></div>
           </div>
         </div>
-        <div class="group-note" id="groupNote"><span class="emoji">🫧</span><span>Une bulle accueille 8 personnes. À moins de 8, vous pourrez partager la bulle avec d'autres convives.</span></div>
+        <div class="group-note" id="groupNote"><span class="emoji">🫧</span><span>Une bulle se partage à 8. À partir de 8 personnes, elle est privatisée pour votre groupe, jusqu'à 10.</span></div>
       </div>
 
       <!-- 4. Coordonnées -->
@@ -194,7 +194,7 @@
   <div class="wrap">
     <h2 class="section-title">Comment ça marche</h2>
     <div class="howto">
-      <div class="card"><div class="ico">🫧</div><h3>5 bulles, 8 places</h3><p>Réservez de 1 à 8 places. À 8, la bulle est à vous. En dessous, vous la partagez peut-être avec d'autres gourmands.</p></div>
+      <div class="card"><div class="ico">🫧</div><h3>5 bulles, 8 places</h3><p>Réservez de 1 à 10 places. Jusqu'à 7, vous partagez peut-être la bulle avec d'autres gourmands. À partir de 8, la bulle est à vous, jusqu'à 10 pour une tablée serrée.</p></div>
       <div class="card"><div class="ico">⏰</div><h3>4 services par jour</h3><p>12h, 14h, 19h et 21h, tous les jours du 27 novembre au 30 décembre. Fermé le 24 au soir et le 25 décembre.</p></div>
       <div class="card"><div class="ico">💳</div><h3>Menu payé en ligne</h3><p>Le menu se règle à la réservation. Boissons et desserts s'ajoutent sur place.</p></div>
       <div class="card"><div class="ico">↩️</div><h3>Annulation 48 h</h3><p>Un empêchement ? Annulez depuis le lien de votre email jusqu'à 48 h avant, remboursement intégral.</p></div>
@@ -220,6 +220,7 @@
   const API = '/.netlify/functions';
   const SERVICES = { '12:00': 'Déjeuner', '14:00': 'Déjeuner', '19:00': 'Dîner', '21:00': 'Dîner' };
   const PRICE = { adult: 3600, kid: 2400 };
+  const SHARED_MAX = 8, PRIVATE_MIN = 8, PRIVATE_MAX = 10;
   const DOW = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'];
   const MON = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
   const eur = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 });
@@ -316,9 +317,10 @@
     document.querySelector('[data-step="adults"][data-dir="-1"]').disabled = state.adults <= 1;
     document.querySelector('[data-step="kids"][data-dir="-1"]').disabled = state.kids <= 0;
     const note = $('groupNote');
-    if (total === 8) { note.className = 'group-note priv'; note.innerHTML = '<span class="emoji">🎉</span><span><b>Bulle privatisée !</b> 8 places, la bulle est entièrement à vous.</span>'; }
-    else if (state.maxGroup < 8) { note.className = 'group-note'; note.innerHTML = `<span class="emoji">🫧</span><span>Sur ce service, il reste au mieux <b>${state.maxGroup} place${state.maxGroup > 1 ? 's' : ''} dans une même bulle</b>. Vous partagerez la bulle avec d'autres convives.</span>`; }
-    else { note.className = 'group-note'; note.innerHTML = '<span class="emoji">🫧</span><span>Une bulle accueille 8 personnes. À moins de 8, vous pourrez partager la bulle avec d’autres convives. À 8, elle est privatisée.</span>'; }
+    if (total > SHARED_MAX) { note.className = 'group-note priv'; note.innerHTML = `<span class="emoji">🎉</span><span><b>Bulle privatisée à ${total} !</b> Nos bulles accueillent jusqu'à 10 convives pour un seul groupe. À ${total}, c'est la version tablée serrée : on se rapproche, on fait tourner les poêlons, l'ambiance est garantie. Si vous préférez plus d'espace, prévoyez une seconde bulle.</span>`; }
+    else if (total === PRIVATE_MIN) { note.className = 'group-note priv'; note.innerHTML = '<span class="emoji">🎉</span><span><b>Bulle privatisée !</b> 8 places, la bulle est entièrement à vous. Vous pouvez ajouter jusqu\'à 2 convives de plus.</span>'; }
+    else if (state.maxGroup < PRIVATE_MIN) { note.className = 'group-note'; note.innerHTML = `<span class="emoji">🫧</span><span>Sur ce service, il reste au mieux <b>${state.maxGroup} place${state.maxGroup > 1 ? 's' : ''} dans une même bulle</b>. Vous partagerez la bulle avec d'autres convives.</span>`; }
+    else { note.className = 'group-note'; note.innerHTML = '<span class="emoji">🫧</span><span>Une bulle se partage à 8. À moins de 8, vous pourrez partager la bulle avec d’autres convives. À partir de 8, elle est privatisée, jusqu’à 10.</span>'; }
     const ok = total >= 1 && state.adults >= 1;
     setStep('stepForm', ok); setStep('stepPay', ok);
     renderSummary();
@@ -331,7 +333,7 @@
     if (state.adults) lines.push(`<div>🎫 ${state.adults} forfait${state.adults > 1 ? 's' : ''} adulte × 36 €</div>`);
     if (state.kids) lines.push(`<div>🎫 ${state.kids} forfait${state.kids > 1 ? 's' : ''} enfant × 24 €</div>`);
     const total = state.adults + state.kids;
-    if (total) lines.push(`<div>${total === 8 ? '🎉 Bulle privatisée' : `🫧 ${total} place${total > 1 ? 's' : ''}, bulle partagée`}</div>`);
+    if (total) lines.push(`<div>${total >= PRIVATE_MIN ? `🎉 Bulle privatisée, ${total} places` : `🫧 ${total} place${total > 1 ? 's' : ''}, bulle partagée`}</div>`);
     $('summaryLines').innerHTML = lines.join('');
     const amount = state.adults * PRICE.adult + state.kids * PRICE.kid;
     $('total').textContent = eur(amount);

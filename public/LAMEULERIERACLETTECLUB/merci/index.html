@@ -38,7 +38,7 @@
         <div><span>Date</span>${fmt(b.date)}</div>
         <div><span>Service</span>${b.service.replace(':', 'h')}</div>
         <div><span>Forfaits</span>${tickets}</div>
-        <div><span>Bulle</span>n°${b.bubble} · ${b.seats === 8 ? 'privatisée' : 'partagée'}</div>
+        <div><span>Bulle</span>n°${b.bubble} · ${b.seats >= 8 ? 'privatisée' : 'partagée'}</div>
         <div><span>Au nom de</span>${b.name}</div>
         <div><span>Montant</span>${eur(b.amount_cents)}</div>
         <div><span>Référence</span>${b.ref}</div>

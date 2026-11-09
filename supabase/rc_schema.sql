@@ -25,7 +25,7 @@ create table if not exists rc_bookings (
   bubble                smallint not null,
   adults                smallint not null default 0 check (adults >= 0),
   kids                  smallint not null default 0 check (kids >= 0),
-  seats                 smallint not null check (seats between 1 and 8),
+  seats                 smallint not null check (seats between 1 and 10),
   name                  text not null,
   email                 text,
   phone                 text,
@@ -75,17 +75,20 @@ left join rc_bookings b on b.slot_id = s.id
 group by s.id;
 
 -- ---------- Disponibilité d'une journée (appelée par le front) ----------
+-- Règle : une bulle se vend 8 places en partagé ; une bulle vide peut être
+-- privatisée par un seul groupe de 8 à 10 personnes (RC_PRIVATE_MAX = 10).
 -- Retourne, par service : places libres totales, plus grand groupe plaçable,
--- nombre de bulles ouvertes.
+-- nombre de bulles ouvertes, nombre de bulles vides.
 create or replace function rc_availability(p_date date)
 returns table (service text, free_total int, max_group int, open_bubbles int, empty_bubbles int)
 language sql stable as $$
   select
     u.service,
-    coalesce(sum(u.free) filter (where u.status = 'open'), 0)::int as free_total,
-    coalesce(max(u.free) filter (where u.status = 'open'), 0)::int as max_group,
+    coalesce(sum(greatest(u.free, 0)) filter (where u.status = 'open'), 0)::int as free_total,
+    case when count(*) filter (where u.status = 'open' and u.used = 0) > 0 then 10
+         else coalesce(max(u.free) filter (where u.status = 'open'), 0) end::int as max_group,
     count(*) filter (where u.status = 'open')::int as open_bubbles,
-    count(*) filter (where u.status = 'open' and u.free = u.capacity)::int as empty_bubbles
+    count(*) filter (where u.status = 'open' and u.used = 0)::int as empty_bubbles
   from rc_slot_usage u
   where u.date = p_date
   group by u.service
@@ -97,8 +100,9 @@ create or replace function rc_availability_range(p_from date, p_to date)
 returns table (date date, free_total int, max_group int, used_total int)
 language sql stable as $$
   select u.date,
-    coalesce(sum(u.free) filter (where u.status = 'open'), 0)::int,
-    coalesce(max(u.free) filter (where u.status = 'open'), 0)::int,
+    coalesce(sum(greatest(u.free, 0)) filter (where u.status = 'open'), 0)::int,
+    case when count(*) filter (where u.status = 'open' and u.used = 0) > 0 then 10
+         else coalesce(max(u.free) filter (where u.status = 'open'), 0) end::int,
     coalesce(sum(u.used), 0)::int
   from rc_slot_usage u
   where u.date between p_from and p_to
@@ -107,8 +111,8 @@ language sql stable as $$
 $$;
 
 -- ---------- Pose d'un hold (transactionnel, verrouille les 5 bulles du service) ----------
--- Choisit la bulle ouverte la plus remplie pouvant accueillir le groupe.
--- 8 places = bulle vide obligatoire (privatisation).
+-- 1 à 7 places : bulle ouverte la plus remplie ayant assez de places (sur 8).
+-- 8 à 10 places : privatisation, bulle ouverte et vide obligatoire.
 create or replace function rc_hold(
   p_date date, p_service text, p_adults int, p_kids int,
   p_name text, p_email text, p_phone text, p_notes text,
@@ -122,7 +126,7 @@ declare
   v_slot  rc_slots%rowtype;
   v_row   rc_bookings;
 begin
-  if v_seats < 1 or v_seats > 8 then
+  if v_seats < 1 or v_seats > 10 then
     raise exception 'SEATS_OUT_OF_RANGE';
   end if;
 
@@ -137,7 +141,7 @@ begin
   from rc_slots s
   join rc_slot_usage u on u.slot_id = s.id
   where s.date = p_date and s.service = p_service and s.status = 'open'
-    and u.free >= v_seats
+    and ((v_seats >= 8 and u.used = 0) or (v_seats < 8 and u.free >= v_seats))
   order by u.free asc, s.bubble asc
   limit 1;
 
