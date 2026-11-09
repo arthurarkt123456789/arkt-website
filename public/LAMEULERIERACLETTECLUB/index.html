@@ -163,6 +163,22 @@
   </div>
 </section>
 
+<section class="section section--video" id="video">
+  <div class="wrap video-wrap">
+    <div class="video-text">
+      <h2 class="section-title" style="text-align:left;margin-bottom:12px">Le Raclette Club<br>en 20 secondes</h2>
+      <p>Le fromage qu'on tranche, l'esprit du club, la raclette qui arrive. Son coupé, appuyez sur la vidéo pour l'activer.</p>
+    </div>
+    <div class="phone" id="phone">
+      <div class="phone-notch"></div>
+      <video id="tdpVideo" muted loop playsinline preload="none" poster="assets/video-tdp-poster.jpg" aria-label="Vidéo La Meulerie x Les Terrasses du Port">
+        <source src="assets/video-tdp.mp4" type="video/mp4" />
+      </video>
+      <button class="phone-sound" id="soundBtn" type="button" aria-label="Activer le son">🔇</button>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="menu">
   <div class="wrap">
     <h2 class="section-title">Au menu</h2>
@@ -406,6 +422,23 @@
     addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
     addEventListener('resize', update);
     update();
+  })();
+
+
+  // ---------- Vidéo iPhone : chargement quand visible, son au clic ----------
+  (() => {
+    const v = document.getElementById('tdpVideo'), btn = document.getElementById('soundBtn');
+    if (!v) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { if (v.preload === 'none') { v.preload = 'auto'; v.load(); } v.play().catch(() => {}); }
+        else v.pause();
+      });
+    }, { threshold: 0.35 });
+    io.observe(v);
+    const toggle = () => { v.muted = !v.muted; btn.textContent = v.muted ? '🔇' : '🔊'; btn.setAttribute('aria-label', v.muted ? 'Activer le son' : 'Couper le son'); if (!v.muted) v.play().catch(() => {}); };
+    btn.addEventListener('click', toggle);
+    v.addEventListener('click', toggle);
   })();
 
   loadDays();
