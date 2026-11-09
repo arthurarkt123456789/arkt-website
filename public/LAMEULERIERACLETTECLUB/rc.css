@@ -16,7 +16,7 @@
   --border: 3px solid var(--ink);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; touch-action: manipulation; }
 body {
   font-family: 'Poppins', system-ui, sans-serif;
   background: var(--blue);
@@ -41,7 +41,8 @@ body {
 
 img { display: block; max-width: 100%; }
 button, input, textarea, select { font: inherit; color: inherit; }
-button { cursor: pointer; border: 0; background: none; }
+button { cursor: pointer; border: 0; background: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+body, .day, .service, .stepper { touch-action: manipulation; }
 a { color: inherit; }
 
 .wrap { width: min(1080px, 100% - 32px); margin: 0 auto; }

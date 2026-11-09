@@ -446,6 +446,15 @@
     io.observe(v);
   })();
 
+  // iOS : bloque le zoom au double-tap même là où touch-action n'est pas respecté
+  let lastTouch = 0;
+  document.addEventListener('touchend', (e) => {
+    const now = Date.now();
+    if (now - lastTouch < 320 && e.target.closest('button, .day, .service, .stepper, .btn')) e.preventDefault();
+    lastTouch = now;
+  }, { passive: false });
+  document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
+
   loadDays();
 })();
 </script>
