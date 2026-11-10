@@ -11,6 +11,7 @@ export const CONFIG = {
   SHARED_MAX: 8,            // places vendues par bulle en partagé
   PRIVATE_MIN: 8,           // à partir de 8, la bulle est privatisée
   PRIVATE_MAX: 10,          // jusqu'à 10 pour un seul groupe
+  KIDS_MAX_RATIO: 0.7,      // au plus 70 % d'enfants par réservation (web)
   FIRST_DAY: "2026-11-27",
   LAST_DAY: "2026-12-24",
   HOLD_MINUTES: 30,
@@ -218,7 +219,7 @@ export function emailLayout(o) {
 
 const block = (bg, title, html) => `<table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td bgcolor="${bg}" style="background:${bg};border-radius:16px;padding:16px 18px"><p style="margin:0 0 6px;font-weight:800;font-size:14px;color:#0B0B14">${title}</p><div style="font-size:14px;line-height:1.55;color:#222">${html}</div></td></tr></table>`;
 
-const MENU_BLOCK = block("#F7F65C", "Au menu, 36 € adulte · 24 € enfant",
+const MENU_BLOCK = block("#F7F65C", "Au menu, 36 € adulte · 24 € enfant (jusqu'à 12 ans)",
   "Fromage à raclette <strong>nature, ail des ours, 3 poivres et truffe</strong>, charcuteries (option veggie ou halal), pommes de terre et condiments, salade verte, eau minérale à discrétion. Desserts, vin chaud et boissons se commandent et se règlent sur place.");
 
 const INFOS_BLOCK = block("#F0EBDA", "Bon à savoir",

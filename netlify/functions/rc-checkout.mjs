@@ -22,6 +22,7 @@ export const handler = async (event) => {
   if (!isValidDate(date) || !isValidService(service)) return json(400, { error: "Créneau invalide" });
   if (seats < 1 || seats > CONFIG.PRIVATE_MAX || adults < 0 || kids < 0) return json(400, { error: `Entre 1 et ${CONFIG.PRIVATE_MAX} places` });
   if (adults < 1) return json(400, { error: "Au moins un adulte par réservation" });
+  if (kids > Math.floor(adults * CONFIG.KIDS_MAX_RATIO / (1 - CONFIG.KIDS_MAX_RATIO) + 1e-9)) return json(400, { error: "Les enfants ne peuvent pas représenter plus de 70 % d'une table" });
   if (name.length < 2) return json(400, { error: "Nom requis" });
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return json(400, { error: "Email invalide" });
   if (phone.replace(/\D/g, "").length < 9) return json(400, { error: "Téléphone invalide" });

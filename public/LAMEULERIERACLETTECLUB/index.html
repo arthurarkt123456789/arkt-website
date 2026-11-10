@@ -80,7 +80,7 @@
       <p><strong>La Meulerie Raclette Club est de retour aux Terrasses du Port !</strong><br>Une raclette qui coule à flots, dans une bulle, sur la terrasse du centre commercial Les Terrasses du Port. 5 bulles, 4 services par jour. Réserve vite ta place !</p>
       <ul class="facts">
         <li>Menu raclette <b>36 €</b></li>
-        <li>Enfant <b>24 €</b></li>
+        <li>Enfant <b>24 €</b> (jusqu'à 12 ans)</li>
         <li><b>12h · 14h · 19h · 21h</b></li>
         <li>De <b>1 à 10</b> personnes</li>
         <li><b>En terrasse</b></li>
@@ -134,12 +134,13 @@
           <div class="ticket ticket--kid">
             <div>
               <div class="t-name">Forfait Enfant</div>
-              <div class="t-desc">Menu raclette enfant, pommes de terre, salade, eau</div>
+              <div class="t-desc">Jusqu'à 12 ans · raclette, pommes de terre, salade, eau</div>
               <div class="t-price">24 <small>€ / enfant</small></div>
             </div>
             <div class="stepper"><button type="button" data-step="kids" data-dir="-1" aria-label="Moins d'enfants">−</button><output id="kidsOut">0</output><button type="button" data-step="kids" data-dir="1" aria-label="Plus d'enfants">+</button></div>
           </div>
         </div>
+        <div class="info hidden" id="kidNote" style="margin-top:12px">Les enfants ne peuvent pas représenter plus de 70 % d'une table. Ajoutez un adulte pour ajouter un enfant.</div>
         <div class="group-note" id="groupNote"><span class="emoji">🫧</span><span>Une bulle se partage à 8. À partir de 8 personnes, elle est privatisée pour votre groupe, jusqu'à 10.</span></div>
       </div>
 
@@ -193,7 +194,7 @@
         <li>Salade verte &amp; sauce vinaigrette</li>
         <li>Eau minérale à discrétion</li>
       </ul>
-      <p style="margin-top:14px;font-weight:800">Menu enfant 24 € · Mi-cuit caramel beurre salé 4 €</p>
+      <p style="margin-top:14px;font-weight:800">Menu enfant 24 € (jusqu'à 12 ans) · Mi-cuit caramel beurre salé 4 €</p>
     </div>
     <div class="menu-grid" style="margin-top:16px">
       <div class="card menu-block">
@@ -239,6 +240,7 @@
       <div class="card"><div class="ico">↩️</div><h3>Annulation 48 h</h3><p>Un empêchement ? Annulez depuis le lien de votre email jusqu'à 48 h avant, remboursement intégral.</p></div>
       <div class="card"><div class="ico">🫧</div><h3>Une bulle, en terrasse</h3><p>Les bulles sont installées sur la terrasse du centre commercial Les Terrasses du Port, en plein air et à l'abri. La raclette fond, Marseille s'étale, c'est la montagne qui est venue en ville.</p></div>
       <div class="card"><div class="ico">📍</div><h3>Les Terrasses du Port</h3><p>9 quai du Lazaret, 13002 Marseille. Métro Joliette, parking du centre commercial.</p></div>
+      <div class="card"><div class="ico">🛒</div><h3>Poussettes et espace</h3><p>L'espace dans et autour des bulles est restreint. Si vous venez avec une poussette, on fera le maximum pour vous installer, sans pouvoir garantir à 100 % que ce soit confortable.</p></div>
       <div class="card card--yellow"><div class="ico">🥪</div><h3>Le chalet</h3><p>Pas de bulle ? Le chalet La Meulerie sert sandwiches et grilled cheese, sans réservation.</p></div>
     </div>
   </div>
@@ -313,6 +315,8 @@
   const SERVICES = { '12:00': 'Déjeuner', '14:00': 'Déjeuner', '19:00': 'Dîner', '21:00': 'Dîner' };
   const PRICE = { adult: 3600, kid: 2400 };
   const SHARED_MAX = 8, PRIVATE_MIN = 8, PRIVATE_MAX = 10;
+  const KIDS_MAX_RATIO = 0.7; // au plus 70 % d'enfants par réservation
+  const maxKidsFor = (adults) => Math.floor(adults * KIDS_MAX_RATIO / (1 - KIDS_MAX_RATIO) + 1e-9);
   const DOW = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'];
   const MON = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
   const eur = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 });
@@ -399,13 +403,21 @@
     if (dir > 0 && total >= state.maxGroup) return;
     if (dir < 0 && state[k] <= 0) return;
     if (k === 'adults' && dir < 0 && state.adults === 1) return; // au moins un adulte
-    state[k] += dir; renderTickets();
+    if (k === 'kids' && dir > 0 && state.kids + 1 > maxKidsFor(state.adults)) return;
+    state[k] += dir;
+    if (k === 'adults' && dir < 0 && state.kids > maxKidsFor(state.adults)) state.kids = maxKidsFor(state.adults);
+    renderTickets();
   }));
 
   function renderTickets() {
     const total = state.adults + state.kids;
     $('adultsOut').textContent = state.adults; $('kidsOut').textContent = state.kids;
     document.querySelectorAll('[data-step][data-dir="1"]').forEach((b) => b.disabled = total >= state.maxGroup);
+    const kidsCap = maxKidsFor(state.adults);
+    const kidsPlus = document.querySelector('[data-step="kids"][data-dir="1"]');
+    kidsPlus.disabled = kidsPlus.disabled || state.kids >= kidsCap;
+    const kidNote = document.getElementById('kidNote');
+    if (kidNote) kidNote.classList.toggle('hidden', !(state.kids >= kidsCap && total < state.maxGroup));
     document.querySelector('[data-step="adults"][data-dir="-1"]').disabled = state.adults <= 1;
     document.querySelector('[data-step="kids"][data-dir="-1"]').disabled = state.kids <= 0;
     const note = $('groupNote');
