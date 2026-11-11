@@ -1,0 +1,6 @@
+{
+  "name": "lameulerie-raclette-club",
+  "private": true,
+  "type": "module",
+  "scripts": { "dev": "node scripts/rc-dev.mjs" }
+}

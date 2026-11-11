@@ -1,0 +1,28 @@
+[build]
+  publish = "public"
+  command = ""
+
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "RC_NOTIFY_EMAIL,RC_REPLY_TO,RC_SITE_URL,RC_FROM,SUPABASE_URL,URL"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Payer ma table · La Meulerie Raclette Club</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="../assets/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../rc.css" />
+</head>
+<body>
+<header class="header"><div class="wrap"><a class="brand" href="../"><img src="../assets/logo-raclette-club-blanc.png" alt="La Meulerie Raclette Club" onerror="this.nextElementSibling.classList.remove('hidden');this.remove()" /><span class="wordmark hidden">La Meulerie<br>Raclette Club<small>Les Terrasses du Port</small></span></a></div></header>
+<main class="simple"><div class="wrap wrap--narrow">
+  <div class="card" id="box"><h1>Un instant…</h1></div>
+</div></main>
+<script>
+(async () => {
+  const box = document.getElementById('box');
+  const q = new URLSearchParams(location.search);
+  const id = q.get('id'), t = q.get('t');
+  const fmt = (d) => new Date(d + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const eur = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+  if (!id || !t) { box.innerHTML = '<h1>Lien invalide</h1>'; return; }
+  const r = await fetch(`/.netlify/functions/rc-booking?id=${encodeURIComponent(id)}&t=${encodeURIComponent(t)}`);
+  if (!r.ok) { box.innerHTML = '<h1>Lien invalide</h1><p>Écrivez-nous à <a href="mailto:hello@lameulerie.com">hello@lameulerie.com</a>.</p>'; return; }
+  const { booking: b } = await r.json();
+  const tickets = [b.adults ? `${b.adults} adulte${b.adults > 1 ? 's' : ''}` : '', b.kids ? `${b.kids} enfant${b.kids > 1 ? 's' : ''}` : ''].filter(Boolean).join(' + ');
+  const recap = `<div class="recap">
+      <div><span>Date</span>${fmt(b.date)}</div><div><span>Service</span>${b.service.replace(':', 'h')}</div>
+      <div><span>Forfaits</span>${tickets}</div><div><span>Bulle</span>${b.seats >= 8 ? 'privatisée' : 'partagée'} · ${b.seats} place${b.seats > 1 ? 's' : ''}</div>
+      <div><span>Au nom de</span>${b.name}</div><div><span>Montant</span>${eur(b.amount_cents)}</div></div>`;
+  if (b.status === 'paid') { box.innerHTML = `<span class="tag">Déjà réglée</span><h1 style="margin-top:12px">C'est réservé !</h1><p>Cette table est déjà payée. À très vite aux Terrasses du Port.</p>${recap}`; return; }
+  if (b.status === 'cancelled') { box.innerHTML = `<h1>Réservation annulée</h1>${recap}<p style="margin-top:14px"><a class="btn btn--blue" href="../">Réserver une autre table</a></p>`; return; }
+  if (!b.payable) { box.innerHTML = `<h1>Ce lien a expiré</h1><p>Les places ont été remises en vente. Écrivez-nous à <a href="mailto:hello@lameulerie.com">hello@lameulerie.com</a> ou réservez directement.</p>${recap}<p style="margin-top:14px"><a class="btn btn--blue" href="../">Voir les disponibilités</a></p>`; return; }
+  const until = new Date(b.expires_at).toLocaleString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+  box.innerHTML = `<span class="tag">Table bloquée pour vous</span><h1 style="margin-top:12px">Confirmez votre table</h1>
+    <p>Votre table est réservée jusqu'au <b>${until}</b>. Réglez le menu en ligne pour la confirmer. Boissons et desserts se règlent sur place.</p>${recap}
+    <div id="err" class="error hidden"></div>
+    <p style="margin-top:18px"><button class="btn btn--pink btn--lg btn--block" id="pay">Payer ${eur(b.amount_cents)} et confirmer</button></p>
+    <p style="font-weight:600;font-size:.85rem;text-align:center">Paiement sécurisé par Stripe. Annulation gratuite jusqu'à 48 h avant le service.</p>`;
+  document.getElementById('pay').addEventListener('click', async (e) => {
+    e.target.disabled = true; e.target.textContent = 'Un instant…';
+    const rr = await fetch('/.netlify/functions/rc-booking', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'pay', id, t }) });
+    const d = await rr.json();
+    if (!rr.ok) { const er = document.getElementById('err'); er.textContent = d.error; er.classList.remove('hidden'); e.target.disabled = false; e.target.textContent = `Payer ${eur(b.amount_cents)} et confirmer`; return; }
+    location.href = d.url;
+  });
+})();
+</script>
+</body>
+</html>
