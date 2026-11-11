@@ -47,7 +47,15 @@
   [headers.values]
     Cache-Control = "public, max-age=300"
 
+# Le site de réservation vit désormais sur www.lameulerieracletteclub.com
+[[redirects]]
+  from = "/LAMEULERIERACLETTECLUB/*"
+  to = "https://www.lameulerieracletteclub.com/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/raclette-club/*"
-  to = "/LAMEULERIERACLETTECLUB/:splat"
+  to = "https://www.lameulerieracletteclub.com/:splat"
   status = 301
+  force = true
