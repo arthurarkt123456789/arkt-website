@@ -61,6 +61,13 @@
   </div>
 </div>
 
+<div class="preban" id="preban" hidden>
+  <div class="wrap preban-in">
+    <span class="preban-txt">ACCÈS RÉSERVÉ · AVANT-PREMIÈRE · LANCEMENT AU GRAND PUBLIC DANS</span>
+    <span class="preban-timer" id="prebanTimer" aria-live="polite">--j --h --m --s</span>
+  </div>
+</div>
+
 <header class="header">
   <div class="wrap">
     <span class="tag">27 nov → 24 déc</span>
@@ -516,6 +523,24 @@
   document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
 
   loadDays();
+})();
+</script>
+<script>
+(function(){
+  // Lancement grand public (heure de Paris). Bannière retirée automatiquement une fois l'échéance passée.
+  const LAUNCH = new Date('2026-11-12T10:00:00+01:00');
+  const el = document.getElementById('preban'), t = document.getElementById('prebanTimer');
+  if (!el || !t) return;
+  const pad = (n) => String(n).padStart(2, '0');
+  const tick = () => {
+    const ms = LAUNCH - Date.now();
+    if (ms <= 0) { el.hidden = true; return; }
+    el.hidden = false;
+    const s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
+    t.textContent = (d ? d + 'j ' : '') + pad(h) + 'h ' + pad(m) + 'm ' + pad(sec) + 's';
+    setTimeout(tick, 1000);
+  };
+  tick();
 })();
 </script>
 </body>
