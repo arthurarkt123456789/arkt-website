@@ -63,7 +63,7 @@ h3 { font-size: clamp(1.15rem, 3vw, 1.4rem); }
 .tag--white { background: var(--white); }
 
 /* ---------- Header ---------- */
-.preban { background: var(--yellow); color: var(--blue); font-weight: 900; letter-spacing: .04em; font-size: clamp(.72rem, 1.6vw, .9rem); text-transform: uppercase; }
+.preban { position: relative; z-index: 2; background: var(--yellow); color: var(--blue); font-weight: 900; letter-spacing: .04em; font-size: clamp(.72rem, 1.6vw, .9rem); text-transform: uppercase; }
 .preban-in { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 14px; padding: 9px 0; text-align: center; }
 .preban-timer { font-variant-numeric: tabular-nums; background: var(--blue); color: var(--yellow); padding: 3px 10px; border-radius: 999px; }
 .header { padding: 22px 0 10px; color: var(--white); }
