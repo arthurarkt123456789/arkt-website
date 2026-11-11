@@ -154,6 +154,28 @@
   </form>
 </dialog>
 
+<dialog id="dlgService">
+  <h3>Privatiser un service</h3>
+  <form class="f" method="dialog" id="formService">
+    <div><label>Date</label><input type="date" name="date" required min="2026-11-27" max="2026-12-24" /></div>
+    <div><label>Services (les 5 bulles de chaque service choisi)</label>
+      <div class="modes" style="grid-template-columns:1fr 1fr">
+        <label class="mode"><input type="checkbox" name="services" value="12:00" /> <span><b>12h</b></span></label>
+        <label class="mode"><input type="checkbox" name="services" value="14:00" /> <span><b>14h</b></span></label>
+        <label class="mode"><input type="checkbox" name="services" value="19:00" /> <span><b>19h</b></span></label>
+        <label class="mode"><input type="checkbox" name="services" value="21:00" /> <span><b>21h</b></span></label>
+      </div></div>
+    <div class="row2"><div><label>Adultes</label><input type="number" name="adults" min="0" max="200" value="40" /></div><div><label>Enfants</label><input type="number" name="kids" min="0" max="200" value="0" /></div></div>
+    <p id="serviceHint" style="font-size:.8rem;font-weight:600;color:#333"></p>
+    <div><label>Nom (entreprise, organisateur)</label><input name="name" required /></div>
+    <div class="row2"><div><label>Email</label><input name="email" type="email" /></div><div><label>Téléphone</label><input name="phone" /></div></div>
+    <div><label>Remarques</label><input name="notes" placeholder="Séminaire, anniversaire, contact sur place…" /></div>
+    <div class="row2"><div><label>Montant à régler (€)</label><input name="amount" type="number" step="0.01" min="0" /></div><div><label>Blocage (heures)</label><input name="hours" type="number" min="1" max="720" value="72" /></div></div>
+    <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="sendEmail" style="width:auto" checked /> <span>Envoyer le lien de paiement par email au client</span></label>
+    <div class="acts-row"><button type="button" class="ghost" onclick="dlgService.close()">Annuler</button><button class="primary" type="submit">Bloquer et générer le lien</button></div>
+  </form>
+</dialog>
+
 <dialog id="dlgLink">
   <h3>Table bloquée</h3>
   <p id="linkInfo" style="font-weight:600;margin-bottom:12px"></p>
@@ -268,8 +290,9 @@
     const paidSeats = active.filter((b) => b.status === 'paid').reduce((n, b) => n + b.seats, 0);
     const revenue = active.reduce((n, b) => n + b.amount_cents, 0) / 100;
     const open = day.slots.filter((s) => s.status === 'open');
-    $('kpis').innerHTML = `<div class="kpi">${fmtLong(current)}</div><div class="kpi"><b>${seats}</b>couverts</div><div class="kpi"><b>${paidSeats}</b>payés en ligne</div><div class="kpi"><b>${open.reduce((n, s) => n + Math.max(0, s.free), 0)}</b>places libres</div><div class="kpi"><b>${revenue.toLocaleString('fr-FR')} €</b>encaissés</div><div class="kpi"><button class="primary" id="addManual">+ Résa manuelle</button></div>`;
+    $('kpis').innerHTML = `<div class="kpi">${fmtLong(current)}</div><div class="kpi"><b>${seats}</b>couverts</div><div class="kpi"><b>${paidSeats}</b>payés en ligne</div><div class="kpi"><b>${open.reduce((n, s) => n + Math.max(0, s.free), 0)}</b>places libres</div><div class="kpi"><b>${revenue.toLocaleString('fr-FR')} €</b>encaissés</div><div class="kpi"><button class="primary" id="addManual">+ Résa manuelle</button></div><div class="kpi"><button class="blue" id="addService">Privatiser un service</button></div>`;
     $('addManual').addEventListener('click', () => openManual());
+    $('addService').addEventListener('click', () => openService());
 
     const grid = $('grid'); grid.innerHTML = '';
     SERVICES.forEach((svc) => {
@@ -280,7 +303,7 @@
       const free = slots.filter((s) => s.status === 'open').reduce((n, s) => n + Math.max(0, s.free), 0);
       card.innerHTML = `<div class="svc-head"><div><h3>${svc.replace(':', 'h')}</h3><small>${allBlocked ? 'Service bloqué' : free + ' places libres'}</small></div>
         <button class="${allBlocked ? 'blue' : ''}" style="font-size:.75rem;padding:5px 10px" data-block-service="${svc}" data-blocked="${!allBlocked}">${allBlocked ? 'Rouvrir' : 'Bloquer'} le service</button></div><div class="bubbles"></div>
-        <div class="svc-foot"><button data-manual="${svc}">+ Résa manuelle</button></div>`;
+        <div class="svc-foot"><button data-manual="${svc}">+ Résa manuelle</button>${slots.every((s) => s.status === 'open' && s.used === 0) ? `<button class="blue" data-service="${svc}">Privatiser</button>` : ''}</div>`;
       const bl = card.querySelector('.bubbles');
       slots.forEach((s) => {
         const bs = day.bookings.filter((b) => b.slot_id === s.slot_id);
@@ -303,23 +326,40 @@
       try { await api('POST', { action: 'block_service', date: current, service: b.dataset.blockService, blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); loadStats(); } catch (e) { toast(e.message, true); }
     }));
     grid.querySelectorAll('[data-manual]').forEach((b) => b.addEventListener('click', () => openManual(b.dataset.manual)));
+    grid.querySelectorAll('[data-service]').forEach((b) => b.addEventListener('click', () => openService(b.dataset.service)));
 
     const tb = $('table').querySelector('tbody'); tb.innerHTML = '';
+    const seenGroups = new Set();
     day.bookings.forEach((b) => {
+      if (b.group_id) {
+        if (seenGroups.has(b.group_id)) return;
+        seenGroups.add(b.group_id);
+        b = agg(b);
+      }
       const tr = document.createElement('tr'); tr.className = b.status;
       const tickets = [b.adults ? b.adults + ' ad.' : '', b.kids ? b.kids + ' enf.' : ''].filter(Boolean).join(' + ');
-      tr.innerHTML = `<td><b>${b.service.replace(':', 'h')}</b></td><td>${b.bubble}</td><td><b>${esc(b.name)}</b><br><small>${b.id.slice(0, 8).toUpperCase()} · ${b.source === 'admin' ? 'manuel' : 'web'}</small></td>
+      tr.innerHTML = `<td><b>${b.group_id ? b.groupLabel : b.service.replace(':', 'h')}</b>${b.group_id ? '<br><small>privatisation</small>' : ''}</td><td>${b.group_id ? `${b.groupBubbles} bulles` : b.bubble}</td><td><b>${esc(b.name)}</b><br><small>${b.id.slice(0, 8).toUpperCase()} · ${b.source === 'admin' ? 'manuel' : 'web'}</small></td>
         <td>${b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a><br>` : ''}${b.phone ? `<a href="tel:${esc(b.phone)}">${esc(b.phone)}</a>` : ''}</td>
         <td>${tickets}<br><small>${(b.amount_cents / 100).toLocaleString('fr-FR')} €</small></td><td style="max-width:220px">${esc(b.notes || '')}</td>
         <td><span class="pill ${b.status}">${b.status === 'hold' ? (b.source === 'admin' ? 'Attente paiement' : 'En cours') : ({ paid: 'Payé', manual: 'Manuel', cancelled: 'Annulé', expired: 'Expiré' }[b.status] || b.status)}</span>${b.status === 'hold' && b.expires_at ? `<br><small>jusqu'au ${new Date(b.expires_at).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</small>` : ''}${b.refund_id ? '<br><small>remboursé</small>' : ''}</td>
-        <td style="white-space:nowrap">${b.status === 'hold' && b.source === 'admin' ? `<button class="primary" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-link="${b.id}">Lien</button> <button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-extend="${b.id}">+24 h</button> ` : ''}${b.status !== 'cancelled' ? `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-move="${b.id}">Bulle</button> <button class="danger" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-cancel="${b.id}">Annuler</button>` : ''}</td>`;
+        <td style="white-space:nowrap">${b.status === 'hold' && b.source === 'admin' ? `<button class="primary" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-link="${b.id}">Lien</button> <button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-extend="${b.id}">+24 h</button> ` : ''}${b.status !== 'cancelled' ? `${b.group_id ? '' : `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-move="${b.id}">Bulle</button> `}<button class="danger" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-cancel="${b.id}">Annuler</button>` : ''}</td>`;
       tb.appendChild(tr);
     });
     tb.querySelectorAll('[data-cancel]').forEach((b) => b.addEventListener('click', () => openCancel(b.dataset.cancel)));
     tb.querySelectorAll('[data-move]').forEach((b) => b.addEventListener('click', () => openMove(b.dataset.move)));
-    tb.querySelectorAll('[data-link]').forEach((b) => b.addEventListener('click', () => { const bk = day.bookings.find((x) => x.id === b.dataset.link); showLink(bk, `${location.origin}/payer/?id=${bk.id}&t=${bk.cancel_token}`); }));
+    tb.querySelectorAll('[data-link]').forEach((b) => b.addEventListener('click', () => { const bk = agg(day.bookings.find((x) => x.id === b.dataset.link)); showLink(bk, `${location.origin}/payer/?id=${bk.id}&t=${bk.cancel_token}`); }));
     tb.querySelectorAll('[data-extend]').forEach((b) => b.addEventListener('click', async () => { try { const r = await api('POST', { action: 'extend', id: b.dataset.extend, hours: 24 }); toast('Prolongé de 24 h'); load(current); } catch (e) { toast(e.message, true); } }));
   }
+  // Vue agrégée d'une privatisation de service (toutes les lignes du groupe)
+  const agg = (b) => {
+    if (!b || !b.group_id) return b;
+    const rows = day.bookings.filter((x) => x.group_id === b.group_id);
+    const live = rows.filter((x) => x.status !== 'cancelled');
+    const base = live.length ? live : rows;
+    return { ...b, adults: base.reduce((n, x) => n + x.adults, 0), kids: base.reduce((n, x) => n + x.kids, 0), seats: base.reduce((n, x) => n + x.seats, 0), amount_cents: base.reduce((n, x) => n + x.amount_cents, 0),
+      stripe_payment_intent: rows.find((x) => x.stripe_payment_intent)?.stripe_payment_intent || null,
+      groupLabel: [...new Set(base.map((x) => x.service))].sort().map((x) => x.replace(':', 'h')).join(' · '), groupBubbles: base.length };
+  };
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   // ---------- Résa manuelle ----------
@@ -344,8 +384,37 @@
     } catch (err) { toast(err.message, true); }
   });
 
+  // ---------- Privatisation d'un service ----------
+  function openService(svc) {
+    const f = $('formService'); f.reset(); delete f.amount.dataset.touched; f.date.value = current;
+    f.querySelectorAll('[name=services]').forEach((c) => { c.checked = svc ? c.value === svc : false; });
+    syncService(); $('dlgService').showModal();
+  }
+  const syncService = () => {
+    const f = $('formService');
+    const n = [...f.querySelectorAll('[name=services]:checked')].length;
+    const adults = Number(f.adults.value) || 0, kids = Number(f.kids.value) || 0;
+    const list = adults * 36 + kids * 24;
+    if (!f.amount.dataset.touched) f.amount.value = list.toFixed(2);
+    $('serviceHint').textContent = n ? `${n} service${n > 1 ? 's' : ''} · ${5 * n} bulles · ${5 * n} à ${50 * n} convives · plein tarif ${list.toLocaleString('fr-FR')} €` : 'Choisis au moins un service';
+  };
+  $('formService').addEventListener('input', (e) => { if (e.target.name === 'amount') e.target.dataset.touched = '1'; syncService(); });
+  $('formService').addEventListener('change', syncService);
+  $('formService').addEventListener('submit', async (e) => {
+    e.preventDefault(); const f = e.target;
+    const services = [...f.querySelectorAll('[name=services]:checked')].map((c) => c.value);
+    const payload = { action: 'hold_service', date: f.date.value, services, adults: Number(f.adults.value), kids: Number(f.kids.value), name: f.name.value, email: f.email.value, phone: f.phone.value, notes: f.notes.value, hours: Number(f.hours.value) || 72, sendEmail: f.sendEmail.checked };
+    if (f.amount.value !== '') payload.amountCents = Math.round(Number(f.amount.value) * 100);
+    try {
+      const r = await api('POST', payload);
+      $('dlgService').close(); load(f.date.value); loadOverview(); loadStats();
+      showLink(r.booking, r.url);
+    } catch (err) { toast(err.message, true); }
+  });
+
   function showLink(b, url) {
-    $('linkInfo').textContent = `${b.name} · ${fmtLong(b.date)} ${b.service.replace(':', 'h')} · bulle ${b.bubble} · ${b.seats} place(s) · ${(b.amount_cents / 100).toLocaleString('fr-FR')} € · places bloquées jusqu'au ${new Date(b.expires_at).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}`;
+    const where = b.group ? `${b.group.label} · ${b.group.bubbles} bulles privatisées` : b.groupLabel ? `${b.groupLabel} · ${b.groupBubbles} bulles privatisées` : `${b.service.replace(':', 'h')} · bulle ${b.bubble}`;
+    $('linkInfo').textContent = `${b.name} · ${fmtLong(b.date)} ${where} · ${b.seats} place(s) · ${(b.amount_cents / 100).toLocaleString('fr-FR')} € · places bloquées jusqu'au ${new Date(b.expires_at).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}`;
     $('linkUrl').value = url; $('dlgLink').showModal();
   }
   $('linkCopy').addEventListener('click', async () => { try { await navigator.clipboard.writeText($('linkUrl').value); toast('Lien copié'); } catch { $('linkUrl').select(); document.execCommand('copy'); toast('Lien copié'); } });
@@ -353,8 +422,8 @@
   // ---------- Annulation ----------
   let cancelId = null;
   function openCancel(id) {
-    const b = day.bookings.find((x) => x.id === id); cancelId = id;
-    $('cancelInfo').textContent = `${b.name} · ${b.service.replace(':', 'h')} · bulle ${b.bubble} · ${b.seats} place(s) · ${(b.amount_cents / 100).toLocaleString('fr-FR')} €`;
+    const b = agg(day.bookings.find((x) => x.id === id)); cancelId = id;
+    $('cancelInfo').textContent = `${b.name} · ${b.group_id ? `${b.groupLabel} · ${b.groupBubbles} bulles (toute la privatisation)` : `${b.service.replace(':', 'h')} · bulle ${b.bubble}`} · ${b.seats} place(s) · ${(b.amount_cents / 100).toLocaleString('fr-FR')} €`;
     $('cancelRefund').checked = Boolean(b.stripe_payment_intent) && b.amount_cents > 0; $('cancelRefund').disabled = !b.stripe_payment_intent;
     $('cancelNotify').checked = Boolean(b.email); $('cancelNotify').disabled = !b.email;
     $('dlgCancel').showModal();

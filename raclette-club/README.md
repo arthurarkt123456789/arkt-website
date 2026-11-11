@@ -23,6 +23,7 @@ Supprimer les enregistrements A / CNAME OVH par défaut sur `www` et l'apex (red
 ## Mise en service (une fois)
 
 1. **Supabase** : nouveau projet, SQL Editor, coller `supabase/rc_schema.sql`, Run. Récupérer `Project URL` et la clé `service_role` (Settings > API).
+   Sur une base existante, exécuter ensuite les migrations dans l'ordre : `rc_migration_privatisation_10.sql`, `rc_migration_fin_24_12.sql`, `rc_migration_privatisation_service.sql`.
 2. **Stripe** : Developers > API keys, clé secrète. Puis Developers > Webhooks > Add endpoint :
    - URL : `https://www.lameulerieracletteclub.com/.netlify/functions/rc-webhook`
    - Événements : `checkout.session.completed`, `checkout.session.expired`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`
@@ -53,6 +54,7 @@ Supprimer les enregistrements A / CNAME OVH par défaut sur `www` et l'apex (red
 - Réservation en ligne fermée 60 min avant le service.
 - Annulation client via le lien de l'email jusqu'à 48 h avant, remboursement Stripe automatique.
 - Admin : bloquer une bulle ou un service, réservation manuelle (avec ou sans email), blocage 24 h avec lien de paiement client (`/payer/?id=…&t=…`, prolongeable), annulation avec ou sans remboursement, déplacement de bulle, export CSV, dashboard (capacité, jauge, C.A.).
+- Admin, privatisation d'un ou plusieurs services complets (`hold_service`) : les 5 bulles de chaque service choisi doivent être ouvertes et vides ; de 5 à 50 convives par service ; montant au tarif public ou négocié ; une réservation par bulle, liées par `group_id`, un seul lien de paiement (porté par la première ligne), blocage 72 h par défaut. Paiement, annulation et remboursement s'appliquent au groupe entier.
 
 Constantes modifiables dans `netlify/lib/rc.mjs` (`CONFIG`).
 

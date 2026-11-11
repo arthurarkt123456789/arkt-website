@@ -8,7 +8,9 @@
 // POST { action: 'manual',  date, service, adults, kids, name, email, phone, notes, sendEmail }
 // POST { action: 'cancel',  id, refund:true|false }
 // POST { action: 'move',    id, bubble }     -> déplace une résa vers une autre bulle du même service
-import { CONFIG, json, checkAdmin, sbRpc, sbSelect, sbPatch, stripe, notifyConfirmation, sendEmail, fmtDate, hhmm, payUrlFor, holdEmailHtml, cancelEmailHtml } from "../lib/rc.mjs";
+// POST { action: 'hold_service', date, services:[...], adults, kids, name, email, phone, notes, hours, amountCents?, sendEmail }
+//                                            -> privatise tous les services listés (5 bulles chacun), 1 lien de paiement
+import { CONFIG, json, checkAdmin, sbRpc, sbSelect, sbPatch, notifyConfirmation, sendEmail, fmtDate, hhmm, svcLabel, payUrlFor, holdEmailHtml, cancelEmailHtml, groupView, cancelBooking, isValidService } from "../lib/rc.mjs";
 
 const csvCell = (v) => { const s = String(v ?? ""); return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
 
@@ -118,11 +120,44 @@ export const handler = async (event) => {
         return json(200, { booking: b, url });
       }
 
+      case "hold_service": {
+        const services = [...new Set((d.services || []).map(String))].filter(isValidService).sort();
+        if (!services.length) return json(400, { error: "Choisis au moins un service" });
+        const adults = Number.parseInt(d.adults, 10) || 0, kids = Number.parseInt(d.kids, 10) || 0;
+        const bubbles = 5 * services.length;
+        if (adults + kids < bubbles) return json(400, { error: `Au moins ${bubbles} convives pour ${bubbles} bulles` });
+        if (adults + kids > 10 * bubbles) return json(400, { error: `Au plus ${10 * bubbles} convives` });
+        const hours = Number(d.hours) > 0 ? Number(d.hours) : 24;
+        const amount = Number.isInteger(d.amountCents) && d.amountCents >= 0 ? d.amountCents : adults * CONFIG.ADULT_CENTS + kids * CONFIG.KID_CENTS;
+        let rows;
+        try {
+          rows = await sbRpc("rc_hold_group", {
+            p_date: d.date, p_services: services, p_adults: adults, p_kids: kids,
+            p_name: String(d.name || "Privatisation").trim(), p_email: String(d.email || "").trim(), p_phone: String(d.phone || "").trim(),
+            p_notes: String(d.notes || "").trim(), p_amount_cents: amount,
+            p_hold_minutes: Math.round(hours * 60), p_source: "admin", p_status: "hold",
+          });
+        } catch (e) {
+          if (/NO_CAPACITY/.test(e.message)) return json(409, { error: "Un des services demandés a déjà une réservation ou une bulle bloquée : il doit être entièrement libre" });
+          if (/TOO_FEW|TOO_MANY/.test(e.message)) return json(400, { error: "Nombre de convives hors limites" });
+          throw e;
+        }
+        const b = await groupView(rows[0]);
+        const url = payUrlFor(b);
+        if (d.sendEmail && b.email) await sendEmail({ to: b.email, subject: `Votre privatisation du Raclette Club est bloquée · ${fmtDate(b.date)} à ${svcLabel(b)}`, html: holdEmailHtml(b) });
+        return json(200, { booking: b, url });
+      }
+
       case "extend": {
         const hours = Number(d.hours) > 0 ? Number(d.hours) : 24;
-        const upd = await sbPatch("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&status=eq.hold&source=eq.admin`, { status: "hold", expires_at: new Date(Date.now() + hours * 3600000).toISOString() });
+        const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
+        const b = rows[0];
+        if (!b) return json(404, { error: "Introuvable" });
+        const filter = b.group_id ? `group_id=eq.${b.group_id}` : `id=eq.${b.id}`;
+        const upd = await sbPatch("rc_bookings", `${filter}&status=eq.hold&source=eq.admin`, { status: "hold", expires_at: new Date(Date.now() + hours * 3600000).toISOString() });
         if (!upd.length) return json(404, { error: "Introuvable" });
-        return json(200, { booking: upd[0], url: payUrlFor(upd[0]) });
+        const v = await groupView(upd[0]);
+        return json(200, { booking: v, url: payUrlFor(v) });
       }
 
       case "cancel": {
@@ -130,15 +165,9 @@ export const handler = async (event) => {
         const b = rows[0];
         if (!b) return json(404, { error: "Introuvable" });
         if (b.status === "cancelled") return json(200, { booking: b });
-        let refundId = b.refund_id || null;
-        if (d.refund && b.stripe_payment_intent && b.amount_cents > 0 && !refundId) {
-          const refund = await stripe("POST", "/refunds", { payment_intent: b.stripe_payment_intent }, `rc-refund-${b.id}`);
-          refundId = refund.id;
-        }
-        const upd = await sbPatch("rc_bookings", `id=eq.${b.id}`, { status: "cancelled", cancelled_at: new Date().toISOString(), refund_id: refundId });
-        const nb = upd[0];
+        const { booking: nb, refundId } = await cancelBooking(b, { refund: Boolean(d.refund) });
         if (d.notify && nb.email) {
-          await sendEmail({ to: nb.email, subject: `Annulation · Raclette Club ${fmtDate(nb.date)} à ${hhmm(nb.service)}`, html: cancelEmailHtml(nb, { byVenue: true, refunded: Boolean(refundId) }) });
+          await sendEmail({ to: nb.email, subject: `Annulation · Raclette Club ${fmtDate(nb.date)} à ${svcLabel(nb)}`, html: cancelEmailHtml(nb, { byVenue: true, refunded: Boolean(refundId) }) });
         }
         return json(200, { booking: nb, refunded: Boolean(refundId) });
       }
@@ -147,6 +176,7 @@ export const handler = async (event) => {
         const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
         const b = rows[0];
         if (!b) return json(404, { error: "Introuvable" });
+        if (b.group_id) return json(409, { error: "Une privatisation de service occupe toutes les bulles, rien à déplacer" });
         const bubble = Number(d.bubble);
         const usage = await sbSelect("rc_slot_usage", `date=eq.${b.date}&service=eq.${encodeURIComponent(b.service)}&bubble=eq.${bubble}&limit=1`);
         const target = usage[0];

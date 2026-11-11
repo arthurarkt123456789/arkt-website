@@ -183,7 +183,7 @@ export function calendarUrl(b) {
   const pad = (n) => String(n).padStart(2, "0");
   const start = `${d}T${pad(h)}${pad(m)}00`, end = `${d}T${pad(h + 2)}${pad(m)}00`;
   const q = new URLSearchParams({ action: "TEMPLATE", text: "La Meulerie Raclette Club", dates: `${start}/${end}`, ctz: "Europe/Paris",
-    details: `Raclette Club · ${b.seats} place(s) · bulle n°${b.bubble} · réf. ${b.id.slice(0, 8).toUpperCase()}`, location: "Les Terrasses du Port, 9 quai du Lazaret, 13002 Marseille" });
+    details: `Raclette Club · ${b.seats} place(s) · ${b.group ? `service${b.group.services.length > 1 ? "s" : ""} ${b.group.label} privatisé${b.group.services.length > 1 ? "s" : ""}` : `bulle n°${b.bubble}`} · réf. ${b.id.slice(0, 8).toUpperCase()}`, location: "Les Terrasses du Port, 9 quai du Lazaret, 13002 Marseille" });
   return `https://calendar.google.com/calendar/render?${q}`;
 }
 
@@ -225,17 +225,43 @@ const MENU_BLOCK = block("#F7F65C", "Au menu, 36 € adulte · 24 € enfant (ju
 const INFOS_BLOCK = block("#F0EBDA", "Bon à savoir",
   `Rendez-vous <strong>10 minutes avant</strong> le début du service, aux Terrasses du Port, <a href="${MAPS_URL}" style="color:#0000FF">9 quai du Lazaret, 13002 Marseille</a> (métro Joliette, parking du centre commercial). Les bulles sont sur la terrasse du centre commercial, en plein air : prévoyez une petite laine pour l'arrivée.`);
 
+/** Libellé des services : "12h" ou "12h · 14h". Pour un groupe, tous les services privatisés. */
+export const svcLabel = (b) => b.group ? b.group.label : hhmm(b.service);
+
+/**
+ * Vue agrégée d'une réservation. Pour une privatisation de service (group_id), renvoie la ligne
+ * principale enrichie des totaux (adultes, enfants, places, montant) et de b.group { services, label, bubbles, ids }.
+ * Pour une réservation simple, renvoie la ligne telle quelle.
+ */
+export async function groupView(b) {
+  if (!b || !b.group_id) return b;
+  const rows = await sbSelect("rc_bookings", `group_id=eq.${b.group_id}&order=service.asc,bubble.asc`);
+  if (!rows.length) return b;
+  const primary = rows[0];
+  const live = rows.filter((r) => r.status !== "cancelled" && r.status !== "expired");
+  const base = live.length ? live : rows;
+  const services = [...new Set(base.map((r) => r.service))].sort();
+  const sum = (f) => base.reduce((n, r) => n + f(r), 0);
+  return {
+    ...primary,
+    adults: sum((r) => r.adults), kids: sum((r) => r.kids), seats: sum((r) => r.seats), amount_cents: sum((r) => r.amount_cents),
+    group: { services, label: services.map(hhmm).join(" · "), bubbles: base.length, ids: rows.map((r) => r.id), primary_id: primary.id },
+  };
+}
+
 export const tickets = (b) => [b.adults ? `${b.adults} adulte${b.adults > 1 ? "s" : ""}` : null, b.kids ? `${b.kids} enfant${b.kids > 1 ? "s" : ""}` : null].filter(Boolean).join(" + ");
-const bubbleLine = (b) => b.seats >= CONFIG.PRIVATE_MIN
+const bubbleLine = (b) => b.group
+  ? `<strong>Service${b.group.services.length > 1 ? "s" : ""} ${esc(b.group.label)} privatisé${b.group.services.length > 1 ? "s" : ""}</strong> · les 5 bulles sont à vous`
+  : b.seats >= CONFIG.PRIVATE_MIN
   ? `Bulle n°${b.bubble} · <strong>privatisée</strong>${b.seats > CONFIG.SHARED_MAX ? ` (${b.seats} convives : capacité réduite à 8 cette année pour plus de confort, l'espace sera plus serré qu'à 8)` : ""}`
   : `Bulle n°${b.bubble} · partagée, vous pourrez être installés avec d'autres convives`;
 
 export function bookingEmailHtml(b, { cancelUrl, logoSrc } = {}) {
   return emailLayout({
     logoSrc, kicker: "Réservation confirmée", title: "C'est réservé !",
-    lead: `Votre table est prête pour le <strong>${esc(fmtDate(b.date))} à ${hhmm(b.service)}</strong>. On s'occupe du fromage.`,
+    lead: `Votre table est prête pour le <strong>${esc(fmtDate(b.date))} à ${esc(svcLabel(b))}</strong>. On s'occupe du fromage.`,
     rows: [
-      ["Date", `${esc(fmtDate(b.date))} à <strong>${hhmm(b.service)}</strong>`],
+      ["Date", `${esc(fmtDate(b.date))} à <strong>${esc(svcLabel(b))}</strong>`],
       ["Forfaits", `${esc(tickets(b))} · ${b.seats} place${b.seats > 1 ? "s" : ""}`],
       ["Bulle", bubbleLine(b)],
       ["Au nom de", esc(b.name)],
@@ -252,9 +278,9 @@ export function holdEmailHtml(b, { logoSrc } = {}) {
   const until = new Date(b.expires_at).toLocaleString("fr-FR", { timeZone: "Europe/Paris", weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
   return emailLayout({
     logoSrc, kicker: "Table bloquée pour vous", title: "Confirmez votre table",
-    lead: `Nous vous avons réservé une table le <strong>${esc(fmtDate(b.date))} à ${hhmm(b.service)}</strong>. Elle est bloquée jusqu'au <strong>${esc(until)}</strong> : réglez le menu en ligne pour la confirmer.`,
+    lead: `Nous vous avons réservé ${b.group ? "le Raclette Club en entier" : "une table"} le <strong>${esc(fmtDate(b.date))} à ${esc(svcLabel(b))}</strong>. ${b.group ? "Les bulles sont bloquées" : "Elle est bloquée"} jusqu'au <strong>${esc(until)}</strong> : réglez le menu en ligne pour confirmer.`,
     rows: [
-      ["Date", `${esc(fmtDate(b.date))} à <strong>${hhmm(b.service)}</strong>`],
+      ["Date", `${esc(fmtDate(b.date))} à <strong>${esc(svcLabel(b))}</strong>`],
       ["Forfaits", `${esc(tickets(b))} · ${b.seats} place${b.seats > 1 ? "s" : ""}`],
       ["Bulle", bubbleLine(b)],
       ["Au nom de", esc(b.name)],
@@ -269,10 +295,10 @@ export function cancelEmailHtml(b, { byVenue = false, refunded = false, logoSrc 
   return emailLayout({
     logoSrc, kicker: "Annulation", title: "Réservation annulée",
     lead: byVenue
-      ? `Votre table du <strong>${esc(fmtDate(b.date))} à ${hhmm(b.service)}</strong> a été annulée par La Meulerie. Nous sommes désolés pour la gêne occasionnée.`
-      : `Votre table du <strong>${esc(fmtDate(b.date))} à ${hhmm(b.service)}</strong> est annulée, comme demandé.`,
+      ? `Votre ${b.group ? "privatisation" : "table"} du <strong>${esc(fmtDate(b.date))} à ${esc(svcLabel(b))}</strong> a été annulée par La Meulerie. Nous sommes désolés pour la gêne occasionnée.`
+      : `Votre ${b.group ? "privatisation" : "table"} du <strong>${esc(fmtDate(b.date))} à ${esc(svcLabel(b))}</strong> est annulée, comme demandé.`,
     rows: [
-      ["Date", `${esc(fmtDate(b.date))} à <strong>${hhmm(b.service)}</strong>`],
+      ["Date", `${esc(fmtDate(b.date))} à <strong>${esc(svcLabel(b))}</strong>`],
       ["Forfaits", `${esc(tickets(b))} · ${b.seats} place${b.seats > 1 ? "s" : ""}`],
       ["Au nom de", esc(b.name)],
       ["Référence", esc(b.id.slice(0, 8).toUpperCase())],
@@ -294,21 +320,25 @@ export async function confirmPaidBooking(sessionId, paymentIntent) {
     { status: "paid", paid_at: new Date().toISOString(), stripe_payment_intent: paymentIntent || null, expires_at: null },
   );
   if (updated.length) {
-    const b = updated[0];
+    let b = updated[0];
+    if (b.group_id) {
+      await sbPatch("rc_bookings", `group_id=eq.${b.group_id}&status=eq.hold`, { status: "paid", paid_at: new Date().toISOString(), stripe_payment_intent: paymentIntent || null, expires_at: null });
+      b = await groupView(b);
+    }
     await notifyConfirmation(b);
     return { booking: b, transitioned: true };
   }
   const rows = await sbSelect("rc_bookings", `stripe_session_id=eq.${encodeURIComponent(sessionId)}&limit=1`);
-  return { booking: rows[0] || null, transitioned: false };
+  return { booking: await groupView(rows[0] || null), transitioned: false };
 }
 
 export async function notifyConfirmation(b) {
   const html = bookingEmailHtml(b, { cancelUrl: b.email ? cancelUrlFor(b) : null });
-  const subject = `C'est réservé ! Raclette Club · ${fmtDate(b.date)} à ${hhmm(b.service)}`;
+  const subject = `C'est réservé ! Raclette Club · ${fmtDate(b.date)} à ${svcLabel(b)}`;
   if (b.email) await sendEmail({ to: b.email, subject, html });
   await sendEmail({
     to: CONFIG.NOTIFY_EMAIL,
-    subject: `[Raclette Club] ${b.source === "admin" ? "Résa manuelle" : "Nouvelle résa"} ${b.date} ${hhmm(b.service)} · bulle ${b.bubble} · ${b.seats} pers. · ${b.name}`,
+    subject: `[Raclette Club] ${b.group ? "Service privatisé" : b.source === "admin" ? "Résa manuelle" : "Nouvelle résa"} ${b.date} ${svcLabel(b)} · ${b.group ? `${b.group.bubbles} bulles` : `bulle ${b.bubble}`} · ${b.seats} pers. · ${b.name}`,
     html: `<p style="font-family:Arial,sans-serif;font-size:14px;background:#fff;padding:12px 16px;margin:0"><strong>${esc(b.name)}</strong> · <a href="mailto:${esc(b.email || "")}">${esc(b.email || "")}</a> · <a href="tel:${esc(b.phone || "")}">${esc(b.phone || "")}</a>${b.notes ? ` · ${esc(b.notes)}` : ""} · ${b.source === "admin" ? "manuel" : "web"} · ${eur(b.amount_cents)}</p>` + html,
     replyTo: b.email || undefined,
   });
@@ -321,21 +351,50 @@ export function payUrlFor(b) {
 /** Crée une session Stripe Checkout pour une réservation en attente (hold). */
 export async function createCheckoutForBooking(b, expiresInMin = CONFIG.HOLD_MINUTES) {
   const base = `${CONFIG.SITE}${CONFIG.BASE_PATH}`;
-  const label = `${fmtDate(b.date)} à ${b.service}`;
+  const label = `${fmtDate(b.date)} à ${svcLabel(b)}`;
   const lineItems = [];
-  if (b.adults) lineItems.push({ quantity: b.adults, price_data: { currency: "eur", unit_amount: CONFIG.ADULT_CENTS, product_data: { name: "Menu Raclette adulte", description: `Raclette Club · ${label}` } } });
-  if (b.kids) lineItems.push({ quantity: b.kids, price_data: { currency: "eur", unit_amount: CONFIG.KID_CENTS, product_data: { name: "Menu Raclette enfant", description: `Raclette Club · ${label}` } } });
+  const listPrice = b.adults * CONFIG.ADULT_CENTS + b.kids * CONFIG.KID_CENTS;
+  if (b.group && b.amount_cents !== listPrice) {
+    // Tarif négocié : une seule ligne au montant convenu
+    lineItems.push({ quantity: 1, price_data: { currency: "eur", unit_amount: b.amount_cents, product_data: { name: `Privatisation Raclette Club · ${label}`, description: `${tickets(b)} · ${b.group.bubbles} bulles` } } });
+  } else {
+    if (b.adults) lineItems.push({ quantity: b.adults, price_data: { currency: "eur", unit_amount: CONFIG.ADULT_CENTS, product_data: { name: "Menu Raclette adulte", description: `Raclette Club · ${label}` } } });
+    if (b.kids) lineItems.push({ quantity: b.kids, price_data: { currency: "eur", unit_amount: CONFIG.KID_CENTS, product_data: { name: "Menu Raclette enfant", description: `Raclette Club · ${label}` } } });
+  }
   const session = await stripe("POST", "/checkout/sessions", {
     mode: "payment", locale: "fr", customer_email: b.email || undefined, client_reference_id: b.id, line_items: lineItems,
     expires_at: Math.floor(Date.now() / 1000) + Math.max(30, expiresInMin) * 60,
     success_url: `${base}/merci/?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: b.source === "admin" ? payUrlFor(b) : `${base}/?date=${b.date}&service=${encodeURIComponent(b.service)}&cancelled=1`,
-    metadata: { booking_id: b.id, date: b.date, service: b.service, bubble: b.bubble, adults: b.adults, kids: b.kids, name: b.name, phone: b.phone || "" },
-    payment_intent_data: { description: `Raclette Club ${label} · ${b.seats} pers. · ${b.name}`, metadata: { booking_id: b.id, date: b.date, service: b.service } },
+    metadata: { booking_id: b.id, group_id: b.group_id || "", date: b.date, service: b.group ? b.group.services.join(",") : b.service, bubble: b.group ? "toutes" : b.bubble, adults: b.adults, kids: b.kids, name: b.name, phone: b.phone || "" },
+    payment_intent_data: { description: `Raclette Club ${label} · ${b.seats} pers. · ${b.name}${b.group ? " · privatisation" : ""}`, metadata: { booking_id: b.id, group_id: b.group_id || "", date: b.date, service: b.group ? b.group.services.join(",") : b.service } },
     custom_text: { submit: { message: "Boissons et desserts se règlent sur place. Annulation gratuite jusqu'à 48 h avant." } },
   }, `rc-checkout-${b.id}-${Date.now()}`);
   await sbPatch("rc_bookings", `id=eq.${b.id}`, { stripe_session_id: session.id });
   return session;
+}
+
+/**
+ * Annule une réservation (ou tout son groupe) avec remboursement Stripe optionnel.
+ * b : ligne brute ou groupView. Renvoie la vue agrégée annulée et refundId.
+ */
+export async function cancelBooking(b, { refund = true } = {}) {
+  const v = await groupView(b);
+  let refundId = v.refund_id || null;
+  if (refund && v.stripe_payment_intent && v.amount_cents > 0 && !refundId) {
+    const r = await stripe("POST", "/refunds", { payment_intent: v.stripe_payment_intent }, `rc-refund-${v.group_id || v.id}`);
+    refundId = r.id;
+  }
+  const now = new Date().toISOString();
+  if (v.group_id) {
+    await sbPatch("rc_bookings", `group_id=eq.${v.group_id}&status=in.(paid,manual,hold)`, { status: "cancelled", cancelled_at: now });
+    await sbPatch("rc_bookings", `id=eq.${v.group.primary_id}`, { refund_id: refundId });
+    const rows = await sbSelect("rc_bookings", `id=eq.${v.group.primary_id}&limit=1`);
+    const nv = await groupView(rows[0]);
+    return { booking: { ...nv, refund_id: refundId }, refundId };
+  }
+  const upd = await sbPatch("rc_bookings", `id=eq.${v.id}&status=in.(paid,manual,hold)`, { status: "cancelled", cancelled_at: now, refund_id: refundId });
+  return { booking: upd[0] || { ...v, status: "cancelled", refund_id: refundId }, refundId };
 }
 
 export function cancelUrlFor(b) {

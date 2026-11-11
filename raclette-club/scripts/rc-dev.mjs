@@ -31,7 +31,7 @@ for (let d = new Date("2026-11-27T12:00:00Z"); d <= new Date("2026-12-24T12:00:0
 const bookings = [];
 const sessions = new Map();
 const active = (b) => b.status === "paid" || b.status === "manual" || (b.status === "hold" && new Date(b.expires_at) > new Date());
-const usage = (s) => { const used = bookings.filter((b) => b.slot_id === s.id && active(b)).reduce((n, b) => n + b.seats, 0); return { slot_id: s.id, date: s.date, service: s.service, bubble: s.bubble, capacity: s.capacity, status: s.status, used, free: s.capacity - used }; };
+const usage = (s) => { const act = bookings.filter((b) => b.slot_id === s.id && active(b)); let used = act.reduce((n, b) => n + b.seats, 0); if (act.some((b) => b.exclusive)) used = Math.max(used, s.capacity); return { slot_id: s.id, date: s.date, service: s.service, bubble: s.bubble, capacity: s.capacity, status: s.status, used, free: s.capacity - used }; };
 
 // Données de démo : quelques résas payées
 function seed() {
@@ -49,8 +49,27 @@ function hold(a) {
   const cands = slots.filter((s) => s.date === a.p_date && s.service === a.p_service && s.status === "open").map(usage).filter((u) => seats >= 8 ? u.used === 0 : u.free >= seats).sort((x, y) => x.free - y.free || x.bubble - y.bubble);
   if (!cands.length) throw Object.assign(new Error("NO_CAPACITY"), { code: 400 });
   const u = cands[0];
-  const b = { id: randomUUID(), slot_id: u.slot_id, date: a.p_date, service: a.p_service, bubble: u.bubble, adults: a.p_adults, kids: a.p_kids, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: a.p_amount_cents, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null };
+  const b = { id: randomUUID(), slot_id: u.slot_id, date: a.p_date, service: a.p_service, bubble: u.bubble, adults: a.p_adults, kids: a.p_kids, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: a.p_amount_cents, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: null, exclusive: false };
   bookings.push(b); return b;
+}
+
+function holdGroup(a) {
+  const services = [...new Set(a.p_services || [])].sort();
+  if (!services.length) throw Object.assign(new Error("NO_SERVICE"), { code: 400 });
+  bookings.forEach((b) => { if (b.status === "hold" && new Date(b.expires_at) <= new Date()) b.status = "expired"; });
+  const target = slots.filter((s) => s.date === a.p_date && services.includes(s.service)).sort((x, y) => x.service.localeCompare(y.service) || x.bubble - y.bubble);
+  const n = target.length, total = a.p_adults + a.p_kids;
+  if (n !== 5 * services.length) throw Object.assign(new Error("NO_CAPACITY"), { code: 400 });
+  if (total < n) throw Object.assign(new Error("TOO_FEW"), { code: 400 });
+  if (total > 10 * n) throw Object.assign(new Error("TOO_MANY"), { code: 400 });
+  if (target.map(usage).some((u) => u.status !== "open" || u.used > 0)) throw Object.assign(new Error("NO_CAPACITY"), { code: 400 });
+  const gid = randomUUID(); let remAd = a.p_adults; const out = [];
+  target.forEach((s, i) => {
+    const seats = Math.floor(total / n) + (i < total % n ? 1 : 0); const ad = Math.min(remAd, seats); remAd -= ad;
+    const b = { id: randomUUID(), slot_id: s.id, date: a.p_date, service: s.service, bubble: s.bubble, adults: ad, kids: seats - ad, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: i === 0 ? a.p_amount_cents : 0, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: gid, exclusive: true };
+    bookings.push(b); out.push(b);
+  });
+  return out;
 }
 
 function parseFilters(qs) {
@@ -72,6 +91,7 @@ async function mockSupabase(url, init) {
     const fn = u.pathname.split("/").pop();
     try {
       if (fn === "rc_hold") return ok(hold(body));
+      if (fn === "rc_hold_group") return ok(holdGroup(body));
       if (fn === "rc_availability") {
         return ok(SERVICES.map((s) => { const us = slots.filter((x) => x.date === body.p_date && x.service === s).map(usage); if (!us.length) return null; const open = us.filter((x) => x.status === "open"); const empty = open.filter((x) => x.used === 0).length; return { service: s, free_total: open.reduce((n, x) => n + Math.max(0, x.free), 0), max_group: empty > 0 ? 10 : Math.max(0, ...open.map((x) => x.free)), open_bubbles: open.length, empty_bubbles: empty }; }).filter(Boolean));
       }
@@ -85,7 +105,7 @@ async function mockSupabase(url, init) {
   const store = table === "rc_bookings" ? bookings : table === "rc_slots" ? slots : table === "rc_slot_usage" ? slots.map(usage) : null;
   if (!store) return err("table inconnue", 404);
   const match = parseFilters(u.search.slice(1));
-  if (method === "GET") return ok(store.filter(match));
+  if (method === "GET") { let rows = store.filter(match); const ord = u.searchParams.get("order"); if (ord) { const keys = ord.split(",").map((k) => k.split(".")[0]); rows = [...rows].sort((x, y) => { for (const k of keys) { if (x[k] < y[k]) return -1; if (x[k] > y[k]) return 1; } return 0; }); } return ok(rows); }
   if (method === "PATCH") { const rows = store.filter(match); rows.forEach((r) => Object.assign(r, body)); return ok(rows); }
   return err("méthode", 405);
 }
