@@ -84,7 +84,9 @@
     .overview{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin-bottom:18px}
     .ov{border:2px solid var(--ink);border-radius:10px;padding:6px 4px;text-align:center;font-weight:800;font-size:.8rem;background:#fff;cursor:pointer}
     .ov small{display:block;font-weight:600;font-size:.65rem;opacity:.7}
-    .ov.sel{background:var(--yellow)}
+    .ov.sel{outline:3px solid var(--blue);outline-offset:1px}
+    .ov.has{background:#dff7e8} .ov.mid{background:#fff3c4} .ov.high{background:#ffe0b3} .ov.full{background:var(--red);color:#fff}
+    .ov.full small{opacity:.9}
     .hidden{display:none!important}
     @media(max-width:600px){.row2{grid-template-columns:1fr}}
   </style>
@@ -130,6 +132,7 @@
     </section>
     <div class="overview" id="overview"></div>
     <div class="kpis" id="kpis"></div>
+    <div class="legend" style="margin-top:-8px"><span><i style="background:#fff"></i>Aucune résa</span><span><i style="background:#dff7e8"></i>Des résas</span><span><i style="background:#fff3c4"></i>40 % et plus</span><span><i style="background:#ffe0b3"></i>75 % et plus</span><span><i style="background:var(--red)"></i>Complet</span></div>
     <div class="legend"><span><i style="background:var(--green)"></i>Payé</span><span><i style="background:var(--blue)"></i>Manuel</span><span><i style="background:var(--orange)"></i>En attente de paiement</span><span><i style="background:#fff"></i>Libre</span><span><i style="background:var(--grey)"></i>Bloqué</span></div>
     <div class="grid" id="grid"></div>
     <table id="table"><thead><tr><th>Service</th><th>Bulle</th><th>Nom</th><th>Contact</th><th>Forfaits</th><th>Remarques</th><th>Statut</th><th></th></tr></thead><tbody></tbody></table>
@@ -271,8 +274,11 @@
     overview = days;
     const el = $('overview'); el.innerHTML = '';
     days.forEach((d) => {
-      const s = fmtShort(d.date); const b = document.createElement('div'); b.className = 'ov' + (d.date === current ? ' sel' : ''); b.dataset.date = d.date;
-      b.innerHTML = `${s.num}<small>${s.dow}</small><small><b>${d.used_total}</b> couv.</small>`; b.title = `${d.free_total} places libres`;
+      const s = fmtShort(d.date); const b = document.createElement('div'); b.dataset.date = d.date;
+      const cap = d.used_total + d.free_total; const pct = cap ? d.used_total / cap : 0;
+      const lv = d.used_total === 0 ? '' : d.free_total === 0 ? 'full' : pct >= .75 ? 'high' : pct >= .4 ? 'mid' : 'has';
+      b.className = 'ov' + (lv ? ' ' + lv : '') + (d.date === current ? ' sel' : '');
+      b.innerHTML = `${s.num}<small>${s.dow}</small><small><b>${d.used_total}</b> couv.</small>`; b.title = lv === 'full' ? 'Complet' : `${d.free_total} places libres · ${Math.round(pct * 100)} % rempli`;
       b.addEventListener('click', () => load(d.date)); el.appendChild(b);
     });
   }
@@ -320,10 +326,10 @@
     });
 
     grid.querySelectorAll('[data-block]').forEach((b) => b.addEventListener('click', async () => {
-      try { await api('POST', { action: 'block', slotIds: [Number(b.dataset.block)], blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); loadStats(); } catch (e) { toast(e.message, true); }
+      try { await api('POST', { action: 'block', slotIds: [Number(b.dataset.block)], blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); loadOverview(); loadStats(); } catch (e) { toast(e.message, true); }
     }));
     grid.querySelectorAll('[data-block-service]').forEach((b) => b.addEventListener('click', async () => {
-      try { await api('POST', { action: 'block_service', date: current, service: b.dataset.blockService, blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); loadStats(); } catch (e) { toast(e.message, true); }
+      try { await api('POST', { action: 'block_service', date: current, service: b.dataset.blockService, blocked: b.dataset.blocked === 'true' }); toast('Mis à jour'); load(current); loadOverview(); loadStats(); } catch (e) { toast(e.message, true); }
     }));
     grid.querySelectorAll('[data-manual]').forEach((b) => b.addEventListener('click', () => openManual(b.dataset.manual)));
     grid.querySelectorAll('[data-service]').forEach((b) => b.addEventListener('click', () => openService(b.dataset.service)));
