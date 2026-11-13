@@ -67,7 +67,7 @@ export const handler = async (event) => {
         description: `Raclette Club ${label} · ${seats} pers. · ${name}`,
         metadata: { booking_id: booking.id, date, service },
       },
-      custom_text: { submit: { message: "Boissons et desserts se règlent sur place. Annulation gratuite jusqu'à 48 h avant." } },
+      custom_text: { submit: { message: "Boissons et desserts se règlent sur place. Annulation gratuite jusqu'à 72 h avant." } },
     }, `rc-checkout-${booking.id}`);
 
     await sbPatch("rc_bookings", `id=eq.${booking.id}`, { stripe_session_id: session.id });

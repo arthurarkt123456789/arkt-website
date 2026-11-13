@@ -85,12 +85,12 @@
       <span class="tag tag--pink">Restaurant éphémère · Marseille</span>
       <h1>Réserve<br>ta <span class="y">bulle</span></h1>
       <p><strong>La Meulerie Raclette Club est de retour aux Terrasses du Port !</strong><br>Une raclette qui coule à flots, dans une bulle, sur la terrasse du centre commercial Les Terrasses du Port. 5 bulles, 4 services par jour. Réserve vite ta place !</p>
-      <div class="notice"><span class="emoji">🫧</span><span><b>Bon à savoir :</b> les bulles se partagent ! À moins de 8, vous êtes installés avec d'autres convives, ambiance chalet. À partir de 8, la bulle est rien qu'à vous (jusqu'à 10 personnes).</span></div>
+      <div class="notice"><span class="emoji">🫧</span><span><b>Bon à savoir :</b> les bulles se partagent ! À moins de 8, vous êtes installés avec d'autres convives, ambiance chalet. À 8, la bulle est rien qu'à vous.</span></div>
       <ul class="facts">
         <li>Menu raclette <b>36 €</b></li>
         <li>Enfant <b>24 €</b> (jusqu'à 12 ans)</li>
         <li><b>12h · 14h · 19h · 21h</b></li>
-        <li>De <b>1 à 10</b> personnes</li>
+        <li>De <b>1 à 8</b> personnes</li>
         <li><b>En terrasse</b></li>
       </ul>
       <a class="btn btn--lg" href="#reserver">Je réserve</a>
@@ -149,7 +149,7 @@
           </div>
         </div>
         <div class="info hidden" id="kidNote" style="margin-top:12px">Les enfants ne peuvent pas représenter plus de 70 % d'une table. Ajoutez un adulte pour ajouter un enfant.</div>
-        <div class="group-note" id="groupNote"><span class="emoji">🫧</span><span>Une bulle se partage à 8. À partir de 8 personnes, elle est privatisée pour votre groupe, jusqu'à 10.</span></div>
+        <div class="group-note" id="groupNote"><span class="emoji">🫧</span><span>Une bulle se partage à 8. À 8 personnes, elle est privatisée pour votre groupe.</span></div>
       </div>
 
       <!-- 4. Coordonnées -->
@@ -160,7 +160,7 @@
           <div class="field"><label for="phone">Téléphone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required inputmode="tel" /></div>
           <div class="field full"><label for="email">Email (confirmation + lien d'annulation)</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
           <div class="field full"><label for="notes">Remarques : option veggie ou halal, allergies, anniversaire…</label><textarea id="notes" name="notes" maxlength="500"></textarea></div>
-          <label class="check full"><input type="checkbox" id="cgv" required /><span>J'ai lu et j'accepte les <a href="cgv/" target="_blank">conditions de réservation</a> : menu réglé en ligne, boissons et desserts sur place, annulation gratuite jusqu'à 48 h avant le service.</span></label>
+          <label class="check full"><input type="checkbox" id="cgv" required /><span>J'ai lu et j'accepte les <a href="cgv/" target="_blank">conditions de réservation</a> : menu réglé en ligne, boissons et desserts sur place, annulation gratuite jusqu'à 72 h avant le service.</span></label>
         </form>
       </div>
 
@@ -242,10 +242,10 @@
   <div class="wrap">
     <h2 class="section-title">Comment ça marche</h2>
     <div class="howto">
-      <div class="card"><div class="ico">🫧</div><h3>5 bulles, 8 places</h3><p>Réservez de 1 à 10 places. Jusqu'à 7, vous partagez peut-être la bulle avec d'autres gourmands. À partir de 8, la bulle est à vous, jusqu'à 10 pour une tablée serrée.</p></div>
+      <div class="card"><div class="ico">🫧</div><h3>5 bulles, 8 places</h3><p>Réservez de 1 à 8 places. Jusqu'à 7, vous partagez peut-être la bulle avec d'autres gourmands. À 8, la bulle est à vous.</p></div>
       <div class="card"><div class="ico">⏰</div><h3>4 services par jour</h3><p>12h, 14h, 19h et 21h, tous les jours du 27 novembre au 24 décembre. Dernier service le 24 à 14h.</p></div>
       <div class="card"><div class="ico">💳</div><h3>Menu payé en ligne</h3><p>Le menu se règle à la réservation. Boissons et desserts s'ajoutent sur place.</p></div>
-      <div class="card"><div class="ico">↩️</div><h3>Annulation 48 h</h3><p>Un empêchement ? Annulez depuis le lien de votre email jusqu'à 48 h avant, remboursement intégral.</p></div>
+      <div class="card"><div class="ico">↩️</div><h3>Annulation 72 h</h3><p>Un empêchement ? Annulez depuis le lien de votre email jusqu'à 72 h avant, remboursement intégral.</p></div>
       <div class="card"><div class="ico">🫧</div><h3>Une bulle, en terrasse</h3><p>Les bulles sont installées sur la terrasse du centre commercial Les Terrasses du Port, en plein air et à l'abri. La raclette fond, Marseille s'étale, c'est la montagne qui est venue en ville.</p></div>
       <div class="card"><div class="ico">📍</div><h3>Les Terrasses du Port</h3><p>9 quai du Lazaret, 13002 Marseille. Métro Joliette, parking du centre commercial.</p></div>
       <div class="card"><div class="ico">👶</div><h3>Poussettes et espace</h3><p>L'espace dans et autour des bulles est restreint. Si vous venez avec une poussette, on fera le maximum pour vous installer, sans pouvoir garantir à 100 % que ce soit confortable.</p></div>
@@ -322,7 +322,7 @@
   const API = '/.netlify/functions';
   const SERVICES = { '12:00': 'Déjeuner', '14:00': 'Déjeuner', '19:00': 'Dîner', '21:00': 'Dîner' };
   const PRICE = { adult: 3600, kid: 2400 };
-  const SHARED_MAX = 8, PRIVATE_MIN = 8, PRIVATE_MAX = 10;
+  const SHARED_MAX = 8, PRIVATE_MIN = 8, PRIVATE_MAX = 8;
   const KIDS_MAX_RATIO = 0.7; // au plus 70 % d'enfants par réservation
   const maxKidsFor = (adults) => Math.floor(adults * KIDS_MAX_RATIO / (1 - KIDS_MAX_RATIO) + 1e-9);
   const DOW = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'];
@@ -429,10 +429,9 @@
     document.querySelector('[data-step="adults"][data-dir="-1"]').disabled = state.adults <= 1;
     document.querySelector('[data-step="kids"][data-dir="-1"]').disabled = state.kids <= 0;
     const note = $('groupNote');
-    if (total > SHARED_MAX) { note.className = 'group-note priv'; note.innerHTML = `<span class="emoji">🎉</span><span><b>Bulle privatisée à ${total} :</b> cette année, nous avons réduit la capacité à 8 pour plus de confort, mais vous pouvez aller jusqu'à 10 dans le cadre d'une privatisation. Tout le monde a sa place, mais l’espace est plus serré qu’à 8.</span>`; }
-    else if (total === PRIVATE_MIN) { note.className = 'group-note priv'; note.innerHTML = '<span class="emoji">🎉</span><span><b>Bulle privatisée !</b> 8 places, la bulle est entièrement à vous. Vous pouvez ajouter jusqu\'à 2 convives de plus.</span>'; }
+    if (total === PRIVATE_MIN) { note.className = 'group-note priv'; note.innerHTML = '<span class="emoji">🎉</span><span><b>Bulle privatisée !</b> 8 places, la bulle est entièrement à vous.</span>'; }
     else if (state.maxGroup < PRIVATE_MIN) { note.className = 'group-note'; note.innerHTML = `<span class="emoji">🫧</span><span>Sur ce service, il reste au mieux <b>${state.maxGroup} place${state.maxGroup > 1 ? 's' : ''} dans une même bulle</b>. Vous partagerez la bulle avec d'autres convives.</span>`; }
-    else { note.className = 'group-note'; note.innerHTML = '<span class="emoji">🫧</span><span>Une bulle se partage à 8. À moins de 8, vous pourrez partager la bulle avec d’autres convives. À partir de 8, elle est privatisée, jusqu’à 10.</span>'; }
+    else { note.className = 'group-note'; note.innerHTML = '<span class="emoji">🫧</span><span>Une bulle se partage à 8. À moins de 8, vous pourrez partager la bulle avec d’autres convives. À 8, elle est privatisée pour votre groupe.</span>'; }
     const ok = total >= 1 && state.adults >= 1;
     setStep('stepForm', ok); setStep('stepPay', ok);
     renderSummary();

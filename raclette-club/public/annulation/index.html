@@ -30,7 +30,7 @@
       <div><span>Montant</span>${eur(b.amount_cents)}</div><div><span>Référence</span>${b.ref}</div></div>`;
   if (b.status === 'cancelled') { box.innerHTML = `<h1>Déjà annulée</h1><p>Cette réservation a déjà été annulée.</p>${recap}`; return; }
   if (!b.cancellable) {
-    box.innerHTML = `<h1>Annulation impossible en ligne</h1><p>${b.status !== 'paid' ? 'Cette réservation n’est pas annulable en ligne.' : 'Le délai de 48 h avant le service est dépassé.'} Pour toute question : <a href="mailto:hello@lameulerie.com">hello@lameulerie.com</a>.</p>${recap}`; return;
+    box.innerHTML = `<h1>Annulation impossible en ligne</h1><p>${b.status !== 'paid' ? 'Cette réservation n’est pas annulable en ligne.' : 'Le délai de 72 h avant le service est dépassé.'} Pour toute question : <a href="mailto:hello@lameulerie.com">hello@lameulerie.com</a>.</p>${recap}`; return;
   }
   box.innerHTML = `<h1>Annuler ma réservation ?</h1><p>Le remboursement de <b>${eur(b.amount_cents)}</b> sera lancé immédiatement et apparaîtra sur votre compte sous 5 à 10 jours ouvrés.</p>${recap}
     <div id="err" class="error hidden"></div>

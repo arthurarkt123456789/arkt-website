@@ -47,14 +47,16 @@ Supprimer les enregistrements A / CNAME OVH par défaut sur `www` et l'apex (red
 
 ## Règles métier
 
+- Marge d'exploitation : la bulle 5 de chaque service est bloquée (statut `blocked`) ; l'admin la rouvre service par service avec « Bloquer » si besoin.
+
 - 5 bulles × 8 places, services 12h, 14h, 19h, 21h, du 27/11 au 24/12, dernier service le 24 à 14h.
-- 1 à 7 places : placé dans la bulle ouverte la plus remplie qui peut l'accueillir (8 places vendues par bulle en partagé). 8 à 10 places en une seule réservation : privatisation, bulle vide obligatoire.
+- 1 à 7 places : placé dans la bulle ouverte la plus remplie qui peut l'accueillir (8 places vendues par bulle en partagé). 8 places en une seule réservation : privatisation, bulle vide obligatoire (`PRIVATE_MAX` = 8 ; la base accepte toujours jusqu'à 10 pour les anciennes réservations).
 - Adulte 36 €, enfant 24 €, au moins un adulte par réservation.
 - Places bloquées 30 min pendant le paiement (expiration automatique, pas de cron).
 - Réservation en ligne fermée 60 min avant le service.
-- Annulation client via le lien de l'email jusqu'à 48 h avant, remboursement Stripe automatique.
+- Annulation client via le lien de l'email jusqu'à 72 h avant, remboursement Stripe automatique.
 - Admin : bloquer une bulle ou un service, réservation manuelle (avec ou sans email), blocage 24 h avec lien de paiement client (`/payer/?id=…&t=…`, prolongeable), annulation avec ou sans remboursement, déplacement de bulle, export CSV, dashboard (capacité, jauge, C.A.).
-- Admin, privatisation d'un ou plusieurs services complets (`hold_service`) : les 5 bulles de chaque service choisi doivent être ouvertes et vides ; de 5 à 50 convives par service ; montant au tarif public ou négocié ; une réservation par bulle, liées par `group_id`, un seul lien de paiement (porté par la première ligne), blocage 72 h par défaut. Paiement, annulation et remboursement s'appliquent au groupe entier.
+- Admin, privatisation d'un ou plusieurs services complets (`hold_service`) : les 5 bulles de chaque service choisi doivent être ouvertes et vides ; de 5 à 40 convives par service ; montant au tarif public ou négocié ; une réservation par bulle, liées par `group_id`, un seul lien de paiement (porté par la première ligne), blocage 72 h par défaut. Paiement, annulation et remboursement s'appliquent au groupe entier.
 
 Constantes modifiables dans `netlify/lib/rc.mjs` (`CONFIG`).
 

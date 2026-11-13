@@ -57,7 +57,7 @@ export const handler = async (event) => {
       if (b.status === "cancelled") return json(200, { booking: publicView(b), already: true });
       if (b.status !== "paid") return json(409, { error: "Cette réservation ne peut pas être annulée en ligne" });
       if (minutesUntil(b.date, b.service) < CONFIG.CANCEL_HOURS * 60) {
-        return json(409, { error: "Le délai d'annulation de 48 h est dépassé. Contactez-nous à hello@lameulerie.com." });
+        return json(409, { error: "Le délai d'annulation de 72 h est dépassé. Contactez-nous à hello@lameulerie.com." });
       }
 
       const { booking: nb, refundId } = await cancelBooking(b, { refund: true });

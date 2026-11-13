@@ -10,13 +10,13 @@ export const CONFIG = {
   SERVICES: ["12:00", "14:00", "19:00", "21:00"],
   SHARED_MAX: 8,            // places vendues par bulle en partagé
   PRIVATE_MIN: 8,           // à partir de 8, la bulle est privatisée
-  PRIVATE_MAX: 10,          // jusqu'à 10 pour un seul groupe
+  PRIVATE_MAX: 8,           // un seul groupe : 8 au plus (les anciennes résas à 9 ou 10 restent valides)
   KIDS_MAX_RATIO: 0.7,      // au plus 70 % d'enfants par réservation (web)
   FIRST_DAY: "2026-11-27",
   LAST_DAY: "2026-12-24",
   HOLD_MINUTES: 30,
   BOOKING_CLOSE_MIN: 60,       // fermeture des résas en ligne : 60 min avant le service
-  CANCEL_HOURS: 48,            // annulation client possible jusqu'à 48 h avant
+  CANCEL_HOURS: 72,            // annulation client possible jusqu'à 72 h avant
   NOTIFY_EMAIL: process.env.RC_NOTIFY_EMAIL || "hello@lameulerie.com",
   FROM: process.env.RC_FROM || "La Meulerie Raclette Club <noreply@arkt-conseil.com>",
   REPLY_TO: process.env.RC_REPLY_TO || "hello@lameulerie.com",
@@ -368,7 +368,7 @@ export async function createCheckoutForBooking(b, expiresInMin = CONFIG.HOLD_MIN
     cancel_url: b.source === "admin" ? payUrlFor(b) : `${base}/?date=${b.date}&service=${encodeURIComponent(b.service)}&cancelled=1`,
     metadata: { booking_id: b.id, group_id: b.group_id || "", date: b.date, service: b.group ? b.group.services.join(",") : b.service, bubble: b.group ? "toutes" : b.bubble, adults: b.adults, kids: b.kids, name: b.name, phone: b.phone || "" },
     payment_intent_data: { description: `Raclette Club ${label} · ${b.seats} pers. · ${b.name}${b.group ? " · privatisation" : ""}`, metadata: { booking_id: b.id, group_id: b.group_id || "", date: b.date, service: b.group ? b.group.services.join(",") : b.service } },
-    custom_text: { submit: { message: "Boissons et desserts se règlent sur place. Annulation gratuite jusqu'à 48 h avant." } },
+    custom_text: { submit: { message: "Boissons et desserts se règlent sur place. Annulation gratuite jusqu'à 72 h avant." } },
   }, `rc-checkout-${b.id}-${Date.now()}`);
   await sbPatch("rc_bookings", `id=eq.${b.id}`, { stripe_session_id: session.id });
   return session;

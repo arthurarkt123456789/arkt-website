@@ -143,7 +143,7 @@
   <h3>Réservation manuelle</h3>
   <form class="f" method="dialog" id="formManual">
     <div class="row2"><div><label>Date</label><input type="date" name="date" required min="2026-11-27" max="2026-12-24" /></div><div><label>Service</label><select name="service"><option>12:00</option><option>14:00</option><option>19:00</option><option>21:00</option></select></div></div>
-    <div class="row2"><div><label>Adultes</label><input type="number" name="adults" min="0" max="10" value="2" /></div><div><label>Enfants</label><input type="number" name="kids" min="0" max="10" value="0" /></div></div>
+    <div class="row2"><div><label>Adultes</label><input type="number" name="adults" min="0" max="8" value="2" /></div><div><label>Enfants</label><input type="number" name="kids" min="0" max="8" value="0" /></div></div>
     <div><label>Nom</label><input name="name" required /></div>
     <div class="row2"><div><label>Email</label><input name="email" type="email" /></div><div><label>Téléphone</label><input name="phone" /></div></div>
     <div><label>Remarques</label><input name="notes" placeholder="Invités, presse, payé sur place…" /></div>
@@ -402,7 +402,7 @@
     const adults = Number(f.adults.value) || 0, kids = Number(f.kids.value) || 0;
     const list = adults * 36 + kids * 24;
     if (!f.amount.dataset.touched) f.amount.value = list.toFixed(2);
-    $('serviceHint').textContent = n ? `${n} service${n > 1 ? 's' : ''} · ${5 * n} bulles · ${5 * n} à ${50 * n} convives · plein tarif ${list.toLocaleString('fr-FR')} €` : 'Choisis au moins un service';
+    $('serviceHint').textContent = n ? `${n} service${n > 1 ? 's' : ''} · ${5 * n} bulles · ${5 * n} à ${40 * n} convives · plein tarif ${list.toLocaleString('fr-FR')} €` : 'Choisis au moins un service';
   };
   $('formService').addEventListener('input', (e) => { if (e.target.name === 'amount') e.target.dataset.touched = '1'; syncService(); });
   $('formService').addEventListener('change', syncService);

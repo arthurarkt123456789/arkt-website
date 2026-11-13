@@ -38,7 +38,7 @@
     <p>Votre table est réservée jusqu'au <b>${until}</b>. Réglez le menu en ligne pour la confirmer. Boissons et desserts se règlent sur place.</p>${recap}
     <div id="err" class="error hidden"></div>
     <p style="margin-top:18px"><button class="btn btn--pink btn--lg btn--block" id="pay">Payer ${eur(b.amount_cents)} et confirmer</button></p>
-    <p style="font-weight:600;font-size:.85rem;text-align:center">Paiement sécurisé par Stripe. Annulation gratuite jusqu'à 48 h avant le service.</p>`;
+    <p style="font-weight:600;font-size:.85rem;text-align:center">Paiement sécurisé par Stripe. Annulation gratuite jusqu'à 72 h avant le service.</p>`;
   document.getElementById('pay').addEventListener('click', async (e) => {
     e.target.disabled = true; e.target.textContent = 'Un instant…';
     const rr = await fetch('/.netlify/functions/rc-booking', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'pay', id, t }) });

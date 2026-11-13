@@ -126,7 +126,7 @@ export const handler = async (event) => {
         const adults = Number.parseInt(d.adults, 10) || 0, kids = Number.parseInt(d.kids, 10) || 0;
         const bubbles = 5 * services.length;
         if (adults + kids < bubbles) return json(400, { error: `Au moins ${bubbles} convives pour ${bubbles} bulles` });
-        if (adults + kids > 10 * bubbles) return json(400, { error: `Au plus ${10 * bubbles} convives` });
+        if (adults + kids > CONFIG.PRIVATE_MAX * bubbles) return json(400, { error: `Au plus ${CONFIG.PRIVATE_MAX * bubbles} convives` });
         const hours = Number(d.hours) > 0 ? Number(d.hours) : 24;
         const amount = Number.isInteger(d.amountCents) && d.amountCents >= 0 ? d.amountCents : adults * CONFIG.ADULT_CENTS + kids * CONFIG.KID_CENTS;
         let rows;
