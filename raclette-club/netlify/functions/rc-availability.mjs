@@ -13,6 +13,7 @@ export const handler = async (event) => {
       const days = rows.map((r) => ({
         date: r.date,
         free: r.free_total,
+        used: r.used_total,
         maxGroup: Math.min(r.max_group, CONFIG.PRIVATE_MAX),
         // journée passée : plus rien à réserver en ligne
         closed: minutesUntil(r.date, CONFIG.SERVICES.at(-1)) < CONFIG.BOOKING_CLOSE_MIN,
@@ -32,6 +33,7 @@ export const handler = async (event) => {
         exists,                                   // false = service fermé ce jour (ex. 24/12 soir)
         closed,                                   // trop tard pour réserver en ligne
         free: exists ? r.free_total : 0,
+        used: exists ? Math.max(0, r.open_bubbles * CONFIG.SHARED_MAX - r.free_total) : 0,
         maxGroup: exists && !closed ? Math.min(r.max_group, CONFIG.PRIVATE_MAX) : 0,
         canPrivatize: exists && !closed && r.empty_bubbles > 0,
       };

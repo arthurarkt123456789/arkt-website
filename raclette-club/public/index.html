@@ -332,7 +332,8 @@
 
   const state = { date: null, service: null, adults: 0, kids: 0, maxGroup: 0, canPrivatize: false, services: [] };
 
-  const level = (free, maxGroup, closed) => closed ? 'closed' : (maxGroup < 1 ? 'full' : free <= 10 ? 'low' : free <= 24 ? 'mid' : 'high');
+  // Dès la première réservation, on affiche « Il reste de la place » (orange)
+  const level = (free, maxGroup, closed, used) => closed ? 'closed' : (maxGroup < 1 ? 'full' : free <= 10 ? 'low' : (used > 0 || free <= 24) ? 'mid' : 'high');
   const setStep = (id, on) => $(id).setAttribute('aria-disabled', on ? 'false' : 'true');
 
   // ---------- Retour depuis Stripe (annulation) ----------
@@ -357,7 +358,7 @@
         const sep = document.createElement('div'); sep.className = 'month-sep';
         sep.textContent = dt.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }); el.appendChild(sep);
       }
-      const lv = level(d.free, d.maxGroup, d.closed);
+      const lv = level(d.free, d.maxGroup, d.closed, d.used);
       const b = document.createElement('button'); b.type = 'button'; b.className = 'day'; b.dataset.level = lv; b.dataset.date = d.date;
       b.disabled = lv === 'closed';
       b.innerHTML = `<span class="dot"></span><span class="dow">${DOW[dt.getDay()]}</span><span class="num">${dt.getDate()}</span><span class="mon">${MON[dt.getMonth()]}</span>`;
@@ -379,7 +380,7 @@
     const el = $('services'); el.innerHTML = '';
     let allFull = true;
     data.services.forEach((s) => {
-      const lv = !s.exists ? 'closed' : s.closed ? 'closed' : level(s.free, s.maxGroup, false);
+      const lv = !s.exists ? 'closed' : s.closed ? 'closed' : level(s.free, s.maxGroup, false, s.used);
       if (lv !== 'closed' && lv !== 'full') allFull = false;
       const b = document.createElement('button'); b.type = 'button'; b.className = 'service'; b.dataset.level = lv; b.dataset.service = s.service;
       b.disabled = lv === 'closed' || lv === 'full';
