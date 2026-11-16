@@ -1,4 +1,5 @@
 import { createServer } from 'vite';
+import { clientsIndexHtml } from './scripts/clients-page.mjs';
 import { fileURLToPath } from 'url';
 import { readFile, writeFile, mkdir, readdir, unlink } from 'fs/promises';
 import path from 'path';
@@ -254,6 +255,13 @@ async function prerenderDevis(vite) {
   await mkdir(outIndex, { recursive: true });
   await writeFile(path.join(outIndex, 'index.html'), devisIndexHtml(index));
   console.log(`✓ Index /devis/`);
+
+  /* Espace clients : accès protégé par netlify/edge-functions/clients-auth.js */
+  const recos = JSON.parse(await readFile(path.join(__dirname, 'content/recos.json'), 'utf-8').catch(() => '[]'));
+  const outClients = path.join(__dirname, 'dist/clients');
+  await mkdir(outClients, { recursive: true });
+  await writeFile(path.join(outClients, 'index.html'), clientsIndexHtml(index, recos));
+  console.log(`✓ Espace clients /clients/`);
 
   /* Supprime le shell SPA devis.html — il n'est utile qu'en tant que template pendant le build.
      Sans cette suppression, Netlify le sert à /devis/ à la place de dist/devis/index.html. */
