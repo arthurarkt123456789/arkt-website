@@ -241,6 +241,7 @@ const ARKT = {
       claim: "Sortir un restaurant festif marseillais du générique pour en faire **une vraie maison qu'on raconte**.",
       panels: [
         { kind: "intro", label: "Projet", title: "Chez Charlot – 2026", sub: "Restaurant festif · plateforme de marque · Marseille" },
+        { kind: "video", light: true, src: "arkt/videos/chezcharlot-video-1.mp4", poster: "arkt/videos/chezcharlot-video-1.jpg" },
         { kind: "media", phr: "1/1", caption: "Chez Charlot · logo sur velours tigré", src: "arkt/images/chezcharlot-1.jpg" },
         { kind: "text", head: "Contexte", body: [
           "Chez Charlot est un lieu marseillais qui se présentait comme un « restaurant festif », un mot que partagent déjà des dizaines d'adresses de la ville.",
@@ -254,6 +255,7 @@ const ARKT = {
           "Refonte de la direction artistique (palette rouge/brun, cartouche léopard, usage retravaillé du logo existant) et définition d'un ton reconnaissable, fait de règles de maison écrites, de phrases courtes et d'humour assumé.",
         ] },
         { kind: "media", phr: "1/1", caption: "Chez Charlot · compte Instagram", src: "arkt/images/chezcharlot-6.jpg" },
+        { kind: "video", light: true, src: "arkt/videos/chezcharlot-video-2.mp4", poster: "arkt/videos/chezcharlot-video-2.jpg" },
         { kind: "result-text", head: "Résultat", body: [
           "Un lieu qui a désormais **une vraie identité de marque**, capable d'exister dans le récit avant même d'exister sur place.",
           "Un territoire propre à Chez Charlot que personne d'autre à Marseille n'occupe, un ton reconnaissable et une direction artistique qui joue sur les codes de l'hôtellerie pour installer la maison comme une adresse dont on se raconte les soirées.",
