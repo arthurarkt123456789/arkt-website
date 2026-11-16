@@ -479,7 +479,7 @@ svg text{font-family:var(--sans)}
   function fmt(v){return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')}
   function cum(a){var s=0;return a.map(function(v){s+=v;return s})}
   var INK='#15140F',DIM='#6E6A5F',ACC='#F2533F',SAND='#C9C1AB',GRID='rgba(21,20,15,.10)';
-  var months=['Mars','Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.'];
+  var months=['Mars','Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','16 nov.'];
 
   /* 1. audience cumulée, empilée par canal */
   (function(){
@@ -490,7 +490,7 @@ svg text{font-family:var(--sans)}
     var tot=dir.map(function(v,i){return v+pag[i]+ig[i]});
     var W=760,H=400,L=18,R=70,T=34,B=34,max=320000;
     var n=months.length;
-    function x(i){return L+(i+1)*(W-L-R)/n}
+    var HALF=16/30,step=(W-L-R)/(n-1+HALF);function x(i){return L+(i===n-1?n-1+HALF:i+1)*step}
     function y(v){return H-B-v/max*(H-T-B)}
     var x0=L;
     [100000,200000,300000].forEach(function(g){svg.appendChild(el('line',{x1:L,x2:W-R,y1:y(g),y2:y(g),stroke:GRID}));svg.appendChild(el('text',{x:W-R+8,y:y(g)+4,'font-size':11,fill:DIM},fmt(g)))});
@@ -502,7 +502,7 @@ svg text{font-family:var(--sans)}
     svg.appendChild(el('path',{d:d,fill:'none',stroke:INK,'stroke-width':1.5}));
     svg.appendChild(el('line',{x1:L,x2:W-R,y1:y(0),y2:y(0),stroke:INK,'stroke-opacity':.4}));
     months.forEach(function(m,i){svg.appendChild(el('text',{x:x(i),y:H-12,'font-size':11.5,fill:DIM,'text-anchor':'middle'},m))});
-    [[1,'79 900'],[2,'169 000'],[4,'233 800'],[7,'301 300']].forEach(function(p){var i=p[0];svg.appendChild(el('circle',{cx:x(i),cy:y(tot[i]),r:4,fill:'#fff',stroke:INK,'stroke-width':1.5}));svg.appendChild(el('text',{x:x(i)-8,y:y(tot[i])-10,'font-size':12.5,'font-weight':700,fill:INK,'text-anchor':'end'},p[1]))});
+    [[1,'79 900'],[2,'169 000'],[4,'233 800'],[6,'270 900']].forEach(function(p){var i=p[0];svg.appendChild(el('circle',{cx:x(i),cy:y(tot[i]),r:4,fill:'#fff',stroke:INK,'stroke-width':1.5}));svg.appendChild(el('text',{x:x(i)-8,y:y(tot[i])-10,'font-size':12.5,'font-weight':700,fill:INK,'text-anchor':'end'},p[1]))});
     var e=n-1;svg.appendChild(el('circle',{cx:x(e),cy:y(tot[e]),r:5.5,fill:ACC,stroke:'#fff','stroke-width':2}));
     svg.appendChild(el('text',{x:x(e)-4,y:y(tot[e])-14,'font-size':17,'font-weight':800,fill:ACC,'text-anchor':'end'},fmt(tot[e])));
     svg.appendChild(el('text',{x:(x(4)+x(5))/2,y:y(tot[5])-34,'font-size':11.5,fill:DIM,'text-anchor':'middle'},'Palier estival'));
@@ -512,7 +512,7 @@ svg text{font-family:var(--sans)}
   function line(id,vals,labels,opt){
     var svg=document.getElementById(id);if(!svg)return;
     var vb=svg.getAttribute('viewBox').split(' '),W=+vb[2],H=+vb[3],L=18,R=64,T=44,B=34,max=opt.max,n=vals.length;
-    function x(i){return L+(i+1)*(W-L-R)/n}
+    var HALF=16/30,step=(W-L-R)/(n-1+HALF);function x(i){return L+(i===n-1?n-1+HALF:i+1)*step}
     function y(v){return H-B-v/max*(H-T-B)}
     opt.grid.forEach(function(g){svg.appendChild(el('line',{x1:L,x2:W-R,y1:y(g),y2:y(g),stroke:GRID}));svg.appendChild(el('text',{x:W-R+8,y:y(g)+4,'font-size':11,fill:DIM},fmt(g)))});
     var d='M'+L+','+y(0),a;vals.forEach(function(v,i){d+=' L'+x(i)+','+y(v)});
