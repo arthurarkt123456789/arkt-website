@@ -359,12 +359,17 @@
         <td>${b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a><br>` : ''}${b.phone ? `<a href="tel:${esc(b.phone)}">${esc(b.phone)}</a>` : ''}</td>
         <td>${tickets}<br><small>${(b.amount_cents / 100).toLocaleString('fr-FR')} €</small></td><td style="max-width:220px">${esc(b.notes || '')}</td>
         <td><span class="pill ${b.status}">${b.status === 'hold' ? (b.source === 'admin' ? 'Attente paiement' : 'En cours') : ({ paid: 'Payé', manual: 'Manuel', cancelled: 'Annulé', expired: 'Expiré' }[b.status] || b.status)}</span>${b.status === 'hold' && b.expires_at ? `<br><small>jusqu'au ${new Date(b.expires_at).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</small>` : ''}${b.refund_id ? '<br><small>remboursé</small>' : ''}</td>
-        <td style="white-space:nowrap">${b.status === 'hold' && b.source === 'admin' ? `<button class="primary" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-link="${b.id}">Lien</button> <button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-extend="${b.id}">+24 h</button> ` : ''}${b.status !== 'cancelled' ? `${b.group_id ? '' : `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-move="${b.id}">Bulle</button> `}<button class="danger" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-cancel="${b.id}">Annuler</button>` : ''}</td>`;
+        <td style="white-space:nowrap">${b.status === 'hold' && b.source === 'admin' ? `<button class="primary" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-link="${b.id}">Lien</button> <button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-extend="${b.id}">+24 h</button> <button class="blue" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-tomanual="${b.id}" title="Le client paie hors ligne (virement, facture) : la résa devient manuelle, sans lien de paiement">→ Manuelle</button> ` : ''}${b.status !== 'cancelled' ? `${b.group_id ? '' : `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-move="${b.id}">Bulle</button> `}<button class="danger" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-cancel="${b.id}">Annuler</button>` : ''}</td>`;
       tb.appendChild(tr);
     });
     tb.querySelectorAll('[data-cancel]').forEach((b) => b.addEventListener('click', () => openCancel(b.dataset.cancel)));
     tb.querySelectorAll('[data-move]').forEach((b) => b.addEventListener('click', () => openMove(b.dataset.move)));
     tb.querySelectorAll('[data-link]').forEach((b) => b.addEventListener('click', () => { const bk = agg(day.bookings.find((x) => x.id === b.dataset.link)); showLink(bk, `${location.origin}/payer/?id=${bk.id}&t=${bk.cancel_token}`); }));
+    tb.querySelectorAll('[data-tomanual]').forEach((b) => b.addEventListener('click', async () => {
+      const bk = agg(day.bookings.find((x) => x.id === b.dataset.tomanual));
+      if (!confirm(`Convertir la résa de ${bk.name} (${bk.seats} places, ${(bk.amount_cents / 100).toLocaleString('fr-FR')} €) en réservation manuelle ?\nLe lien de paiement ne fonctionnera plus. Le montant reste à cocher « Encaissé » dans la liste des résas manuelles.`)) return;
+      try { await api('POST', { action: 'to_manual', id: bk.id }); toast('Convertie en résa manuelle'); load(current); loadOverview(); loadStats(); } catch (e) { toast(e.message, true); }
+    }));
     tb.querySelectorAll('[data-extend]').forEach((b) => b.addEventListener('click', async () => { try { const r = await api('POST', { action: 'extend', id: b.dataset.extend, hours: 24 }); toast('Prolongé de 24 h'); load(current); } catch (e) { toast(e.message, true); } }));
   }
   // Vue agrégée d'une privatisation de service (toutes les lignes du groupe)

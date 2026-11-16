@@ -49,7 +49,7 @@ export const handler = async (event) => {
       if (d.action === "pay") {
         const v = publicView(b);
         if (b.status === "paid") return json(409, { error: "Cette réservation est déjà réglée." });
-        if (!v.payable) return json(409, { error: "Ce lien de paiement a expiré. Contactez-nous à hello@lameulerie.com." });
+        if (!v.payable) return json(409, { error: (b.status === "paid" || b.status === "manual") ? "Cette réservation est déjà confirmée, rien à régler en ligne." : "Ce lien de paiement a expiré. Contactez-nous à hello@lameulerie.com." });
         const remaining = Math.floor((new Date(b.expires_at) - Date.now()) / 60000);
         const session = await createCheckoutForBooking(b, Math.min(remaining, 24 * 60));
         return json(200, { url: session.url });

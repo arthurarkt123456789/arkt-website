@@ -162,6 +162,18 @@ export const handler = async (event) => {
         return json(200, { booking: b, url });
       }
 
+      case "to_manual": {
+        // Blocage avec lien de paiement -> réservation manuelle (paiement hors ligne)
+        const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
+        const b = rows[0];
+        if (!b) return json(404, { error: "Introuvable" });
+        if (b.status !== "hold" || b.source !== "admin") return json(409, { error: "Seul un blocage admin en attente de paiement peut être converti" });
+        const filter = b.group_id ? `group_id=eq.${b.group_id}` : `id=eq.${b.id}`;
+        const upd = await sbPatch("rc_bookings", `${filter}&status=eq.hold`, { status: "manual", paid_at: new Date().toISOString(), expires_at: null, manual_paid_at: null });
+        if (!upd.length) return json(409, { error: "Le blocage a expiré, refais une résa manuelle" });
+        return json(200, { booking: await groupView(upd[0]) });
+      }
+
       case "manual_paid": {
         const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
         const b = rows[0];
