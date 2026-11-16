@@ -722,5 +722,40 @@ footer b{color:#F3F1EA}
   <p><b>ARKT Conseil</b> · 14 square Belsunce, 13001 Marseille · arkt-conseil.com<br>Document préparé pour Play Forward · Devis D-2026-002-v2, postes 03 et 04 · 16 novembre 2026</p>
 </div></footer>
 
+<script>
+(function(){
+  var K='arkt_devis_auth';
+  if(sessionStorage.getItem(K)==='ok'){return;}
+  var d=document;
+  d.documentElement.style.overflow='hidden';
+  var g=d.createElement('div');
+  g.style.cssText='position:fixed;inset:0;z-index:99999;background:#15140F;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;font-family:Inter,system-ui,sans-serif;';
+  g.innerHTML='<div style="text-align:center;color:#F3F1EA;width:90%;max-width:340px;">'
+    +'<img src="/arkt/logo-arkt.png" style="height:28px;margin-bottom:48px;display:block;margin-left:auto;margin-right:auto;" alt="ARKT"/>'
+    +'<p style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(243,241,234,.45);margin-bottom:22px;">Accès restreint</p>'
+    +'<input id="_gi" type="password" inputmode="numeric" placeholder="· · · ·" autocomplete="one-time-code" style="width:100%;padding:16px;border-radius:14px;border:1px solid rgba(243,241,234,.15);background:rgba(243,241,234,.06);color:#F3F1EA;font-size:22px;text-align:center;letter-spacing:.4em;outline:none;font-family:inherit;transition:border-color .2s;" />'
+    +'<p id="_ge" style="color:#F2533F;font-size:13px;margin-top:14px;min-height:18px;"></p>'
+    +'</div>';
+  d.body.appendChild(g);
+  var inp=d.getElementById('_gi'),err=d.getElementById('_ge');
+  setTimeout(function(){inp.focus();},60);
+  inp.addEventListener('focus',function(){inp.style.borderColor='rgba(243,241,234,.4)';});
+  inp.addEventListener('blur',function(){inp.style.borderColor='rgba(243,241,234,.15)';});
+  inp.addEventListener('keydown',function(e){
+    if(e.key!=='Enter')return;
+    if(inp.value.trim()==='2026'){
+      sessionStorage.setItem(K,'ok');
+      g.style.transition='opacity .3s';
+      g.style.opacity='0';
+      setTimeout(function(){g.remove();d.documentElement.style.overflow='';},300);
+    } else {
+      err.textContent='Code incorrect.';
+      inp.value='';
+      inp.style.borderColor='#F2533F';
+      setTimeout(function(){inp.style.borderColor='rgba(243,241,234,.15)';err.textContent='';},2000);
+    }
+  });
+})();
+</script>
 </body>
 </html>
