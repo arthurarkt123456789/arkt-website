@@ -49,7 +49,7 @@ function hold(a) {
   const cands = slots.filter((s) => s.date === a.p_date && s.service === a.p_service && s.status === "open").map(usage).filter((u) => seats >= 8 ? u.used === 0 : u.free >= seats).sort((x, y) => x.free - y.free || x.bubble - y.bubble);
   if (!cands.length) throw Object.assign(new Error("NO_CAPACITY"), { code: 400 });
   const u = cands[0];
-  const b = { id: randomUUID(), slot_id: u.slot_id, date: a.p_date, service: a.p_service, bubble: u.bubble, adults: a.p_adults, kids: a.p_kids, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: a.p_amount_cents, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: null, exclusive: false };
+  const b = { id: randomUUID(), slot_id: u.slot_id, date: a.p_date, service: a.p_service, bubble: u.bubble, adults: a.p_adults, kids: a.p_kids, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: a.p_amount_cents, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: null, exclusive: false, manual_paid_at: null };
   bookings.push(b); return b;
 }
 
@@ -66,7 +66,7 @@ function holdGroup(a) {
   const gid = randomUUID(); let remAd = a.p_adults; const out = [];
   target.forEach((s, i) => {
     const seats = Math.floor(total / n) + (i < total % n ? 1 : 0); const ad = Math.min(remAd, seats); remAd -= ad;
-    const b = { id: randomUUID(), slot_id: s.id, date: a.p_date, service: s.service, bubble: s.bubble, adults: ad, kids: seats - ad, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: i === 0 ? a.p_amount_cents : 0, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: gid, exclusive: true };
+    const b = { id: randomUUID(), slot_id: s.id, date: a.p_date, service: s.service, bubble: s.bubble, adults: ad, kids: seats - ad, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: i === 0 ? a.p_amount_cents : 0, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: gid, exclusive: true, manual_paid_at: null };
     bookings.push(b); out.push(b);
   });
   return out;

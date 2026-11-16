@@ -32,7 +32,7 @@ export const handler = async (event) => {
       if (q.action === "stats") {
         const [slots, sold, cancelled] = await Promise.all([
           sbSelect("rc_slots", "select=capacity,status"),
-          sbSelect("rc_bookings", "select=seats,amount_cents,status,source,date&status=in.(paid,manual)"),
+          sbSelect("rc_bookings", "select=seats,amount_cents,status,source,date,manual_paid_at&status=in.(paid,manual)"),
           sbSelect("rc_bookings", "select=seats,amount_cents,refund_id&status=eq.cancelled"),
         ]);
         const sum = (arr, f) => arr.reduce((n, r) => n + f(r), 0);
@@ -47,9 +47,23 @@ export const handler = async (event) => {
           revenue_cents: sum(sold, (r) => r.amount_cents),
           revenue_online_cents: sum(sold.filter((r) => r.status === "paid"), (r) => r.amount_cents),
           revenue_manual_cents: sum(sold.filter((r) => r.status === "manual"), (r) => r.amount_cents),
+          revenue_manual_paid_cents: sum(sold.filter((r) => r.status === "manual" && r.manual_paid_at), (r) => r.amount_cents),
           refunded_cents: sum(cancelled.filter((r) => r.refund_id), (r) => r.amount_cents),
           bookings_count: sold.length,
         }, noStore);
+      }
+      if (q.action === "manual_list") {
+        const rows = await sbSelect("rc_bookings", `status=eq.manual&order=date.asc,service.asc,bubble.asc`);
+        // une ligne par réservation ; une privatisation de service (group_id) est agrégée
+        const out = []; const seen = new Set();
+        for (const b of rows) {
+          if (!b.group_id) { out.push({ ...b, bubbles: 1 }); continue; }
+          if (seen.has(b.group_id)) continue;
+          seen.add(b.group_id);
+          const g = rows.filter((x) => x.group_id === b.group_id);
+          out.push({ ...b, adults: g.reduce((n, x) => n + x.adults, 0), kids: g.reduce((n, x) => n + x.kids, 0), seats: g.reduce((n, x) => n + x.seats, 0), amount_cents: g.reduce((n, x) => n + x.amount_cents, 0), services: [...new Set(g.map((x) => x.service))].sort(), bubbles: g.length });
+        }
+        return json(200, { bookings: out }, noStore);
       }
       if (q.action === "export") {
         const rows = await sbSelect("rc_bookings", `status=in.(paid,manual,cancelled)&order=date.asc,service.asc,bubble.asc`);
@@ -146,6 +160,15 @@ export const handler = async (event) => {
         const url = payUrlFor(b);
         if (d.sendEmail && b.email) await sendEmail({ to: b.email, subject: `Votre privatisation du Raclette Club est bloquée · ${fmtDate(b.date)} à ${svcLabel(b)}`, html: holdEmailHtml(b) });
         return json(200, { booking: b, url });
+      }
+
+      case "manual_paid": {
+        const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
+        const b = rows[0];
+        if (!b || b.status !== "manual") return json(404, { error: "Réservation manuelle introuvable" });
+        const filter = b.group_id ? `group_id=eq.${b.group_id}` : `id=eq.${b.id}`;
+        const upd = await sbPatch("rc_bookings", `${filter}&status=eq.manual`, { manual_paid_at: d.paid ? new Date().toISOString() : null });
+        return json(200, { booking: upd[0], paid: Boolean(d.paid) });
       }
 
       case "extend": {

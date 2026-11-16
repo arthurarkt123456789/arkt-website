@@ -99,6 +99,7 @@
     <input type="date" id="date" min="2026-11-27" max="2026-12-24" />
     <button class="ghost" style="color:#fff;border-color:#fff" id="next">▶</button>
     <button class="primary" id="today">Aujourd'hui</button>
+    <button id="manualBtn">Résas manuelles</button>
     <button id="export">Export CSV</button>
     <button class="ghost" style="color:#fff;border-color:#fff" id="logout">Quitter</button>
   </div>
@@ -149,12 +150,22 @@
     <div><label>Remarques</label><input name="notes" placeholder="Invités, presse, payé sur place…" /></div>
     <div class="modes">
       <label class="mode"><input type="radio" name="mode" value="hold" checked /> <span><b>Bloquer 24 h + lien de paiement</b><br><small>Les places sont réservées 24 h. Le client paie via le lien que tu lui envoies.</small></span></label>
-      <label class="mode"><input type="radio" name="mode" value="manual" /> <span><b>Enregistrer directement</b><br><small>Payé sur place, offert, invité. Aucun paiement en ligne.</small></span></label>
+      <label class="mode"><input type="radio" name="mode" value="manual" /> <span><b>Enregistrer directement</b><br><small>Virement, facture, payé sur place, offert. Aucun paiement en ligne ; à cocher « Encaissé » dans la liste des résas manuelles.</small></span></label>
     </div>
-    <div id="manualOnly" class="hidden"><label>Montant encaissé (€, 0 si offert)</label><input name="amount" type="number" step="0.01" min="0" value="0" /></div>
+    <div id="manualOnly" class="hidden"><label>Montant dû ou encaissé (€, 0 si offert)</label><input name="amount" type="number" step="0.01" min="0" value="0" /></div>
     <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="sendEmail" style="width:auto" /> <span id="sendEmailLabel">Envoyer le lien de paiement par email au client</span></label>
     <div class="acts-row"><button type="button" class="ghost" onclick="dlgManual.close()">Annuler</button><button class="primary" type="submit" id="manualSubmit">Bloquer et générer le lien</button></div>
   </form>
+</dialog>
+
+<dialog id="dlgManualList" style="max-width:1100px">
+  <h3>Réservations manuelles</h3>
+  <p style="font-size:.85rem;font-weight:600;color:#333;margin:-6px 0 10px">Toutes les résas posées à la main (virement, facture, espèces…). Coche « Encaissé » quand le client t'a payé.</p>
+  <div id="manualSummary" style="font-weight:800;font-size:.9rem;margin-bottom:8px"></div>
+  <div style="max-height:60vh;overflow:auto">
+    <table style="margin-top:0"><thead><tr><th>Date</th><th>Service</th><th>Client</th><th>Places</th><th>Montant</th><th>Remarques</th><th>Encaissé</th></tr></thead><tbody id="manualBody"></tbody></table>
+  </div>
+  <div class="acts-row"><button type="button" class="ghost" onclick="dlgManualList.close()">Fermer</button></div>
 </dialog>
 
 <dialog id="dlgService">
@@ -265,7 +276,7 @@
       $('dGauge').style.background = pct >= 85 ? 'var(--red)' : pct >= 60 ? 'var(--orange)' : 'var(--green)';
       $('dSoldSub').textContent = `${d.seats_paid} payées en ligne · ${d.seats_manual} manuelles · ${d.bookings_count} réservations · ${d.seats_past} déjà servies`;
       $('dRev').textContent = eur(d.revenue_cents);
-      $('dRevSub').textContent = `${eur(d.revenue_online_cents)} en ligne · ${eur(d.revenue_manual_cents)} manuel` + (d.refunded_cents ? ` · ${eur(d.refunded_cents)} remboursés (hors total)` : '');
+      $('dRevSub').textContent = `${eur(d.revenue_online_cents)} en ligne · ${eur(d.revenue_manual_cents)} manuel dont ${eur(d.revenue_manual_paid_cents || 0)} encaissés` + (d.refunded_cents ? ` · ${eur(d.refunded_cents)} remboursés (hors total)` : '');
     } catch (e) { toast(e.message, true); }
   }
 
@@ -370,15 +381,17 @@
 
   // ---------- Résa manuelle ----------
   function openManual(svc) {
-    const f = $('formManual'); f.reset(); f.date.value = current; if (svc) f.service.value = svc; syncMode(); $('dlgManual').showModal();
+    const f = $('formManual'); f.reset(); delete f.amount.dataset.touched; f.date.value = current; if (svc) f.service.value = svc; syncMode(); $('dlgManual').showModal();
   }
   const syncMode = () => {
     const f = $('formManual'); const hold = f.mode.value === 'hold';
+    if (!f.amount.dataset.touched) f.amount.value = ((Number(f.adults.value) || 0) * 36 + (Number(f.kids.value) || 0) * 24).toFixed(2);
     $('manualOnly').classList.toggle('hidden', hold);
     $('manualSubmit').textContent = hold ? 'Bloquer et générer le lien' : 'Enregistrer';
     $('sendEmailLabel').textContent = hold ? 'Envoyer le lien de paiement par email au client' : "Envoyer l'email de confirmation au client";
   };
-  $('formManual').addEventListener('change', (e) => { if (e.target.name === 'mode') syncMode(); });
+  $('formManual').addEventListener('input', (e) => { if (e.target.name === 'amount') e.target.dataset.touched = '1'; });
+  $('formManual').addEventListener('change', (e) => { if (e.target.name === 'mode' || e.target.name === 'adults' || e.target.name === 'kids') syncMode(); });
   $('formManual').addEventListener('submit', async (e) => {
     e.preventDefault(); const f = e.target; const hold = f.mode.value === 'hold';
     const payload = { action: hold ? 'hold' : 'manual', date: f.date.value, service: f.service.value, adults: Number(f.adults.value), kids: Number(f.kids.value), name: f.name.value, email: f.email.value, phone: f.phone.value, notes: f.notes.value, sendEmail: f.sendEmail.checked };
@@ -389,6 +402,33 @@
       if (hold) showLink(r.booking, r.url); else toast('Réservation enregistrée');
     } catch (err) { toast(err.message, true); }
   });
+
+  // ---------- Réservations manuelles ----------
+  async function openManualList() {
+    $('dlgManualList').showModal(); $('manualBody').innerHTML = '<tr><td colspan="7">Chargement…</td></tr>';
+    try { await renderManualList(); } catch (err) { toast(err.message, true); }
+  }
+  async function renderManualList() {
+    const r = await api('GET', null, { action: 'manual_list' });
+    const tb = $('manualBody'); tb.innerHTML = '';
+    const eur = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+    let total = 0, paid = 0;
+    if (!r.bookings.length) tb.innerHTML = '<tr><td colspan="7">Aucune réservation manuelle.</td></tr>';
+    r.bookings.forEach((b) => {
+      total += b.amount_cents; if (b.manual_paid_at) paid += b.amount_cents;
+      const tickets = [b.adults ? b.adults + ' ad.' : '', b.kids ? b.kids + ' enf.' : ''].filter(Boolean).join(' + ');
+      const svc = b.services ? b.services.map((x) => x.replace(':', 'h')).join(' · ') + ` <small>privatisation · ${b.bubbles} bulles</small>` : `${b.service.replace(':', 'h')} <small>bulle ${b.bubble}</small>`;
+      const tr = document.createElement('tr'); tr.className = b.manual_paid_at ? 'paid' : 'manual';
+      tr.innerHTML = `<td><b>${fmtLong(b.date)}</b></td><td>${svc}</td><td><b>${esc(b.name)}</b><br><small>${esc(b.email || '')}${b.email && b.phone ? ' · ' : ''}${esc(b.phone || '')}</small></td><td>${b.seats}<br><small>${tickets}</small></td><td><b>${eur(b.amount_cents)}</b></td><td><small>${esc(b.notes || '')}</small></td><td><label style="display:flex;gap:6px;align-items:center;text-transform:none;font-size:.8rem;cursor:pointer"><input type="checkbox" data-paid="${b.id}" ${b.manual_paid_at ? 'checked' : ''} style="width:18px;height:18px" /> ${b.manual_paid_at ? new Date(b.manual_paid_at).toLocaleDateString('fr-FR') : 'non'}</label></td>`;
+      tb.appendChild(tr);
+    });
+    $('manualSummary').textContent = `${r.bookings.length} réservation${r.bookings.length > 1 ? 's' : ''} · ${eur(total)} au total · ${eur(paid)} encaissés · ${eur(total - paid)} en attente`;
+    tb.querySelectorAll('[data-paid]').forEach((c) => c.addEventListener('change', async () => {
+      try { await api('POST', { action: 'manual_paid', id: c.dataset.paid, paid: c.checked }); toast(c.checked ? 'Marquée encaissée' : 'Marquée non encaissée'); renderManualList(); loadStats(); }
+      catch (err) { toast(err.message, true); c.checked = !c.checked; }
+    }));
+  }
+  $('manualBtn').addEventListener('click', openManualList);
 
   // ---------- Privatisation d'un service ----------
   function openService(svc) {
