@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palauma Global Group · Bilan de communication · Avril à novembre 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#15140F">
+<link rel="icon" type="image/png" href="/arkt/logo-mark.png">
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format("woff2")}
+@font-face{font-family:"Big Shoulders Display";font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/big-shoulders-display-latin.woff2) format("woff2")}
+:root{
+  --ink:#15140F;--ink-2:#1F1E18;--dim:#6E6A5F;--paper:#F3F1EA;--white:#FFFFFF;--sand:#C9C1AB;--sand-2:#E4DFD1;
+  --accent:#F2533F;--accent-2:#F57969;--accent-3:#C24232;--line:rgba(21,20,15,.12);--line-d:rgba(243,241,234,.16);
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;--display:"Big Shoulders Display","Inter",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:#0C0B08;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1,"ss01" 1}
+.bar{position:sticky;top:0;z-index:10;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(12,11,8,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line-d);color:var(--paper);font-size:13px}
+.bar b{font-weight:600}
+.bar span{color:rgba(243,241,234,.6)}
+.bar button{font:inherit;color:var(--ink);background:var(--paper);border:0;border-radius:999px;padding:7px 16px;font-weight:600;cursor:pointer}
+.bar button:hover{background:#fff}
+.deck{padding:28px 16px 64px;display:flex;flex-direction:column;align-items:center;gap:28px}
+.frame{position:relative;box-shadow:0 30px 80px -30px rgba(0,0,0,.8);border-radius:6px;overflow:hidden;background:var(--paper)}
+.slide{width:1280px;height:720px;position:relative;transform-origin:0 0;background:var(--paper);padding:54px 64px 58px;display:flex;flex-direction:column;overflow:hidden}
+.slide.dark{background:var(--ink);color:var(--paper)}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.dark .eyebrow{color:rgba(243,241,234,.6)}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+h1,h2{font-family:var(--display);font-weight:800;text-transform:uppercase;line-height:.94;letter-spacing:-.005em}
+h2{font-size:52px;margin-top:14px;max-width:1000px}
+h2 em{font-style:normal;color:var(--accent)}
+.lead{font-size:18px;line-height:1.5;color:#3A382F;margin-top:14px;max-width:880px}
+.dark .lead{color:rgba(243,241,234,.78)}
+.foot{position:absolute;left:64px;right:64px;bottom:22px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.dark .foot{color:rgba(243,241,234,.45)}
+.body{flex:1;min-height:0;margin-top:26px;display:flex;gap:32px}
+.col{flex:1;min-width:0;display:flex;flex-direction:column}
+.num{font-family:var(--display);font-weight:800;line-height:.9;letter-spacing:-.01em}
+.note{font-size:12px;color:var(--dim);line-height:1.45}
+.dark .note{color:rgba(243,241,234,.55)}
+svg text{font-family:var(--sans)}
+
+/* cover */
+.cover{padding:64px}
+.cover .logo{height:92px;width:92px;align-self:flex-start;margin-left:-14px}
+.cover h1{font-size:132px;margin-top:auto;line-height:.86}
+.cover h1 em{font-style:normal;color:var(--accent)}
+.cover .sub{font-size:22px;line-height:1.4;color:rgba(243,241,234,.8);margin-top:22px;max-width:760px}
+.cover .meta{display:flex;gap:28px;margin-top:34px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(243,241,234,.55)}
+.halo{position:absolute;right:-220px;bottom:-320px;width:900px;height:900px;border-radius:50%;background:radial-gradient(closest-side,var(--accent) 0%,rgba(242,83,63,.32) 42%,transparent 72%);opacity:.55;filter:blur(30px);pointer-events:none}
+
+/* kpis */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;width:100%}
+.kpi{background:var(--white);border-radius:14px;padding:26px 24px 22px;display:flex;flex-direction:column;justify-content:space-between;min-height:330px;border:1px solid var(--line)}
+.kpi.hot{background:var(--accent);color:#fff;border-color:transparent}
+.kpi.ink{background:var(--ink);color:var(--paper);border-color:transparent}
+.kpi .num{font-size:78px;white-space:nowrap}
+.kpi p{font-size:15px;line-height:1.4;font-weight:500}
+.kpi small{display:block;font-size:12.5px;line-height:1.45;margin-top:6px;opacity:.72;font-weight:400}
+.strip{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+.chip{font-size:13px;font-weight:500;border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.6)}
+.chip b{font-weight:700;color:var(--accent-3)}
+.dark .chip{border-color:var(--line-d);background:rgba(243,241,234,.06)}
+.dark .chip b{color:var(--accent-2)}
+
+/* chart layout */
+.chart{flex:1.9;min-width:0;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:18px 18px 8px;display:flex;flex-direction:column}
+.chart svg{width:100%;height:100%;display:block}
+.side{flex:1;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.fact{border-left:3px solid var(--accent);padding:2px 0 2px 16px}
+.fact .num{font-size:46px}
+.fact p{font-size:14px;line-height:1.45;color:#3A382F;margin-top:4px}
+.legend{display:flex;gap:18px;font-size:12.5px;color:#3A382F;margin:2px 0 6px 6px;flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:7px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+/* leaders */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%}
+.card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column}
+.card h3{font-size:17px;font-weight:700}
+.card .role{font-size:12px;color:var(--dim);margin-top:2px}
+.card .mult{font-family:var(--display);font-weight:800;font-size:68px;line-height:.9;color:var(--accent);margin-top:18px}
+.card .mult small{font-family:var(--sans);font-size:13px;font-weight:500;color:var(--dim);display:block;line-height:1.35;margin-top:8px}
+.rows{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;display:grid;gap:7px}
+.rows div{display:flex;justify-content:space-between;font-size:13px;color:#3A382F}
+.rows b{font-weight:700;color:var(--ink)}
+
+/* generic lists */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
+.col>.grid2{flex:1;grid-auto-rows:1fr}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%}
+.tile{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.dark .tile{background:var(--ink-2);border-color:var(--line-d)}
+.tile h3{font-size:16px;font-weight:700;line-height:1.3}
+.tile p{font-size:13.5px;line-height:1.5;color:#3A382F;margin-top:7px}
+.dark .tile p{color:rgba(243,241,234,.72)}
+.tile .num{font-size:44px;color:var(--accent);margin-bottom:8px}
+.tile .tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.tile ul{list-style:none;margin-top:10px;display:grid;gap:9px}
+.tile li{font-size:13.5px;line-height:1.45;color:#3A382F;padding-left:16px;position:relative}
+.tile li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.tile li b{color:var(--ink)}
+
+.hb{display:grid;gap:9px;width:100%}
+.hb .r{display:grid;grid-template-columns:230px 1fr 76px;align-items:center;gap:14px;font-size:13.5px}
+.hb .r span:first-child{line-height:1.25}
+.hb .r span:first-child small{display:block;color:var(--dim);font-size:11.5px}
+.hb .t{height:22px;background:var(--sand-2);border-radius:5px;overflow:hidden}
+.hb .t i{display:block;height:100%;background:var(--accent);border-radius:5px}
+.hb .r b{text-align:right;font-weight:700}
+.mini .r{grid-template-columns:120px 1fr 44px;font-size:12.5px}
+.mini .t{height:12px}
+
+.tl{display:grid;grid-template-columns:repeat(6,1fr);gap:0;width:100%;position:relative;margin-top:8px}
+.tl::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line-d)}
+.tl div{padding:0 14px 0 0;position:relative}
+.tl div::before{content:"";display:block;width:20px;height:20px;border-radius:50%;background:var(--accent);border:5px solid var(--ink);position:relative;margin-bottom:16px}
+.tl time{font-family:var(--display);font-weight:800;font-size:25px;text-transform:uppercase;line-height:1;display:block}
+.tl h3{font-size:14.5px;font-weight:700;margin-top:10px;line-height:1.3}
+.tl p{font-size:12.5px;line-height:1.5;color:rgba(243,241,234,.68);margin-top:7px}
+.tl em{font-style:normal;display:block;font-size:12.5px;line-height:1.45;color:var(--accent-2);margin-top:9px}
+
+.src{columns:2;column-gap:40px;font-size:12.5px;line-height:1.55;color:rgba(243,241,234,.72)}
+.src p{break-inside:avoid;margin-bottom:11px}
+.src b{color:var(--paper)}
+.src a{color:var(--accent-2)}
+
+@media print{
+  @page{size:1280px 720px;margin:0}
+  body{background:#fff}
+  .bar{display:none}
+  .deck{padding:0;gap:0;display:block}
+  .frame{box-shadow:none;border-radius:0;width:1280px!important;height:720px!important;page-break-after:always;break-after:page}
+  .slide{transform:none!important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="bar"><div><b>ARKT</b> <span>· Palauma Global Group · Bilan de communication</span></div><button onclick="window.print()">Enregistrer en PDF</button></div>
+<main class="deck" id="deck">
+
+<!-- 1 -->
+<section class="slide dark cover">
+  <div class="halo"></div>
+  <img class="logo" src="/arkt/logo-arkt.png" alt="ARKT Conseil">
+  <h1>Bilan de<br>communication<br><em>2026</em></h1>
+  <p class="sub">Palauma Global Group. Sept mois et demi pour installer six voix sur LinkedIn et Instagram.</p>
+  <div class="meta"><span>Avril à novembre 2026</span><span>Données au 16 novembre</span><span>Document confidentiel</span></div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <div class="eyebrow"><i></i>L'essentiel</div>
+  <h2>Une audience construite <em>en sept mois</em></h2>
+  <p class="lead">Depuis avril, Palauma Global Group s'exprime à travers six comptes actifs : la page LinkedIn, quatre dirigeants et Instagram.</p>
+  <div class="body" style="align-items:flex-end">
+    <div class="kpis">
+      <div class="kpi hot"><div class="num">305 000</div><p>vues et impressions cumulées<small>LinkedIn et Instagram, du 24 mars au 16 novembre</small></p></div>
+      <div class="kpi"><div class="num">1 932</div><p>nouveaux abonnés<small>Sur les six comptes, sans sponsorisation de la page</small></p></div>
+      <div class="kpi"><div class="num">203</div><p>publications<small>99 sur LinkedIn, 104 sur Instagram</small></p></div>
+      <div class="kpi ink"><div class="num">×6</div><p>audience mensuelle des dirigeants<small>18 900 impressions par mois, contre 3 200 avant avril</small></p></div>
+    </div>
+  </div>
+  <div class="foot"><span>ARKT · Palauma Global Group</span><span>02 / 14</span></div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="eyebrow"><i></i>Audience</div>
+  <h2>305 000 vues <em>cumulées</em> depuis le lancement</h2>
+  <div class="body">
+    <div class="chart">
+      <div class="legend"><span><i style="background:var(--accent)"></i>Dirigeants LinkedIn · 141 800</span><span><i style="background:var(--ink)"></i>Page LinkedIn · 61 600</span><span><i style="background:var(--sand)"></i>Instagram · 101 500</span></div>
+      <div style="flex:1;min-height:0"><svg id="c-aud" viewBox="0 0 760 400" role="img" aria-label="Vues et impressions cumulées par canal, de mars à novembre 2026"></svg></div>
+    </div>
+    <div class="side">
+      <div class="fact"><div class="num">169 000</div><p>vues à fin mai. Le lancement installe la présence du groupe en deux mois.</p></div>
+      <div class="fact"><div class="num">+61 100</div><p>vues en septembre et octobre. La rentrée relance la progression après le palier estival.</p></div>
+      <div class="fact"><div class="num">≈ 40 000</div><p>vues par mois en moyenne depuis le lancement, tous canaux confondus.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Vues et impressions cumulées · exports LinkedIn, Meta et Buffer</span><span>03 / 14</span></div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="eyebrow"><i></i>Communauté</div>
+  <h2>Une communauté qui grandit <em>chaque mois</em></h2>
+  <div class="body">
+    <div class="chart">
+      <div style="flex:1;min-height:0"><svg id="c-fol" viewBox="0 0 760 420" role="img" aria-label="Nouveaux abonnés cumulés, de mars à novembre 2026"></svg></div>
+    </div>
+    <div class="side">
+      <div class="fact"><div class="num">≈ 250</div><p>nouveaux abonnés par mois en moyenne, tous comptes confondus.</p></div>
+      <div class="fact"><div class="num">+125</div><p>abonnés en août. La communauté continue de s'élargir pendant la pause estivale.</p></div>
+      <div class="strip" style="margin-top:6px">
+        <span class="chip">Philippe Bega <b>+652</b></span><span class="chip">Eyal Bompuis <b>+282</b></span><span class="chip">Instagram <b>+277</b></span><span class="chip">Nicolas Ortollan <b>+250</b></span><span class="chip">Clara Mosconi <b>+236</b></span><span class="chip">Page PGG <b>+235</b></span>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Nouveaux abonnés cumulés · six comptes · du 23 mars au 16 novembre</span><span>04 / 14</span></div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <div class="eyebrow"><i></i>Dirigeants</div>
+  <h2>Quatre voix, <em>quatre audiences</em> installées</h2>
+  <p class="lead">Les profils des dirigeants cumulent 141 800 impressions depuis avril et réunissent 14 835 abonnés.</p>
+  <div class="body">
+    <div class="cards">
+      <div class="card"><h3>Philippe Bega</h3><div class="role">9 761 abonnés</div><div class="mult">×3,1<small>d'impressions mensuelles<br>2 742 avant, 8 551 depuis avril</small></div><div class="rows"><div>Nouveaux abonnés<b>+652</b></div><div>Impressions<b>64 134</b></div><div>Membres touchés, 12 mois<b>20 747</b></div></div></div>
+      <div class="card"><h3>Eyal Bompuis</h3><div class="role">2 713 abonnés</div><div class="mult">×11<small>d'impressions mensuelles<br>456 avant, 5 027 depuis avril</small></div><div class="rows"><div>Nouveaux abonnés<b>+282</b></div><div>Impressions<b>37 703</b></div><div>Membres touchés, 12 mois<b>13 964</b></div></div></div>
+      <div class="card"><h3>Nicolas Ortollan</h3><div class="role">965 abonnés</div><div class="mult">2 928<small>impressions mensuelles<br>une prise de parole créée en avril</small></div><div class="rows"><div>Nouveaux abonnés<b>+250</b></div><div>Impressions<b>21 961</b></div><div>Membres touchés, 12 mois<b>6 808</b></div></div></div>
+      <div class="card"><h3>Clara Mosconi</h3><div class="role">1 396 abonnés</div><div class="mult">2 400<small>impressions mensuelles<br>14 avant avril</small></div><div class="rows"><div>Nouveaux abonnés<b>+236</b></div><div>Impressions<b>18 002</b></div><div>Membres touchés, 12 mois<b>8 908</b></div></div></div>
+    </div>
+  </div>
+  <div class="foot"><span>Exports LinkedIn · avant : 17/11/2025 au 31/03/2026 · depuis : 01/04 au 16/11/2026</span><span>05 / 14</span></div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="eyebrow"><i></i>Page LinkedIn</div>
+  <h2>La page PGG <em>change d'échelle</em></h2>
+  <div class="body">
+    <div class="col" style="flex:1.25">
+      <div class="grid2">
+        <div class="tile"><div class="num">1 566</div><h3>abonnés au 16 novembre</h3><p>235 nouveaux abonnés depuis avril, tous organiques.</p></div>
+        <div class="tile"><div class="num">×12,7</div><h3>impressions mensuelles</h3><p>14 166 par mois d'avril à juin, contre 1 113 auparavant.</p></div>
+        <div class="tile"><div class="num">51</div><h3>publications en sept mois et demi</h3><p>La page en comptait 8 sur toute l'année 2025.</p></div>
+        <div class="tile"><div class="num">+62 %</div><h3>visiteurs mensuels</h3><p>86 visiteurs par mois depuis avril, contre 53.</p></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="tile" style="flex:1">
+        <div class="tag">Qui suit la page</div>
+        <h3>Une audience de professionnels du secteur</h3>
+        <div class="hb mini" style="margin-top:16px">
+          <div class="r"><span>Immobilier</span><div class="t"><i style="width:65%"></i></div><b>416</b></div>
+          <div class="r"><span>Construction</span><div class="t"><i style="width:20%"></i></div><b>129</b></div>
+        </div>
+        <div class="hb mini" style="margin-top:16px">
+          <div class="r"><span>Marseille</span><div class="t"><i style="width:100%"></i></div><b>642</b></div>
+          <div class="r"><span>Paris</span><div class="t"><i style="width:39%"></i></div><b>251</b></div>
+        </div>
+        <div class="hb mini" style="margin-top:16px">
+          <div class="r"><span>Expérimentés</span><div class="t"><i style="width:64%"></i></div><b>409</b></div>
+          <div class="r"><span>Directeurs</span><div class="t"><i style="width:44%"></i></div><b>281</b></div>
+        </div>
+        <p class="note" style="margin-top:16px">Deux premières valeurs de chaque catégorie : secteur, bassin, niveau hiérarchique.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Exports LinkedIn de la page et Buffer</span><span>06 / 14</span></div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="eyebrow"><i></i>Instagram</div>
+  <h2>Un nouveau canal, ouvert <em>le 24 mars</em></h2>
+  <div class="body">
+    <div class="chart" style="flex:1.5">
+      <div style="flex:1;min-height:0"><svg id="c-ig" viewBox="0 0 640 400" role="img" aria-label="Abonnés Instagram cumulés depuis le lancement"></svg></div>
+    </div>
+    <div class="side" style="flex:1.1">
+      <div class="grid2">
+        <div class="tile"><div class="num">101 500</div><h3>vues</h3></div>
+        <div class="tile"><div class="num">277</div><h3>abonnés gagnés</h3></div>
+        <div class="tile"><div class="num">104</div><h3>publications</h3></div>
+        <div class="tile"><div class="num">2 280</div><h3>interactions</h3></div>
+      </div>
+      <div class="fact" style="margin-top:8px"><p><b>Octobre signe le meilleur mois depuis mai</b>, avec 47 nouveaux abonnés. La publication sur la pose de première pierre atteint 4 325 vues, onze fois la moyenne du compte.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Exports Meta Business Suite · abonnés cumulés depuis le 23 mars</span><span>07 / 14</span></div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="eyebrow"><i></i>Contenus</div>
+  <h2>Le terrain en tête <em>du classement</em></h2>
+  <p class="lead">Programmes, chantiers et événements signent les meilleures audiences, du printemps à l'automne.</p>
+  <div class="body">
+    <div class="hb">
+      <div class="r"><span>Résidence Le Gabriel<small>Clara Mosconi · 9 avril</small></span><div class="t"><i style="width:100%"></i></div><b>9 101</b></div>
+      <div class="r"><span>Stand du salon, Parc Chanot<small>Philippe Bega · 10 avril</small></span><div class="t"><i style="width:93.7%"></i></div><b>8 532</b></div>
+      <div class="r"><span>Le modèle de la montagne<small>Eyal Bompuis · 19 mai</small></span><div class="t"><i style="width:93.5%"></i></div><b>8 507</b></div>
+      <div class="r"><span>Publication d'équipe<small>Page PGG · 12 juin</small></span><div class="t"><i style="width:74.7%"></i></div><b>6 794</b></div>
+      <div class="r"><span>Nice, quartier Vauban<small>Philippe Bega · 26 juin</small></span><div class="t"><i style="width:67.8%"></i></div><b>6 172</b></div>
+      <div class="r"><span>Hangar de 2 000 m² réhabilité<small>Nicolas Ortollan · 25 juin</small></span><div class="t"><i style="width:60.2%"></i></div><b>5 477</b></div>
+      <div class="r"><span>Rue Saint-Sébastien, Marseille 8e<small>Philippe Bega · 28 octobre</small></span><div class="t"><i style="width:59.8%"></i></div><b>5 441</b></div>
+      <div class="r"><span>Pose de première pierre<small>Instagram · 28 octobre</small></span><div class="t"><i style="width:47.5%;background:var(--ink)"></i></div><b>4 325</b></div>
+    </div>
+  </div>
+  <div class="foot"><span>Impressions par publication (vues pour Instagram) · Buffer</span><span>08 / 14</span></div>
+</section>
+
+<!-- 9 -->
+<section class="slide dark">
+  <div class="eyebrow"><i></i>Acquis</div>
+  <h2>Quatre atouts <em>solides</em></h2>
+  <div class="body">
+    <div class="grid2">
+      <div class="tile"><div class="num">70 %</div><h3>Les dirigeants portent l'audience</h3><p>Les quatre profils génèrent 70 % des impressions LinkedIn. Une publication de dirigeant atteint 3 000 impressions en moyenne, contre 1 200 pour la page.</p></div>
+      <div class="tile"><div class="num">100 %</div><h3>Une croissance organique</h3><p>Les 235 nouveaux abonnés de la page sont venus sans sponsorisation. L'audience acquise est une audience choisie.</p></div>
+      <div class="tile"><div class="num">+134</div><h3>Un effet qui dure</h3><p>Clara Mosconi a gagné 134 abonnés depuis sa dernière publication du 17 juillet. Les contenus continuent de travailler.</p></div>
+      <div class="tile"><div class="num">×7</div><h3>Une rentrée dynamique</h3><p>Les dirigeants passent de 2 274 impressions en août à 16 830 en septembre. Instagram réalise en octobre son meilleur mois depuis mai.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>ARKT · Palauma Global Group</span><span>09 / 14</span></div>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <div class="eyebrow"><i></i>Leviers</div>
+  <h2>Six leviers pour <em>accélérer</em></h2>
+  <p class="lead">Le socle est en place. Chaque levier ci-dessous s'appuie sur un constat chiffré.</p>
+  <div class="body">
+    <div class="grid3">
+      <div class="tile"><div class="tag">Régularité</div><h3>3 000 impressions par publication</h3><p>Chaque publication d'un dirigeant ajoute environ 3 000 impressions. Avril, avec 27 publications LinkedIn, donne la mesure du potentiel.</p></div>
+      <div class="tile"><div class="tag">Validation</div><h3>12 publications prêtes à partir</h3><p>10 pour Clara Mosconi, 2 pour Eyal Bompuis. Leur mise en ligne représente un potentiel estimé à 36 000 impressions.</p></div>
+      <div class="tile"><div class="tag">Été</div><h3>Un stock validé dès juin</h3><p>Le palier d'août se transforme en progression avec des publications prêtes avant les congés.</p></div>
+      <div class="tile"><div class="tag">Conversation</div><h3>4 943 réactions à convertir</h3><p>L'audience réagit. Avec 109 commentaires à ce jour, la discussion est le prochain palier.</p></div>
+      <div class="tile"><div class="tag">Page</div><h3>14 835 abonnés à inviter</h3><p>Le réseau des dirigeants pèse neuf fois celui de la page. Une campagne d'invitations fait le lien.</p></div>
+      <div class="tile"><div class="tag">Instagram</div><h3>Un rendez-vous entre les temps forts</h3><p>Les abonnés arrivent avec les événements : 47 en octobre. Un format récurrent entretient ce rythme toute l'année.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Potentiel estimé : 12 publications × 3 000 impressions moyennes</span><span>10 / 14</span></div>
+</section>
+
+<!-- 11 -->
+<section class="slide dark">
+  <div class="eyebrow"><i></i>Calendrier</div>
+  <h2>Six temps forts <em>d'ici mars</em></h2>
+  <div class="body" style="align-items:center">
+    <div class="tl">
+      <div><time>24-26 nov.</time><h3>Salon des Maires et des Collectivités Locales</h3><p>Paris, Porte de Versailles. Thème : l'audace locale. Première édition depuis les municipales.</p><em>Le travail avec les villes et les élus.</em></div>
+      <div><time>8-10 déc.</time><h3>SIMI</h3><p>Paris Expo, Pavillon 1. L'immobilier, industrie stratégique. Un temps fort dédié au logement.</p><em>Présence des dirigeants, cinq ans de Palauma.</em></div>
+      <div><time>15 déc.</time><h3>Pyramides d'Or de la FPI</h3><p>Date à reconfirmer.</p><em>Le regard d'un promoteur sur la qualité.</em></div>
+      <div><time>Déc.</time><h3>Budget 2027</h3><p>Le Sénat examine le texte à partir du 20 novembre.</p><em>Décryptage des mesures logement.</em></div>
+      <div><time>1er janv.</time><h3>Nouveau calcul du DPE</h3><p>Le coefficient de l'électricité passe de 1,9 à 1,7.</p><em>Pédagogie sur la performance des programmes.</em></div>
+      <div><time>16-19 mars</time><h3>MIPIM</h3><p>Cannes, Palais des Festivals.</p><em>Investisseurs, foncière, partenariats institutionnels.</em></div>
+    </div>
+  </div>
+  <div class="foot"><span>Dates consultées le 16 novembre 2026</span><span>11 / 14</span></div>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+  <div class="eyebrow"><i></i>Marché</div>
+  <h2>Le contexte de marché <em>en novembre</em></h2>
+  <div class="body">
+    <div class="col" style="flex:1.2">
+      <div class="grid2">
+        <div class="tile"><div class="num">15 102</div><h3>réservations au 3e trimestre</h3><p>En recul de 24,4 % sur un an. Point bas depuis 2009, publié par la FPI le 12 novembre.</p></div>
+        <div class="tile"><div class="num">9 140</div><h3>mises en vente</h3><p>En recul de 32,1 % sur un an. Les nouveaux lancements se raréfient.</p></div>
+        <div class="tile"><div class="num">5 040 €</div><h3>prix moyen au m²</h3><p>Les prix du neuf se maintiennent.</p></div>
+        <div class="tile"><div class="num">3,5 à 3,7 %</div><h3>taux sur 20 ans</h3><p>Les taux remontent en novembre. Le statut du bailleur privé reste ouvert jusqu'à fin 2028.</p></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="tile" style="flex:1;background:var(--ink);color:var(--paper);border-color:transparent">
+        <div class="tag">Ce que cela ouvre pour Palauma</div>
+        <h3 style="font-size:20px">Trois angles gagnent en valeur</h3>
+        <ul>
+          <li style="color:rgba(243,241,234,.8)"><b style="color:#fff">La preuve par le chantier.</b> Montrer ce qui avance : Le Gabriel, Louise, les réhabilitations.</li>
+          <li style="color:rgba(243,241,234,.8)"><b style="color:#fff">La réhabilitation.</b> Un savoir-faire recherché quand le neuf ralentit.</li>
+          <li style="color:rgba(243,241,234,.8)"><b style="color:#fff">La pédagogie.</b> Éclairer acquéreurs et investisseurs sur les dispositifs, le crédit et le DPE.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Observatoire FPI T3 2026 · Observatoire Crédit Logement/CSA · baromètres courtiers</span><span>12 / 14</span></div>
+</section>
+
+<!-- 13 -->
+<section class="slide">
+  <div class="eyebrow"><i></i>Recommandations</div>
+  <h2>La feuille de route <em>proposée</em></h2>
+  <div class="body">
+    <div class="grid3">
+      <div class="tile"><div class="tag">D'ici le 10 décembre</div><h3>Capitaliser sur la fin d'année</h3><ul>
+        <li><b>Valider les 12 publications en attente.</b> 30 minutes par dirigeant.</li>
+        <li><b>Séquence Salon des Maires.</b> Une prise de parole par dirigeant, relayée par la page.</li>
+        <li><b>Séquence SIMI.</b> Annonce, une publication par jour, stories en direct, bilan.</li>
+        <li><b>Cinq ans de Palauma.</b> Rétrospective en carrousel, texte personnel de chaque dirigeant, vidéo.</li>
+      </ul></div>
+      <div class="tile"><div class="tag">Rythme</div><h3>Installer la régularité</h3><ul>
+        <li><b>Un rendez-vous de validation mensuel.</b> Le mois suivant validé en une fois.</li>
+        <li><b>Une publication par semaine et par dirigeant.</b></li>
+        <li><b>Un stock d'été validé en juin.</b> Huit publications par dirigeant.</li>
+        <li><b>Un point chiffré trimestriel.</b> Exports tirés chaque mois.</li>
+      </ul></div>
+      <div class="tile"><div class="tag">Idées éditoriales</div><h3>Nourrir la ligne</h3><ul>
+        <li><b>Une série chantier mensuelle.</b> Vidéo ou timelapse, sur LinkedIn et Instagram.</li>
+        <li><b>Un décryptage marché sous 48 heures.</b> FPI, taux, budget, DPE.</li>
+        <li><b>Des publications qui ouvrent la discussion.</b> Une question, une réponse à chaque commentaire.</li>
+        <li><b>Cap 2 000 abonnés pour la page</b> au premier semestre 2027.</li>
+        <li><b>Préparation du MIPIM</b> dès janvier.</li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="foot"><span>ARKT · Palauma Global Group</span><span>13 / 14</span></div>
+</section>
+
+<!-- 14 -->
+<section class="slide dark">
+  <div class="halo" style="opacity:.3"></div>
+  <div class="eyebrow"><i></i>Sources et méthode</div>
+  <h2>D'où viennent <em>les chiffres</em></h2>
+  <div class="body" style="position:relative">
+    <div class="src">
+      <p><b>Dirigeants.</b> Exports LinkedIn des quatre profils, du 17/11/2025 au 16/11/2026 : impressions, membres touchés, nouveaux abonnés par jour.</p>
+      <p><b>Page PGG.</b> Exports LinkedIn des abonnés et des visiteurs, du 15/11/2025 au 14/11/2026. Total d'abonnés relevé le 16/11/2026. Impressions mensuelles comparées entre juillet 2025 à mars 2026 et avril à juin 2026, dernière période couverte par l'export. Impressions par publication : Buffer.</p>
+      <p><b>Instagram.</b> Exports Meta Business Suite, du 01/01 au 16/11/2026 : vues, interactions, nouveaux abonnés. Les vues incluent un pic de 40 468 vues du 14 au 18 mai.</p>
+      <p><b>Publications.</b> Buffer, 203 publications envoyées du 24/03 au 16/11/2026.</p>
+      <p><b>Total de 305 000.</b> Impressions LinkedIn des dirigeants (exports LinkedIn), impressions des publications de la page (Buffer) et vues Instagram (Meta). Les courbes cumulées additionnent ces valeurs mois par mois. Novembre s'arrête au 16.</p>
+      <p><b>Moyennes mensuelles.</b> « Avant » couvre 4,5 mois, « depuis » 7,5 mois. Les visiteurs mensuels de la page additionnent des visiteurs uniques journaliers.</p>
+      <p><b>Marché et calendrier.</b> <a href="https://www.batiweb.com/actualites/immobilier/logement-neuf-ventes-baisse-t3-2026-fpi-49599">Observatoire FPI T3 2026</a>, <a href="https://www.immobilier-danger.com/taux-immobilier-novembre-2026.html">Crédit Logement/CSA</a>, <a href="https://www.clubpatrimoine.com/evenements/limmobilier-un-levier-strategique-pour-leconomie-et-les-territoires-3">SIMI</a>, <a href="https://presseagence.fr/paris-stephanie-gay-torrente-laudace-est-une-capacite-a-transformer-durablement-les-territoires/">Salon des Maires</a>, <a href="https://www.mipim.com/en-gb/practical-information/hotels-and-travels.html">MIPIM</a>. Pages consultées le 16/11/2026.</p>
+    </div>
+  </div>
+  <div class="foot"><span>ARKT Conseil · 14 square Belsunce, Marseille · arkt-conseil.com</span><span>14 / 14</span></div>
+</section>
+
+</main>
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;return e}
+  function fmt(v){return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')}
+  function cum(a){var s=0;return a.map(function(v){s+=v;return s})}
+  var INK='#15140F',DIM='#6E6A5F',ACC='#F2533F',SAND='#C9C1AB',GRID='rgba(21,20,15,.10)';
+  var months=['Mars','Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.'];
+
+  /* 1. audience cumulée, empilée par canal */
+  (function(){
+    var svg=document.getElementById('c-aud');if(!svg)return;
+    var dir=cum([0,43130,27238,21675,15923,2274,16830,12395,2335]);
+    var pag=cum([0,13943,8682,14273,4727,1662,8588,9179,516]);
+    var ig =cum([3869,18949,53201,6212,2001,2432,5258,8850,776]);
+    var tot=dir.map(function(v,i){return v+pag[i]+ig[i]});
+    var W=760,H=400,L=18,R=70,T=34,B=34,max=320000;
+    var n=months.length;
+    function x(i){return L+(i+1)*(W-L-R)/n}
+    function y(v){return H-B-v/max*(H-T-B)}
+    var x0=L;
+    [100000,200000,300000].forEach(function(g){svg.appendChild(el('line',{x1:L,x2:W-R,y1:y(g),y2:y(g),stroke:GRID}));svg.appendChild(el('text',{x:W-R+8,y:y(g)+4,'font-size':11,fill:DIM},fmt(g)))});
+    function area(top,bot,fill){var d='M'+x0+','+y(0);top.forEach(function(v,i){d+=' L'+x(i)+','+y(v)});for(var i=n-1;i>=0;i--)d+=' L'+x(i)+','+y(bot[i]);d+=' L'+x0+','+y(0)+' Z';svg.appendChild(el('path',{d:d,fill:fill}))}
+    var zero=dir.map(function(){return 0});
+    var l1=dir,l2=dir.map(function(v,i){return v+pag[i]});
+    area(tot,l2,SAND);area(l2,l1,INK);area(l1,zero,ACC);
+    var d='M'+x0+','+y(0);tot.forEach(function(v,i){d+=' L'+x(i)+','+y(v)});
+    svg.appendChild(el('path',{d:d,fill:'none',stroke:INK,'stroke-width':1.5}));
+    svg.appendChild(el('line',{x1:L,x2:W-R,y1:y(0),y2:y(0),stroke:INK,'stroke-opacity':.4}));
+    months.forEach(function(m,i){svg.appendChild(el('text',{x:x(i),y:H-12,'font-size':11.5,fill:DIM,'text-anchor':'middle'},m))});
+    [[1,'79 900'],[2,'169 000'],[4,'233 800'],[7,'301 300']].forEach(function(p){var i=p[0];svg.appendChild(el('circle',{cx:x(i),cy:y(tot[i]),r:4,fill:'#fff',stroke:INK,'stroke-width':1.5}));svg.appendChild(el('text',{x:x(i)-8,y:y(tot[i])-10,'font-size':12.5,'font-weight':700,fill:INK,'text-anchor':'end'},p[1]))});
+    var e=n-1;svg.appendChild(el('circle',{cx:x(e),cy:y(tot[e]),r:5.5,fill:ACC,stroke:'#fff','stroke-width':2}));
+    svg.appendChild(el('text',{x:x(e)-4,y:y(tot[e])-14,'font-size':17,'font-weight':800,fill:ACC,'text-anchor':'end'},fmt(tot[e])));
+    svg.appendChild(el('text',{x:(x(4)+x(5))/2,y:y(tot[5])-34,'font-size':11.5,fill:DIM,'text-anchor':'middle'},'Palier estival'));
+  })();
+
+  /* courbe cumulée simple */
+  function line(id,vals,labels,opt){
+    var svg=document.getElementById(id);if(!svg)return;
+    var vb=svg.getAttribute('viewBox').split(' '),W=+vb[2],H=+vb[3],L=18,R=64,T=44,B=34,max=opt.max,n=vals.length;
+    function x(i){return L+(i+1)*(W-L-R)/n}
+    function y(v){return H-B-v/max*(H-T-B)}
+    opt.grid.forEach(function(g){svg.appendChild(el('line',{x1:L,x2:W-R,y1:y(g),y2:y(g),stroke:GRID}));svg.appendChild(el('text',{x:W-R+8,y:y(g)+4,'font-size':11,fill:DIM},fmt(g)))});
+    var d='M'+L+','+y(0),a;vals.forEach(function(v,i){d+=' L'+x(i)+','+y(v)});
+    a=d+' L'+x(n-1)+','+y(0)+' Z';
+    var g=el('linearGradient',{id:id+'-g',x1:0,y1:0,x2:0,y2:1});g.appendChild(el('stop',{offset:'0','stop-color':ACC,'stop-opacity':.38}));g.appendChild(el('stop',{offset:'1','stop-color':ACC,'stop-opacity':.04}));
+    var defs=el('defs',{});defs.appendChild(g);svg.appendChild(defs);
+    svg.appendChild(el('path',{d:a,fill:'url(#'+id+'-g)'}));
+    svg.appendChild(el('path',{d:d,fill:'none',stroke:ACC,'stroke-width':3,'stroke-linejoin':'round'}));
+    svg.appendChild(el('line',{x1:L,x2:W-R,y1:y(0),y2:y(0),stroke:INK,'stroke-opacity':.4}));
+    vals.forEach(function(v,i){
+      var last=i===n-1;
+      svg.appendChild(el('circle',{cx:x(i),cy:y(v),r:last?6:4,fill:last?ACC:'#fff',stroke:last?'#fff':ACC,'stroke-width':2}));
+      svg.appendChild(el('text',{x:x(i)-(last?2:6),y:y(v)-12,'font-size':last?18:12.5,'font-weight':last?800:700,fill:last?ACC:INK,'text-anchor':'end'},fmt(v)));
+      svg.appendChild(el('text',{x:x(i),y:H-12,'font-size':11.5,fill:DIM,'text-anchor':'middle'},labels[i]));
+    });
+    if(opt.title)svg.appendChild(el('text',{x:L,y:20,'font-size':13,'font-weight':600,fill:INK},opt.title));
+  }
+  line('c-fol',cum([35,429,314,256,224,125,223,228,98]),months,{max:2100,grid:[500,1000,1500,2000],title:'Nouveaux abonnés cumulés, six comptes'});
+  line('c-ig',cum([35,69,69,13,8,7,21,47,8]),months,{max:300,grid:[100,200,300],title:'Abonnés Instagram cumulés'});
+
+  /* mise à l'échelle façon lecteur PDF */
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  slides.forEach(function(s){var f=document.createElement('div');f.className='frame';s.parentNode.insertBefore(f,s);f.appendChild(s)});
+  function fit(){
+    var w=Math.min(document.documentElement.clientWidth-32,1280),k=w/1280;
+    slides.forEach(function(s){s.style.transform='scale('+k+')';s.parentNode.style.width=w+'px';s.parentNode.style.height=(720*k)+'px'});
+  }
+  fit();window.addEventListener('resize',fit);
+  window.addEventListener('beforeprint',function(){slides.forEach(function(s){s.style.transform='none'})});
+  window.addEventListener('afterprint',fit);
+})();
+</script>
+</body>
+</html>

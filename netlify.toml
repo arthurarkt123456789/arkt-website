@@ -22,6 +22,13 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
+# Bilans clients : jamais indexés, jamais mis en cache
+[[headers]]
+  for = "/bilan/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-cache"
+
 # Page cachée La Plus Belle Raclette du Monde
 [[headers]]
   for = "/raclette/*"
