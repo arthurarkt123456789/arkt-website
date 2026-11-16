@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Play Forward · Stratégie et scripts publicitaires</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+/* Polices auto-hébergées (aucune requête vers Google : pas de transfert d'IP des visiteurs) */
+/* Big Shoulders Display — latin-ext */
+@font-face {
+  font-family: 'Big Shoulders Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/fonts/big-shoulders-display-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Big Shoulders Display — latin */
+@font-face {
+  font-family: 'Big Shoulders Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/fonts/big-shoulders-display-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Big Shoulders Display — latin-ext */
+@font-face {
+  font-family: 'Big Shoulders Display';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/fonts/big-shoulders-display-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Big Shoulders Display — latin */
+@font-face {
+  font-family: 'Big Shoulders Display';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/fonts/big-shoulders-display-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Big Shoulders Display — latin-ext */
+@font-face {
+  font-family: 'Big Shoulders Display';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(/fonts/big-shoulders-display-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Big Shoulders Display — latin */
+@font-face {
+  font-family: 'Big Shoulders Display';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(/fonts/big-shoulders-display-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Inter — latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(/fonts/inter-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Inter — latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(/fonts/inter-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root{
+  /* Charte ARKT (arkt-conseil.com). Page à thème unique, clair. Mise en page : colonne de lecture, sommaire collant, scripts en fiches. */
+  --accent:#F2533F; --accent-deep:#C24232; --accent-soft:#FBE3DE;
+  --bg:#F3F1EA; --bg-2:#ECE9DF; --surface:#FFFFFF;
+  --ink:#15140F; --dim:#6E6A5F; --faded:#A6A299;
+  --line:rgba(19,19,17,.12); --line-soft:rgba(19,19,17,.07);
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+.top{position:sticky;top:0;z-index:10;background:rgba(243,241,234,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;min-height:64px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.top img{height:44px;width:44px;display:block}
+.top .client{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.02em;text-transform:uppercase}
+.top nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.top nav a{text-decoration:none;font-size:13px;font-weight:600;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.top nav a:hover{border-color:var(--accent);color:var(--accent-deep)}
+
+.hero{padding:56px 0 40px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep)}
+h1{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(44px,8vw,92px);line-height:.92;letter-spacing:.005em;margin:14px 0 20px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--accent)}
+.lead{max-width:62ch;font-size:18px;color:var(--ink);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.meta span{font-size:13px;font-weight:500;padding:6px 12px;border-radius:999px;background:var(--bg-2);color:var(--dim)}
+.meta b{color:var(--ink);font-weight:600}
+
+.part{padding:44px 0 12px;border-top:2px solid var(--ink);margin-top:36px}
+.part .num{font-family:var(--display);font-weight:800;font-size:20px;color:var(--accent);letter-spacing:.06em}
+h2{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(32px,5vw,54px);line-height:1;margin:6px 0 10px;text-wrap:balance}
+.part p.intro{max-width:65ch;margin:0;color:var(--dim)}
+.subnav{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.subnav a{font-size:13px;font-weight:600;text-decoration:none;padding:6px 12px;border-radius:8px;background:var(--surface);border:1px solid var(--line)}
+.subnav a:hover{border-color:var(--accent)}
+
+section{padding:36px 0 8px}
+h3{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:30px;line-height:1.05;margin:0 0 14px;letter-spacing:.01em}
+h3::before{content:"";display:inline-block;width:10px;height:22px;background:var(--accent);margin-right:12px;border-radius:2px;vertical-align:-2px}
+h4{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:28px 0 10px}
+p{max-width:68ch;margin:0 0 12px}
+ul,ol{max-width:68ch;margin:0 0 12px;padding-left:20px}
+li{margin:4px 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--bg-2);padding:2px 6px;border-radius:4px}
+
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:0 0 16px}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--line-soft)}
+tr:last-child td{border-bottom:0}
+thead th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:700;background:var(--bg-2);border-bottom:1px solid var(--line)}
+tbody th{font-weight:600;white-space:nowrap;width:1%}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.angles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.angle{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.angle .tag{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;color:var(--accent)}
+.angle h5{font-family:var(--display);text-transform:uppercase;font-size:24px;margin:0;font-weight:800}
+.angle dl{margin:0;display:grid;gap:8px;font-size:14px}
+.angle dt{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.angle dd{margin:0}
+.quote{font-style:italic;color:var(--dim);border-left:3px solid var(--accent);padding-left:10px;font-size:14px}
+
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);margin-bottom:16px}
+.step{padding:18px 20px;border-right:1px solid var(--line)}
+.step:last-child{border-right:0}
+.step .d{font-family:var(--display);font-weight:800;font-size:26px;color:var(--accent);text-transform:uppercase}
+.step p{font-size:14px;margin:6px 0 0}
+.step .dec{margin-top:10px;font-size:13px;color:var(--dim)}
+.step .dec b{color:var(--ink)}
+
+.note{background:var(--accent-soft);border-radius:12px;padding:14px 18px;font-size:14.5px;max-width:none;margin-bottom:16px}
+.note p{margin:0;max-width:none}
+
+.script{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 18px;overflow:hidden}
+.script header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:16px 20px;border-bottom:1px solid var(--line)}
+.script .code{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;color:var(--accent)}
+.script .ttl{font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase}
+.script .who{margin-left:auto;font-size:13px;color:var(--dim)}
+.hooks{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--line)}
+.hook{padding:12px 20px;font-size:15px;font-weight:600}
+.hook+.hook{border-left:1px solid var(--line)}
+.hook small{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:3px}
+.beats{display:grid;grid-template-columns:86px minmax(0,1fr) minmax(0,1.25fr)}
+.beats>div{padding:11px 14px;border-bottom:1px solid var(--line-soft);font-size:14.5px}
+.beats>div:nth-last-child(-n+3){border-bottom:0}
+.beats .t{font-variant-numeric:tabular-nums;font-weight:600;color:var(--dim);padding-left:20px;white-space:nowrap}
+.beats .i{color:var(--dim)}
+.beats .v{font-weight:500}
+.beats .h{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);background:var(--bg-2);border-bottom:1px solid var(--line)}
+
+.check{list-style:none;padding:0;max-width:none;display:grid;gap:8px}
+.check li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px 10px 40px;position:relative;margin:0;font-size:14.5px}
+.check li::before{content:"";position:absolute;left:14px;top:13px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+
+footer{margin-top:56px;background:var(--ink);color:#F3F1EA;padding:36px 0}
+footer .wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+footer img{height:56px;width:56px;background:#F3F1EA;border-radius:12px;padding:4px}
+footer p{margin:0;font-size:13px;color:#A6A299;max-width:none}
+footer b{color:#F3F1EA}
+
+@media (max-width:860px){
+  .angles,.steps{grid-template-columns:1fr}
+  .step{border-right:0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:0}
+  .hooks{grid-template-columns:1fr}
+  .hook+.hook{border-left:0;border-top:1px solid var(--line)}
+  .beats{grid-template-columns:1fr}
+  .beats .h{display:none}
+  .beats>div{border-bottom:0;padding:4px 20px}
+  .beats .t{padding-top:14px;border-top:1px solid var(--line-soft);color:var(--accent-deep)}
+  .beats .v{padding-bottom:14px}
+  .script .who{margin-left:0;width:100%}
+  .top nav{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="wrap">
+  <img src="data:image/png;base64,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" alt="ARKT">
+  <span class="client">Play Forward</span>
+  <nav aria-label="Sommaire">
+    <a href="#poste-03">03 · Stratégie</a>
+    <a href="#poste-04">04 · Scripts vidéo</a>
+    <a href="#validations">À valider</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<div class="hero">
+  <div class="eyebrow">Devis D-2026-002-v2 · Postes 03 et 04</div>
+  <h1>Le rêve américain, <em>ça se prépare.</em></h1>
+  <p class="lead">Stratégie créative publicitaire et scripts des neuf vidéos de lancement. La publicité Meta s'adresse aux parents et vise l'inscription à la masterclass gratuite. Les jeunes athlètes sont touchés par l'organique et par les structures sportives.</p>
+  <div class="meta">
+    <span>Masterclass <b>jeudi 3 décembre · 18h30</b></span>
+    <span><b>3</b> angles</span>
+    <span><b>9</b> vidéos de 30 secondes</span>
+    <span><b>18</b> accroches à tester</span>
+    <span>Version du <b>16 novembre 2026</b></span>
+  </div>
+</div>
+
+<!-- ============ POSTE 03 ============ -->
+<div class="part" id="poste-03">
+  <div class="num">POSTE 03</div>
+  <h2>Stratégie créative publicitaire</h2>
+  <div class="subnav">
+    <a href="#cadre">Cadre</a><a href="#briefs">Briefs par angle</a><a href="#test">Plan de test</a><a href="#audiences">Audiences parents</a><a href="#organique">Organique et relais</a>
+  </div>
+</div>
+
+<section id="cadre">
+  <h3>Cadre</h3>
+  <div class="tbl"><table><tbody>
+    <tr><th>Objectif</th><td>Inscriptions de parents à la masterclass gratuite « Études et sport aux USA » (en ligne, 90 minutes, 50 places)</td></tr>
+    <tr><th>Prochaine session</th><td>Jeudi 3 décembre, 18h30</td></tr>
+    <tr><th>Événement de conversion</th><td>Formulaire d'inscription validé, remonté en événement « Lead » par le pixel et l'API Conversions</td></tr>
+    <tr><th>Indicateur principal</th><td>Coût par inscription de parent</td></tr>
+    <tr><th>Indicateurs aval</th><td>Taux de présence au direct, rendez-vous Calendly pris après la masterclass</td></tr>
+    <tr><th>Cible payante</th><td>Parents d'athlètes de 15 à 18 ans. Aucun ciblage de mineurs.</td></tr>
+    <tr><th>Cible organique</th><td>Athlètes de 15 à 18 ans, par les contenus et les structures sportives</td></tr>
+    <tr><th>Signature</th><td>« Le rêve américain, ça se prépare. »</td></tr>
+    <tr><th>Limites</th><td>Aucune promesse de bourse, d'admission ou de recrutement. Aucun logo NCAA ou NAIA. Aucun comédien présenté comme un vrai parent ou un vrai ancien élève.</td></tr>
+  </tbody></table></div>
+  <h4>Prérequis techniques</h4>
+  <ol>
+    <li>Pixel Meta et API Conversions actifs sur playforward.education, avec l'événement « Lead » déclenché sur la page de confirmation d'inscription.</li>
+    <li>Un champ « Vous êtes : parent / athlète » dans le formulaire de la masterclass. Il mesure la part de parents et isole les contacts de mineurs.</li>
+    <li>Un paramètre UTM par vidéo et par accroche (exemple : <code>utm_content=A1_hA</code>), repris jusqu'au rendez-vous Calendly.</li>
+  </ol>
+</section>
+
+<section id="briefs">
+  <h3>Briefs créatifs</h3>
+  <p>Chaque angle répond à un frein différent et occupe une place différente dans le parcours du parent.</p>
+  <div class="angles">
+    <div class="angle">
+      <div class="tag">A</div><h5>Le rêve</h5>
+      <div class="quote">« Je fais 300 km chaque week-end pour ses matchs, je veux que ça mène quelque part. »</div>
+      <dl>
+        <div><dt>Rôle</dt><dd>Prospection. Premier contact avec le parent « qui y croit ».</dd></div>
+        <div><dt>Tension</dt><dd>Des années d'investissement et aucune visibilité sur l'après-bac. En France, poursuivre le sport à ce niveau et des études supérieures devient difficile.</dd></div>
+        <div><dt>Message unique</dt><dd>Jouer et étudier dans une université américaine est un projet accessible à des profils français, à condition de le préparer.</dd></div>
+        <div><dt>Preuves</dt><dd>L'université américaine réunit sport et diplôme. Une classe préparatoire de 12 semaines existe. La masterclass est gratuite.</dd></div>
+        <div><dt>Ton</dt><dd>Émotion contenue, fierté, projection.</dd></div>
+        <div><dt>Univers</dt><dd>Voiture et domicile du parent. Images de sport, puis bascule vers des campus américains.</dd></div>
+        <div><dt>Structure</dt><dd>Voix intérieure du parent sur une scène jouée. Le quotidien, la projection, puis « ça se prépare ».</dd></div>
+        <div><dt>À exclure</dt><dd>Toute idée de financement des études par le sport. Drapeau en plein cadre, personnalité politique, imagerie militaire. Logos d'universités et de ligues.</dd></div>
+        <div><dt>Lecture</dt><dd>Taux d'accroche, puis coût par inscription.</dd></div>
+      </dl>
+    </div>
+    <div class="angle">
+      <div class="tag">B</div><h5>La preuve</h5>
+      <div class="quote">« Je ne veux pas payer quelqu'un qui me promet une bourse et disparaît. »</div>
+      <dl>
+        <div><dt>Rôle</dt><dd>Conversion du parent « prudent ». Retargeting à partir de la deuxième semaine.</dd></div>
+        <div><dt>Tension</dt><dd>Méfiance envers les intermédiaires. Flou sur ce que la famille achète réellement.</dd></div>
+        <div><dt>Message unique</dt><dd>Play Forward dit ce qu'il garantit, ce qu'il ne garantit pas, et montre ce que l'enfant produit en 12 semaines.</dd></div>
+        <div><dt>Preuves</dt><dd>La FAQ du site : aucune garantie de bourse ou de recrutement, statut de classe préparatoire. Les six livrables de fin de programme. Le test d'anglais Duolingo. Le mentorat en direct.</dd></div>
+        <div><dt>Ton</dt><dd>Sincère, factuel, posé.</dd></div>
+        <div><dt>Univers</dt><dd>Intérieur : bureau, table de cuisine, écran d'ordinateur, documents imprimés.</dd></div>
+        <div><dt>Structure</dt><dd>Une objection de parent, une pièce montrée à l'écran, une réponse.</dd></div>
+        <div><dt>À exclure</dt><dd>Témoignage d'ancien élève joué par un comédien. Montant de bourse. Comparaison nominative avec une agence.</dd></div>
+        <div><dt>Lecture</dt><dd>Coût par inscription en retargeting, part de parents parmi les inscrits.</dd></div>
+      </dl>
+    </div>
+    <div class="angle">
+      <div class="tag">C</div><h5>La méthode</h5>
+      <div class="quote">« J'ai peur de passer à côté de sa chance parce que je n'ai pas les bons contacts. »</div>
+      <dl>
+        <div><dt>Rôle</dt><dd>Conversion directe, pour les deux profils de parents.</dd></div>
+        <div><dt>Tension</dt><dd>La famille croit que tout dépend du niveau sportif ou d'un réseau.</dd></div>
+        <div><dt>Message unique</dt><dd>Le talent ne suffit pas. Un profil recrutable se prépare sur trois dimensions, dès la Seconde.</dd></div>
+        <div><dt>Preuves</dt><dd>Le programme de la masterclass : dimensions sportive, académique et personnelle. La méthode Talent, Projet, Opportunité. Le calendrier Seconde, Première, Terminale de la FAQ.</dd></div>
+        <div><dt>Ton</dt><dd>Complice, direct, pédagogique.</dd></div>
+        <div><dt>Univers</dt><dd>Face caméra, dans la voiture ou en extérieur près de chez soi. Texte incrusté, rythme rapide.</dd></div>
+        <div><dt>Structure</dt><dd>Une idée reçue, une explication en trois points, la masterclass.</dd></div>
+        <div><dt>À exclure</dt><dd>Statistique sans source. Récit personnel du comédien. Il parle de « votre enfant ».</dd></div>
+        <div><dt>Lecture</dt><dd>Taux de clic sur le lien, puis coût par inscription.</dd></div>
+      </dl>
+    </div>
+  </div>
+  <div class="note"><p>Le site ne publie aucun témoignage d'ancien élève à ce jour. La preuve repose donc sur la transparence et sur les livrables.</p></div>
+</section>
+
+<section id="test">
+  <h3>Plan de test des messages</h3>
+  <p>Le test dure trois semaines et répond à trois questions dans cet ordre : quel angle, quelle vidéo, quelle accroche.</p>
+  <div class="steps">
+    <div class="step"><div class="d">J1 à J7</div><p>Les 9 vidéos en accroche A, 3 ensembles à budget égal.</p><div class="dec"><b>Décision.</b> Classement des angles et des vidéos. Arrêt des vidéos sous les seuils.</div></div>
+    <div class="step"><div class="d">J8 à J14</div><p>Les 3 meilleures vidéos, accroche A contre accroche B, en test A/B Meta à répartition égale. Ouverture du retargeting avec l'angle B.</p><div class="dec"><b>Décision.</b> Accroche retenue pour chaque vidéo.</div></div>
+    <div class="step"><div class="d">J15 à J21</div><p>Budget concentré sur les combinaisons gagnantes.</p><div class="dec"><b>Décision.</b> Bilan écrit. Il sert de base à la campagne de la masterclass suivante.</div></div>
+  </div>
+  <h4>Structure de campagne</h4>
+  <ul>
+    <li>Une campagne à objectif Prospects, optimisée sur l'événement « Lead ».</li>
+    <li>Trois ensembles de publicités, un par angle, à budget quotidien égal. Le budget est fixé par ensemble pour que chaque angle reçoive la même dépense.</li>
+    <li>Même audience dans les trois ensembles.</li>
+    <li>Trois vidéos par ensemble, avec l'accroche A. Chaque publicité embarque ses deux formats, 9:16 et 4:5.</li>
+    <li>Aucune modification pendant sept jours.</li>
+  </ul>
+  <p>Les deux accroches d'une même vidéo ne démarrent pas ensemble. Elles se partageraient la diffusion et aucune n'atteindrait un volume lisible.</p>
+  <h4>Budget minimal</h4>
+  <p>Meta indique qu'un ensemble de publicités sort de la phase d'apprentissage après environ 50 résultats en sept jours. Le budget hebdomadaire d'un ensemble se calcule donc ainsi : 50 × coût par inscription cible. Le plan à trois ensembles demande trois fois ce montant par semaine.</p>
+  <p>Si le budget disponible est inférieur, le test passe à un seul ensemble avec trois vidéos, une par angle (A1, B1, C1). Les six autres entrent par rotation hebdomadaire. La comparaison des angles se lit alors sur le taux d'accroche et le taux de clic.</p>
+  <h4>Critères de performance</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Indicateur</th><th>Calcul</th><th>Ce qu'il juge</th></tr></thead>
+    <tbody>
+      <tr><th>Taux d'accroche</th><td>Lectures de 3 secondes ÷ impressions</td><td>Les trois premières secondes</td></tr>
+      <tr><th>Taux de rétention</th><td>ThruPlays ÷ lectures de 3 secondes</td><td>Le corps de la vidéo</td></tr>
+      <tr><th>Taux de clic sur le lien</th><td>Clics sur le lien ÷ impressions</td><td>La promesse et l'appel à l'action</td></tr>
+      <tr><th>Taux de conversion de la page</th><td>Inscriptions ÷ vues de la page de destination</td><td>La page de la masterclass</td></tr>
+      <tr><th>Coût par inscription</th><td>Dépense ÷ inscriptions</td><td>Le résultat</td></tr>
+      <tr><th>Part de parents</th><td>Inscrits « parent » ÷ inscrits</td><td>La qualité du contact</td></tr>
+    </tbody></table></div>
+  <p>Un ThruPlay est une lecture de la vidéo jusqu'à la fin ou pendant au moins 15 secondes. Sur des vidéos de 30 secondes, le taux de rétention mesure donc la part des spectateurs accrochés qui regardent au moins 15 secondes.</p>
+  <p>Impressions, lectures de vidéo de 3 secondes, ThruPlays, clics sur le lien, vues de la page de destination, résultats et coût par résultat sont des colonnes du Gestionnaire de publicités Meta. Les taux d'accroche et de rétention se créent en indicateurs personnalisés à partir de ces colonnes. La part de parents vient du formulaire d'inscription, hors Meta.</p>
+  <h4>Seuils de décision</h4>
+  <p>Ces seuils sont des règles de pilotage proposées par ARKT. Ils se recalibrent à J7 sur les données du compte.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Décision</th><th>Règle</th></tr></thead>
+    <tbody>
+      <tr><th>Plancher de lecture</th><td>Aucune décision sur une vidéo avant 1 500 impressions.</td></tr>
+      <tr><th>Arrêt d'une vidéo</th><td>Dépense égale à 2 fois le coût par inscription cible sans aucune inscription. Ou taux d'accroche et taux de clic inférieurs de 30 % à la médiane des 9 vidéos.</td></tr>
+      <tr><th>Vidéo gagnante</th><td>Au moins 5 inscriptions et un coût par inscription inférieur ou égal à la cible.</td></tr>
+      <tr><th>Angle gagnant</th><td>Coût par inscription de l'ensemble le plus bas à J7, avec au moins 20 % d'écart sur le deuxième. En dessous de 20 %, les deux angles sont conservés.</td></tr>
+      <tr><th>Accroche gagnante</th><td>Taux d'accroche supérieur d'au moins 15 % à celui de l'autre accroche, à taux de clic égal ou supérieur, sur 3 000 impressions minimum par variante.</td></tr>
+      <tr><th>Page d'inscription</th><td>Si les vidéos génèrent des clics et que la page convertit peu sur l'ensemble du trafic, la correction porte sur la page avant toute retouche vidéo.</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="audiences">
+  <h3>Audiences parents</h3>
+  <p>La publicité vise uniquement des adultes. Le paramétrage ferme l'accès aux mineurs à trois niveaux : l'âge, les données importées, le message.</p>
+  <h4>Règles sur les mineurs</h4>
+  <ul>
+    <li>Le règlement européen sur les services numériques (DSA, article 28) interdit la publicité fondée sur le profilage des mineurs.</li>
+    <li>Meta limite depuis 2023 le ciblage des moins de 18 ans à l'âge et à la localisation. Meta a aussi annoncé en novembre 2023 la suspension de toute publicité vers les moins de 18 ans dans l'Union européenne. Le maintien de cette suspension à ce jour n'est pas confirmé par les sources consultées.</li>
+    <li>Conséquences pour Play Forward : âge minimum verrouillé à 25 ans, aucun contact d'athlète mineur dans les audiences importées, vidéos adressées au parent (« votre enfant »).</li>
+  </ul>
+  <h4>Ensemble de prospection</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Paramètre</th><th>Réglage</th><th>Nature dans Meta</th></tr></thead>
+    <tbody>
+      <tr><th>Zone</th><td>France entière</td><td>Contrôle strict</td></tr>
+      <tr><th>Âge minimum</th><td>25 ans, le maximum autorisé avec l'audience Advantage+</td><td>Contrôle strict</td></tr>
+      <tr><th>Tranche d'âge</th><td>38 à 60 ans</td><td>Suggestion</td></tr>
+      <tr><th>Langue</th><td>Français</td><td>Contrôle strict</td></tr>
+      <tr><th>Ciblage détaillé</th><td>Parents d'adolescents (13-17 ans) si le segment est disponible dans le compte. Intérêts basketball, tennis, volley-ball.</td><td>Suggestion</td></tr>
+      <tr><th>Exclusion</th><td>Personnes déjà inscrites à la masterclass</td><td>Contrôle strict</td></tr>
+      <tr><th>Placements</th><td>Advantage+. Le 9:16 sert Reels et Stories, le 4:5 sert les fils.</td><td></td></tr>
+    </tbody></table></div>
+  <p>La masterclass est en ligne, la zone publicitaire couvre donc la France entière. Les quatre régions prioritaires (Île-de-France, Auvergne-Rhône-Alpes, Provence-Alpes-Côte d'Azur, Bretagne) servent à la lecture des résultats par région et au travail de terrain auprès des clubs.</p>
+  <p>La tranche 38 à 60 ans est une suggestion : Meta peut diffuser en dehors. Si plus d'un tiers des inscriptions vient d'en dehors de 35 à 64 ans à J7, l'audience Advantage+ est désactivée et la tranche devient stricte.</p>
+  <h4>Retargeting</h4>
+  <p>Ouverture à J8, avec les vidéos de l'angle B. Les inscrits sont exclus des trois audiences.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Audience</th><th>Fenêtre</th></tr></thead>
+    <tbody>
+      <tr><td>Visiteurs de la page masterclass non inscrits</td><td class="n">30 jours</td></tr>
+      <tr><td>Personnes ayant vu au moins 50 % d'une vidéo de la campagne</td><td class="n">30 jours</td></tr>
+      <tr><td>Personnes ayant interagi avec les comptes Instagram et Facebook de Play Forward</td><td class="n">60 jours</td></tr>
+    </tbody></table></div>
+  <h4>Audience similaire</h4>
+  <p>Source : la liste des parents inscrits aux masterclass. Meta demande au moins 100 personnes d'un même pays dans la liste source. L'import suppose que la politique de confidentialité du site prévoie cet usage.</p>
+  <h4>Données des jeunes</h4>
+  <p>Le formulaire de la masterclass reçoit aussi des inscriptions d'athlètes. Le champ « parent / athlète » permet de n'importer dans Meta que les contacts de parents.</p>
+</section>
+
+<section id="organique">
+  <h3>Organique et relais</h3>
+  <p>Le jeune athlète rencontre Play Forward par des contenus qu'il choisit de suivre et par les adultes de son environnement sportif. Chaque contenu qui lui est destiné se termine par une transmission au parent, qui décide et qui s'inscrit.</p>
+  <h4>Contenus pour les jeunes</h4>
+  <p>Instagram et TikTok, tutoiement, trois publications par semaine : deux Reels et un carrousel.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Série</th><th>Contenu</th><th>Format</th><th>Action demandée</th></tr></thead>
+    <tbody>
+      <tr><th>Comment ça marche</th><td>Le système universitaire américain expliqué : divisions, calendrier de la Seconde à la Terminale, test d'anglais, premier message à un coach</td><td>Reel de 30 à 45 secondes, carrousel</td><td>Enregistrer, envoyer à un coéquipier</td></tr>
+      <tr><th>Parcours</th><td>Des parcours types expliqués étape par étape. Puis des étudiants-athlètes français du réseau, quand ils sont disponibles.</td><td>Reel explicatif, puis entretien en trois questions</td><td>Partager</td></tr>
+      <tr><th>Ton projet</th><td>Les exercices du parcours Leader : se présenter en 30 secondes en anglais, écrire son premier message</td><td>Reel face caméra, défi</td><td>Le faire et identifier Play Forward</td></tr>
+      <tr><th>Pour tes parents</th><td>Une réponse courte à une objection de parent</td><td>Reel</td><td>« Envoie cette vidéo à tes parents »</td></tr>
+    </tbody></table></div>
+  <p>Les neuf vidéos publicitaires sont aussi publiées en organique. Les droits prévus au poste 04 couvrent cet usage.</p>
+  <h4>Relais</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Relais</th><th>Interlocuteur</th><th>Ce que Play Forward apporte</th><th>Mécanique</th></tr></thead>
+    <tbody>
+      <tr><th>Clubs</th><td>Basket, tennis et volley des quatre régions prioritaires. Président, responsable des jeunes, entraîneurs U15 à U18.</td><td>Une réunion d'information en visio réservée aux familles du club</td><td>Message prêt à transférer dans les groupes WhatsApp de parents d'équipe. Affiche avec QR code au club-house.</td></tr>
+      <tr><th>CREPS et pôles</th><td>Responsable de pôle, responsable du suivi scolaire</td><td>Une intervention de 30 minutes sur le double projet à l'international</td><td>Session sur site ou en visio. QR code vers la masterclass.</td></tr>
+      <tr><th>Sections sportives et sport-études</th><td>Professeur d'EPS coordonnateur, chef d'établissement</td><td>La même intervention, dans le cadre de l'orientation</td><td>Diffusion aux familles par l'établissement</td></tr>
+      <tr><th>Ligues et comités</th><td>Responsable technique ou formation</td><td>Un article prêt à publier</td><td>Lettre d'information et site de la ligue</td></tr>
+    </tbody></table></div>
+  <p>Chaque structure reçoit un lien d'inscription qui lui est propre. Le premier cycle porte sur dix structures, prises dans le réseau direct d'Anne-Sophie.</p>
+  <h4>Témoignages de parcours</h4>
+  <ul>
+    <li>Uniquement des parcours réels : des étudiants-athlètes français actuellement dans une université américaine, non rémunérés, issus du réseau de Play Forward.</li>
+    <li>Aucun comédien dans le rôle d'un ancien élève ou d'un athlète parti aux États-Unis.</li>
+    <li>En attendant ces témoignages, la série « Parcours » présente des parcours types, annoncés comme des exemples.</li>
+    <li>Autorisation écrite de droit à l'image avant toute publication. Pour un mineur, signature des deux parents.</li>
+    <li>Aucun montant de bourse. Aucun logo NCAA ou NAIA à l'image.</li>
+    <li>Trame en trois questions : d'où tu pars, ce qui a compté dans ton dossier, ce que tu dirais à un joueur de 15 ans.</li>
+  </ul>
+  <h4>Mesure</h4>
+  <ul>
+    <li>Inscriptions par source : organique, puis chaque structure relais.</li>
+    <li>Partages et enregistrements par publication.</li>
+    <li>Part des inscriptions faites par un parent.</li>
+  </ul>
+</section>
+
+<!-- ============ POSTE 04 ============ -->
+<div class="part" id="poste-04">
+  <div class="num">POSTE 04</div>
+  <h2>Concepts créatifs et scripts vidéo</h2>
+  <p class="intro">Neuf vidéos de 30 secondes environ, trois par angle, chacune avec deux accroches à tester. Anne-Sophie n'apparaît dans aucune.</p>
+  <div class="subnav">
+    <a href="#regles">Règles communes</a><a href="#angles">Les trois angles</a><a href="#matrice">Matrice</a><a href="#scripts-a">Scripts A</a><a href="#scripts-b">Scripts B</a><a href="#scripts-c">Scripts C</a><a href="#cta">Carton CTA et annonces</a><a href="#production">Production</a>
+  </div>
+</div>
+
+<section id="regles">
+  <h3>Règles communes</h3>
+  <div class="tbl"><table><tbody>
+    <tr><th>Signature</th><td>« Le rêve américain, ça se prépare. » Elle clôt les neuf vidéos.</td></tr>
+    <tr><th>Durée</th><td>28 à 35 secondes</td></tr>
+    <tr><th>Accroche</th><td>Les trois premières secondes : une phrase dite et affichée en plein écran. Chaque vidéo a deux accroches. Seuls le premier plan et la première phrase changent.</td></tr>
+    <tr><th>Sous-titres</th><td>Incrustés, mot à mot, deux lignes maximum. Un fichier .srt accompagne chaque vidéo.</td></tr>
+    <tr><th>Zone de sécurité 9:16</th><td>Aucun texte dans les 14 % du haut, les 35 % du bas et les 6 % de chaque côté (recommandation Meta pour Reels)</td></tr>
+    <tr><th>Comédiens, angles A et B</th><td>Scènes de fiction. Aucun nom, aucun bandeau d'identité, aucune phrase qui attribue un résultat à Play Forward.</td></tr>
+    <tr><th>Comédiens, angle C</th><td>Le comédien s'adresse aux parents et parle de « votre enfant ». Il ne raconte aucune expérience personnelle.</td></tr>
+    <tr><th>Jeune athlète</th><td>Rôle tenu par une comédienne majeure. Elle apparaît face caméra dans C3 et en plans de détail ailleurs.</td></tr>
+    <tr><th>Promesses</th><td>Aucune bourse, admission ou recrutement promis ou suggéré. Le mot « bourse » n'apparaît que pour dire qu'elle n'est pas garantie : B1, B3 et la mention du carton CTA.</td></tr>
+    <tr><th>Marques</th><td>Aucun logo NCAA, NAIA, d'université ou de ligue. Le sigle NCAA n'est pas prononcé.</td></tr>
+    <tr><th>Images exclues</th><td>Drapeau en plein cadre, personnalité politique, imagerie militaire</td></tr>
+    <tr><th>Date</th><td>Aucune date dans les vidéos. Elle figure sur le carton CTA, séparé et modifiable.</td></tr>
+    <tr><th>Habillage</th><td>Typographique : une police, blanc sur image, logo Play Forward actuel sur le carton final</td></tr>
+  </tbody></table></div>
+</section>
+
+<section id="angles">
+  <h3>Les trois angles</h3>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>A · Le rêve</th><th>B · La preuve</th><th>C · La méthode</th></tr></thead>
+    <tbody>
+      <tr><th>Univers</th><td>Voiture et domicile du parent, le soir ou le week-end. Images de sport, puis bascule vers des campus américains.</td><td>Intérieur : bureau, table de cuisine, écran, documents imprimés</td><td>Face caméra : voiture, extérieur près de chez soi</td></tr>
+      <tr><th>Ton</th><td>Émotion contenue, fierté, projection</td><td>Sincère, factuel, posé</td><td>Complice, direct, pédagogique</td></tr>
+      <tr><th>Structure narrative</th><td>Voix intérieure d'un parent sur une scène jouée : le quotidien, la projection, « ça se prépare »</td><td>Une objection de parent, une pièce montrée, une réponse</td><td>Une idée reçue, trois points, la masterclass</td></tr>
+      <tr><th>Voix</th><td>Voix off du parent</td><td>Voix off Play Forward</td><td>Comédien face caméra</td></tr>
+      <tr><th>Montage</th><td>Plans longs, son d'ambiance, musique douce</td><td>Plans fixes, texte qui s'affiche ligne à ligne, musique très discrète</td><td>Coupes rapides, texte incrusté, musique rythmée</td></tr>
+      <tr><th>Parent visé</th><td>Celui « qui y croit »</td><td>Le « prudent »</td><td>Les deux</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="matrice">
+  <h3>Matrice des 9 vidéos</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Code</th><th>Sujet</th><th>À l'image</th><th>Accroche A</th><th>Accroche B</th></tr></thead>
+    <tbody>
+      <tr><th><a href="#a1">A1</a></th><td>Basket</td><td>Mère, images de basket</td><td>« Et si son prochain match se jouait sur un campus américain ? »</td><td>« Quatre entraînements par semaine depuis ses 9 ans. Je veux que ça la mène quelque part. »</td></tr>
+      <tr><th><a href="#a2">A2</a></th><td>Tennis</td><td>Père, fils hors champ</td><td>« Dix ans de tennis. Et après le bac ? »</td><td>« Après le bac, il devra souvent choisir : le tennis ou les études. »</td></tr>
+      <tr><th><a href="#a3">A3</a></th><td>Volley féminin</td><td>Mère, images de volley</td><td>« Chaque samedi, je la regarde jouer. Et je me dis : et si… »</td><td>« Elle a 16 ans. Elle veut partir jouer aux États-Unis. »</td></tr>
+      <tr><th><a href="#b1">B1</a></th><td>La garantie</td><td>Père</td><td>« Play Forward garantit-il une bourse ? Non. »</td><td>« Méfiez-vous de celui qui vous promet une bourse. »</td></tr>
+      <tr><th><a href="#b2">B2</a></th><td>Les six livrables</td><td>Mère</td><td>« Douze semaines. Voici ce que votre enfant a entre les mains à la fin. »</td><td>« À la fin d'un accompagnement, que reste-t-il concrètement ? »</td></tr>
+      <tr><th><a href="#b3">B3</a></th><td>Trois questions à poser</td><td>Mains, carnet, documents</td><td>« Trois questions à poser avant de payer qui que ce soit pour un projet américain. »</td><td>« Avant de signer avec un accompagnement, posez ces trois questions. »</td></tr>
+      <tr><th><a href="#c1">C1</a></th><td>Basket, le contact avec les coachs</td><td>Père</td><td>« Vous pouvez envoyer 40 mails à des coachs américains et ne recevoir aucune réponse. »</td><td>« Une erreur fréquente : envoyer une vidéo de match à un coach, et attendre. »</td></tr>
+      <tr><th><a href="#c2">C2</a></th><td>Tennis, les trois dimensions</td><td>Mère</td><td>« Son classement ne suffira pas. Voici pourquoi. »</td><td>« Trois choses qu'une université américaine regarde en plus du classement. »</td></tr>
+      <tr><th><a href="#c3">C3</a></th><td>Volley féminin, le calendrier</td><td>Jeune comédienne</td><td>« Elle est en Seconde ? Vous n'êtes pas en avance. »</td><td>« Partir aux États-Unis à 18 ans, ça se prépare à 15. »</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="scripts-a">
+  <h3>Scripts angle A · Le rêve</h3>
+  <p>La colonne « Voix » donne le texte dit et sous-titré.</p>
+
+  <article class="script" id="a1">
+    <header><span class="code">A1</span><span class="ttl">Basket · la mère</span><span class="who">Voix off de la mère</span></header>
+    <div class="hooks"><div class="hook"><small>Accroche A</small>« Et si son prochain match se jouait sur un campus américain ? »</div><div class="hook"><small>Accroche B</small>« Quatre entraînements par semaine depuis ses 9 ans. Je veux que ça la mène quelque part. »</div></div>
+    <div class="beats">
+      <div class="h t">Temps</div><div class="h">Image</div><div class="h">Voix</div>
+      <div class="t">0 à 3 s</div><div class="i">Le soir. La mère au volant, voiture garée. Accroche en plein écran.</div><div class="v">Accroche A ou B</div>
+      <div class="t">3 à 10 s</div><div class="i">Banque d'images : une joueuse de basket à l'entraînement, de dos. Insert : des mains lacent des chaussures de sport.</div><div class="v">« Je l'attends ici presque tous les soirs. Elle, elle pense au match de samedi. Moi, je pense à la suite. »</div>
+      <div class="t">10 à 18 s</div><div class="i">Bascule : campus américain, salle universitaire pleine, bibliothèque (banque d'images).</div><div class="v">« Aux États-Unis, des universités réunissent les deux : un diplôme et une équipe. J'ai longtemps cru qu'il fallait attendre qu'un recruteur la remarque. »</div>
+      <div class="t">18 à 26 s</div><div class="i">Retour dans la voiture. La mère fait défiler la page de la masterclass sur son téléphone.</div><div class="v">« J'ai compris que ça se construit. Un dossier scolaire, un niveau d'anglais, une façon de se présenter aux coachs. »</div>
+      <div class="t">26 à 32 s</div><div class="i">Fond uni, signature. Puis carton CTA.</div><div class="v">« Le rêve américain, ça se prépare. »</div>
+    </div>
+  </article>
+
+  <article class="script" id="a2">
+    <header><span class="code">A2</span><span class="ttl">Tennis · le père</span><span class="who">Voix off du père</span></header>
+    <div class="hooks"><div class="hook"><small>Accroche A</small>« Dix ans de tennis. Et après le bac ? »</div><div class="hook"><small>Accroche B</small>« Après le bac, il devra souvent choisir : le tennis ou les études. »</div></div>
+    <div class="beats">
+      <div class="h t">Temps</div><div class="h">Image</div><div class="h">Voix</div>
+      <div class="t">0 à 3 s</div><div class="i">Devant chez lui, tôt le matin. Le père charge un sac de tennis dans le coffre. Accroche en plein écran.</div><div class="v">Accroche A ou B</div>
+      <div class="t">3 à 10 s</div><div class="i">Détails : raquettes, tubes de balles, feuille de tournoi sur le tableau de bord.</div><div class="v">« Les tournois du dimanche, les kilomètres, les raquettes à recorder. Ça dure depuis qu'il a 7 ans. Je ne regrette rien. »</div>
+      <div class="t">10 à 17 s</div><div class="i">Un bureau à domicile : manuels scolaires, trophées.</div><div class="v">« Mais le bac arrive. Et continuer à ce niveau en suivant de vraies études, ici, c'est compliqué. »</div>
+      <div class="t">17 à 25 s</div><div class="i">Campus américain, courts universitaires (banque d'images).</div><div class="v">« Aux États-Unis, l'université fait les deux. Encore faut-il arriver préparé : des notes solides, un score d'anglais, un profil présenté aux bons programmes. »</div>
+      <div class="t">25 à 32 s</div><div class="i">Fond uni, signature. Puis carton CTA.</div><div class="v">« Le rêve américain, ça se prépare. »</div>
+    </div>
+  </article>
+
+  <article class="script" id="a3">
+    <header><span class="code">A3</span><span class="ttl">Volley féminin · la mère</span><span class="who">Voix off de la mère</span></header>
+    <div class="hooks"><div class="hook"><small>Accroche A</small>« Chaque samedi, je la regarde jouer. Et je me dis : et si… »</div><div class="hook"><small>Accroche B</small>« Elle a 16 ans. Elle veut partir jouer aux États-Unis. »</div></div>
+    <div class="beats">
+      <div class="h t">Temps</div><div class="h">Image</div><div class="h">Voix</div>
+      <div class="t">0 à 3 s</div><div class="i">Banque d'images : un match de volley féminin. Accroche en plein écran.</div><div class="v">Accroche A ou B</div>
+      <div class="t">3 à 10 s</div><div class="i">Voiture, la nuit. La mère au volant, un sac de sport sur le siège passager.</div><div class="v">« Elle m'en a parlé un soir, en rentrant de l'entraînement. Jouer et étudier là-bas. J'ai souri. Puis j'ai eu peur. »</div>
+      <div class="t">10 à 18 s</div><div class="i">La mère seule dans la cuisine, ordinateur ouvert.</div><div class="v">« Si loin, si jeune. Alors j'ai voulu comprendre. Comment ça marche. À quel âge on s'y prend. Ce qu'on peut préparer dès maintenant. »</div>
+      <div class="t">18 à 26 s</div><div class="i">Campus américain, équipe féminine à l'entraînement (banque d'images, sans logo).</div><div class="v">« Une chose m'a rassurée : plus on commence tôt, plus elle garde d'options ouvertes. »</div>
+      <div class="t">26 à 32 s</div><div class="i">Fond uni, signature. Puis carton CTA.</div><div class="v">« Le rêve américain, ça se prépare. »</div>
+    </div>
+  </article>
+</section>
+
+<section id="scripts-b">
+  <h3>Scripts angle B · La preuve</h3>
+  <p>La voix off est celle de Play Forward. Elle peut être enregistrée par Anne-Sophie, qui reste hors image, ou par une comédienne.</p>
+
+  <article class="script" id="b1">
+    <header><span class="code">B1</span><span class="ttl">La garantie · le père</span><span class="who">Voix off Play Forward</span></header>
+    <div class="hooks"><div class="hook"><small>Accroche A</small>« Play Forward garantit-il une bourse ? Non. »</div><div class="hook"><small>Accroche B</small>« Méfiez-vous de celui qui vous promet une bourse. »</div></div>
+    <div class="beats">
+      <div class="h t">Temps</div><div class="h">Image</div><div class="h">Voix</div>
+      <div class="t">0 à 3 s</div><div class="i">Écran d'ordinateur. La question s'écrit dans un champ de recherche. Accroche en plein écran.</div><div class="v">Accroche A ou B</div>
+      <div class="t">3 à 11 s</div><div class="i">Le père à son bureau lit la FAQ du site.</div><div class="v">« Aucun programme ne peut garantir la décision d'un coach ou d'une université américaine. Personne ne décide à leur place. »</div>
+      <div class="t">11 à 21 s</div><div class="i">Quatre lignes s'affichent une à une : projet, dossier scolaire, anglais, prise de contact.</div><div class="v">« Ce qui se prépare : un projet cohérent, un dossier scolaire en ordre, un niveau d'anglais mesuré, une prise de contact soignée avec les coachs. »</div>
+      <div class="t">21 à 28 s</div><div class="i">Le père referme l'ordinateur et se lève.</div><div class="v">« Play Forward est une classe préparatoire. Douze semaines pour travailler tout ce que votre enfant peut maîtriser. »</div>
+      <div class="t">28 à 34 s</div><div class="i">Fond uni, signature. Puis carton CTA.</div><div class="v">« Le rêve américain, ça se prépare. »</div>
+    </div>
+  </article>
+
+  <article class="script" id="b2">
+    <header><span class="code">B2</span><span class="ttl">Les six livrables · la mère</span><span class="who">Voix off Play Forward</span></header>
+    <div class="hooks"><div class="hook"><small>Accroche A</small>« Douze semaines. Voici ce que votre enfant a entre les mains à la fin. »</div><div class="hook"><small>Accroche B</small>« À la fin d'un accompagnement, que reste-t-il concrètement ? »</div></div>
+    <div class="beats">
+      <div class="h t">Temps</div><div class="h">Image</div><div class="h">Voix</div>
+      <div class="t">0 à 3 s</div><div class="i">Table de cuisine. La main de la mère ouvre une chemise cartonnée. Accroche en plein écran.</div><div class="v">Accroche A ou B</div>
+      <div class="t">3 à 22 s</div><div class="i">Six plans, un par pièce sortie de la chemise. Numéro et intitulé incrustés.</div><div class="v">« Un : un projet sport-études clarifié. Deux : son dossier scolaire, rassemblé et organisé. Trois : une présentation de son profil et ses messages pour contacter les coachs. Quatre : une première sélection de programmes. Cinq : une feuille de route personnalisée. Six : son score au test d'anglais Duolingo. »</div>
+      <div class="t">22 à 28 s</div><div class="i">La mère range les documents dans la chemise.</div><div class="v">« Des modules en ligne, du mentorat en direct, un travail concret chaque semaine. C'est votre enfant qui construit son projet. »</div>
+      <div class="t">28 à 34 s</div><div class="i">Fond uni, signature. Puis carton CTA.</div><div class="v">« Le rêve américain, ça se prépare. »</div>
+    </div>
+  </article>
+
+  <article class="script" id="b3">
+    <header><span class="code">B3</span><span class="ttl">Trois questions</span><span class="who">Voix off Play Forward · vidéo sans visage</span></header>
+    <div class="hooks"><div class="hook"><small>Accroche A</small>« Trois questions à poser avant de payer qui que ce soit pour un projet américain. »</div><div class="hook"><small>Accroche B</small>« Avant de signer avec un accompagnement, posez ces trois questions. »</div></div>
+    <div class="beats">
+      <div class="h t">Temps</div><div class="h">Image</div><div class="h">Voix</div>
+      <div class="t">0 à 3 s</div><div class="i">Un carnet. Une main écrit « 3 questions ». Accroche en plein écran.</div><div class="v">Accroche A ou B</div>
+      <div class="t">3 à 11 s</div><div class="i">La main écrit la première question.</div><div class="v">« Un : que garantissez-vous ? La réponse honnête : rien sur la décision d'un coach, donc aucune bourse promise. »</div>
+      <div class="t">11 à 19 s</div><div class="i">Deuxième question. Des mains tapent un message sur un ordinateur.</div><div class="v">« Deux : qui fait le travail ? Chez Play Forward, votre enfant. Il construit son dossier et écrit ses messages aux coachs. »</div>
+      <div class="t">19 à 27 s</div><div class="i">Troisième question. Les documents posés sur la table.</div><div class="v">« Trois : que reste-t-il à la fin ? Un dossier, une feuille de route, un score d'anglais, une sélection de programmes. »</div>
+      <div class="t">27 à 33 s</div><div class="i">Fond uni, signature. Puis carton CTA.</div><div class="v">« Le rêve américain, ça se prépare. »</div>
+    </div>
+  </article>
+
+</section>
+
+<section id="scripts-c">
+  <h3>Scripts angle C · La méthode</h3>
+  <p>Le comédien parle face caméra, téléphone tenu à la main. Les mots-clés s'incrustent à l'écran au moment où ils sont dits.</p>
+
+  <article class="script" id="c1">
+    <header><span class="code">C1</span><span class="ttl">Basket · le contact avec les coachs</span><span class="who">Le père, dans sa voiture garée</span></header>
+    <div class="hooks"><div class="hook"><small>Accroche A</small>« Vous pouvez envoyer 40 mails à des coachs américains et ne recevoir aucune réponse. »</div><div class="hook"><small>Accroche B</small>« Une erreur fréquente : envoyer une vidéo de match à un coach, et attendre. »</div></div>
+    <div class="beats">
+      <div class="h t">Temps</div><div class="h">Image</div><div class="h">Voix</div>
+      <div class="t">0 à 3 s</div><div class="i">Face caméra, au volant. Accroche en plein écran.</div><div class="v">Accroche A ou B</div>
+      <div class="t">3 à 11 s</div><div class="i">Face caméra. Insert : une boîte mail, des vidéos en pièce jointe.</div><div class="v">« Un coach reçoit des vidéos toute l'année. Une vidéo seule ne lui dit rien des notes de votre enfant, de son anglais, de son projet. »</div>
+      <div class="t">11 à 21 s</div><div class="i">Trois mots s'incrustent : sportive, académique, personnelle.</div><div class="v">« Un profil recrutable repose sur trois dimensions. Sportive. Académique. Personnelle. Les trois se préparent. »</div>
+      <div class="t">21 à 27 s</div><div class="i">Face caméra.</div><div class="v">« Et la démarche, c'est votre enfant qui la porte. Avec une présentation claire et des messages travaillés. »</div>
+      <div class="t">27 à 34 s</div><div class="i">Face caméra, puis signature et carton CTA.</div><div class="v">« Tout est expliqué dans la masterclass gratuite. Le rêve américain, ça se prépare. »</div>
+    </div>
+  </article>
+
+  <article class="script" id="c2">
+    <header><span class="code">C2</span><span class="ttl">Tennis · les trois dimensions</span><span class="who">La mère, en extérieur, près de chez elle</span></header>
+    <div class="hooks"><div class="hook"><small>Accroche A</small>« Son classement ne suffira pas. Voici pourquoi. »</div><div class="hook"><small>Accroche B</small>« Trois choses qu'une université américaine regarde en plus du classement. »</div></div>
+    <div class="beats">
+      <div class="h t">Temps</div><div class="h">Image</div><div class="h">Voix</div>
+      <div class="t">0 à 3 s</div><div class="i">Face caméra, en extérieur. Accroche en plein écran.</div><div class="v">Accroche A ou B</div>
+      <div class="t">3 à 9 s</div><div class="i">Face caméra.</div><div class="v">« Le classement dit son niveau de jeu. Une université américaine recrute aussi un étudiant. »</div>
+      <div class="t">9 à 22 s</div><div class="i">Numéros 1, 2, 3 incrustés. Inserts : bulletin scolaire, écran de test d'anglais, adolescent qui parle en visio.</div><div class="v">« Un : le dossier scolaire. Les bulletins du lycée comptent. Deux : l'anglais, avec un score à un test. Trois : la personnalité. Sa façon de se présenter et d'échanger avec un coach. »</div>
+      <div class="t">22 à 28 s</div><div class="i">Face caméra.</div><div class="v">« Ces trois points se travaillent dès la Seconde, en parallèle du tennis. »</div>
+      <div class="t">28 à 34 s</div><div class="i">Face caméra, puis signature et carton CTA.</div><div class="v">« La masterclass gratuite explique comment. Le rêve américain, ça se prépare. »</div>
+    </div>
+  </article>
+
+  <article class="script" id="c3">
+    <header><span class="code">C3</span><span class="ttl">Volley féminin · le calendrier</span><span class="who">La jeune comédienne, en extérieur, devant un terrain de sport en accès libre</span></header>
+    <div class="hooks"><div class="hook"><small>Accroche A</small>« Elle est en Seconde ? Vous n'êtes pas en avance. »</div><div class="hook"><small>Accroche B</small>« Partir aux États-Unis à 18 ans, ça se prépare à 15. »</div></div>
+    <div class="beats">
+      <div class="h t">Temps</div><div class="h">Image</div><div class="h">Voix</div>
+      <div class="t">0 à 3 s</div><div class="i">Face caméra, terrain de sport derrière elle. Accroche en plein écran.</div><div class="v">Accroche A ou B</div>
+      <div class="t">3 à 9 s</div><div class="i">Face caméra.</div><div class="v">« Beaucoup de familles attendent la Terminale pour s'y intéresser. Le calendrier est alors serré. »</div>
+      <div class="t">9 à 23 s</div><div class="i">Trois lignes s'incrustent : Seconde, Première, Terminale.</div><div class="v">« Seconde : le bon moment pour anticiper. Première : on structure le projet. Terminale : il reste des opportunités, avec moins de marge. »</div>
+      <div class="t">23 à 28 s</div><div class="i">Face caméra.</div><div class="v">« Plus on commence tôt, plus on garde d'options ouvertes. »</div>
+      <div class="t">28 à 34 s</div><div class="i">Face caméra, puis signature et carton CTA.</div><div class="v">« La masterclass gratuite détaille les étapes, de la Seconde à la Terminale. Le rêve américain, ça se prépare. »</div>
+    </div>
+  </article>
+</section>
+
+<section id="cta">
+  <h3>Carton CTA et textes d'annonce</h3>
+  <h4>Carton CTA</h4>
+  <p>Trois secondes, placé après la signature, livré en fichier séparé et modifiable. Trois versions.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Version</th><th>Ligne 1</th><th>Ligne 2</th><th>Ligne 3</th></tr></thead>
+    <tbody>
+      <tr><th>Masterclass datée</th><td>MASTERCLASS GRATUITE</td><td>Études et sport aux USA</td><td>Jeudi 3 décembre · 18h30 · En ligne · 90 minutes</td></tr>
+      <tr><th>Masterclass sans date</th><td>MASTERCLASS GRATUITE</td><td>Études et sport aux USA</td><td>En ligne · 90 minutes · Inscription par le lien</td></tr>
+      <tr><th>Rendez-vous</th><td>30 MINUTES POUR FAIRE LE POINT</td><td>Le projet de votre enfant, avec Play Forward</td><td>Choisissez votre créneau par le lien</td></tr>
+    </tbody></table></div>
+  <p>Mention en pied de carton, sur les trois versions : « Play Forward ne garantit ni admission, ni bourse, ni recrutement. Non affilié à la NCAA ni à la NAIA. »</p>
+  <h4>Textes d'annonce Meta</h4>
+  <p>Bouton : « S'inscrire ». Description commune : « Masterclass gratuite · 90 min · en ligne ».</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Angle</th><th>Texte principal</th><th>Titre</th></tr></thead>
+    <tbody>
+      <tr><th>A · Le rêve</th><td>Des années d'entraînements, de matchs, de kilomètres. Et après le bac ? Jouer et étudier dans une université américaine est un projet qui se prépare dès le lycée. Masterclass gratuite pour les parents, en ligne, 90 minutes.</td><td>Sport et études aux USA : la masterclass</td></tr>
+      <tr><th>B · La preuve</th><td>Play Forward ne garantit ni bourse, ni admission, ni recrutement. Personne ne le peut. En 12 semaines, votre enfant prépare ce qui dépend de lui : projet, dossier scolaire, anglais, prise de contact avec les coachs. La méthode est présentée en masterclass gratuite.</td><td>Ce qu'un projet américain demande vraiment</td></tr>
+      <tr><th>C · La méthode</th><td>Le niveau sportif seul ne suffit pas pour être recruté par une université américaine. Un profil se construit sur trois dimensions : sportive, académique, personnelle. 90 minutes pour comprendre comment, dès la Seconde. Gratuit, en ligne.</td><td>Le talent ne suffit pas</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="production">
+  <h3>Kit de production</h3>
+  <h4>Casting</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Rôle</th><th>Profil</th><th>Vidéos</th><th>Décors</th></tr></thead>
+    <tbody>
+      <tr><th>La mère</th><td>42 à 50 ans, active</td><td>A1, A3, B2, C2</td><td>Sa voiture, sa cuisine, un extérieur près de chez elle</td></tr>
+      <tr><th>Le père</th><td>45 à 55 ans, impliqué, un peu dépassé par les démarches</td><td>A2, B1, C1</td><td>Sa voiture, un bureau à domicile</td></tr>
+      <tr><th>La jeune comédienne</th><td>18 à 21 ans, pratique réelle d'un sport</td><td>C3, les mains de B3, les inserts de A1</td><td>Un extérieur devant un terrain en accès libre, son domicile</td></tr>
+    </tbody></table></div>
+  <p>Chaque comédien tourne seul, au téléphone, en une session. Aucun lieu à réserver, aucune scène à deux. Le sport est montré par la banque d'images et par les accessoires. Les deux accroches sont enregistrées dans la même prise.</p>
+  <h4>Décors et accessoires</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Décor</th><th>Vidéos</th><th>Accessoires</th></tr></thead>
+    <tbody>
+      <tr><th>Voiture</th><td>A1, A2, A3, C1</td><td>Sac de sport, sac de tennis, raquettes</td></tr>
+      <tr><th>Domicile : cuisine, bureau</th><td>A2, A3, B1, B2, B3</td><td>Ordinateur ouvert sur la FAQ du site, chemise cartonnée avec les six documents, carnet, manuels scolaires, trophées, chaussures de sport</td></tr>
+      <tr><th>Extérieur près du domicile</th><td>C2, C3</td><td></td></tr>
+    </tbody></table></div>
+  <h4>Banque d'images et musique</h4>
+  <ul>
+    <li>France : joueuse de basket à l'entraînement, match de volley féminin. États-Unis : campus, salle universitaire, bibliothèque, courts, équipe féminine de volley à l'entraînement.</li>
+    <li>Plans sans logo d'université, de ligue ou d'équipementier lisible.</li>
+    <li>Musique libre de droits : douce pour l'angle A, très discrète pour l'angle B, rythmée pour l'angle C.</li>
+  </ul>
+  <h4>Exports</h4>
+  <div class="tbl"><table><tbody>
+    <tr><th>Formats</th><td>9:16 en 1080 × 1920 et 4:5 en 1080 × 1350, MP4</td></tr>
+    <tr><th>Versions par vidéo</th><td>2 accroches × 2 formats × 2 fins (avec carton CTA, sans CTA), soit 8 fichiers</td></tr>
+    <tr><th>Total</th><td>72 fichiers MP4, le carton CTA séparé dans les deux formats, les fichiers .srt, les fichiers projet</td></tr>
+    <tr><th>Nom de fichier</th><td><code>PF_A1_basket_hA_9x16_CTA.mp4</code> : code vidéo, sujet, accroche, format, fin</td></tr>
+    <tr><th>Suivi</th><td>Le code du fichier est repris dans le paramètre <code>utm_content</code> de l'annonce</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- ============ VALIDATIONS ============ -->
+<div class="part" id="validations">
+  <div class="num">AVANT LANCEMENT</div>
+  <h2>À valider avec Anne-Sophie</h2>
+</div>
+<section>
+  <h4>Stratégie et campagne</h4>
+  <ul class="check">
+    <li>Coût par inscription cible et budget média du premier cycle</li>
+    <li>Tranche d'âge du programme : la page masterclass mentionne 15 à 18 ans et 15 à 19 ans</li>
+    <li>Pixel Meta, API Conversions et événement « Lead » sur playforward.education</li>
+    <li>Ajout du champ « parent / athlète » au formulaire d'inscription</li>
+    <li>Mention de l'usage publicitaire des contacts dans la politique de confidentialité</li>
+    <li>Étudiants-athlètes du réseau disponibles pour témoigner</li>
+    <li>Liste des dix premières structures relais</li>
+  </ul>
+  <h4>Avant tournage</h4>
+  <ul class="check">
+    <li>Relecture de trois affirmations de fond : « un coach reçoit des vidéos toute l'année » (C1), « les bulletins du lycée comptent » (C2), « beaucoup de familles attendent la Terminale » (C3)</li>
+    <li>Voix off de l'angle B : Anne-Sophie ou une comédienne</li>
+    <li>Les six documents de B2, fournis par Play Forward ou maquettés</li>
+    <li>Logo Play Forward pour le carton final</li>
+    <li>Autorisations de droit à l'image des comédiens, signées avant le tournage</li>
+  </ul>
+</section>
+
+</div>
+
+<footer><div class="wrap">
+  <img src="data:image/png;base64,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" alt="ARKT">
+  <p><b>ARKT Conseil</b> · 14 square Belsunce, 13001 Marseille · arkt-conseil.com<br>Document préparé pour Play Forward · Devis D-2026-002-v2, postes 03 et 04 · 16 novembre 2026</p>
+</div></footer>
+
+</body>
+</html>
