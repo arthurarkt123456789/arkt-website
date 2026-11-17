@@ -457,7 +457,7 @@ function Footer() {
           <p className="foot-tag dim">{tf.tag1}<br />{tf.tag2}</p>
         </div>
         <nav className="foot-nav" aria-label="Pied de page">
-          {D.nav.map((n) => (<a key={n.id} href={"#" + n.id} onClick={(e) => { e.preventDefault(); scrollToId(n.id); }}>{t.nav[n.id] || n.label}</a>))}
+          {["projets", "offre", "equipe", "contact"].map((id) => D.nav.find((n) => n.id === id)).map((n) => (<a key={n.id} href={"#" + n.id} onClick={(e) => { e.preventDefault(); scrollToId(n.id); }}>{t.nav[n.id] || n.label}</a>))}
         </nav>
         <div className="foot-contact">
           <a className="foot-mail alink" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>{tf.startProject} <Arrow /></a>
