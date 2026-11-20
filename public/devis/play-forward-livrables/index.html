@@ -849,21 +849,33 @@ footer b{color:#F3F1EA}
   d.documentElement.style.overflow='hidden';
   var g=d.createElement('div');
   g.style.cssText='position:fixed;inset:0;z-index:99999;background:#15140F;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;font-family:Inter,system-ui,sans-serif;';
-  g.innerHTML='<div style="text-align:center;color:#F3F1EA;width:90%;max-width:340px;">'
+  g.innerHTML='<form id="_gf" novalidate style="text-align:center;color:#F3F1EA;width:90%;max-width:340px;margin:0;">'
     +'<img src="/arkt/logo-arkt.png" style="height:28px;margin-bottom:48px;display:block;margin-left:auto;margin-right:auto;" alt="ARKT"/>'
     +'<p style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(243,241,234,.45);margin-bottom:22px;">Accès restreint</p>'
-    +'<input id="_gi" type="password" inputmode="numeric" placeholder="· · · ·" autocomplete="one-time-code" style="width:100%;padding:16px;border-radius:14px;border:1px solid rgba(243,241,234,.15);background:rgba(243,241,234,.06);color:#F3F1EA;font-size:22px;text-align:center;letter-spacing:.4em;outline:none;font-family:inherit;transition:border-color .2s;" />'
+    +'<input id="_gi" type="password" inputmode="numeric" enterkeyhint="go" placeholder="· · · ·" autocomplete="one-time-code" aria-label="Code d\'accès" style="width:100%;padding:16px;border-radius:14px;border:1px solid rgba(243,241,234,.15);background:rgba(243,241,234,.06);color:#F3F1EA;font-size:22px;text-align:center;letter-spacing:.4em;outline:none;font-family:inherit;transition:border-color .2s;" />'
+    +'<button id="_gb" type="submit" style="display:block;width:100%;margin:12px 0 0;padding:16px;border-radius:14px;border:0;background:#F2533F;color:#15140F;font-family:inherit;font-size:15px;font-weight:600;line-height:1.2;letter-spacing:0;text-transform:none;cursor:pointer;-webkit-appearance:none;appearance:none;">Entrer</button>'
     +'<p id="_ge" style="color:#F2533F;font-size:13px;margin-top:14px;min-height:18px;"></p>'
-    +'</div>';
+    +'</form>';
   d.body.appendChild(g);
-  var inp=d.getElementById('_gi'),err=d.getElementById('_ge');
+  var form=d.getElementById('_gf'),inp=d.getElementById('_gi'),err=d.getElementById('_ge');
   setTimeout(function(){inp.focus();},60);
   inp.addEventListener('focus',function(){inp.style.borderColor='rgba(243,241,234,.4)';});
   inp.addEventListener('blur',function(){inp.style.borderColor='rgba(243,241,234,.15)';});
-  inp.addEventListener('keydown',function(e){
-    if(e.key!=='Enter')return;
+  /* Clavier mobile ouvert : le bloc reste centré dans la zone visible, bouton compris. */
+  var vv=window.visualViewport;
+  var fit=function(){
+    var r=g.getBoundingClientRect();
+    g.style.paddingTop=Math.max(0,Math.round(vv.offsetTop-r.top))+'px';
+    g.style.paddingBottom=Math.max(0,Math.round(r.bottom-vv.offsetTop-vv.height))+'px';
+  };
+  if(vv){vv.addEventListener('resize',fit);vv.addEventListener('scroll',fit);}
+  /* Un seul chemin de validation : bouton, touche Entrée, touche OK du clavier mobile. */
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
     if(inp.value.trim()==='2026'){
       sessionStorage.setItem(K,'ok');
+      if(vv){vv.removeEventListener('resize',fit);vv.removeEventListener('scroll',fit);}
+      inp.blur();
       g.style.transition='opacity .3s';
       g.style.opacity='0';
       setTimeout(function(){g.remove();d.documentElement.style.overflow='';},300);
