@@ -10,7 +10,7 @@ export const CONFIG = {
   SERVICES: ["12:00", "14:00", "19:00", "21:00"],
   SHARED_MAX: 8,            // places vendues par bulle en partagé
   PRIVATE_MIN: 8,           // à partir de 8, la bulle est privatisée
-  PRIVATE_MAX: 10,          // un seul groupe : 8 conseillé, jusqu'à 10 en privatisation (le site demande 3 appuis pour dépasser 8)
+  PRIVATE_MAX: 10,          // un seul groupe : 8 conseillé, jusqu'à 10 en privatisation (le site demande 4 appuis pour dépasser 8)
   KIDS_MAX_RATIO: 0.7,      // au plus 70 % d'enfants par réservation (web)
   FIRST_DAY: "2026-11-27",
   LAST_DAY: "2026-12-24",

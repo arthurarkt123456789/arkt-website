@@ -322,7 +322,7 @@
   const API = '/.netlify/functions';
   const SERVICES = { '12:00': 'Déjeuner', '14:00': 'Déjeuner', '19:00': 'Dîner', '21:00': 'Dîner' };
   const PRICE = { adult: 3600, kid: 2400 };
-  const SHARED_MAX = 8, PRIVATE_MIN = 8, PRIVATE_MAX = 10, SOFT_MAX = 8, EXTRA_PRESSES = 3;
+  const SHARED_MAX = 8, PRIVATE_MIN = 8, PRIVATE_MAX = 10, SOFT_MAX = 8, EXTRA_PRESSES = 4;
   const KIDS_MAX_RATIO = 0.7; // au plus 70 % d'enfants par réservation
   const maxKidsFor = (adults) => Math.floor(adults * KIDS_MAX_RATIO / (1 - KIDS_MAX_RATIO) + 1e-9);
   const DOW = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'];
