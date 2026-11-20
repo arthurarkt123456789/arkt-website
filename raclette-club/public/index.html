@@ -437,8 +437,7 @@
     document.querySelector('[data-step="adults"][data-dir="-1"]').disabled = state.adults <= 1;
     document.querySelector('[data-step="kids"][data-dir="-1"]').disabled = state.kids <= 0;
     const note = $('groupNote');
-    if (total === SOFT_MAX && state.extraPress > 0) { const left = EXTRA_PRESSES - state.extraPress; note.className = 'group-note priv'; note.innerHTML = `<span class="emoji">🤏</span><span><b>Bulle pensée pour 8.</b> Jusqu'à 10 possible en privatisation, mais plus serré. Pour passer à 9, appuyez encore <b>${left} fois</b> sur +.</span>`; }
-    else if (total > SOFT_MAX) { note.className = 'group-note priv'; note.innerHTML = `<span class="emoji">🎉</span><span><b>Bulle privatisée à ${total}.</b> Tout le monde a sa place, mais l'espace est plus serré qu'à 8.</span>`; }
+    if (total > SOFT_MAX) { note.className = 'group-note priv'; note.innerHTML = `<span class="emoji">🎉</span><span><b>Bulle privatisée à ${total}.</b> Tout le monde a sa place, mais l'espace est plus serré qu'à 8.</span>`; }
     else if (total === PRIVATE_MIN) { note.className = 'group-note priv'; note.innerHTML = '<span class="emoji">🎉</span><span><b>Bulle privatisée !</b> 8 places, la bulle est entièrement à vous.</span>'; }
     else if (state.maxGroup < PRIVATE_MIN) { note.className = 'group-note'; note.innerHTML = `<span class="emoji">🫧</span><span>Sur ce service, il reste au mieux <b>${state.maxGroup} place${state.maxGroup > 1 ? 's' : ''} dans une même bulle</b>. Vous partagerez la bulle avec d'autres convives.</span>`; }
     else { note.className = 'group-note'; note.innerHTML = '<span class="emoji">🫧</span><span>Une bulle se partage à 8. À moins de 8, vous pourrez partager la bulle avec d’autres convives. À 8, elle est privatisée pour votre groupe.</span>'; }
