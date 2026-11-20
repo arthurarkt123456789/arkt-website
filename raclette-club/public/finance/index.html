@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Finance · Raclette Club</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root { --blue:#0000FF; --yellow:#F7F65C; --cream:#F0EBDA; --pink:#FF5CA8; --ink:#0B0B14; --green:#28C76F; --orange:#FF9F43; --red:#FF3B5C; --grey:#D9D6CC; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Poppins,system-ui,sans-serif;background:var(--cream);color:var(--ink);min-height:100svh;font-size:14px}
+    button,input{font:inherit;color:inherit}
+    button{cursor:pointer;border:2px solid var(--ink);border-radius:999px;padding:8px 14px;background:#fff;font-weight:800;box-shadow:2px 2px 0 var(--ink)}
+    button:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+    button.primary{background:var(--yellow)} button.ghost{box-shadow:none;background:transparent}
+    input{border:2px solid var(--ink);border-radius:12px;padding:9px 12px;background:#fff;width:100%}
+    .top{background:var(--blue);color:#fff;padding:14px 0}
+    .wrap{width:min(1180px,100% - 28px);margin:0 auto}
+    .top .wrap{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .top h1{font-size:1.15rem;font-weight:900;letter-spacing:-.02em}
+    .top .nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .top button{color:var(--ink)} .top button.ghost{color:#fff;border-color:#fff}
+    main{padding:20px 0 60px}
+    .login{max-width:360px;margin:60px auto;background:#fff;border:3px solid var(--ink);border-radius:22px;padding:28px;box-shadow:5px 5px 0 var(--ink)}
+    .login h2{margin-bottom:14px;font-weight:900}
+    .f{display:grid;gap:10px}
+    .f label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+    h2.sec{font-weight:900;font-size:1.05rem;margin:22px 0 10px;letter-spacing:-.01em}
+    h2.sec small{font-weight:600;font-size:.78rem;opacity:.7;margin-left:8px}
+    .grid{display:grid;gap:12px}
+    .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+    @media(max-width:860px){.g3,.g4,.g2{grid-template-columns:1fr 1fr}} @media(max-width:560px){.g3,.g4,.g2{grid-template-columns:1fr}}
+    .card{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:14px 16px;box-shadow:4px 4px 0 var(--ink)}
+    .card.y{background:var(--yellow)} .card.b{background:var(--blue);color:#fff} .card.b .lbl,.card.b .sub{color:#fff;opacity:.9} .card.g{background:#dff7e8} .card.o{background:#fff3c4}
+    .lbl{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.7}
+    .val{font-size:1.9rem;font-weight:900;line-height:1.1;margin:4px 0 2px}
+    .val small{font-size:.9rem;font-weight:800;opacity:.7}
+    .sub{font-size:.78rem;font-weight:600;color:#333}
+    table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:3px solid var(--ink);border-radius:16px;overflow:hidden;font-size:.82rem}
+    th,td{padding:9px 10px;text-align:left;border-bottom:2px solid var(--grey);vertical-align:top}
+    th{background:var(--cream);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em}
+    tr:last-child td{border-bottom:0}
+    td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+    .pill{display:inline-block;border:2px solid var(--ink);border-radius:999px;padding:1px 8px;font-size:.7rem;font-weight:800}
+    .pill.paid{background:var(--green)} .pill.pending{background:var(--orange)} .pill.failed,.pill.canceled{background:var(--red);color:#fff}
+    .note{font-size:.78rem;font-weight:600;color:#333;margin-top:8px}
+    .warn{background:#fff3c4;border:2px solid var(--ink);border-radius:12px;padding:10px 12px;font-weight:700;font-size:.82rem;margin:10px 0}
+    .hidden{display:none!important}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+    .tabs button.on{background:var(--yellow)}
+    details{margin-top:10px} summary{cursor:pointer;font-weight:800}
+  </style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <h1>Raclette Club · Finance</h1>
+  <div class="nav" id="nav">
+    <button class="primary" id="refresh">Actualiser</button>
+    <a href="/admin/" style="color:#fff;font-weight:800;text-decoration:none;font-size:.85rem">Gestion →</a>
+    <button class="ghost" id="logout">Quitter</button>
+  </div>
+</div></div>
+
+<main class="wrap">
+  <div class="login" id="login">
+    <h2>Accès finance</h2>
+    <div class="f"><label>Mot de passe</label><input type="password" id="pwd" autocomplete="current-password" /><button class="primary" id="loginBtn">Entrer</button></div>
+    <p id="loginErr" style="color:var(--red);font-weight:700;margin-top:8px"></p>
+  </div>
+
+  <div id="app" class="hidden">
+    <div id="stripeWarn" class="warn hidden"></div>
+
+    <h2 class="sec">Chiffre d'affaires <small id="caSub"></small></h2>
+    <div class="grid g3">
+      <div class="card y"><div class="lbl">C.A. total TTC</div><div class="val" id="caTtc">–</div><div class="sub" id="caTtcSub"></div></div>
+      <div class="card"><div class="lbl">C.A. total HT</div><div class="val" id="caHt">–</div><div class="sub" id="caHtSub"></div></div>
+      <div class="card"><div class="lbl">TVA collectée</div><div class="val" id="caTva">–</div><div class="sub" id="caTvaSub"></div></div>
+    </div>
+
+    <h2 class="sec">Trésorerie</h2>
+    <div class="grid g3">
+      <div class="card g"><div class="lbl">Encaissé à date</div><div class="val" id="cashed">–</div><div class="sub" id="cashedSub"></div></div>
+      <div class="card o"><div class="lbl">À venir</div><div class="val" id="upcoming">–</div><div class="sub" id="upcomingSub"></div></div>
+      <div class="card"><div class="lbl">Liens de paiement en attente</div><div class="val" id="pending">–</div><div class="sub" id="pendingSub"></div></div>
+    </div>
+
+    <h2 class="sec">Répartition <small id="splitSub"></small></h2>
+    <div class="grid g4">
+      <div class="card"><div class="lbl">Dû au logisticien · sur l'encaissé</div><div class="val" id="logCashed">–</div><div class="sub" id="logCashedSub"></div></div>
+      <div class="card b"><div class="lbl">Revenu La Meulerie · sur l'encaissé</div><div class="val" id="lmCashed">–</div><div class="sub" id="lmCashedSub"></div></div>
+      <div class="card"><div class="lbl">Dû au logisticien · sur le total</div><div class="val" id="logTotal">–</div><div class="sub" id="logTotalSub"></div></div>
+      <div class="card b"><div class="lbl">Revenu La Meulerie · sur le total</div><div class="val" id="lmTotal">–</div><div class="sub" id="lmTotalSub"></div></div>
+    </div>
+
+    <h2 class="sec">Stripe <small id="stripeSub"></small></h2>
+    <div class="grid g4">
+      <div class="card"><div class="lbl">Encaissé par carte (brut)</div><div class="val" id="sGross">–</div><div class="sub" id="sGrossSub"></div></div>
+      <div class="card"><div class="lbl">Frais Stripe</div><div class="val" id="sFees">–</div><div class="sub" id="sFeesSub"></div></div>
+      <div class="card"><div class="lbl">Net après frais et remboursements</div><div class="val" id="sNet">–</div><div class="sub" id="sNetSub"></div></div>
+      <div class="card"><div class="lbl">Solde Stripe</div><div class="val" id="sBal">–</div><div class="sub" id="sBalSub"></div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="on" data-tab="payouts">Virements sur le compte bancaire</button>
+      <button data-tab="payments">Paiements carte</button>
+      <button data-tab="manual">Encaissements manuels</button>
+      <button data-tab="upcoming">À venir</button>
+      <button data-tab="links">Liens en attente</button>
+    </div>
+    <div id="tab-payouts"><table><thead><tr><th>Arrivée sur le compte</th><th>Statut</th><th>Méthode</th><th class="num">Montant</th></tr></thead><tbody></tbody></table><p class="note" id="payoutsNote"></p></div>
+    <div id="tab-payments" class="hidden"><table><thead><tr><th>Date du paiement</th><th>Réservation</th><th>Client</th><th>Carte</th><th class="num">Brut</th><th class="num">Frais</th><th class="num">Remboursé</th><th class="num">Net</th></tr></thead><tbody></tbody></table></div>
+    <div id="tab-manual" class="hidden"><table><thead><tr><th>Encaissé le</th><th>Réservation</th><th>Client</th><th class="num">Places</th><th class="num">Montant</th></tr></thead><tbody></tbody></table></div>
+    <div id="tab-upcoming" class="hidden"><table><thead><tr><th>Service</th><th>Client</th><th class="num">Places</th><th class="num">Montant</th><th>Remarques</th></tr></thead><tbody></tbody></table><p class="note">Réservations manuelles non encore marquées « Encaissé » dans la gestion.</p></div>
+    <div id="tab-links" class="hidden"><table><thead><tr><th>Service</th><th>Client</th><th class="num">Places</th><th class="num">Montant</th><th>Bloqué jusqu'au</th></tr></thead><tbody></tbody></table><p class="note">Blocages avec lien de paiement envoyé, pas encore réglés. Non comptés dans le C.A.</p></div>
+
+    <details><summary>Méthode de calcul</summary>
+      <p class="note" id="method"></p>
+    </details>
+  </div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+  const API = '/.netlify/functions/rc-finance';
+  const $ = (id) => document.getElementById(id);
+  let key = sessionStorage.getItem('rc_finance_key') || '';
+  const eur = (c) => ((c || 0) / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
+  const eur0 = (c) => ((c || 0) / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+  const pct = (x) => Math.round(x * 100) + ' %';
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmtDate = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+  const fmtTs = (ts) => new Date(ts * 1000).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+  const fmtIso = (iso) => new Date(iso).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+
+  const api = async (method, payload, query) => {
+    const r = await fetch(API + (query ? '?' + new URLSearchParams(query) : ''), { method, headers: { 'x-finance-key': key, 'Content-Type': 'application/json' }, body: payload ? JSON.stringify(payload) : undefined });
+    if (r.status === 401) { logout(); throw new Error('Session expirée'); }
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || 'Erreur');
+    return d;
+  };
+  function showApp() { $('login').classList.add('hidden'); $('app').classList.remove('hidden'); }
+  function logout() { sessionStorage.removeItem('rc_finance_key'); key = ''; $('login').classList.remove('hidden'); $('app').classList.add('hidden'); }
+  $('loginBtn').addEventListener('click', login);
+  $('pwd').addEventListener('keydown', (e) => e.key === 'Enter' && login());
+  async function login() {
+    key = $('pwd').value.trim(); $('loginErr').textContent = '';
+    try { await api('POST', { action: 'login' }); sessionStorage.setItem('rc_finance_key', key); showApp(); load(); }
+    catch { $('loginErr').textContent = 'Mot de passe incorrect'; key = ''; }
+  }
+  $('logout').addEventListener('click', logout);
+  $('refresh').addEventListener('click', load);
+  document.querySelectorAll('.tabs button').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('.tabs button').forEach((x) => x.classList.toggle('on', x === b));
+    ['payouts', 'payments', 'manual', 'upcoming', 'links'].forEach((t) => $('tab-' + t).classList.toggle('hidden', t !== b.dataset.tab));
+  }));
+
+  async function load() {
+    $('refresh').disabled = true;
+    try {
+      const d = await api('GET', null, { action: 'summary' });
+      const p = d.params, r = d.revenue, c = d.cash, s = d.split, st = d.stripe;
+      $('caSub').textContent = `${r.bookings} réservations confirmées · ${r.seats} couverts · au ${new Date(d.generated_at).toLocaleString('fr-FR')}`;
+      $('caTtc').textContent = eur(r.total_ttc); $('caTtcSub').textContent = `${eur(r.online_ttc)} en ligne · ${eur(r.manual_ttc)} manuel` + (r.refunded_ttc ? ` · ${eur(r.refunded_ttc)} remboursés sur ${r.cancelled_count} annulation(s), hors total` : '');
+      $('caHt').textContent = eur(r.total_ht); $('caHtSub').textContent = `TVA ${pct(p.vat_rate)} déduite`;
+      $('caTva').textContent = eur(r.vat); $('caTvaSub').textContent = `à ${pct(p.vat_rate)} sur ${eur(r.total_ttc)} TTC`;
+
+      $('cashed').textContent = eur(c.cashed_ttc); $('cashedSub').textContent = `${eur(c.cashed_online_ttc)} par carte (Stripe) + ${eur(c.cashed_manual_ttc)} manuels encaissés · soit ${eur(c.cashed_ht)} HT`;
+      $('upcoming').textContent = eur(c.upcoming_ttc); $('upcomingSub').textContent = `${d.upcoming.length} résa(s) manuelle(s) à encaisser sur place, par virement ou autre · ${eur(c.upcoming_ht)} HT`;
+      $('pending').textContent = eur(c.pending_links_ttc); $('pendingSub').textContent = `${c.pending_links_count} lien(s) envoyé(s), hors C.A. tant que non payés`;
+
+      $('splitSub').textContent = `logisticien ${pct(p.logistics_share)} · La Meulerie ${pct(p.meulerie_share)} · calculé sur le TTC`;
+      $('logCashed').textContent = eur(s.logistics_on_cashed); $('logCashedSub').textContent = `${pct(p.logistics_share)} de ${eur(c.cashed_ttc)} encaissés · ${eur(s.logistics_on_cashed_ht)} HT`;
+      $('lmCashed').textContent = eur(s.meulerie_on_cashed); $('lmCashedSub').textContent = `${pct(p.meulerie_share)} de ${eur(c.cashed_ttc)} encaissés · ${eur(s.meulerie_on_cashed_ht)} HT`;
+      $('logTotal').textContent = eur(s.logistics_on_total); $('logTotalSub').textContent = `${pct(p.logistics_share)} de ${eur(c.projected_ttc)} (encaissé + à venir) · ${eur(s.logistics_on_total_ht)} HT`;
+      $('lmTotal').textContent = eur(s.meulerie_on_total); $('lmTotalSub').textContent = `${pct(p.meulerie_share)} de ${eur(c.projected_ttc)} (encaissé + à venir) · ${eur(s.meulerie_on_total_ht)} HT`;
+
+      $('stripeWarn').classList.toggle('hidden', st.ok);
+      if (!st.ok) $('stripeWarn').textContent = 'Stripe injoignable : ' + st.error;
+      $('stripeSub').textContent = `${st.charges_count} paiement(s) carte rapprochés` + (st.unmatched_charges ? ` · ${st.unmatched_charges} paiement(s) sur le compte Stripe sans réservation Raclette Club (non comptés)` : '');
+      $('sGross').textContent = eur(st.gross_cents); $('sGrossSub').textContent = st.refunded_cents ? `dont ${eur(st.refunded_cents)} remboursés` : 'aucun remboursement';
+      $('sFees').textContent = eur(st.fees_cents); $('sFeesSub').textContent = st.gross_cents ? `${(st.fees_cents / st.gross_cents * 100).toFixed(2).replace('.', ',')} % du brut` : '';
+      $('sNet').textContent = eur(st.net_cents); $('sNetSub').textContent = `brut − frais − remboursements`;
+      $('sBal').textContent = eur((st.balance_available_cents || 0) + (st.balance_pending_cents || 0)); $('sBalSub').textContent = `${eur(st.balance_available_cents)} disponible · ${eur(st.balance_pending_cents)} en attente`;
+
+      const tb = (id) => { const t = $(id).querySelector('tbody'); t.innerHTML = ''; return t; };
+      let t = tb('tab-payouts');
+      if (!st.payouts.length) t.innerHTML = '<tr><td colspan="4">Aucun virement Stripe depuis le 1er novembre.</td></tr>';
+      st.payouts.forEach((x) => { const tr = document.createElement('tr'); tr.innerHTML = `<td><b>${fmtTs(x.arrival_date)}</b></td><td><span class="pill ${x.status}">${x.status === 'paid' ? 'arrivé' : x.status === 'in_transit' ? 'en transit' : x.status}</span></td><td>${esc(x.method)}</td><td class="num"><b>${eur(x.amount_cents)}</b></td>`; t.appendChild(tr); });
+      $('payoutsNote').textContent = `${eur(st.payouts_paid_cents)} arrivés sur le compte · ${eur(st.payouts_pending_cents)} en route. Stripe vire l'ensemble du solde du compte Stripe, réservations Raclette Club et autres encaissements confondus.`;
+
+      t = tb('tab-payments');
+      if (!st.payments.length) t.innerHTML = '<tr><td colspan="8">Aucun paiement carte.</td></tr>';
+      st.payments.forEach((x) => { const b = x.booking; const tr = document.createElement('tr'); tr.innerHTML = `<td>${fmtTs(x.created)}</td><td>${b ? `<b>${fmtDate(b.date)}</b> ${esc(b.service)}${b.group ? ' <span class="pill">privatisation</span>' : ''}${b.status === 'cancelled' ? ' <span class="pill canceled">annulée</span>' : ''}` : '–'}</td><td>${b ? esc(b.name) : ''}</td><td>${esc(x.card)}</td><td class="num">${eur(x.amount_cents)}</td><td class="num">${x.fee_cents == null ? '–' : eur(x.fee_cents)}</td><td class="num">${x.refunded_cents ? eur(x.refunded_cents) : ''}</td><td class="num"><b>${eur((x.net_cents ?? x.amount_cents) - x.refunded_cents)}</b></td>`; t.appendChild(tr); });
+
+      t = tb('tab-manual');
+      if (!d.manual_cashed.length) t.innerHTML = '<tr><td colspan="5">Aucun encaissement manuel.</td></tr>';
+      d.manual_cashed.forEach((x) => { const tr = document.createElement('tr'); tr.innerHTML = `<td>${fmtIso(x.paid_at)}</td><td><b>${fmtDate(x.date)}</b> ${esc(x.service)}${x.group ? ' <span class="pill">privatisation</span>' : ''}</td><td>${esc(x.name)}</td><td class="num">${x.seats}</td><td class="num"><b>${eur(x.amount_cents)}</b></td>`; t.appendChild(tr); });
+
+      t = tb('tab-upcoming');
+      if (!d.upcoming.length) t.innerHTML = '<tr><td colspan="5">Rien à venir.</td></tr>';
+      d.upcoming.forEach((x) => { const tr = document.createElement('tr'); tr.innerHTML = `<td><b>${fmtDate(x.date)}</b> ${esc(x.service)}${x.group ? ' <span class="pill">privatisation</span>' : ''}</td><td>${esc(x.name)}</td><td class="num">${x.seats}</td><td class="num"><b>${eur(x.amount_cents)}</b></td><td><small>${esc(x.notes)}</small></td>`; t.appendChild(tr); });
+
+      t = tb('tab-links');
+      if (!d.pending_links.length) t.innerHTML = '<tr><td colspan="5">Aucun lien en attente.</td></tr>';
+      d.pending_links.forEach((x) => { const tr = document.createElement('tr'); tr.innerHTML = `<td><b>${fmtDate(x.date)}</b> ${esc(x.service)}${x.group ? ' <span class="pill">privatisation</span>' : ''}</td><td>${esc(x.name)}</td><td class="num">${x.seats}</td><td class="num"><b>${eur(x.amount_cents)}</b></td><td>${fmtIso(x.expires_at)}</td>`; t.appendChild(tr); });
+
+      $('method').textContent = `C.A. total = réservations payées en ligne + réservations manuelles (encaissées ou non), annulations exclues. HT = TTC ÷ ${(1 + p.vat_rate).toLocaleString('fr-FR')}. Encaissé = paiements carte Stripe + manuelles cochées « Encaissé ». À venir = manuelles non cochées. Répartition ${pct(p.logistics_share)} / ${pct(p.meulerie_share)} appliquée au TTC (le HT est indiqué en dessous). Frais Stripe = somme des frais réels de chaque paiement rapproché à une réservation ; les virements listés sont ceux du compte Stripe entier.`;
+    } catch (e) { toast(e.message, true); }
+    $('refresh').disabled = false;
+  }
+  const toast = (m, err) => { const t = $('toast'); t.textContent = m; t.className = 'toast on' + (err ? ' err' : ''); setTimeout(() => t.className = 'toast', 2600); };
+
+  if (key) { api('POST', { action: 'login' }).then(() => { showApp(); load(); }).catch(() => logout()); }
+</script>
+<style>.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}.toast.on{opacity:1}.toast.err{background:var(--red)}</style>
+</body>
+</html>

@@ -55,6 +55,7 @@ Supprimer les enregistrements A / CNAME OVH par défaut sur `www` et l'apex (red
 - Places bloquées 30 min pendant le paiement (expiration automatique, pas de cron).
 - Réservation en ligne fermée 60 min avant le service.
 - Annulation client via le lien de l'email jusqu'à 72 h avant, remboursement Stripe automatique.
+- Finance (`/finance/`, mot de passe `RC_FINANCE_PASSWORD`, à défaut celui de l'admin) : C.A. TTC/HT (TVA `RC_VAT_RATE`, 10 % par défaut), encaissé / à venir / liens en attente, répartition logisticien `RC_LOGISTICS_SHARE` (90 %) / La Meulerie, frais Stripe réels par paiement, virements Stripe vers la banque, solde Stripe.
 - Admin : bloquer une bulle ou un service, réservation manuelle (avec ou sans email), blocage 24 h avec lien de paiement client (`/payer/?id=…&t=…`, prolongeable), annulation avec ou sans remboursement, déplacement de bulle, export CSV, dashboard (capacité, jauge, C.A.).
 - Admin, privatisation d'un ou plusieurs services complets (`hold_service`) : les 5 bulles de chaque service choisi doivent être ouvertes et vides ; de 5 à 40 convives par service ; montant au tarif public ou négocié ; une réservation par bulle, liées par `group_id`, un seul lien de paiement (porté par la première ligne), blocage 72 h par défaut. Paiement, annulation et remboursement s'appliquent au groupe entier.
 

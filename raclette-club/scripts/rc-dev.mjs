@@ -122,6 +122,23 @@ async function mockStripe(url, init) {
   const m = u.pathname.match(/^\/v1\/checkout\/sessions\/(.+)$/);
   if (m) return ok(sessions.get(m[1]) || { id: m[1], payment_status: "unpaid" });
   if (u.pathname === "/v1/refunds") return ok({ id: "re_" + randomUUID().slice(0, 8), status: "succeeded", payment_intent: p.get("payment_intent") });
+  // Finance : charges issues des réservations payées, frais 1,5 % + 0,25 €, un virement par jour
+  if (u.pathname === "/v1/charges") {
+    const paid = bookings.filter((b) => b.stripe_payment_intent && (b.status === "paid" || (b.status === "cancelled" && b.refund_id)));
+    const seen = new Set();
+    const data = paid.filter((b) => !seen.has(b.stripe_payment_intent) && seen.add(b.stripe_payment_intent)).map((b) => {
+      const amt = bookings.filter((x) => x.stripe_payment_intent === b.stripe_payment_intent).reduce((n, x) => n + x.amount_cents, 0);
+      const fee = Math.round(amt * 0.015 + 25);
+      return { id: "ch_" + b.id.slice(0, 8), paid: true, payment_intent: b.stripe_payment_intent, amount: amt, amount_refunded: b.status === "cancelled" ? amt : 0, currency: "eur", created: Math.floor(new Date(b.paid_at || b.created_at).getTime() / 1000), payment_method_details: { type: "card", card: { brand: "visa", last4: "4242" } }, balance_transaction: { fee, net: amt - fee } };
+    });
+    data.push({ id: "ch_autre", paid: true, payment_intent: "pi_autre", amount: 1500, amount_refunded: 0, currency: "eur", created: Math.floor(Date.now() / 1000), payment_method_details: { type: "card", card: { brand: "mastercard", last4: "1111" } }, balance_transaction: { fee: 48, net: 1452 } });
+    return ok({ object: "list", data, has_more: false });
+  }
+  if (u.pathname === "/v1/payouts") return ok({ object: "list", has_more: false, data: [
+    { id: "po_1", amount: 21600, currency: "eur", status: "paid", arrival_date: Math.floor(Date.now() / 1000) - 86400 * 3, created: Math.floor(Date.now() / 1000) - 86400 * 5, method: "standard", description: "STRIPE PAYOUT" },
+    { id: "po_2", amount: 7200, currency: "eur", status: "in_transit", arrival_date: Math.floor(Date.now() / 1000) + 86400, created: Math.floor(Date.now() / 1000) - 86400, method: "standard", description: "STRIPE PAYOUT" },
+  ] });
+  if (u.pathname === "/v1/balance") return ok({ available: [{ currency: "eur", amount: 3600 }], pending: [{ currency: "eur", amount: 14400 }] });
   return new Response(JSON.stringify({ error: { message: "mock: route inconnue " + u.pathname } }), { status: 404 });
 }
 
@@ -138,7 +155,7 @@ seed();
 // ---------- Serveur HTTP ----------
 const MIME = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml", ".webp": "image/webp", ".ico": "image/x-icon" };
 const fns = {};
-for (const n of ["rc-availability", "rc-checkout", "rc-webhook", "rc-booking", "rc-admin"]) fns[n] = (await import(`../netlify/functions/${n}.mjs`)).handler;
+for (const n of ["rc-availability", "rc-checkout", "rc-webhook", "rc-booking", "rc-admin", "rc-finance"]) fns[n] = (await import(`../netlify/functions/${n}.mjs`)).handler;
 
 http.createServer(async (req, res) => {
   const url = new URL(req.url, process.env.URL);

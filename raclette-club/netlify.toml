@@ -3,7 +3,7 @@
   command = ""
 
 [build.environment]
-  SECRETS_SCAN_OMIT_KEYS = "RC_NOTIFY_EMAIL,RC_REPLY_TO,RC_SITE_URL,RC_FROM,SUPABASE_URL,URL"
+  SECRETS_SCAN_OMIT_KEYS = "RC_NOTIFY_EMAIL,RC_REPLY_TO,RC_SITE_URL,RC_FROM,SUPABASE_URL,URL,RC_VAT_RATE,RC_LOGISTICS_SHARE"
 
 [functions]
   directory = "netlify/functions"
@@ -11,6 +11,12 @@
 
 [[headers]]
   for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/finance/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
     Cache-Control = "no-store"
