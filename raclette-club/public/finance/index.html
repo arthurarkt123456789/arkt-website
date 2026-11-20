@@ -74,15 +74,15 @@
 
     <h2 class="sec">Chiffre d'affaires <small id="caSub"></small></h2>
     <div class="grid g3">
-      <div class="card y"><div class="lbl">C.A. total TTC</div><div class="val" id="caTtc">–</div><div class="sub" id="caTtcSub"></div></div>
-      <div class="card"><div class="lbl">C.A. total HT</div><div class="val" id="caHt">–</div><div class="sub" id="caHtSub"></div></div>
+      <div class="card y"><div class="lbl">C.A. total HT</div><div class="val" id="caHt">–</div><div class="sub" id="caHtSub"></div></div>
+      <div class="card"><div class="lbl">C.A. total TTC</div><div class="val" id="caTtc">–</div><div class="sub" id="caTtcSub"></div></div>
       <div class="card"><div class="lbl">TVA collectée</div><div class="val" id="caTva">–</div><div class="sub" id="caTvaSub"></div></div>
     </div>
 
     <h2 class="sec">Trésorerie</h2>
     <div class="grid g3">
-      <div class="card g"><div class="lbl">Encaissé à date</div><div class="val" id="cashed">–</div><div class="sub" id="cashedSub"></div></div>
-      <div class="card o"><div class="lbl">À venir</div><div class="val" id="upcoming">–</div><div class="sub" id="upcomingSub"></div></div>
+      <div class="card g"><div class="lbl">Encaissé à date (HT)</div><div class="val" id="cashed">–</div><div class="sub" id="cashedSub"></div></div>
+      <div class="card o"><div class="lbl">À venir (HT)</div><div class="val" id="upcoming">–</div><div class="sub" id="upcomingSub"></div></div>
       <div class="card"><div class="lbl">Liens de paiement en attente</div><div class="val" id="pending">–</div><div class="sub" id="pendingSub"></div></div>
     </div>
 
@@ -164,18 +164,18 @@
       const p = d.params, r = d.revenue, c = d.cash, s = d.split, st = d.stripe;
       $('caSub').textContent = `${r.bookings} réservations confirmées · ${r.seats} couverts · au ${new Date(d.generated_at).toLocaleString('fr-FR')}`;
       $('caTtc').textContent = eur(r.total_ttc); $('caTtcSub').textContent = `${eur(r.online_ttc)} en ligne · ${eur(r.manual_ttc)} manuel` + (r.refunded_ttc ? ` · ${eur(r.refunded_ttc)} remboursés sur ${r.cancelled_count} annulation(s), hors total` : '');
-      $('caHt').textContent = eur(r.total_ht); $('caHtSub').textContent = `TVA ${pct(p.vat_rate)} déduite`;
+      $('caHt').textContent = eur(r.total_ht); $('caHtSub').textContent = `TVA ${pct(p.vat_rate)} déduite · base de tous les calculs`;
       $('caTva').textContent = eur(r.vat); $('caTvaSub').textContent = `à ${pct(p.vat_rate)} sur ${eur(r.total_ttc)} TTC`;
 
-      $('cashed').textContent = eur(c.cashed_ttc); $('cashedSub').textContent = `${eur(c.cashed_online_ttc)} par carte (Stripe) + ${eur(c.cashed_manual_ttc)} manuels encaissés · soit ${eur(c.cashed_ht)} HT`;
-      $('upcoming').textContent = eur(c.upcoming_ttc); $('upcomingSub').textContent = `${d.upcoming.length} résa(s) manuelle(s) à encaisser sur place, par virement ou autre · ${eur(c.upcoming_ht)} HT`;
-      $('pending').textContent = eur(c.pending_links_ttc); $('pendingSub').textContent = `${c.pending_links_count} lien(s) envoyé(s), hors C.A. tant que non payés`;
+      $('cashed').textContent = eur(c.cashed_ht); $('cashedSub').textContent = `${eur(c.cashed_ttc)} TTC : ${eur(c.cashed_online_ttc)} par carte (Stripe) + ${eur(c.cashed_manual_ttc)} manuels encaissés`;
+      $('upcoming').textContent = eur(c.upcoming_ht); $('upcomingSub').textContent = `${eur(c.upcoming_ttc)} TTC · ${d.upcoming.length} résa(s) manuelle(s) à encaisser sur place, par virement ou autre`;
+      $('pending').textContent = eur(Math.round(c.pending_links_ttc / (1 + p.vat_rate))); $('pendingSub').textContent = `HT · ${eur(c.pending_links_ttc)} TTC · ${c.pending_links_count} lien(s) envoyé(s), hors C.A. tant que non payés`;
 
-      $('splitSub').textContent = `logisticien ${pct(p.logistics_share)} · La Meulerie ${pct(p.meulerie_share)} · calculé sur le TTC`;
-      $('logCashed').textContent = eur(s.logistics_on_cashed); $('logCashedSub').textContent = `${pct(p.logistics_share)} de ${eur(c.cashed_ttc)} encaissés · ${eur(s.logistics_on_cashed_ht)} HT`;
-      $('lmCashed').textContent = eur(s.meulerie_on_cashed); $('lmCashedSub').textContent = `${pct(p.meulerie_share)} de ${eur(c.cashed_ttc)} encaissés · ${eur(s.meulerie_on_cashed_ht)} HT`;
-      $('logTotal').textContent = eur(s.logistics_on_total); $('logTotalSub').textContent = `${pct(p.logistics_share)} de ${eur(c.projected_ttc)} (encaissé + à venir) · ${eur(s.logistics_on_total_ht)} HT`;
-      $('lmTotal').textContent = eur(s.meulerie_on_total); $('lmTotalSub').textContent = `${pct(p.meulerie_share)} de ${eur(c.projected_ttc)} (encaissé + à venir) · ${eur(s.meulerie_on_total_ht)} HT`;
+      $('splitSub').textContent = `logisticien ${pct(p.logistics_share)} · La Meulerie ${pct(p.meulerie_share)} · calculé sur le HT`;
+      $('logCashed').textContent = eur(s.logistics_on_cashed_ht); $('logCashedSub').textContent = `${pct(p.logistics_share)} de ${eur(c.cashed_ht)} HT encaissés (soit ${eur(s.logistics_on_cashed)} sur le TTC)`;
+      $('lmCashed').textContent = eur(s.meulerie_on_cashed_ht); $('lmCashedSub').textContent = `${pct(p.meulerie_share)} de ${eur(c.cashed_ht)} HT encaissés (soit ${eur(s.meulerie_on_cashed)} sur le TTC)`;
+      $('logTotal').textContent = eur(s.logistics_on_total_ht); $('logTotalSub').textContent = `${pct(p.logistics_share)} de ${eur(c.projected_ht)} HT (encaissé + à venir)`;
+      $('lmTotal').textContent = eur(s.meulerie_on_total_ht); $('lmTotalSub').textContent = `${pct(p.meulerie_share)} de ${eur(c.projected_ht)} HT (encaissé + à venir)`;
 
       $('stripeWarn').classList.toggle('hidden', st.ok);
       if (!st.ok) $('stripeWarn').textContent = 'Stripe injoignable : ' + st.error;
@@ -207,7 +207,7 @@
       if (!d.pending_links.length) t.innerHTML = '<tr><td colspan="5">Aucun lien en attente.</td></tr>';
       d.pending_links.forEach((x) => { const tr = document.createElement('tr'); tr.innerHTML = `<td><b>${fmtDate(x.date)}</b> ${esc(x.service)}${x.group ? ' <span class="pill">privatisation</span>' : ''}</td><td>${esc(x.name)}</td><td class="num">${x.seats}</td><td class="num"><b>${eur(x.amount_cents)}</b></td><td>${fmtIso(x.expires_at)}</td>`; t.appendChild(tr); });
 
-      $('method').textContent = `C.A. total = réservations payées en ligne + réservations manuelles (encaissées ou non), annulations exclues. HT = TTC ÷ ${(1 + p.vat_rate).toLocaleString('fr-FR')}. Encaissé = paiements carte Stripe + manuelles cochées « Encaissé ». À venir = manuelles non cochées. Répartition ${pct(p.logistics_share)} / ${pct(p.meulerie_share)} appliquée au TTC (le HT est indiqué en dessous). Frais Stripe = somme des frais réels de chaque paiement rapproché à une réservation ; les virements listés sont ceux du compte Stripe entier.`;
+      $('method').textContent = `C.A. total = réservations payées en ligne + réservations manuelles (encaissées ou non), annulations exclues. HT = TTC ÷ ${(1 + p.vat_rate).toLocaleString('fr-FR')}. Encaissé = paiements carte Stripe + manuelles cochées « Encaissé ». À venir = manuelles non cochées. Répartition ${pct(p.logistics_share)} / ${pct(p.meulerie_share)} appliquée au HT. Frais Stripe = somme des frais réels de chaque paiement rapproché à une réservation ; les virements listés sont ceux du compte Stripe entier.`;
     } catch (e) { toast(e.message, true); }
     $('refresh').disabled = false;
   }
