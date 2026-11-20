@@ -322,7 +322,7 @@
   const API = '/.netlify/functions';
   const SERVICES = { '12:00': 'Déjeuner', '14:00': 'Déjeuner', '19:00': 'Dîner', '21:00': 'Dîner' };
   const PRICE = { adult: 3600, kid: 2400 };
-  const SHARED_MAX = 8, PRIVATE_MIN = 8, PRIVATE_MAX = 8;
+  const SHARED_MAX = 8, PRIVATE_MIN = 8, PRIVATE_MAX = 10, SOFT_MAX = 8, EXTRA_PRESSES = 3;
   const KIDS_MAX_RATIO = 0.7; // au plus 70 % d'enfants par réservation
   const maxKidsFor = (adults) => Math.floor(adults * KIDS_MAX_RATIO / (1 - KIDS_MAX_RATIO) + 1e-9);
   const DOW = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'];
@@ -330,7 +330,7 @@
   const eur = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 });
   const $ = (id) => document.getElementById(id);
 
-  const state = { date: null, service: null, adults: 0, kids: 0, maxGroup: 0, canPrivatize: false, services: [] };
+  const state = { date: null, service: null, adults: 0, kids: 0, maxGroup: 0, canPrivatize: false, services: [], extraPress: 0 };
 
   // Dès la première réservation, on affiche « Il reste de la place » (orange)
   const level = (free, maxGroup, closed, used) => closed ? 'closed' : (maxGroup < 1 ? 'full' : free <= 10 ? 'low' : (used > 0 || free <= 24) ? 'mid' : 'high');
@@ -410,10 +410,17 @@
     const k = b.dataset.step, dir = Number(b.dataset.dir);
     const total = state.adults + state.kids;
     if (dir > 0 && total >= state.maxGroup) return;
+    if (dir > 0 && total === SOFT_MAX && state.maxGroup > SOFT_MAX) {
+      // Au-delà de 8 : il faut insister 3 fois sur +
+      state.extraPress += 1;
+      if (state.extraPress < EXTRA_PRESSES) { renderTickets(); return; }
+      state.extraPress = 0;
+    }
     if (dir < 0 && state[k] <= 0) return;
     if (k === 'adults' && dir < 0 && state.adults === 1) return; // au moins un adulte
     if (k === 'kids' && dir > 0 && state.kids + 1 > maxKidsFor(state.adults)) return;
     state[k] += dir;
+    if (state.adults + state.kids !== SOFT_MAX) state.extraPress = 0;
     if (k === 'adults' && dir < 0 && state.kids > maxKidsFor(state.adults)) state.kids = maxKidsFor(state.adults);
     renderTickets();
   }));
@@ -430,7 +437,9 @@
     document.querySelector('[data-step="adults"][data-dir="-1"]').disabled = state.adults <= 1;
     document.querySelector('[data-step="kids"][data-dir="-1"]').disabled = state.kids <= 0;
     const note = $('groupNote');
-    if (total === PRIVATE_MIN) { note.className = 'group-note priv'; note.innerHTML = '<span class="emoji">🎉</span><span><b>Bulle privatisée !</b> 8 places, la bulle est entièrement à vous.</span>'; }
+    if (total === SOFT_MAX && state.extraPress > 0) { const left = EXTRA_PRESSES - state.extraPress; note.className = 'group-note priv'; note.innerHTML = `<span class="emoji">🤏</span><span><b>Bulle pensée pour 8.</b> Jusqu'à 10 possible en privatisation, mais plus serré. Pour passer à 9, appuyez encore <b>${left} fois</b> sur +.</span>`; }
+    else if (total > SOFT_MAX) { note.className = 'group-note priv'; note.innerHTML = `<span class="emoji">🎉</span><span><b>Bulle privatisée à ${total}.</b> Tout le monde a sa place, mais l'espace est plus serré qu'à 8.</span>`; }
+    else if (total === PRIVATE_MIN) { note.className = 'group-note priv'; note.innerHTML = '<span class="emoji">🎉</span><span><b>Bulle privatisée !</b> 8 places, la bulle est entièrement à vous.</span>'; }
     else if (state.maxGroup < PRIVATE_MIN) { note.className = 'group-note'; note.innerHTML = `<span class="emoji">🫧</span><span>Sur ce service, il reste au mieux <b>${state.maxGroup} place${state.maxGroup > 1 ? 's' : ''} dans une même bulle</b>. Vous partagerez la bulle avec d'autres convives.</span>`; }
     else { note.className = 'group-note'; note.innerHTML = '<span class="emoji">🫧</span><span>Une bulle se partage à 8. À moins de 8, vous pourrez partager la bulle avec d’autres convives. À 8, elle est privatisée pour votre groupe.</span>'; }
     const ok = total >= 1 && state.adults >= 1;
