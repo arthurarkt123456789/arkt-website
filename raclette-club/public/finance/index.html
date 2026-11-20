@@ -37,6 +37,7 @@
     .val{font-size:1.9rem;font-weight:900;line-height:1.1;margin:4px 0 2px}
     .val small{font-size:.9rem;font-weight:800;opacity:.7}
     .sub{font-size:.78rem;font-weight:600;color:#333}
+    table.inv{border:0;border-radius:0;box-shadow:none;font-size:.85rem} table.inv td{padding:6px 4px;border-bottom:1px solid var(--grey)} table.inv tr.tot td{font-weight:900;border-top:2px solid var(--ink);border-bottom:0}
     table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:3px solid var(--ink);border-radius:16px;overflow:hidden;font-size:.82rem}
     th,td{padding:9px 10px;text-align:left;border-bottom:2px solid var(--grey);vertical-align:top}
     th{background:var(--cream);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em}
@@ -86,13 +87,24 @@
       <div class="card"><div class="lbl">Liens de paiement en attente</div><div class="val" id="pending">–</div><div class="sub" id="pendingSub"></div></div>
     </div>
 
-    <h2 class="sec">Répartition <small id="splitSub"></small></h2>
-    <div class="grid g4">
-      <div class="card"><div class="lbl">Dû au logisticien · sur l'encaissé</div><div class="val" id="logCashed">–</div><div class="sub" id="logCashedSub"></div></div>
-      <div class="card b"><div class="lbl">Revenu La Meulerie · sur l'encaissé</div><div class="val" id="lmCashed">–</div><div class="sub" id="lmCashedSub"></div></div>
-      <div class="card"><div class="lbl">Dû au logisticien · sur le total</div><div class="val" id="logTotal">–</div><div class="sub" id="logTotalSub"></div></div>
-      <div class="card b"><div class="lbl">Revenu La Meulerie · sur le total</div><div class="val" id="lmTotal">–</div><div class="sub" id="lmTotalSub"></div></div>
+    <h2 class="sec">Facturation <small id="invSub"></small></h2>
+    <div class="tabs" id="invTabs"><button class="on" data-inv="cashed">Sur l'encaissé à date</button><button data-inv="total">Sur le total (encaissé + à venir)</button></div>
+    <div class="grid g3">
+      <div class="card b"><div class="lbl">Marge La Meulerie (HT)</div><div class="val" id="invMargin">–</div><div class="sub" id="invMarginSub"></div></div>
+      <div class="card y"><div class="lbl">Dû à La Fine Équipe · versement net</div><div class="val" id="invTransfer">–</div><div class="sub" id="invTransferSub"></div></div>
+      <div class="card"><div class="lbl">Base HT facturée</div><div class="val" id="invBase">–</div><div class="sub" id="invBaseSub"></div></div>
     </div>
+    <div class="grid g2" style="margin-top:12px">
+      <div class="card">
+        <div class="lbl">Facture La Fine Équipe → La Meulerie</div>
+        <table class="inv" style="margin-top:8px"><tbody id="invLfe"></tbody></table>
+      </div>
+      <div class="card">
+        <div class="lbl">Facture La Meulerie → La Fine Équipe</div>
+        <table class="inv" style="margin-top:8px"><tbody id="invLm"></tbody></table>
+      </div>
+    </div>
+    <p class="note" id="invNote"></p>
 
     <h2 class="sec">Stripe <small id="stripeSub"></small></h2>
     <div class="grid g4">
@@ -171,11 +183,7 @@
       $('upcoming').textContent = eur(c.upcoming_ht); $('upcomingSub').textContent = `${eur(c.upcoming_ttc)} TTC · ${d.upcoming.length} résa(s) manuelle(s) à encaisser sur place, par virement ou autre`;
       $('pending').textContent = eur(Math.round(c.pending_links_ttc / (1 + p.vat_rate))); $('pendingSub').textContent = `HT · ${eur(c.pending_links_ttc)} TTC · ${c.pending_links_count} lien(s) envoyé(s), hors C.A. tant que non payés`;
 
-      $('splitSub').textContent = `logisticien ${pct(p.logistics_share)} · La Meulerie ${pct(p.meulerie_share)} · calculé sur le HT`;
-      $('logCashed').textContent = eur(s.logistics_on_cashed_ht); $('logCashedSub').textContent = `${pct(p.logistics_share)} de ${eur(c.cashed_ht)} HT encaissés (soit ${eur(s.logistics_on_cashed)} sur le TTC)`;
-      $('lmCashed').textContent = eur(s.meulerie_on_cashed_ht); $('lmCashedSub').textContent = `${pct(p.meulerie_share)} de ${eur(c.cashed_ht)} HT encaissés (soit ${eur(s.meulerie_on_cashed)} sur le TTC)`;
-      $('logTotal').textContent = eur(s.logistics_on_total_ht); $('logTotalSub').textContent = `${pct(p.logistics_share)} de ${eur(c.projected_ht)} HT (encaissé + à venir)`;
-      $('lmTotal').textContent = eur(s.meulerie_on_total_ht); $('lmTotalSub').textContent = `${pct(p.meulerie_share)} de ${eur(c.projected_ht)} HT (encaissé + à venir)`;
+      window.__inv = d.invoices; window.__p = p; renderInvoices(document.querySelector('#invTabs button.on').dataset.inv);
 
       $('stripeWarn').classList.toggle('hidden', st.ok);
       if (!st.ok) $('stripeWarn').textContent = 'Stripe injoignable : ' + st.error;
@@ -207,10 +215,22 @@
       if (!d.pending_links.length) t.innerHTML = '<tr><td colspan="5">Aucun lien en attente.</td></tr>';
       d.pending_links.forEach((x) => { const tr = document.createElement('tr'); tr.innerHTML = `<td><b>${fmtDate(x.date)}</b> ${esc(x.service)}${x.group ? ' <span class="pill">privatisation</span>' : ''}</td><td>${esc(x.name)}</td><td class="num">${x.seats}</td><td class="num"><b>${eur(x.amount_cents)}</b></td><td>${fmtIso(x.expires_at)}</td>`; t.appendChild(tr); });
 
-      $('method').textContent = `C.A. total = réservations payées en ligne + réservations manuelles (encaissées ou non), annulations exclues. HT = TTC ÷ ${(1 + p.vat_rate).toLocaleString('fr-FR')}. Encaissé = paiements carte Stripe + manuelles cochées « Encaissé ». À venir = manuelles non cochées. Répartition ${pct(p.logistics_share)} / ${pct(p.meulerie_share)} appliquée au HT. Frais Stripe = somme des frais réels de chaque paiement rapproché à une réservation ; les virements listés sont ceux du compte Stripe entier.`;
+      $('method').textContent = `C.A. total = réservations payées en ligne + réservations manuelles (encaissées ou non), annulations exclues. HT = TTC ÷ ${(1 + p.vat_rate).toLocaleString('fr-FR')}. Encaissé = paiements carte Stripe + manuelles cochées « Encaissé ». À venir = manuelles non cochées. Facturation : La Fine Équipe facture le C.A. HT à La Meulerie (TVA ${pct(p.vat_rate)}) ; La Meulerie facture à La Fine Équipe la licence ${pct(p.licence_share)}, les frais de plateforme ${pct(p.platform_share)} et les frais Stripe au réel (TVA ${pct(p.vat_services)}) ; le versement net est la différence des deux TTC. Frais Stripe = somme des frais réels de chaque paiement rapproché à une réservation ; les virements listés sont ceux du compte Stripe entier.`;
     } catch (e) { toast(e.message, true); }
     $('refresh').disabled = false;
   }
+  function renderInvoices(which) {
+    const inv = window.__inv && window.__inv[which]; const p = window.__p; if (!inv) return;
+    const row = (l, v, cls) => `<tr class="${cls || ''}"><td>${l}</td><td class="num">${eur(v)}</td></tr>`;
+    $('invSub').textContent = which === 'cashed' ? 'montants à facturer sur ce qui est encaissé aujourd\'hui' : 'projection sur le total confirmé, frais Stripe au réel à date';
+    $('invMargin').textContent = eur(inv.margin_ht); $('invMarginSub').textContent = `licence ${pct(p.licence_share)} (${eur(inv.lm.licence_ht)}) + plateforme ${pct(p.platform_share)} (${eur(inv.lm.platform_ht)}) · frais Stripe refacturés en plus, sans marge`;
+    $('invTransfer').textContent = eur(inv.transfer_ttc); $('invTransferSub').textContent = `${eur(inv.lfe.ttc)} TTC facturés par La Fine Équipe − ${eur(inv.lm.ttc)} TTC facturés par La Meulerie`;
+    $('invBase').textContent = eur(inv.base_ht); $('invBaseSub').textContent = `C.A. HT (TTC ÷ ${(1 + p.vat_rate).toLocaleString('fr-FR')})`;
+    $('invLfe').innerHTML = row('Prestation restauration, base HT', inv.lfe.ht) + row(`TVA ${pct(p.vat_rate)}`, inv.lfe.vat) + row('Total TTC', inv.lfe.ttc, 'tot');
+    $('invLm').innerHTML = row(`Licence de marque La Meulerie, ${pct(p.licence_share)} du HT`, inv.lm.licence_ht) + row(`Frais de plateforme de réservation, ${pct(p.platform_share)} du HT`, inv.lm.platform_ht) + row('Frais Stripe au réel (HT)', inv.lm.stripe_ht) + row('Sous-total HT', inv.lm.ht) + row(`TVA ${pct(p.vat_services)}`, inv.lm.vat) + row('Total TTC', inv.lm.ttc, 'tot');
+    $('invNote').textContent = `La Meulerie encaisse la totalité des ventes (${eur(inv.lfe.ttc)} TTC sur cette base) moins les frais Stripe, puis vire à La Fine Équipe la différence entre les deux factures : ${eur(inv.transfer_ttc)}. Après paiement de sa TVA, il lui reste ${eur(inv.margin_ht)} HT de marge. Les frais Stripe sont facturés par Stripe sans TVA (autoliquidation) et refacturés ici avec TVA ${pct(p.vat_services)}.`;
+  }
+  document.querySelectorAll('#invTabs button').forEach((b) => b.addEventListener('click', () => { document.querySelectorAll('#invTabs button').forEach((x) => x.classList.toggle('on', x === b)); renderInvoices(b.dataset.inv); }));
   const toast = (m, err) => { const t = $('toast'); t.textContent = m; t.className = 'toast on' + (err ? ' err' : ''); setTimeout(() => t.className = 'toast', 2600); };
 
   if (key) { api('POST', { action: 'login' }).then(() => { showApp(); load(); }).catch(() => logout()); }

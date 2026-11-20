@@ -1,12 +1,13 @@
 // Finance Raclette Club. Header requis : x-finance-key: <RC_FINANCE_PASSWORD> (à défaut RC_ADMIN_PASSWORD)
 // POST { action: 'login' }      -> 200 si mot de passe ok
-// GET  ?action=summary          -> C.A., trésorerie, Stripe (frais, virements), répartition logisticien / La Meulerie
+// GET  ?action=summary          -> C.A., trésorerie, Stripe (frais, virements), factures croisées La Fine Équipe / La Meulerie
 import { timingSafeEqual } from "node:crypto";
 import { json, sbSelect, stripe, hhmm } from "../lib/rc.mjs";
 
-const VAT_RATE = Number(process.env.RC_VAT_RATE ?? "0.10");          // TVA restauration sur place
-const LOGISTICS_SHARE = Number(process.env.RC_LOGISTICS_SHARE ?? "0.90"); // part du sous-traitant logistique
-const MEULERIE_SHARE = 1 - LOGISTICS_SHARE;
+const VAT_RATE = Number(process.env.RC_VAT_RATE ?? "0.10");            // TVA sur la vente des repas (et la prestation La Fine Équipe)
+const VAT_SERVICES = Number(process.env.RC_VAT_SERVICES ?? "0.20");    // TVA sur licence, frais de plateforme, refacturation des frais Stripe
+const LICENCE_SHARE = Number(process.env.RC_LICENCE_SHARE ?? "0.08");  // licence de marque La Meulerie, % du HT
+const PLATFORM_SHARE = Number(process.env.RC_PLATFORM_SHARE ?? "0.01"); // frais de plateforme de réservation, % du HT
 const STRIPE_SINCE = Math.floor(new Date("2026-11-01T00:00:00Z").getTime() / 1000);
 
 function checkFinance(event) {
@@ -19,6 +20,25 @@ function checkFinance(event) {
 
 const sum = (arr, f) => arr.reduce((n, r) => n + f(r), 0);
 const ht = (ttc) => Math.round(ttc / (1 + VAT_RATE));
+
+/**
+ * Factures croisées sur une base HT donnée.
+ *  - La Fine Équipe facture La Meulerie : base HT, TVA restauration.
+ *  - La Meulerie facture La Fine Équipe : licence + frais de plateforme (% du HT) + frais Stripe au réel (HT), TVA services.
+ *  - La Meulerie encaisse tout ; elle reverse la différence TTC entre les deux factures.
+ */
+function invoicesFor(baseHt, stripeFeesHt) {
+  const lfe_ht = baseHt, lfe_vat = Math.round(lfe_ht * VAT_RATE), lfe_ttc = lfe_ht + lfe_vat;
+  const licence_ht = Math.round(baseHt * LICENCE_SHARE), platform_ht = Math.round(baseHt * PLATFORM_SHARE), stripe_ht = stripeFeesHt;
+  const lm_ht = licence_ht + platform_ht + stripe_ht, lm_vat = Math.round(lm_ht * VAT_SERVICES), lm_ttc = lm_ht + lm_vat;
+  return {
+    base_ht: baseHt,
+    lfe: { ht: lfe_ht, vat: lfe_vat, ttc: lfe_ttc },
+    lm: { licence_ht, platform_ht, stripe_ht, ht: lm_ht, vat: lm_vat, ttc: lm_ttc },
+    margin_ht: licence_ht + platform_ht,
+    transfer_ttc: lfe_ttc - lm_ttc,
+  };
+}
 
 /** Parcourt une liste Stripe paginée (limit 100) jusqu'au bout, borné à 20 pages. */
 async function stripeAll(path, params) {
@@ -115,7 +135,7 @@ export const handler = async (event) => {
 
     return json(200, {
       generated_at: nowIso,
-      params: { vat_rate: VAT_RATE, logistics_share: LOGISTICS_SHARE, meulerie_share: MEULERIE_SHARE, stripe_since: STRIPE_SINCE },
+      params: { vat_rate: VAT_RATE, vat_services: VAT_SERVICES, licence_share: LICENCE_SHARE, platform_share: PLATFORM_SHARE, stripe_since: STRIPE_SINCE },
       revenue: {
         total_ttc, total_ht: ht(total_ttc), vat: total_ttc - ht(total_ttc),
         online_ttc, manual_ttc: manual_paid_ttc + manual_due_ttc,
@@ -128,11 +148,9 @@ export const handler = async (event) => {
         pending_links_ttc: holds_ttc, pending_links_count: collapse(holds).length,
         projected_ttc: total_ttc, projected_ht: ht(total_ttc),
       },
-      split: {
-        logistics_on_cashed: Math.round(cashed_ttc * LOGISTICS_SHARE), meulerie_on_cashed: cashed_ttc - Math.round(cashed_ttc * LOGISTICS_SHARE),
-        logistics_on_total: Math.round(total_ttc * LOGISTICS_SHARE), meulerie_on_total: total_ttc - Math.round(total_ttc * LOGISTICS_SHARE),
-        logistics_on_cashed_ht: Math.round(ht(cashed_ttc) * LOGISTICS_SHARE), meulerie_on_cashed_ht: ht(cashed_ttc) - Math.round(ht(cashed_ttc) * LOGISTICS_SHARE),
-        logistics_on_total_ht: Math.round(ht(total_ttc) * LOGISTICS_SHARE), meulerie_on_total_ht: ht(total_ttc) - Math.round(ht(total_ttc) * LOGISTICS_SHARE),
+      invoices: {
+        cashed: invoicesFor(ht(cashed_ttc), stripe_fees),
+        total: invoicesFor(ht(total_ttc), stripe_fees),
       },
       stripe: {
         ok: stripeOk, error: stripeError,
