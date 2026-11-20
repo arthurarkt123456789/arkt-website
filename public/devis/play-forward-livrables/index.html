@@ -187,7 +187,20 @@ footer img{height:56px;width:56px;background:#F3F1EA;border-radius:12px;padding:
 footer p{margin:0;font-size:13px;color:#A6A299;max-width:none}
 footer b{color:#F3F1EA}
 
+.script .body{padding:6px 20px 20px}
+.script .body h4{margin:22px 0 8px}
+.script .body p,.script .body ul{max-width:72ch}
+.hooks.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.vo{list-style:none;padding:0;margin:0 0 12px;max-width:72ch;display:grid;gap:6px}
+.vo li{margin:0;padding:8px 14px;border-left:3px solid var(--accent);background:var(--bg);border-radius:0 8px 8px 0;font-size:15px}
+.vo li.hook-line{font-weight:700}
+.vo li.card{border-left-color:var(--ink);font-style:italic;color:var(--dim)}
+.subjects{list-style:none;padding:0;max-width:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.subjects li{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14.5px}
+.subjects b{display:block;font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+
 @media (max-width:860px){
+  .hooks.three,.subjects{grid-template-columns:1fr}
   .angles,.steps{grid-template-columns:1fr}
   .step{border-right:0;border-bottom:1px solid var(--line)}
   .step:last-child{border-bottom:0}
@@ -211,6 +224,7 @@ footer b{color:#F3F1EA}
   <nav aria-label="Sommaire">
     <a href="#poste-03">03 · Stratégie</a>
     <a href="#poste-04">04 · Scripts vidéo</a>
+    <a href="#serie-reve">Série « Le rêve »</a>
     
   </nav>
 </div></div>
@@ -685,6 +699,139 @@ footer b{color:#F3F1EA}
     <tr><th>Nom de fichier</th><td><code>PF_A1_basket_hA_9x16_CTA.mp4</code> : code vidéo, sujet, accroche, format, fin</td></tr>
     <tr><th>Suivi</th><td>Le code du fichier est repris dans le paramètre <code>utm_content</code> de l'annonce</td></tr>
   </tbody></table></div>
+</section>
+
+<!-- ============ SÉRIE « LE RÊVE » ============ -->
+<div class="part" id="serie-reve">
+  <div class="num">SÉRIE « LE RÊVE »</div>
+  <h2>Série « Le rêve » · Play Forward</h2>
+  <p class="intro">3 vidéos publicitaires · Concepts, scripts et cadre de tournage</p>
+  <div class="subnav">
+    <a href="#reve-serie">La série</a><a href="#reve-a1">A1 · Athlétisme</a><a href="#reve-a2">A2 · Tennis</a><a href="#reve-a3">A3 · Basket</a>
+  </div>
+</div>
+
+<section id="reve-serie">
+  <h3>La série</h3>
+  <h4>L’objectif</h4>
+  <p>Trois vidéos publicitaires de 30 secondes, diffusées sur Facebook et Instagram auprès des parents de sportifs de 15 à 18 ans. Elles ont une seule mission : faire inscrire ces familles à la masterclass gratuite « Études et sport aux USA ».</p>
+  <h4>L’idée</h4>
+  <p>Chaque vidéo plonge dans un moment du quotidien d’un parent de sportif. Des années de temps et d’énergie investis, et une question qui revient : <b>où est-ce que tout ça va mener ?</b> La réponse est la même pour les trois : jouer et étudier dans une université américaine, c’est possible, à condition de s’y préparer. La masterclass est la première étape pour comprendre comment.</p>
+  <h4>Comment chaque vidéo amène à l’inscription</h4>
+  <p>Les trois premières secondes arrêtent le défilement, avec une phrase forte, dite et affichée à l’écran. Le parent se reconnaît ensuite dans une scène qu’il vit chaque semaine, ce qui le retient jusqu’au bout. La bascule vers un campus américain transforme une inquiétude en projet possible. La vidéo se termine par la signature, « Le rêve américain, ça se prépare. », et un carton d’inscription à la masterclass, relayé par le bouton « S’inscrire » de l’annonce. Deux accroches sont testées par vidéo pour garder celle qui génère le plus d’inscriptions.</p>
+  <h4>Les trois sujets</h4>
+  <ul class="subjects">
+    <li><b>A1 · Athlétisme</b>Un narrateur (jeune athlète) parle des parents depuis le bord d’une piste.</li>
+    <li><b>A2 · Tennis</b>Un parent attend son enfant dans sa voiture, sur un parking.</li>
+    <li><b>A3 · Basket</b>Un parent prépare le sac de match de son enfant, comme chaque samedi.</li>
+  </ul>
+  <h4>Le ton</h4>
+  <p>Émotion contenue, fierté, projection. On fait rêver, on n’explique pas.</p>
+  <h4>Le fil commun</h4>
+  <p>Les trois vidéos partent du quotidien, basculent vers un campus américain et se terminent par la même signature, « Le rêve américain, ça se prépare. », suivie d’un carton d’inscription à la masterclass.</p>
+  <h4>Les règles</h4>
+  <div class="note"><p>Aucun nom à l’écran, fiction assumée, aucun jeune mineur reconnaissable, aucune promesse de bourse, d’admission ou de recrutement, aucun logo d’université ou de ligue.</p></div>
+</section>
+
+<section id="reve-scripts">
+  <h3>Les trois vidéos</h3>
+  <article class="script" id="reve-a1">
+    <header><span class="code">A1</span><span class="ttl">Athlétisme · « Le bord de piste »</span><span class="who"><b>Lieu :</b> un stade d’athlétisme, la piste et les tribunes.</span></header>
+    <div class="hooks three"><div class="hook"><small>Accroche principale</small>« À 19 heures, quand le stade se vide, il reste toujours des parents dans les tribunes. »</div><div class="hook"><small>Alternative test A/B</small>« Huit ans d’athlétisme. Et après le bac, ça mène où ? »</div><div class="hook"><small>Alternative test A/B</small>« Les parents d’athlètes connaissent chaque chrono. Mais pas encore la suite. »</div></div>
+    <div class="body">
+      <h4>Le concept</h4>
+      <p>Parler aux parents depuis l’endroit où ils passent leurs soirées : le bord d’une piste d’athlétisme.</p>
+      <p>Un narrateur, jeune athlète, seul dans un stade, évoque les parents qui attendent en tribune depuis des années, avec une question en tête : où est-ce que tout ça va mener ? Il parle des parents, jamais aux parents. Le spectateur se reconnaît au lieu de se sentir visé. La réponse arrive à la fin : jouer et étudier aux États-Unis, ça se prépare.</p>
+      <p>La vidéo alterne deux positions : face caméra en marchant le long de la piste (le message), assis en tribune à la place des parents (l’émotion).</p>
+      <h4>Ce qui fait cliquer</h4>
+      <p>Le parent se voit à travers les yeux d’un jeune athlète, presque comme son propre enfant le verrait. Il se sent reconnu, ce qui crée la confiance nécessaire pour passer à l’inscription.</p>
+      <h4>Le script</h4>
+      <ol class="vo">
+        <li class="hook-line">« À 19 heures, quand le stade se vide, il reste toujours des parents dans les tribunes. »</li>
+        <li>« Ils savent lire un chrono au centième. Ils ont attendu sous la pluie, applaudi des records que personne d’autre n’a vus. »</li>
+        <li>« Et chaque saison, la même question revient : après le bac, tout ça mène où ? »</li>
+        <li>« Aux États-Unis, des universités réunissent la piste et les études. »</li>
+        <li>« Mais ça ne se joue pas qu’au chrono. Ça se construit : les bulletins, l’anglais, la façon de se présenter aux coachs. »</li>
+        <li>« Le rêve américain, ça se prépare. »</li>
+        <li class="card">Carton : inscription à la masterclass gratuite.</li>
+      </ol>
+      <h4>Le ton</h4>
+      <p>Posé, sincère, une fierté contenue.</p>
+      <h4>Le cadre global</h4>
+      <ul>
+        <li><b>Le narrateur au bord de la piste :</b> face caméra, en mouvement le long de la piste, pour porter le message.</li>
+        <li><b>La tribune :</b> la place des parents. Le narrateur y est assis pour les moments de confidence, au milieu de sièges vides et d’affaires laissées là.</li>
+        <li><b>Les traces de l’athlétisme :</b> des objets qui racontent l’entraînement, comme des pointes, des starting-blocks, les lignes et numéros des couloirs, une haie, un chrono.</li>
+        <li><b>La lumière du soir :</b> la fin de journée sur le stade, du couchant aux projecteurs qui s’allument.</li>
+        <li><b>La bascule :</b> du stade municipal français à un stade universitaire américain, en banque d’images et sans logo.</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="script" id="reve-a2">
+    <header><span class="code">A2</span><span class="ttl">Tennis · « L’attente »</span><span class="who"><b>Lieu :</b> une voiture sur un parking (idéalement celui d’un club de tennis).</span></header>
+    <div class="hooks three"><div class="hook"><small>Accroche principale</small>« Les heures passées sur ce parking, je ne les compte plus. »</div><div class="hook"><small>Alternative test A/B</small>« Ma voiture est devenue sa deuxième maison. »</div><div class="hook"><small>Alternative test A/B</small>« Tout ce temps à l’attendre au tennis, j’aimerais qu’il serve à quelque chose. »</div></div>
+    <div class="body">
+      <h4>Le concept</h4>
+      <p>Un parent attend son enfant dans sa voiture, garée sur le parking du club de tennis. Des heures, des soirs, des années : c’est le temps donné sans compter.</p>
+      <p>On entend sa voix intérieure, en voix off. Pas de regret. Mais avec tout ce temps investi, une question s’installe : est-ce que ça mènera quelque part ? La réponse arrive à la fin : jouer et étudier aux États-Unis, ça se prépare.</p>
+      <h4>Ce qui fait cliquer</h4>
+      <p>Le parent revit ses propres soirées d’attente. La vidéo donne un sens à ce temps investi : il peut devenir le début d’un vrai projet.</p>
+      <h4>Le script</h4>
+      <ol class="vo">
+        <li class="hook-line">« Les heures passées sur ce parking, je ne les compte plus. »</li>
+        <li>« Les entraînements après l’école. Les tournois du week-end. Les retours de nuit, le sac de raquettes sur la banquette. »</li>
+        <li>« Je ne regrette pas une minute. »</li>
+        <li>« Mais parfois, quand les projecteurs s’éteignent, je me demande où tout ce temps va nous mener. »</li>
+        <li>« Après le bac, le tennis à ce niveau et de vraies études, ici, c’est rarement compatible. »</li>
+        <li>« Aux États-Unis, des universités réunissent les deux. Et ça se construit dès le lycée. »</li>
+        <li>« Le rêve américain, ça se prépare. »</li>
+        <li class="card">Carton : inscription à la masterclass gratuite.</li>
+      </ol>
+      <h4>Le ton</h4>
+      <p>Intime, tendre, une fatigue douce, jamais plaintive. De la fierté avant tout.</p>
+      <h4>Le cadre global</h4>
+      <ul>
+        <li><b>L’attente dans la voiture :</b> le parent au volant, et le temps qui passe à travers ses petits gestes (téléphone, café, regard dans le vide, yeux fermés).</li>
+        <li><b>La voiture sur le parking :</b> des plans extérieurs pour ouvrir l’espace, avec la voiture seule, les lumières du parking, les phares, les reflets sur le pare-brise.</li>
+        <li><b>Les traces du tennis :</b> des objets qui racontent des années de pratique, comme un sac de raquettes sur la banquette, des tubes de balles, les courts éclairés au loin.</li>
+        <li><b>Le temps qui passe :</b> tout ce qui fait sentir la durée, par exemple l’horloge du tableau de bord, la buée sur les vitres, la nuit qui tombe.</li>
+        <li><b>La bascule :</b> de la voiture française aux courts d’un campus américain, en banque d’images et sans logo.</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="script" id="reve-a3">
+    <header><span class="code">A3</span><span class="ttl">Basket · « Le rituel »</span><span class="who"><b>Lieu :</b> une maison (cuisine, salon ou entrée), puis la voiture devant chez soi.</span></header>
+    <div class="hooks three"><div class="hook"><small>Accroche principale</small>« Chaque samedi, je prépare son sac de basket. Mais l’après-bac reste flou. »</div><div class="hook"><small>Alternative test A/B</small>« Son sac de basket est prêt depuis hier soir. Son avenir, beaucoup moins. »</div><div class="hook"><small>Alternative test A/B</small>« Le samedi, c’est moi qui prépare son sac de basket. Depuis ses 9 ans. »</div></div>
+    <div class="body">
+      <h4>Le concept</h4>
+      <p>Samedi matin, jour de match. Un parent prépare tout, comme chaque week-end depuis des années : le café, le sac, les affaires de son enfant, la voiture. Un rituel connu par cœur.</p>
+      <p>On entend sa voix intérieure, en voix off. Chaque match est préparé dans les moindres détails, mais la suite, jamais. La réponse arrive à la fin, et elle fait écho au rituel : jouer et étudier aux États-Unis, ça se prépare.</p>
+      <h4>Ce qui fait cliquer</h4>
+      <p>Le parent prépare déjà tout pour son enfant. La vidéo lui montre qu’il peut appliquer ce même soin à son avenir, et que la masterclass est le premier geste à faire.</p>
+      <h4>Le script</h4>
+      <ol class="vo">
+        <li class="hook-line">« Chaque samedi, je prépare son sac de basket. Mais l’après-bac reste flou. »</li>
+        <li>« La gourde. Les chaussures qui ont séché près du radiateur. Le maillot plié, le numéro sur le dessus. »</li>
+        <li>« Un matin, en fermant ce sac, j’ai compris : je prépare chaque match dans les moindres détails. Jamais la suite. »</li>
+        <li>« Ici, le basket à ce niveau et les études supérieures se croisent rarement. »</li>
+        <li>« Aux États-Unis, des universités réunissent les deux. À condition de s’y prendre tôt : les bulletins, l’anglais, le profil. »</li>
+        <li>« Le rêve américain, ça se prépare. »</li>
+        <li class="card">Carton : inscription à la masterclass gratuite.</li>
+      </ol>
+      <h4>Le ton</h4>
+      <p>Calme, chaleureux. Un parent qui parle peu mais qui pense beaucoup.</p>
+      <h4>Le cadre global</h4>
+      <ul>
+        <li><b>Le matin à la maison :</b> une ambiance calme de début de journée, entre la cuisine, le salon ou l’entrée, selon ce que le lieu offre.</li>
+        <li><b>Les gestes du rituel :</b> tout ce qui montre un parent qui prépare. Le café, le sac qu’on remplit, les affaires qu’on rassemble.</li>
+        <li><b>Les traces du basket :</b> des objets qui racontent des années de pratique dans la maison, comme un ballon, des chaussures, un maillot, des médailles ou une photo d’équipe.</li>
+        <li><b>Le départ :</b> le sac chargé dans la voiture, et le moment où tout est prêt.</li>
+        <li><b>La bascule :</b> du quotidien français à une salle de basket universitaire américaine, en banque d’images et sans logo.</li>
+      </ul>
+    </div>
+  </article>
 </section>
 
 </div>
