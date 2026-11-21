@@ -99,6 +99,7 @@
     <input type="date" id="date" min="2026-11-27" max="2026-12-24" />
     <button class="ghost" style="color:#fff;border-color:#fff" id="next">▶</button>
     <button class="primary" id="today">Aujourd'hui</button>
+    <form id="searchForm" style="display:flex;gap:4px;margin:0"><input type="search" id="searchQ" placeholder="Nom, email ou tél." minlength="2" required style="width:170px" /><button type="submit">Chercher</button></form>
     <button id="manualBtn">Résas manuelles</button>
     <button id="export">Export CSV</button>
     <a href="/finance/" style="color:#fff;font-weight:800;text-decoration:none;font-size:.85rem">Finance →</a>
@@ -207,6 +208,12 @@
     <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="send" style="width:auto" checked /> <span>Envoyer la facture par email tout de suite</span></label>
     <div class="acts-row"><button type="button" class="ghost" onclick="dlgInvoice.close()">Annuler</button><button class="primary" type="submit">Créer la facture</button></div>
   </form>
+</dialog>
+
+<dialog id="dlgSearch" style="max-width:1000px">
+  <h3 id="searchTitle">Recherche</h3>
+  <div style="overflow:auto;max-height:65vh"><table><thead><tr><th>Date</th><th>Service</th><th>Client</th><th>Places</th><th>Montant</th><th>Statut</th><th></th></tr></thead><tbody id="searchBody"></tbody></table></div>
+  <div class="acts-row"><button type="button" class="ghost" onclick="dlgSearch.close()">Fermer</button></div>
 </dialog>
 
 <dialog id="dlgManualList" style="max-width:1100px">
@@ -439,6 +446,7 @@
       groupLabel: [...new Set(base.map((x) => x.service))].sort().map((x) => x.replace(':', 'h')).join(' · '), groupBubbles: base.length };
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const eurFmt = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 
   // ---------- Résa manuelle ----------
   function openManual(svc) {
@@ -491,6 +499,23 @@
   }
   const syncAddSeats = () => { const fa = $('formAddSeats'); if (!fa.amount.dataset.touched) fa.amount.value = ((Number(fa.adults.value) || 0) * 36 + (Number(fa.kids.value) || 0) * 24).toFixed(2); };
   $('formAddSeats').addEventListener('input', (e) => { if (e.target.name === 'amount') e.target.dataset.touched = '1'; else syncAddSeats(); });
+  $('searchForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); const q = $('searchQ').value.trim(); if (q.length < 2) return;
+    $('searchTitle').textContent = `Recherche « ${q} »`; $('searchBody').innerHTML = '<tr><td colspan="7">Recherche…</td></tr>'; $('dlgSearch').showModal();
+    try {
+      const r = await api('GET', null, { action: 'search', q });
+      const tb = $('searchBody'); tb.innerHTML = '';
+      if (!r.bookings.length) { tb.innerHTML = '<tr><td colspan="7">Aucune réservation ne correspond.</td></tr>'; return; }
+      r.bookings.forEach((b) => {
+        const st = b.status === 'hold' ? (b.source === 'admin' ? 'Attente paiement' : 'En cours') : ({ paid: 'Payé', manual: 'Manuel', cancelled: 'Annulé', expired: 'Expiré' }[b.status] || b.status);
+        const svc = b.group ? b.group.label + ' · privatisation' : b.service.replace(':', 'h') + ' · bulle ' + b.bubble;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td><b>${fmtLong(b.date)}</b></td><td>${svc}</td><td><b>${esc(b.name)}</b>${b.parent_id ? ' <span class="pill" style="background:var(--yellow)">+ complément</span>' : ''}<br><small>${esc(b.email || '')}${b.email && b.phone ? ' · ' : ''}${esc(b.phone || '')}</small><br><small>${b.id.slice(0, 8).toUpperCase()} · ${b.source === 'admin' ? 'manuel' : 'web'}</small></td><td>${b.seats}</td><td><b>${eurFmt(b.amount_cents)}</b></td><td><span class="pill ${b.status}">${st}</span></td><td><button class="primary" data-open="${b.date}">Ouvrir le jour</button></td>`;
+        tb.appendChild(tr);
+      });
+      tb.querySelectorAll('[data-open]').forEach((btn) => btn.addEventListener('click', () => { $('dlgSearch').close(); load(btn.dataset.open); }));
+    } catch (err) { $('searchBody').innerHTML = `<tr><td colspan="7">${esc(err.message)}</td></tr>`; }
+  });
   $('formAddSeats').addEventListener('submit', async (e) => {
     e.preventDefault(); const fa = e.target;
     try {

@@ -37,6 +37,17 @@ export const handler = async (event) => {
         const data = await sbRpc("rc_day", { p_date: q.date });
         return json(200, data, noStore);
       }
+      if (q.action === "search") {
+        // Recherche par nom, email ou téléphone (insensible à la casse), 60 résultats max
+        const term = String(q.q || "").trim().replace(/[,()*%\\]/g, " ").replace(/\s+/g, " ");
+        if (term.length < 2) return json(400, { error: "Deux caractères minimum" });
+        const pat = encodeURIComponent(`*${term}*`);
+        const rows = await sbSelect("rc_bookings", `or=(name.ilike.${pat},email.ilike.${pat},phone.ilike.${pat})&order=date.asc,service.asc&limit=60`);
+        // Une privatisation de service n'apparaît qu'une fois (ligne principale agrégée)
+        const seen = new Set(), out = [];
+        for (const r of rows) { if (r.group_id) { if (seen.has(r.group_id)) continue; seen.add(r.group_id); out.push(await groupView(r)); } else out.push(r); }
+        return json(200, { bookings: out }, noStore);
+      }
       if (q.action === "overview") {
         const rows = await sbRpc("rc_availability_range", { p_from: CONFIG.FIRST_DAY, p_to: CONFIG.LAST_DAY });
         return json(200, { days: rows }, noStore);

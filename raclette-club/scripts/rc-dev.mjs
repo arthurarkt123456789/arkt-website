@@ -95,6 +95,7 @@ function parseFilters(qs) {
   const f = [];
   for (const [k, v] of new URLSearchParams(qs)) {
     if (["limit", "order", "select"].includes(k)) continue;
+    if (k === "or") { const alts = v.replace(/^\(|\)$/g, "").split(",").map((a) => { const [col, op, ...rest] = a.split("."); const val = rest.join("."); return op === "ilike" ? (r) => new RegExp("^" + val.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*") + "$", "i").test(String(r[col] ?? "")) : (r) => String(r[col]) === val; }); f.push((r) => alts.some((fn) => fn(r))); continue; }
     if (v === "is.null") { f.push((r) => r[k] == null); continue; }
     if (v === "not.is.null") { f.push((r) => r[k] != null); continue; }
     const m = v.match(/^(eq|gt)\.(.*)$/) || v.match(/^(in)\.(.*)$/); if (!m) continue;
