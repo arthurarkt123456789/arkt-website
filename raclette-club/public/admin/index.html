@@ -179,6 +179,7 @@
     <div><label>Nom</label><input name="name" required /></div>
     <div class="row2"><div><label>Email</label><input name="email" type="email" /></div><div><label>Téléphone</label><input name="phone" /></div></div>
     <div><label>Remarques</label><textarea name="notes" rows="3"></textarea></div>
+    <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="resend" style="width:auto" /> <span>Renvoyer le mail de confirmation à cette adresse après enregistrement</span></label>
     <div class="acts-row"><button type="button" class="ghost" onclick="dlgEdit.close()">Annuler</button><button class="primary" type="submit">Enregistrer</button></div>
   </form>
 </dialog>
@@ -398,13 +399,18 @@
         <td>${b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a><br>` : ''}${b.phone ? `<a href="tel:${esc(b.phone)}">${esc(b.phone)}</a>` : ''}</td>
         <td>${tickets}<br><small>${(b.amount_cents / 100).toLocaleString('fr-FR')} €</small></td><td style="max-width:220px">${esc(b.notes || '')}</td>
         <td><span class="pill ${b.status}">${b.status === 'hold' ? (b.source === 'admin' ? 'Attente paiement' : 'En cours') : ({ paid: 'Payé', manual: 'Manuel', cancelled: 'Annulé', expired: 'Expiré' }[b.status] || b.status)}</span>${b.status === 'hold' && b.expires_at ? `<br><small>jusqu'au ${new Date(b.expires_at).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</small>` : ''}${b.refund_id ? '<br><small>remboursé</small>' : ''}</td>
-        <td style="white-space:nowrap">${b.status === 'hold' && b.source === 'admin' ? `<button class="primary" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-link="${b.id}">Lien</button> <button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-extend="${b.id}">+24 h</button> <button class="blue" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-tomanual="${b.id}" title="Le client paie hors ligne (virement, facture) : la résa devient manuelle, sans lien de paiement">→ Manuelle</button> ` : ''}${b.status !== 'cancelled' ? `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-edit="${b.id}">Modifier</button> ${b.group_id ? '' : `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-move="${b.id}">Bulle</button> `}<button class="danger" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-cancel="${b.id}">Annuler</button>` : ''}</td>`;
+        <td style="white-space:nowrap">${b.status === 'hold' && b.source === 'admin' ? `<button class="primary" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-link="${b.id}">Lien</button> <button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-extend="${b.id}">+24 h</button> <button class="blue" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-tomanual="${b.id}" title="Le client paie hors ligne (virement, facture) : la résa devient manuelle, sans lien de paiement">→ Manuelle</button> ` : ''}${b.status !== 'cancelled' ? `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-edit="${b.id}">Modifier</button> <button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-resend="${b.id}" title="Renvoyer au client le mail de confirmation (ou le lien de paiement)">Mail</button> ${b.group_id ? '' : `<button style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-move="${b.id}">Bulle</button> `}<button class="danger" style="font-size:.72rem;padding:4px 8px;box-shadow:none" data-cancel="${b.id}">Annuler</button>` : ''}</td>`;
       tb.appendChild(tr);
     });
     tb.querySelectorAll('[data-cancel]').forEach((b) => b.addEventListener('click', () => openCancel(b.dataset.cancel)));
     tb.querySelectorAll('[data-move]').forEach((b) => b.addEventListener('click', () => openMove(b.dataset.move)));
     tb.querySelectorAll('[data-link]').forEach((b) => b.addEventListener('click', () => { const bk = agg(day.bookings.find((x) => x.id === b.dataset.link)); showLink(bk, `${location.origin}/payer/?id=${bk.id}&t=${bk.cancel_token}`); }));
     tb.querySelectorAll('[data-edit]').forEach((b) => b.addEventListener('click', () => openEdit(b.dataset.edit)));
+    tb.querySelectorAll('[data-resend]').forEach((b) => b.addEventListener('click', async () => {
+      const bk = day.bookings.find((x) => x.id === b.dataset.resend);
+      const email = prompt('Renvoyer le mail à :', bk.email || ''); if (!email) return;
+      try { const r = await api('POST', { action: 'resend', id: bk.id, email }); toast(`Mail (${r.kind}) renvoyé à ${email}`); } catch (e) { toast(e.message, true); }
+    }));
     tb.querySelectorAll('[data-tomanual]').forEach((b) => b.addEventListener('click', async () => {
       const bk = agg(day.bookings.find((x) => x.id === b.dataset.tomanual));
       if (!confirm(`Convertir la résa de ${bk.name} (${bk.seats} places, ${(bk.amount_cents / 100).toLocaleString('fr-FR')} €) en réservation manuelle ?\nLe lien de paiement ne fonctionnera plus. Le montant reste à cocher « Encaissé » dans la liste des résas manuelles.`)) return;
@@ -466,7 +472,7 @@
   }
   $('formEdit').addEventListener('submit', async (e) => {
     e.preventDefault(); const f = e.target;
-    try { await api('POST', { action: 'edit', id: f.id.value, name: f.name.value, email: f.email.value, phone: f.phone.value, notes: f.notes.value }); $('dlgEdit').close(); toast('Réservation modifiée'); load(current); }
+    try { const r = await api('POST', { action: 'edit', id: f.id.value, name: f.name.value, email: f.email.value, phone: f.phone.value, notes: f.notes.value, resend: f.resend.checked }); $('dlgEdit').close(); toast(r.resent ? (r.resent.startsWith('erreur') ? 'Modifié, mais mail non envoyé : ' + r.resent : `Modifié, mail (${r.resent}) renvoyé`) : 'Réservation modifiée', Boolean(r.resent && r.resent.startsWith('erreur'))); load(current); }
     catch (err) { toast(err.message, true); }
   });
 

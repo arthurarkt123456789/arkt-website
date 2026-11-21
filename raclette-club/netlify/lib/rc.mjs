@@ -352,6 +352,22 @@ export async function notifyConfirmation(b) {
   });
 }
 
+/** Renvoie au client le mail correspondant à l'état de sa résa : confirmation (payée / manuelle) ou lien de paiement (blocage admin). */
+export async function resendClientEmail(b, to) {
+  const email = (to || b.email || "").trim();
+  if (!email) throw new Error("Pas d'email client");
+  const v = { ...b, email };
+  if (v.status === "paid" || v.status === "manual") {
+    await sendEmail({ to: email, subject: `C'est réservé ! Raclette Club · ${fmtDate(v.date)} à ${svcLabel(v)}`, html: bookingEmailHtml(v, { cancelUrl: cancelUrlFor(v) }) });
+    return "confirmation";
+  }
+  if (v.status === "hold" && v.source === "admin") {
+    await sendEmail({ to: email, subject: `Votre table est bloquée · Raclette Club ${fmtDate(v.date)} à ${svcLabel(v)}`, html: holdEmailHtml(v) });
+    return "lien de paiement";
+  }
+  throw new Error("Rien à renvoyer pour une réservation " + v.status);
+}
+
 export function payUrlFor(b) {
   return `${CONFIG.SITE}${CONFIG.BASE_PATH}/payer/?id=${b.id}&t=${b.cancel_token}`;
 }

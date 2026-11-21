@@ -10,7 +10,7 @@
 // POST { action: 'move',    id, bubble }     -> déplace une résa vers une autre bulle du même service
 // POST { action: 'hold_service', date, services:[...], adults, kids, name, email, phone, notes, hours, amountCents?, sendEmail }
 //                                            -> privatise tous les services listés (5 bulles chacun), 1 lien de paiement
-import { CONFIG, json, checkAdmin, sbRpc, sbSelect, sbPatch, notifyConfirmation, sendEmail, fmtDate, hhmm, svcLabel, payUrlFor, holdEmailHtml, cancelEmailHtml, groupView, cancelBooking, isValidService } from "../lib/rc.mjs";
+import { CONFIG, json, checkAdmin, sbRpc, sbSelect, sbPatch, notifyConfirmation, sendEmail, fmtDate, hhmm, svcLabel, payUrlFor, holdEmailHtml, cancelEmailHtml, groupView, cancelBooking, isValidService, resendClientEmail } from "../lib/rc.mjs";
 import { pl, pennylaneEnabled, findOrCreateCustomer, invoiceBooking, getInvoice, sendInvoice, invoiceState } from "../lib/pennylane.mjs";
 
 /** Rafraîchit le statut Pennylane d'une résa manuelle ; passe « Encaissé » quand la facture est payée. */
@@ -189,6 +189,15 @@ export const handler = async (event) => {
         return json(200, { booking: b, url });
       }
 
+      case "resend": {
+        // Renvoie le mail de confirmation (ou le lien de paiement) au client, à l'adresse enregistrée ou à une autre
+        const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
+        const b = rows[0];
+        if (!b) return json(404, { error: "Introuvable" });
+        const kind = await resendClientEmail(await groupView(b), d.email);
+        return json(200, { ok: true, kind });
+      }
+
       case "edit": {
         // Modifie nom, email, téléphone, remarques (toutes les lignes d'une privatisation)
         const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
@@ -200,7 +209,9 @@ export const handler = async (event) => {
         if (patch.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(patch.email)) return json(400, { error: "Email invalide" });
         const filter = b.group_id ? `group_id=eq.${b.group_id}` : `id=eq.${b.id}`;
         const upd = await sbPatch("rc_bookings", filter, patch);
-        return json(200, { booking: upd[0] });
+        let resent = null;
+        if (d.resend && patch.email) { try { resent = await resendClientEmail(await groupView(upd[0])); } catch (e) { resent = "erreur : " + e.message; } }
+        return json(200, { booking: upd[0], resent });
       }
 
       case "to_manual": {
