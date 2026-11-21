@@ -162,6 +162,20 @@ export const handler = async (event) => {
         return json(200, { booking: b, url });
       }
 
+      case "edit": {
+        // Modifie nom, email, téléphone, remarques (toutes les lignes d'une privatisation)
+        const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
+        const b = rows[0];
+        if (!b) return json(404, { error: "Introuvable" });
+        const name = String(d.name ?? b.name).trim();
+        if (name.length < 2) return json(400, { error: "Nom requis" });
+        const patch = { name, email: String(d.email ?? b.email ?? "").trim() || null, phone: String(d.phone ?? b.phone ?? "").trim() || null, notes: String(d.notes ?? b.notes ?? "").trim() || null };
+        if (patch.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(patch.email)) return json(400, { error: "Email invalide" });
+        const filter = b.group_id ? `group_id=eq.${b.group_id}` : `id=eq.${b.id}`;
+        const upd = await sbPatch("rc_bookings", filter, patch);
+        return json(200, { booking: upd[0] });
+      }
+
       case "to_manual": {
         // Blocage avec lien de paiement -> réservation manuelle (paiement hors ligne)
         const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
