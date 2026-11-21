@@ -15,6 +15,7 @@ export const CONFIG = {
   FIRST_DAY: "2026-11-27",
   LAST_DAY: "2026-12-24",
   HOLD_MINUTES: 30,
+  HOLD_GRACE_HOURS: 24,        // blocage admin : on annonce N h au client, on bloque N + 24 h en réalité
   BOOKING_CLOSE_MIN: 60,       // fermeture des résas en ligne : 60 min avant le service
   CANCEL_HOURS: 72,            // annulation client possible jusqu'à 72 h avant
   NOTIFY_EMAIL: process.env.RC_NOTIFY_EMAIL || "hello@lameulerie.com",
@@ -249,6 +250,13 @@ export async function groupView(b) {
   };
 }
 
+/** Échéance annoncée au client pour un blocage admin : la vraie moins la marge de grâce. */
+export const shownExpiry = (b) => {
+  if (!b.expires_at) return null;
+  const t = new Date(b.expires_at).getTime() - (b.source === "admin" ? CONFIG.HOLD_GRACE_HOURS * 3600000 : 0);
+  return new Date(Math.max(t, Date.now() + 60000)).toISOString();
+};
+
 export const tickets = (b) => [b.adults ? `${b.adults} adulte${b.adults > 1 ? "s" : ""}` : null, b.kids ? `${b.kids} enfant${b.kids > 1 ? "s" : ""}` : null].filter(Boolean).join(" + ");
 const bubbleLine = (b) => b.group
   ? `<strong>Service${b.group.services.length > 1 ? "s" : ""} ${esc(b.group.label)} privatisé${b.group.services.length > 1 ? "s" : ""}</strong> · les 5 bulles sont à vous`
@@ -275,7 +283,7 @@ export function bookingEmailHtml(b, { cancelUrl, logoSrc } = {}) {
 }
 
 export function holdEmailHtml(b, { logoSrc } = {}) {
-  const until = new Date(b.expires_at).toLocaleString("fr-FR", { timeZone: "Europe/Paris", weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
+  const until = new Date(shownExpiry(b)).toLocaleString("fr-FR", { timeZone: "Europe/Paris", weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
   return emailLayout({
     logoSrc, kicker: "Table bloquée pour vous", title: "Confirmez votre table",
     lead: `Nous vous avons réservé ${b.group ? "le Raclette Club en entier" : "une table"} le <strong>${esc(fmtDate(b.date))} à ${esc(svcLabel(b))}</strong>. ${b.group ? "Les bulles sont bloquées" : "Elle est bloquée"} jusqu'au <strong>${esc(until)}</strong> : réglez le menu en ligne pour confirmer.`,

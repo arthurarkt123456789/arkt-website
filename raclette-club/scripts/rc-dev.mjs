@@ -11,6 +11,7 @@ process.env.SUPABASE_SERVICE_KEY = "mock";
 process.env.STRIPE_SECRET_KEY = "sk_test_mock";
 process.env.STRIPE_WEBHOOK_SECRET = "whsec_mock";
 process.env.RC_ADMIN_PASSWORD = process.env.RC_ADMIN_PASSWORD || "raclette";
+process.env.PENNYLANE_API_KEY = process.env.PENNYLANE_API_KEY || "pl_mock";
 process.env.URL = "http://localhost:8788"; process.env.RC_SITE_URL = "http://localhost:8788";
 delete process.env.RESEND_API_KEY; // pas d'email en dev
 
@@ -49,7 +50,7 @@ function hold(a) {
   const cands = slots.filter((s) => s.date === a.p_date && s.service === a.p_service && s.status === "open").map(usage).filter((u) => seats >= 8 ? u.used === 0 : u.free >= seats).sort((x, y) => x.free - y.free || x.bubble - y.bubble);
   if (!cands.length) throw Object.assign(new Error("NO_CAPACITY"), { code: 400 });
   const u = cands[0];
-  const b = { id: randomUUID(), slot_id: u.slot_id, date: a.p_date, service: a.p_service, bubble: u.bubble, adults: a.p_adults, kids: a.p_kids, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: a.p_amount_cents, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: null, exclusive: false, manual_paid_at: null };
+  const b = { id: randomUUID(), slot_id: u.slot_id, date: a.p_date, service: a.p_service, bubble: u.bubble, adults: a.p_adults, kids: a.p_kids, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: a.p_amount_cents, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: null, exclusive: false, manual_paid_at: null, pennylane_customer_id: null, pennylane_invoice_id: null, pennylane_invoice_number: null, pennylane_status: null, pennylane_invoiced_at: null, pennylane_sent_at: null };
   bookings.push(b); return b;
 }
 
@@ -66,7 +67,7 @@ function holdGroup(a) {
   const gid = randomUUID(); let remAd = a.p_adults; const out = [];
   target.forEach((s, i) => {
     const seats = Math.floor(total / n) + (i < total % n ? 1 : 0); const ad = Math.min(remAd, seats); remAd -= ad;
-    const b = { id: randomUUID(), slot_id: s.id, date: a.p_date, service: s.service, bubble: s.bubble, adults: ad, kids: seats - ad, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: i === 0 ? a.p_amount_cents : 0, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: gid, exclusive: true, manual_paid_at: null };
+    const b = { id: randomUUID(), slot_id: s.id, date: a.p_date, service: s.service, bubble: s.bubble, adults: ad, kids: seats - ad, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: i === 0 ? a.p_amount_cents : 0, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: gid, exclusive: true, manual_paid_at: null, pennylane_customer_id: null, pennylane_invoice_id: null, pennylane_invoice_number: null, pennylane_status: null, pennylane_invoiced_at: null, pennylane_sent_at: null };
     bookings.push(b); out.push(b);
   });
   return out;
@@ -76,7 +77,10 @@ function parseFilters(qs) {
   const f = [];
   for (const [k, v] of new URLSearchParams(qs)) {
     if (["limit", "order", "select"].includes(k)) continue;
-    const m = v.match(/^(eq|in)\.(.*)$/); if (!m) continue;
+    if (v === "is.null") { f.push((r) => r[k] == null); continue; }
+    if (v === "not.is.null") { f.push((r) => r[k] != null); continue; }
+    const m = v.match(/^(eq|gt)\.(.*)$/) || v.match(/^(in)\.(.*)$/); if (!m) continue;
+    if (m[1] === "gt") { f.push((r) => String(r[k]) > m[2]); continue; }
     f.push(m[1] === "eq" ? (r) => String(r[k]) === m[2] : (r) => m[2].replace(/^\(|\)$/g, "").split(",").includes(String(r[k])));
   }
   return (r) => f.every((fn) => fn(r));
@@ -142,11 +146,34 @@ async function mockStripe(url, init) {
   return new Response(JSON.stringify({ error: { message: "mock: route inconnue " + u.pathname } }), { status: 404 });
 }
 
+// Pennylane mock : client, facture (payée au 2e GET), envoi
+const plInvoices = new Map();
+async function mockPennylane(url, init) {
+  const u = new URL(url); const ok = (d) => new Response(JSON.stringify(d), { status: 200, headers: { "content-type": "application/json" } });
+  const body = init?.body ? JSON.parse(init.body) : {};
+  if (u.pathname.endsWith("/customers") && init?.method === "GET") return ok({ items: [] });
+  if (u.pathname.endsWith("/company_customers")) return ok({ id: 4242, name: body.name });
+  if (u.pathname.endsWith("/customer_invoices") && init?.method === "POST") {
+    const id = 9000 + plInvoices.size; const total = body.invoice_lines.reduce((n, l) => n + Number(l.raw_currency_unit_price) * l.quantity * 1.1, 0);
+    const inv = { id, invoice_number: "F2026-" + String(id).padStart(4, "0"), status: "upcoming", paid: false, currency_amount: total.toFixed(2), remaining_amount_with_tax: total.toFixed(2), public_file_url: null, deadline: body.deadline, reads: 0 };
+    plInvoices.set(id, inv); return ok(inv);
+  }
+  const m = u.pathname.match(/\/customer_invoices\/(\d+)(\/send_by_email)?$/);
+  if (m) {
+    const inv = plInvoices.get(Number(m[1])); if (!inv) return new Response(JSON.stringify({ message: "not found" }), { status: 404 });
+    if (m[2]) return ok({ ok: true });
+    inv.reads++; if (inv.reads >= 2) { inv.paid = true; inv.status = "paid"; inv.remaining_amount_with_tax = "0.00"; } inv.public_file_url = "https://example.com/" + inv.invoice_number + ".pdf";
+    return ok(inv);
+  }
+  return new Response(JSON.stringify({ message: "mock pennylane: route inconnue " + u.pathname }), { status: 404 });
+}
+
 const realFetch = globalThis.fetch;
 globalThis.fetch = (url, init) => {
   const s = String(url);
   if (s.startsWith(process.env.SUPABASE_URL)) return mockSupabase(s, init);
   if (s.startsWith("https://api.stripe.com")) return mockStripe(s, init);
+  if (s.startsWith("https://app.pennylane.com")) return mockPennylane(s, init);
   return realFetch(url, init);
 };
 
@@ -155,7 +182,7 @@ seed();
 // ---------- Serveur HTTP ----------
 const MIME = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml", ".webp": "image/webp", ".ico": "image/x-icon" };
 const fns = {};
-for (const n of ["rc-availability", "rc-checkout", "rc-webhook", "rc-booking", "rc-admin", "rc-finance"]) fns[n] = (await import(`../netlify/functions/${n}.mjs`)).handler;
+for (const n of ["rc-availability", "rc-checkout", "rc-webhook", "rc-booking", "rc-admin", "rc-finance", "rc-pennylane-sync"]) fns[n] = (await import(`../netlify/functions/${n}.mjs`)).handler;
 
 http.createServer(async (req, res) => {
   const url = new URL(req.url, process.env.URL);

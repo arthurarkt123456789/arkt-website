@@ -1,12 +1,12 @@
 // GET /.netlify/functions/rc-booking?session_id=cs_...   -> page merci
 // GET /.netlify/functions/rc-booking?id=<uuid>&t=<token>  -> page annulation (lecture)
 // POST /.netlify/functions/rc-booking { id, t }           -> annulation client + remboursement Stripe
-import { CONFIG, json, sbSelect, stripe, confirmPaidBooking, createCheckoutForBooking, minutesUntil, sendEmail, fmtDate, svcLabel, cancelEmailHtml, groupView, cancelBooking } from "../lib/rc.mjs";
+import { CONFIG, json, sbSelect, stripe, confirmPaidBooking, createCheckoutForBooking, minutesUntil, sendEmail, fmtDate, svcLabel, cancelEmailHtml, groupView, cancelBooking, shownExpiry } from "../lib/rc.mjs";
 
 const publicView = (b) => ({
   id: b.id, ref: b.id.slice(0, 8).toUpperCase(), date: b.date, service: b.service, bubble: b.bubble,
   adults: b.adults, kids: b.kids, seats: b.seats, name: b.name, email: b.email, amount_cents: b.amount_cents,
-  status: b.status, notes: b.notes, expires_at: b.expires_at, source: b.source,
+  status: b.status, notes: b.notes, expires_at: shownExpiry(b), source: b.source,
   group: b.group ? { services: b.group.services, label: b.group.label, bubbles: b.group.bubbles } : null,
   cancellable: b.status === "paid" && minutesUntil(b.date, b.service) >= CONFIG.CANCEL_HOURS * 60,
   payable: b.status === "hold" && b.source === "admin" && b.expires_at && new Date(b.expires_at) > new Date() && minutesUntil(b.date, b.service) > 0,

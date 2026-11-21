@@ -11,6 +11,18 @@
 // POST { action: 'hold_service', date, services:[...], adults, kids, name, email, phone, notes, hours, amountCents?, sendEmail }
 //                                            -> privatise tous les services listés (5 bulles chacun), 1 lien de paiement
 import { CONFIG, json, checkAdmin, sbRpc, sbSelect, sbPatch, notifyConfirmation, sendEmail, fmtDate, hhmm, svcLabel, payUrlFor, holdEmailHtml, cancelEmailHtml, groupView, cancelBooking, isValidService } from "../lib/rc.mjs";
+import { pennylaneEnabled, findOrCreateCustomer, invoiceBooking, getInvoice, sendInvoice, invoiceState } from "../lib/pennylane.mjs";
+
+/** Rafraîchit le statut Pennylane d'une résa manuelle ; passe « Encaissé » quand la facture est payée. */
+export async function syncInvoice(b) {
+  const inv = await getInvoice(b.pennylane_invoice_id);
+  const st = invoiceState(inv);
+  const patch = { pennylane_status: st.status, pennylane_invoice_number: st.number };
+  if (st.paid && !b.manual_paid_at) patch.manual_paid_at = new Date().toISOString();
+  const filter = b.group_id ? `group_id=eq.${b.group_id}` : `id=eq.${b.id}`;
+  await sbPatch("rc_bookings", filter, patch);
+  return { ...st, booking_id: b.id, marked_paid: Boolean(patch.manual_paid_at) };
+}
 
 const csvCell = (v) => { const s = String(v ?? ""); return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
 
@@ -52,6 +64,16 @@ export const handler = async (event) => {
           bookings_count: sold.length,
         }, noStore);
       }
+      if (q.action === "invoice_sync") {
+        if (!pennylaneEnabled()) return json(200, { enabled: false, synced: [] });
+        const rows = await sbSelect("rc_bookings", "status=eq.manual&pennylane_invoice_id=not.is.null&manual_paid_at=is.null&order=date.asc");
+        const seen = new Set(); const out = [];
+        for (const b of rows) {
+          const k = b.group_id || b.id; if (seen.has(k)) continue; seen.add(k);
+          try { out.push(await syncInvoice(b)); } catch (e) { out.push({ booking_id: b.id, error: e.message }); }
+        }
+        return json(200, { enabled: true, synced: out }, noStore);
+      }
       if (q.action === "manual_list") {
         const rows = await sbSelect("rc_bookings", `status=eq.manual&order=date.asc,service.asc,bubble.asc`);
         // une ligne par réservation ; une privatisation de service (group_id) est agrégée
@@ -63,7 +85,7 @@ export const handler = async (event) => {
           const g = rows.filter((x) => x.group_id === b.group_id);
           out.push({ ...b, adults: g.reduce((n, x) => n + x.adults, 0), kids: g.reduce((n, x) => n + x.kids, 0), seats: g.reduce((n, x) => n + x.seats, 0), amount_cents: g.reduce((n, x) => n + x.amount_cents, 0), services: [...new Set(g.map((x) => x.service))].sort(), bubbles: g.length });
         }
-        return json(200, { bookings: out }, noStore);
+        return json(200, { bookings: out, pennylane: pennylaneEnabled() }, noStore);
       }
       if (q.action === "export") {
         const rows = await sbSelect("rc_bookings", `status=in.(paid,manual,cancelled)&order=date.asc,service.asc,bubble.asc`);
@@ -123,7 +145,7 @@ export const handler = async (event) => {
             p_date: d.date, p_service: d.service, p_adults: adults, p_kids: kids,
             p_name: String(d.name || "Réservation").trim(), p_email: String(d.email || "").trim(), p_phone: String(d.phone || "").trim(),
             p_notes: String(d.notes || "").trim(), p_amount_cents: adults * CONFIG.ADULT_CENTS + kids * CONFIG.KID_CENTS,
-            p_hold_minutes: Math.round(hours * 60), p_source: "admin", p_status: "hold",
+            p_hold_minutes: Math.round((hours + CONFIG.HOLD_GRACE_HOURS) * 60), p_source: "admin", p_status: "hold",
           });
         } catch (e) {
           if (/NO_CAPACITY/.test(e.message)) return json(409, { error: "Pas de bulle ouverte avec assez de places" });
@@ -149,7 +171,7 @@ export const handler = async (event) => {
             p_date: d.date, p_services: services, p_adults: adults, p_kids: kids,
             p_name: String(d.name || "Privatisation").trim(), p_email: String(d.email || "").trim(), p_phone: String(d.phone || "").trim(),
             p_notes: String(d.notes || "").trim(), p_amount_cents: amount,
-            p_hold_minutes: Math.round(hours * 60), p_source: "admin", p_status: "hold",
+            p_hold_minutes: Math.round((hours + CONFIG.HOLD_GRACE_HOURS) * 60), p_source: "admin", p_status: "hold",
           });
         } catch (e) {
           if (/NO_CAPACITY/.test(e.message)) return json(409, { error: "Un des services demandés a déjà une réservation ou une bulle bloquée : il doit être entièrement libre" });
@@ -188,6 +210,52 @@ export const handler = async (event) => {
         return json(200, { booking: await groupView(upd[0]) });
       }
 
+      case "invoice": {
+        // Crée le client et la facture dans Pennylane, l'envoie par email, mémorise le numéro
+        if (!pennylaneEnabled()) return json(400, { error: "Pennylane n'est pas configuré (PENNYLANE_API_KEY)" });
+        const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
+        const b0 = rows[0];
+        if (!b0) return json(404, { error: "Introuvable" });
+        if (b0.status !== "manual") return json(409, { error: "Seule une réservation manuelle se facture" });
+        if (b0.pennylane_invoice_id) return json(409, { error: `Déjà facturée (${b0.pennylane_invoice_number || b0.pennylane_invoice_id})` });
+        const b = await groupView(b0);
+        if (!b.amount_cents) return json(400, { error: "Montant à 0 : rien à facturer" });
+        const email = String(d.email || b.email || "").trim();
+        const company = String(d.company || b.name || "").trim();
+        if (!company) return json(400, { error: "Raison sociale requise" });
+        const customer = await findOrCreateCustomer({
+          ref: `rc-${(email || b.id).toLowerCase()}`, name: company, email, phone: b.phone || "",
+          address: String(d.address || "").trim(), postalCode: String(d.postalCode || "").trim(), city: String(d.city || "").trim(),
+        });
+        const deadlineDays = Number(d.deadlineDays) > 0 ? Number(d.deadlineDays) : 30;
+        const { invoice, sent, sendError } = await invoiceBooking(b, { customer, deadlineDays, send: Boolean(d.send) && Boolean(email), recipients: email ? [email] : [] });
+        const st = invoiceState(invoice);
+        const filter = b.group_id ? `group_id=eq.${b.group_id}` : `id=eq.${b.id}`;
+        const patch = { pennylane_customer_id: customer.id, pennylane_invoice_id: st.id, pennylane_invoice_number: st.number || null, pennylane_status: st.status || null, pennylane_invoiced_at: new Date().toISOString(), ...(sent ? { pennylane_sent_at: new Date().toISOString() } : {}) };
+        if (email && email !== b.email) patch.email = email;
+        await sbPatch("rc_bookings", filter, patch);
+        return json(200, { invoice: st, sent, sendError, customer_id: customer.id });
+      }
+
+      case "invoice_send": {
+        const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
+        const b = rows[0];
+        if (!b || !b.pennylane_invoice_id) return json(404, { error: "Pas de facture Pennylane" });
+        const email = String(d.email || b.email || "").trim();
+        if (!email) return json(400, { error: "Email du client requis" });
+        await sendInvoice(b.pennylane_invoice_id, [email]);
+        const filter = b.group_id ? `group_id=eq.${b.group_id}` : `id=eq.${b.id}`;
+        await sbPatch("rc_bookings", filter, { pennylane_sent_at: new Date().toISOString(), ...(email !== b.email ? { email } : {}) });
+        return json(200, { ok: true });
+      }
+
+      case "invoice_status": {
+        const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
+        const b = rows[0];
+        if (!b || !b.pennylane_invoice_id) return json(404, { error: "Pas de facture Pennylane" });
+        return json(200, { invoice: await syncInvoice(b) });
+      }
+
       case "manual_paid": {
         const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
         const b = rows[0];
@@ -203,7 +271,7 @@ export const handler = async (event) => {
         const b = rows[0];
         if (!b) return json(404, { error: "Introuvable" });
         const filter = b.group_id ? `group_id=eq.${b.group_id}` : `id=eq.${b.id}`;
-        const upd = await sbPatch("rc_bookings", `${filter}&status=eq.hold&source=eq.admin`, { status: "hold", expires_at: new Date(Date.now() + hours * 3600000).toISOString() });
+        const upd = await sbPatch("rc_bookings", `${filter}&status=eq.hold&source=eq.admin`, { status: "hold", expires_at: new Date(Date.now() + (hours + CONFIG.HOLD_GRACE_HOURS) * 3600000).toISOString() });
         if (!upd.length) return json(404, { error: "Introuvable" });
         const v = await groupView(upd[0]);
         return json(200, { booking: v, url: payUrlFor(v) });

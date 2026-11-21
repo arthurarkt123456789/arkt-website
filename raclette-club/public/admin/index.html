@@ -148,7 +148,16 @@
       <label class="mode"><input type="radio" name="mode" value="hold" checked /> <span><b>Bloquer 24 h + lien de paiement</b><br><small>Les places sont réservées 24 h. Le client paie via le lien que tu lui envoies.</small></span></label>
       <label class="mode"><input type="radio" name="mode" value="manual" /> <span><b>Enregistrer directement</b><br><small>Virement, facture, payé sur place, offert. Aucun paiement en ligne ; à cocher « Encaissé » dans la liste des résas manuelles.</small></span></label>
     </div>
-    <div id="manualOnly" class="hidden"><label>Montant dû ou encaissé (€, 0 si offert)</label><input name="amount" type="number" step="0.01" min="0" value="0" /></div>
+    <div id="manualOnly" class="hidden"><label>Montant dû ou encaissé (€, 0 si offert)</label><input name="amount" type="number" step="0.01" min="0" value="0" />
+      <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem;margin-top:10px"><input type="checkbox" name="invoice" id="manualInvoice" style="width:auto" /> <span>Facturer via Pennylane et envoyer la facture par email</span></label>
+      <div id="invoiceFields" class="hidden" style="display:grid;gap:10px;margin-top:8px;padding:10px;border:2px dashed var(--ink);border-radius:12px">
+        <div><label>Raison sociale (nom sur la facture)</label><input name="company" placeholder="Entreprise X" /></div>
+        <div><label>Adresse</label><input name="address" placeholder="12 rue de la République" /></div>
+        <div class="row2"><div><label>Code postal</label><input name="postalCode" /></div><div><label>Ville</label><input name="city" /></div></div>
+        <div><label>Échéance (jours)</label><input name="deadlineDays" type="number" min="1" max="90" value="30" /></div>
+        <p style="font-size:.78rem;font-weight:600;color:#333">La facture est créée au nom de La Meulerie, envoyée à l'email du client, et la résa passera « Encaissé » automatiquement quand Pennylane la verra payée.</p>
+      </div>
+    </div>
     <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="sendEmail" style="width:auto" /> <span id="sendEmailLabel">Envoyer le lien de paiement par email au client</span></label>
     <div class="acts-row"><button type="button" class="ghost" onclick="dlgManual.close()">Annuler</button><button class="primary" type="submit" id="manualSubmit">Bloquer et générer le lien</button></div>
   </form>
@@ -166,12 +175,27 @@
   </form>
 </dialog>
 
+<dialog id="dlgInvoice">
+  <h3>Facturer via Pennylane</h3>
+  <form class="f" method="dialog" id="formInvoice">
+    <input type="hidden" name="id" />
+    <p id="invoiceInfo" style="font-size:.85rem;font-weight:600;color:#333"></p>
+    <div><label>Raison sociale (nom sur la facture)</label><input name="company" required /></div>
+    <div><label>Email d'envoi</label><input name="email" type="email" required /></div>
+    <div><label>Adresse</label><input name="address" /></div>
+    <div class="row2"><div><label>Code postal</label><input name="postalCode" /></div><div><label>Ville</label><input name="city" /></div></div>
+    <div><label>Échéance (jours)</label><input name="deadlineDays" type="number" min="1" max="90" value="30" /></div>
+    <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="send" style="width:auto" checked /> <span>Envoyer la facture par email tout de suite</span></label>
+    <div class="acts-row"><button type="button" class="ghost" onclick="dlgInvoice.close()">Annuler</button><button class="primary" type="submit">Créer la facture</button></div>
+  </form>
+</dialog>
+
 <dialog id="dlgManualList" style="max-width:1100px">
   <h3>Réservations manuelles</h3>
   <p style="font-size:.85rem;font-weight:600;color:#333;margin:-6px 0 10px">Toutes les résas posées à la main (virement, facture, espèces…). Coche « Encaissé » quand le client t'a payé.</p>
   <div id="manualSummary" style="font-weight:800;font-size:.9rem;margin-bottom:8px"></div>
   <div style="max-height:60vh;overflow:auto">
-    <table style="margin-top:0"><thead><tr><th>Date</th><th>Service</th><th>Client</th><th>Places</th><th>Montant</th><th>Remarques</th><th>Encaissé</th></tr></thead><tbody id="manualBody"></tbody></table>
+    <table style="margin-top:0"><thead><tr><th>Date</th><th>Service</th><th>Client</th><th>Places</th><th>Montant</th><th>Facture Pennylane</th><th>Encaissé</th></tr></thead><tbody id="manualBody"></tbody></table>
   </div>
   <div class="acts-row"><button type="button" class="ghost" onclick="dlgManualList.close()">Fermer</button></div>
 </dialog>
@@ -393,7 +417,7 @@
 
   // ---------- Résa manuelle ----------
   function openManual(svc) {
-    const f = $('formManual'); f.reset(); delete f.amount.dataset.touched; f.date.value = current; if (svc) f.service.value = svc; syncMode(); $('dlgManual').showModal();
+    const f = $('formManual'); f.reset(); delete f.amount.dataset.touched; $('invoiceFields').classList.add('hidden'); f.date.value = current; if (svc) f.service.value = svc; syncMode(); $('dlgManual').showModal();
   }
   const syncMode = () => {
     const f = $('formManual'); const hold = f.mode.value === 'hold';
@@ -403,6 +427,7 @@
     $('sendEmailLabel').textContent = hold ? 'Envoyer le lien de paiement par email au client' : "Envoyer l'email de confirmation au client";
   };
   $('formManual').addEventListener('input', (e) => { if (e.target.name === 'amount') e.target.dataset.touched = '1'; });
+  $('manualInvoice').addEventListener('change', (e) => { $('invoiceFields').classList.toggle('hidden', !e.target.checked); if (e.target.checked && !$('formManual').company.value) $('formManual').company.value = $('formManual').name.value; });
   $('formManual').addEventListener('change', (e) => { if (e.target.name === 'mode' || e.target.name === 'adults' || e.target.name === 'kids') syncMode(); });
   $('formManual').addEventListener('submit', async (e) => {
     e.preventDefault(); const f = e.target; const hold = f.mode.value === 'hold';
@@ -411,7 +436,14 @@
     try {
       const r = await api('POST', payload);
       $('dlgManual').close(); load(f.date.value); loadOverview(); loadStats();
-      if (hold) showLink(r.booking, r.url); else toast('Réservation enregistrée');
+      if (hold) { showLink(r.booking, r.url); return; }
+      if (f.invoice && f.invoice.checked) {
+        if (!f.email.value) { toast('Réservation enregistrée, mais pas de facture : email du client manquant', true); return; }
+        try {
+          const inv = await api('POST', { action: 'invoice', id: r.booking.id, company: f.company.value, address: f.address.value, postalCode: f.postalCode.value, city: f.city.value, email: f.email.value, deadlineDays: Number(f.deadlineDays.value) || 30, send: true });
+          toast(`Facture ${inv.invoice.number || inv.invoice.id} créée${inv.sent ? ' et envoyée' : inv.sendError ? ', envoi échoué : ' + inv.sendError : ''}`, Boolean(inv.sendError));
+        } catch (err) { toast('Réservation enregistrée, facture Pennylane refusée : ' + err.message, true); }
+      } else toast('Réservation enregistrée');
     } catch (err) { toast(err.message, true); }
   });
 
@@ -439,21 +471,49 @@
     const eur = (c) => (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
     let total = 0, paid = 0;
     if (!r.bookings.length) tb.innerHTML = '<tr><td colspan="7">Aucune réservation manuelle.</td></tr>';
+    const plLabel = { paid: 'payée', late: 'en retard', upcoming: 'envoyée, à échoir', partially_paid: 'partiellement payée', cancelled: 'annulée', draft: 'brouillon', incomplete: 'incomplète' };
     r.bookings.forEach((b) => {
       total += b.amount_cents; if (b.manual_paid_at) paid += b.amount_cents;
       const tickets = [b.adults ? b.adults + ' ad.' : '', b.kids ? b.kids + ' enf.' : ''].filter(Boolean).join(' + ');
       const svc = b.services ? b.services.map((x) => x.replace(':', 'h')).join(' · ') + ` <small>privatisation · ${b.bubbles} bulles</small>` : `${b.service.replace(':', 'h')} <small>bulle ${b.bubble}</small>`;
       const tr = document.createElement('tr'); tr.className = b.manual_paid_at ? 'paid' : 'manual';
-      tr.innerHTML = `<td><b>${fmtLong(b.date)}</b></td><td>${svc}</td><td><b>${esc(b.name)}</b><br><small>${esc(b.email || '')}${b.email && b.phone ? ' · ' : ''}${esc(b.phone || '')}</small></td><td>${b.seats}<br><small>${tickets}</small></td><td><b>${eur(b.amount_cents)}</b></td><td><small>${esc(b.notes || '')}</small></td><td><label style="display:flex;gap:6px;align-items:center;text-transform:none;font-size:.8rem;cursor:pointer"><input type="checkbox" data-paid="${b.id}" ${b.manual_paid_at ? 'checked' : ''} style="width:18px;height:18px" /> ${b.manual_paid_at ? new Date(b.manual_paid_at).toLocaleDateString('fr-FR') : 'non'}</label></td>`;
+      const inv = b.pennylane_invoice_id
+        ? `<b>${esc(b.pennylane_invoice_number || '#' + b.pennylane_invoice_id)}</b> <span class="pill ${b.pennylane_status === 'paid' ? 'paid' : b.pennylane_status === 'late' ? 'cancelled' : 'hold'}">${plLabel[b.pennylane_status] || esc(b.pennylane_status || '')}</span><br><small>${b.pennylane_sent_at ? 'envoyée le ' + new Date(b.pennylane_sent_at).toLocaleDateString('fr-FR') : 'non envoyée'}</small><br><button style="font-size:.68rem;padding:3px 7px;box-shadow:none" data-plpdf="${b.id}">PDF</button> <button style="font-size:.68rem;padding:3px 7px;box-shadow:none" data-plsend="${b.id}">Renvoyer</button>`
+        : (r.pennylane && b.amount_cents > 0 ? `<button class="blue" style="font-size:.68rem;padding:3px 8px;box-shadow:none" data-plinv="${b.id}">Facturer</button>` : '<small>–</small>');
+      tr.innerHTML = `<td><b>${fmtLong(b.date)}</b></td><td>${svc}</td><td><b>${esc(b.name)}</b><br><small>${esc(b.email || '')}${b.email && b.phone ? ' · ' : ''}${esc(b.phone || '')}</small>${b.notes ? `<br><small><i>${esc(b.notes)}</i></small>` : ''}</td><td>${b.seats}<br><small>${tickets}</small></td><td><b>${eur(b.amount_cents)}</b></td><td>${inv}</td><td><label style="display:flex;gap:6px;align-items:center;text-transform:none;font-size:.8rem;cursor:pointer"><input type="checkbox" data-paid="${b.id}" ${b.manual_paid_at ? 'checked' : ''} style="width:18px;height:18px" /> ${b.manual_paid_at ? new Date(b.manual_paid_at).toLocaleDateString('fr-FR') : 'non'}</label></td>`;
       tb.appendChild(tr);
     });
     $('manualSummary').textContent = `${r.bookings.length} réservation${r.bookings.length > 1 ? 's' : ''} · ${eur(total)} au total · ${eur(paid)} encaissés · ${eur(total - paid)} en attente`;
+    tb.querySelectorAll('[data-plinv]').forEach((x) => x.addEventListener('click', () => openInvoice(r.bookings.find((b) => b.id === x.dataset.plinv))));
+    tb.querySelectorAll('[data-plpdf]').forEach((x) => x.addEventListener('click', async () => {
+      try { const res = await api('POST', { action: 'invoice_status', id: x.dataset.plpdf }); if (res.invoice.pdf) window.open(res.invoice.pdf, '_blank'); else toast('PDF pas encore généré par Pennylane, réessaie dans une minute', true); renderManualList(); loadStats(); }
+      catch (err) { toast(err.message, true); }
+    }));
+    tb.querySelectorAll('[data-plsend]').forEach((x) => x.addEventListener('click', async () => {
+      const b = r.bookings.find((bb) => bb.id === x.dataset.plsend);
+      const email = prompt('Envoyer la facture à :', b.email || ''); if (!email) return;
+      try { await api('POST', { action: 'invoice_send', id: b.id, email }); toast('Facture envoyée'); renderManualList(); } catch (err) { toast(err.message, true); }
+    }));
     tb.querySelectorAll('[data-paid]').forEach((c) => c.addEventListener('change', async () => {
       try { await api('POST', { action: 'manual_paid', id: c.dataset.paid, paid: c.checked }); toast(c.checked ? 'Marquée encaissée' : 'Marquée non encaissée'); renderManualList(); loadStats(); }
       catch (err) { toast(err.message, true); c.checked = !c.checked; }
     }));
   }
   $('manualBtn').addEventListener('click', openManualList);
+
+  // ---------- Facture Pennylane sur une résa manuelle existante ----------
+  function openInvoice(b) {
+    const f = $('formInvoice'); f.reset(); f.id.value = b.id; f.company.value = b.name || ''; f.email.value = b.email || '';
+    $('invoiceInfo').textContent = `${fmtLong(b.date)} · ${b.services ? b.services.map((x) => x.replace(':', 'h')).join(' · ') + ' · privatisation' : b.service.replace(':', 'h')} · ${b.seats} place(s) · ${(b.amount_cents / 100).toLocaleString('fr-FR')} € TTC`;
+    $('dlgInvoice').showModal();
+  }
+  $('formInvoice').addEventListener('submit', async (e) => {
+    e.preventDefault(); const f = e.target;
+    try {
+      const inv = await api('POST', { action: 'invoice', id: f.id.value, company: f.company.value, email: f.email.value, address: f.address.value, postalCode: f.postalCode.value, city: f.city.value, deadlineDays: Number(f.deadlineDays.value) || 30, send: f.send.checked });
+      $('dlgInvoice').close(); toast(`Facture ${inv.invoice.number || inv.invoice.id} créée${inv.sent ? ' et envoyée' : inv.sendError ? ', envoi échoué : ' + inv.sendError : ''}`, Boolean(inv.sendError)); renderManualList();
+    } catch (err) { toast(err.message, true); }
+  });
 
   // ---------- Privatisation d'un service ----------
   function openService(svc) {
@@ -485,7 +545,7 @@
 
   function showLink(b, url) {
     const where = b.group ? `${b.group.label} · ${b.group.bubbles} bulles privatisées` : b.groupLabel ? `${b.groupLabel} · ${b.groupBubbles} bulles privatisées` : `${b.service.replace(':', 'h')} · bulle ${b.bubble}`;
-    $('linkInfo').textContent = `${b.name} · ${fmtLong(b.date)} ${where} · ${b.seats} place(s) · ${(b.amount_cents / 100).toLocaleString('fr-FR')} € · places bloquées jusqu'au ${new Date(b.expires_at).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}`;
+    $('linkInfo').textContent = `${b.name} · ${fmtLong(b.date)} ${where} · ${b.seats} place(s) · ${(b.amount_cents / 100).toLocaleString('fr-FR')} € · annoncé au client jusqu'au ${new Date(new Date(b.expires_at).getTime() - 24 * 3600000).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} · bloqué en réalité jusqu'au ${new Date(b.expires_at).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}`;
     $('linkUrl').value = url; $('dlgLink').showModal();
   }
   $('linkCopy').addEventListener('click', async () => { try { await navigator.clipboard.writeText($('linkUrl').value); toast('Lien copié'); } catch { $('linkUrl').select(); document.execCommand('copy'); toast('Lien copié'); } });
