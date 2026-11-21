@@ -182,6 +182,16 @@
     <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="resend" style="width:auto" /> <span>Renvoyer le mail de confirmation à cette adresse après enregistrement</span></label>
     <div class="acts-row"><button type="button" class="ghost" onclick="dlgEdit.close()">Annuler</button><button class="primary" type="submit">Enregistrer</button></div>
   </form>
+  <div id="addSeatsBox" style="margin-top:14px;padding:12px;border:2px dashed var(--ink);border-radius:14px">
+    <b style="font-size:.9rem">Ajouter des participants</b>
+    <p id="addSeatsInfo" style="font-size:.78rem;font-weight:600;color:#333;margin:4px 0 8px"></p>
+    <form class="f" method="dialog" id="formAddSeats">
+      <div class="row2"><div><label>Adultes en plus</label><input name="adults" type="number" min="0" max="9" value="1" /></div><div><label>Enfants en plus</label><input name="kids" type="number" min="0" max="9" value="0" /></div></div>
+      <div class="row2"><div><label>Montant du complément (€)</label><input name="amount" type="number" step="0.01" min="0" /></div><div><label>Durée annoncée</label><select name="hours"><option value="24">24 h</option><option value="48">48 h</option><option value="72">72 h</option></select></div></div>
+      <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="sendEmail" style="width:auto" checked /> <span>Envoyer le lien de paiement par email au client</span></label>
+      <div class="acts-row"><button class="blue" type="submit">Bloquer les places et générer le lien</button></div>
+    </form>
+  </div>
 </dialog>
 
 <dialog id="dlgInvoice">
@@ -395,7 +405,7 @@
       }
       const tr = document.createElement('tr'); tr.className = b.status;
       const tickets = [b.adults ? b.adults + ' ad.' : '', b.kids ? b.kids + ' enf.' : ''].filter(Boolean).join(' + ');
-      tr.innerHTML = `<td><b>${b.group_id ? b.groupLabel : b.service.replace(':', 'h')}</b>${b.group_id ? '<br><small>privatisation</small>' : ''}</td><td>${b.group_id ? `${b.groupBubbles} bulles` : b.bubble}</td><td><b>${esc(b.name)}</b><br><small>${b.id.slice(0, 8).toUpperCase()} · ${b.source === 'admin' ? 'manuel' : 'web'}</small></td>
+      tr.innerHTML = `<td><b>${b.group_id ? b.groupLabel : b.service.replace(':', 'h')}</b>${b.group_id ? '<br><small>privatisation</small>' : ''}</td><td>${b.group_id ? `${b.groupBubbles} bulles` : b.bubble}</td><td><b>${esc(b.name)}</b>${b.parent_id ? ' <span class="pill" style="background:var(--yellow)">+ complément</span>' : ''}<br><small>${b.id.slice(0, 8).toUpperCase()} · ${b.source === 'admin' ? 'manuel' : 'web'}</small></td>
         <td>${b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a><br>` : ''}${b.phone ? `<a href="tel:${esc(b.phone)}">${esc(b.phone)}</a>` : ''}</td>
         <td>${tickets}<br><small>${(b.amount_cents / 100).toLocaleString('fr-FR')} €</small></td><td style="max-width:220px">${esc(b.notes || '')}</td>
         <td><span class="pill ${b.status}">${b.status === 'hold' ? (b.source === 'admin' ? 'Attente paiement' : 'En cours') : ({ paid: 'Payé', manual: 'Manuel', cancelled: 'Annulé', expired: 'Expiré' }[b.status] || b.status)}</span>${b.status === 'hold' && b.expires_at ? `<br><small>jusqu'au ${new Date(b.expires_at).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</small>` : ''}${b.refund_id ? '<br><small>remboursé</small>' : ''}</td>
@@ -468,8 +478,26 @@
     const b = agg(day.bookings.find((x) => x.id === id)); const f = $('formEdit');
     f.id.value = b.id; f.name.value = b.name || ''; f.email.value = b.email || ''; f.phone.value = b.phone || ''; f.notes.value = b.notes || '';
     $('editInfo').textContent = `${fmtLong(b.date)} · ${b.group_id ? b.groupLabel + ' · privatisation' : b.service.replace(':', 'h') + ' · bulle ' + b.bubble} · ${b.seats} place(s)`;
+    const canAdd = !b.group_id && (b.status === 'paid' || b.status === 'manual');
+    $('addSeatsBox').classList.toggle('hidden', !canAdd);
+    if (canAdd) {
+      const fam = day.bookings.filter((x) => (x.id === b.id || x.parent_id === b.id) && x.status !== 'cancelled' && x.status !== 'expired').reduce((n, x) => n + x.seats, 0);
+      const others = day.bookings.filter((x) => x.service === b.service && x.bubble === b.bubble && x.id !== b.id && x.parent_id !== b.id && x.status !== 'cancelled' && x.status !== 'expired').reduce((n, x) => n + x.seats, 0);
+      const maxAdd = others > 0 ? Math.max(0, Math.min(8 - fam - others, 10 - fam)) : Math.max(0, 10 - fam);
+      $('addSeatsInfo').textContent = `Aujourd'hui ${fam} place(s) pour ce client${others ? `, ${others} autre(s) convive(s) dans la bulle` : ', bulle à lui seul'} · jusqu'à ${maxAdd} place(s) en plus. Le client reçoit un lien pour payer les places ajoutées ; le blocage réel dure 24 h de plus que la durée annoncée.`;
+      const fa = $('formAddSeats'); fa.reset(); delete fa.amount.dataset.touched; fa.dataset.id = b.id; syncAddSeats();
+    }
     $('dlgEdit').showModal();
   }
+  const syncAddSeats = () => { const fa = $('formAddSeats'); if (!fa.amount.dataset.touched) fa.amount.value = ((Number(fa.adults.value) || 0) * 36 + (Number(fa.kids.value) || 0) * 24).toFixed(2); };
+  $('formAddSeats').addEventListener('input', (e) => { if (e.target.name === 'amount') e.target.dataset.touched = '1'; else syncAddSeats(); });
+  $('formAddSeats').addEventListener('submit', async (e) => {
+    e.preventDefault(); const fa = e.target;
+    try {
+      const r = await api('POST', { action: 'add_seats', id: fa.dataset.id, adults: Number(fa.adults.value), kids: Number(fa.kids.value), amountCents: Math.round(Number(fa.amount.value || 0) * 100), hours: Number(fa.hours.value) || 24, sendEmail: fa.sendEmail.checked });
+      $('dlgEdit').close(); load(current); loadOverview(); loadStats(); showLink(r.booking, r.url);
+    } catch (err) { toast(err.message, true); }
+  });
   $('formEdit').addEventListener('submit', async (e) => {
     e.preventDefault(); const f = e.target;
     try { const r = await api('POST', { action: 'edit', id: f.id.value, name: f.name.value, email: f.email.value, phone: f.phone.value, notes: f.notes.value, resend: f.resend.checked }); $('dlgEdit').close(); toast(r.resent ? (r.resent.startsWith('erreur') ? 'Modifié, mais mail non envoyé : ' + r.resent : `Modifié, mail (${r.resent}) renvoyé`) : 'Réservation modifiée', Boolean(r.resent && r.resent.startsWith('erreur'))); load(current); }

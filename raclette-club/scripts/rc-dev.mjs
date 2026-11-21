@@ -50,8 +50,26 @@ function hold(a) {
   const cands = slots.filter((s) => s.date === a.p_date && s.service === a.p_service && s.status === "open").map(usage).filter((u) => seats >= 8 ? u.used === 0 : u.free >= seats).sort((x, y) => x.free - y.free || x.bubble - y.bubble);
   if (!cands.length) throw Object.assign(new Error("NO_CAPACITY"), { code: 400 });
   const u = cands[0];
-  const b = { id: randomUUID(), slot_id: u.slot_id, date: a.p_date, service: a.p_service, bubble: u.bubble, adults: a.p_adults, kids: a.p_kids, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: a.p_amount_cents, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: null, exclusive: false, manual_paid_at: null, pennylane_customer_id: null, pennylane_invoice_id: null, pennylane_invoice_number: null, pennylane_status: null, pennylane_invoiced_at: null, pennylane_sent_at: null };
+  const b = { id: randomUUID(), slot_id: u.slot_id, date: a.p_date, service: a.p_service, bubble: u.bubble, adults: a.p_adults, kids: a.p_kids, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: a.p_amount_cents, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: null, exclusive: false, manual_paid_at: null, parent_id: null, pennylane_customer_id: null, pennylane_invoice_id: null, pennylane_invoice_number: null, pennylane_status: null, pennylane_invoiced_at: null, pennylane_sent_at: null };
   bookings.push(b); return b;
+}
+
+function addSeats(a) {
+  const seats = a.p_adults + a.p_kids; if (seats < 1) throw Object.assign(new Error("NO_SEATS"), { code: 400 });
+  const parent = bookings.find((b) => b.id === a.p_booking_id);
+  if (!parent || !["paid", "manual"].includes(parent.status)) throw Object.assign(new Error("NOT_ACTIVE"), { code: 400 });
+  if (parent.group_id) throw Object.assign(new Error("IS_GROUP"), { code: 400 });
+  bookings.forEach((b) => { if (b.status === "hold" && new Date(b.expires_at) <= new Date()) b.status = "expired"; });
+  const slot = slots.find((s) => s.id === parent.slot_id); if (slot.status !== "open") throw Object.assign(new Error("NO_CAPACITY"), { code: 400 });
+  const act = bookings.filter((b) => b.slot_id === slot.id && active(b));
+  const fam = act.filter((b) => b.id === parent.id || b.parent_id === parent.id).reduce((n, b) => n + b.seats, 0);
+  const others = act.filter((b) => b.id !== parent.id && b.parent_id !== parent.id).reduce((n, b) => n + b.seats, 0);
+  if (fam + seats > 10) throw Object.assign(new Error("TOO_MANY"), { code: 400 });
+  if (others > 0 && fam + others + seats > slot.capacity) throw Object.assign(new Error("NO_CAPACITY"), { code: 400 });
+  const b = { id: randomUUID(), slot_id: slot.id, date: parent.date, service: parent.service, bubble: parent.bubble, adults: a.p_adults, kids: a.p_kids, seats, name: parent.name, email: parent.email, phone: parent.phone, notes: "Complément de la réservation " + parent.id.slice(0, 8).toUpperCase(), amount_cents: a.p_amount_cents, status: "hold", source: "admin", stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: new Date(Date.now() + a.p_hold_minutes * 60000).toISOString(), created_at: new Date().toISOString(), paid_at: null, cancelled_at: null, group_id: null, exclusive: fam + seats >= 8, manual_paid_at: null, parent_id: parent.id, pennylane_customer_id: null, pennylane_invoice_id: null, pennylane_invoice_number: null, pennylane_status: null, pennylane_invoiced_at: null, pennylane_sent_at: null };
+  bookings.push(b);
+  if (fam + seats >= 8) bookings.forEach((x) => { if (x.id === parent.id || x.parent_id === parent.id) x.exclusive = true; });
+  return b;
 }
 
 function holdGroup(a) {
@@ -67,7 +85,7 @@ function holdGroup(a) {
   const gid = randomUUID(); let remAd = a.p_adults; const out = [];
   target.forEach((s, i) => {
     const seats = Math.floor(total / n) + (i < total % n ? 1 : 0); const ad = Math.min(remAd, seats); remAd -= ad;
-    const b = { id: randomUUID(), slot_id: s.id, date: a.p_date, service: s.service, bubble: s.bubble, adults: ad, kids: seats - ad, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: i === 0 ? a.p_amount_cents : 0, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: gid, exclusive: true, manual_paid_at: null, pennylane_customer_id: null, pennylane_invoice_id: null, pennylane_invoice_number: null, pennylane_status: null, pennylane_invoiced_at: null, pennylane_sent_at: null };
+    const b = { id: randomUUID(), slot_id: s.id, date: a.p_date, service: s.service, bubble: s.bubble, adults: ad, kids: seats - ad, seats, name: a.p_name, email: a.p_email || null, phone: a.p_phone || null, notes: a.p_notes || null, amount_cents: i === 0 ? a.p_amount_cents : 0, status: a.p_status, source: a.p_source, stripe_session_id: null, stripe_payment_intent: null, refund_id: null, cancel_token: randomUUID().replace(/-/g, ""), expires_at: a.p_status === "hold" ? new Date(Date.now() + a.p_hold_minutes * 60000).toISOString() : null, created_at: new Date().toISOString(), paid_at: a.p_status === "manual" ? new Date().toISOString() : null, cancelled_at: null, group_id: gid, exclusive: true, manual_paid_at: null, parent_id: null, pennylane_customer_id: null, pennylane_invoice_id: null, pennylane_invoice_number: null, pennylane_status: null, pennylane_invoiced_at: null, pennylane_sent_at: null };
     bookings.push(b); out.push(b);
   });
   return out;
@@ -96,6 +114,7 @@ async function mockSupabase(url, init) {
     try {
       if (fn === "rc_hold") return ok(hold(body));
       if (fn === "rc_hold_group") return ok(holdGroup(body));
+      if (fn === "rc_add_seats") return ok(addSeats(body));
       if (fn === "rc_availability") {
         return ok(SERVICES.map((s) => { const us = slots.filter((x) => x.date === body.p_date && x.service === s).map(usage); if (!us.length) return null; const open = us.filter((x) => x.status === "open"); const empty = open.filter((x) => x.used === 0).length; return { service: s, free_total: open.reduce((n, x) => n + Math.max(0, x.free), 0), max_group: empty > 0 ? 10 : Math.max(0, ...open.map((x) => x.free)), open_bubbles: open.length, empty_bubbles: empty }; }).filter(Boolean));
       }

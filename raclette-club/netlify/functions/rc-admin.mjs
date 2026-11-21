@@ -189,6 +189,27 @@ export const handler = async (event) => {
         return json(200, { booking: b, url });
       }
 
+      case "add_seats": {
+        // Ajoute des participants à une résa payée ou manuelle : complément dans la même bulle, lien de paiement
+        const adults = Number.parseInt(d.adults, 10) || 0, kids = Number.parseInt(d.kids, 10) || 0;
+        if (adults + kids < 1) return json(400, { error: "Au moins une place à ajouter" });
+        const hours = Number(d.hours) > 0 ? Number(d.hours) : 24;
+        const amount = Number.isInteger(d.amountCents) && d.amountCents >= 0 ? d.amountCents : adults * CONFIG.ADULT_CENTS + kids * CONFIG.KID_CENTS;
+        let b;
+        try {
+          b = await sbRpc("rc_add_seats", { p_booking_id: d.id, p_adults: adults, p_kids: kids, p_amount_cents: amount, p_hold_minutes: Math.round((hours + CONFIG.HOLD_GRACE_HOURS) * 60) });
+        } catch (e) {
+          if (/NOT_ACTIVE/.test(e.message)) return json(409, { error: "Seule une réservation payée ou manuelle peut être complétée" });
+          if (/IS_GROUP/.test(e.message)) return json(409, { error: "Une privatisation de service se modifie par une nouvelle résa manuelle" });
+          if (/TOO_MANY/.test(e.message)) return json(409, { error: "10 personnes maximum dans une bulle, compléments inclus" });
+          if (/NO_CAPACITY/.test(e.message)) return json(409, { error: "Plus assez de place dans cette bulle : d'autres convives l'occupent. Déplace d'abord la résa vers une bulle plus libre (bouton Bulle)" });
+          throw e;
+        }
+        const url = payUrlFor(b);
+        if (d.sendEmail && b.email) await sendEmail({ to: b.email, subject: `Vos places supplémentaires sont bloquées · Raclette Club ${fmtDate(b.date)} à ${hhmm(b.service)}`, html: holdEmailHtml(b) });
+        return json(200, { booking: b, url });
+      }
+
       case "resend": {
         // Renvoie le mail de confirmation (ou le lien de paiement) au client, à l'adresse enregistrée ou à une autre
         const rows = await sbSelect("rc_bookings", `id=eq.${encodeURIComponent(d.id)}&limit=1`);
@@ -310,12 +331,18 @@ export const handler = async (event) => {
         const b = rows[0];
         if (!b) return json(404, { error: "Introuvable" });
         if (b.group_id) return json(409, { error: "Une privatisation de service occupe toutes les bulles, rien à déplacer" });
+        if (b.parent_id) return json(409, { error: "Déplace la réservation d'origine : ses compléments suivent" });
         const bubble = Number(d.bubble);
         const usage = await sbSelect("rc_slot_usage", `date=eq.${b.date}&service=eq.${encodeURIComponent(b.service)}&bubble=eq.${bubble}&limit=1`);
         const target = usage[0];
         if (!target) return json(404, { error: "Bulle introuvable" });
-        if (b.seats >= CONFIG.PRIVATE_MIN ? target.used > 0 : target.free < b.seats) return json(409, { error: b.seats >= CONFIG.PRIVATE_MIN ? `Bulle ${bubble} déjà occupée, une privatisation exige une bulle vide` : `Bulle ${bubble} : ${target.free} place(s) libre(s), il en faut ${b.seats}` });
+        // La famille (origine + compléments actifs) se déplace ensemble
+        const kids = await sbSelect("rc_bookings", `parent_id=eq.${b.id}&status=in.(paid,manual,hold)`);
+        const family = [b, ...kids.filter((k) => k.status !== "hold" || new Date(k.expires_at) > new Date())];
+        const seats = family.reduce((n, x) => n + x.seats, 0);
+        if (seats >= CONFIG.PRIVATE_MIN ? target.used > 0 : target.free < seats) return json(409, { error: seats >= CONFIG.PRIVATE_MIN ? `Bulle ${bubble} déjà occupée, une privatisation exige une bulle vide` : `Bulle ${bubble} : ${target.free} place(s) libre(s), il en faut ${seats}` });
         const upd = await sbPatch("rc_bookings", `id=eq.${b.id}`, { slot_id: target.slot_id, bubble });
+        if (kids.length) await sbPatch("rc_bookings", `parent_id=eq.${b.id}`, { slot_id: target.slot_id, bubble });
         return json(200, { booking: upd[0] });
       }
 
