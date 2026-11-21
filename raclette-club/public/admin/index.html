@@ -145,8 +145,16 @@
     <div class="row2"><div><label>Email</label><input name="email" type="email" /></div><div><label>Téléphone</label><input name="phone" /></div></div>
     <div><label>Remarques</label><input name="notes" placeholder="Invités, presse, payé sur place…" /></div>
     <div class="modes">
-      <label class="mode"><input type="radio" name="mode" value="hold" checked /> <span><b>Bloquer 24 h + lien de paiement</b><br><small>Les places sont réservées 24 h. Le client paie via le lien que tu lui envoies.</small></span></label>
+      <label class="mode"><input type="radio" name="mode" value="hold" checked /> <span><b>Bloquer + lien de paiement</b><br><small>Les places sont réservées le temps choisi. Le client paie via le lien que tu lui envoies.</small></span></label>
       <label class="mode"><input type="radio" name="mode" value="manual" /> <span><b>Enregistrer directement</b><br><small>Virement, facture, payé sur place, offert. Aucun paiement en ligne ; à cocher « Encaissé » dans la liste des résas manuelles.</small></span></label>
+    </div>
+    <div id="holdOnly"><label>Durée annoncée au client</label>
+      <div class="modes" style="grid-template-columns:repeat(3,1fr)">
+        <label class="mode"><input type="radio" name="hours" value="24" checked /> <span><b>24 h</b></span></label>
+        <label class="mode"><input type="radio" name="hours" value="48" /> <span><b>48 h</b></span></label>
+        <label class="mode"><input type="radio" name="hours" value="72" /> <span><b>72 h</b></span></label>
+      </div>
+      <p style="font-size:.78rem;font-weight:600;color:#333;margin-top:4px">Le blocage réel dure 24 h de plus que la durée annoncée.</p>
     </div>
     <div id="manualOnly" class="hidden"><label>Montant dû ou encaissé (€, 0 si offert)</label><input name="amount" type="number" step="0.01" min="0" value="0" />
       <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem;margin-top:10px"><input type="checkbox" name="invoice" id="manualInvoice" style="width:auto" /> <span>Facturer via Pennylane et envoyer la facture par email</span></label>
@@ -217,7 +225,7 @@
     <div><label>Nom (entreprise, organisateur)</label><input name="name" required /></div>
     <div class="row2"><div><label>Email</label><input name="email" type="email" /></div><div><label>Téléphone</label><input name="phone" /></div></div>
     <div><label>Remarques</label><input name="notes" placeholder="Séminaire, anniversaire, contact sur place…" /></div>
-    <div class="row2"><div><label>Montant à régler (€)</label><input name="amount" type="number" step="0.01" min="0" /></div><div><label>Blocage (heures)</label><input name="hours" type="number" min="1" max="720" value="72" /></div></div>
+    <div class="row2"><div><label>Montant à régler (€)</label><input name="amount" type="number" step="0.01" min="0" /></div><div><label>Durée annoncée au client</label><select name="hours"><option value="24">24 h</option><option value="48">48 h</option><option value="72" selected>72 h</option><option value="168">7 jours</option></select></div></div>
     <label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:.85rem"><input type="checkbox" name="sendEmail" style="width:auto" checked /> <span>Envoyer le lien de paiement par email au client</span></label>
     <div class="acts-row"><button type="button" class="ghost" onclick="dlgService.close()">Annuler</button><button class="primary" type="submit">Bloquer et générer le lien</button></div>
   </form>
@@ -423,7 +431,7 @@
   const syncMode = () => {
     const f = $('formManual'); const hold = f.mode.value === 'hold';
     if (!f.amount.dataset.touched) f.amount.value = ((Number(f.adults.value) || 0) * 36 + (Number(f.kids.value) || 0) * 24).toFixed(2);
-    $('manualOnly').classList.toggle('hidden', hold);
+    $('manualOnly').classList.toggle('hidden', hold); $('holdOnly').classList.toggle('hidden', !hold);
     $('manualSubmit').textContent = hold ? 'Bloquer et générer le lien' : 'Enregistrer';
     $('sendEmailLabel').textContent = hold ? 'Envoyer le lien de paiement par email au client' : "Envoyer l'email de confirmation au client";
   };
@@ -433,6 +441,7 @@
   $('formManual').addEventListener('submit', async (e) => {
     e.preventDefault(); const f = e.target; const hold = f.mode.value === 'hold';
     const payload = { action: hold ? 'hold' : 'manual', date: f.date.value, service: f.service.value, adults: Number(f.adults.value), kids: Number(f.kids.value), name: f.name.value, email: f.email.value, phone: f.phone.value, notes: f.notes.value, sendEmail: f.sendEmail.checked };
+    if (hold) payload.hours = Number(f.hours.value) || 24;
     if (!hold) payload.amountCents = Math.round(Number(f.amount.value || 0) * 100);
     try {
       const r = await api('POST', payload);
