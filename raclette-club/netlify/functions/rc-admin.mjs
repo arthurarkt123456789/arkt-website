@@ -11,7 +11,7 @@
 // POST { action: 'hold_service', date, services:[...], adults, kids, name, email, phone, notes, hours, amountCents?, sendEmail }
 //                                            -> privatise tous les services listés (5 bulles chacun), 1 lien de paiement
 import { CONFIG, json, checkAdmin, sbRpc, sbSelect, sbPatch, notifyConfirmation, sendEmail, fmtDate, hhmm, svcLabel, payUrlFor, holdEmailHtml, cancelEmailHtml, groupView, cancelBooking, isValidService } from "../lib/rc.mjs";
-import { pennylaneEnabled, findOrCreateCustomer, invoiceBooking, getInvoice, sendInvoice, invoiceState } from "../lib/pennylane.mjs";
+import { pl, pennylaneEnabled, findOrCreateCustomer, invoiceBooking, getInvoice, sendInvoice, invoiceState } from "../lib/pennylane.mjs";
 
 /** Rafraîchit le statut Pennylane d'une résa manuelle ; passe « Encaissé » quand la facture est payée. */
 export async function syncInvoice(b) {
@@ -63,6 +63,11 @@ export const handler = async (event) => {
           refunded_cents: sum(cancelled.filter((r) => r.refund_id), (r) => r.amount_cents),
           bookings_count: sold.length,
         }, noStore);
+      }
+      if (q.action === "pennylane_check") {
+        if (!pennylaneEnabled()) return json(200, { enabled: false });
+        try { const me = await pl("GET", "/me"); return json(200, { enabled: true, ok: true, company: me?.company?.name || me?.company || null, user: me?.user?.email || me?.email || null }, noStore); }
+        catch (e) { return json(200, { enabled: true, ok: false, error: e.message }, noStore); }
       }
       if (q.action === "invoice_sync") {
         if (!pennylaneEnabled()) return json(200, { enabled: false, synced: [] });
