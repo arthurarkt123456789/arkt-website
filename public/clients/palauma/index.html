@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Palauma · Résidence Louise · Campagne cuisine offerte</title>
+<title>Palauma · Résidence Louise · Campagne de la première pierre</title>
 <meta name="robots" content="noindex, nofollow" />
 <meta name="theme-color" content="#2d3741" />
 <style>
@@ -55,9 +55,10 @@ h3 { margin: 0 0 4px; font-size: 18px; font-weight: 600; }
 .points li { counter-increment: p; position: relative; padding: 14px 0 14px 46px; border-top: 1px solid var(--line); }
 .points li::before { content: counter(p); position: absolute; left: 0; top: 11px; width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 15px; font-weight: 600; line-height: 30px; text-align: center; }
 .points b { font-weight: 600; }
-.result { margin: 24px 0 0; padding: 16px 20px; background: var(--ink); color: var(--paper); border-radius: 6px; font-size: 18px; }
-.result b { color: var(--accent); font-weight: 600; }
-.source { margin: 10px 0 0; font-size: 13.5px; color: var(--ink-mute); }
+.lead { margin: 0 0 22px; padding: 16px 20px; background: var(--ink); color: var(--paper); border-radius: 6px; font-size: 19px; line-height: 1.35; }
+.lead b { color: var(--accent); font-weight: 600; }
+.estim { margin: 20px 0 0; font-size: 14.5px; color: var(--ink-mute); max-width: 86ch; }
+sup { font-size: 0.68em; line-height: 0; }
 
 /* Créas */
 .block { margin-top: 34px; }
@@ -74,12 +75,25 @@ figcaption { margin-top: 8px; font-size: 14px; color: var(--ink-mute); }
 .duo { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px clamp(28px, 4vw, 56px); align-items: start; }
 .duo > * { min-width: 0; }
 .cards { display: grid; gap: 16px; }
-.cards.c5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .cards.c6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .adtext { margin-top: 26px; padding: 18px 22px; background: var(--white); border: 1px solid var(--line); border-radius: 6px; max-width: 860px; }
 .adtext h3 { margin-bottom: 8px; }
 .adtext p { margin: 0; }
-.adtext p + p { margin-top: 8px; color: var(--ink-mute); font-size: 15.5px; }
+.adtext p + p { margin-top: 10px; }
+.adtext p.meta { color: var(--ink-mute); font-size: 15.5px; }
+
+/* LinkedIn */
+.rules { margin: 0 0 26px; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.rules li { background: var(--white); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; }
+.plan { margin: 0; padding: 0; list-style: none; }
+.plan li { display: grid; grid-template-columns: 190px 200px 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
+.plan li:first-child { border-top: 0; padding-top: 0; }
+.plan b { font-weight: 600; }
+.plan .who { color: var(--accent-deep); font-weight: 600; }
+.dl { display: inline-block; margin-top: 22px; padding: 12px 20px; background: var(--ink); color: var(--paper); border-radius: 6px; text-decoration: none; font-weight: 500; }
+.dl:hover, .dl:focus-visible { background: var(--accent-deep); }
+.ch { font-style: normal; font-weight: 600; color: var(--accent-deep); }
+.cal li.key .ch { color: var(--accent); }
 
 /* Calendrier */
 .cal { margin: 0; padding: 0; list-style: none; }
@@ -124,8 +138,10 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
   .points { grid-template-columns: 1fr; }
   .todo { grid-template-columns: 1fr; }
   .cal li { grid-template-columns: 1fr; gap: 2px; }
+  .rules { grid-template-columns: 1fr; }
+  .plan li { grid-template-columns: 1fr; gap: 2px; }
   /* Les créas défilent au doigt, à la taille d'un écran de téléphone */
-  .row, .mix, .cards.c5, .cards.c6 { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x proximity; margin-inline: calc(-1 * clamp(18px, 4vw, 48px)); padding: 0 clamp(18px, 4vw, 48px) 14px; --h: 430px; -webkit-overflow-scrolling: touch; }
+  .row, .mix, .cards.c6 { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x proximity; margin-inline: calc(-1 * clamp(18px, 4vw, 48px)); padding: 0 clamp(18px, 4vw, 48px) 14px; --h: 430px; -webkit-overflow-scrolling: touch; }
   .mix { --h: 340px; }
   .row figure, .mix figure, .cards figure { flex: 0 0 auto; scroll-snap-align: center; }
   .mix .f45 { width: calc(var(--h) * 0.8); }
@@ -142,13 +158,13 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
       <img src="/clients/palauma/img/palauma-blanc.png" alt="Palauma Global Group" />
       <img src="/clients/palauma/img/louise-blanc.svg" alt="Résidence Louise, Marseille 12e" />
     </div>
-    <h1>Campagne «&nbsp;Votre cuisine offerte&nbsp;»</h1>
-    <p>Résidence Louise · du 23 novembre au 3 décembre 2026</p>
+    <h1>Campagne de la première pierre</h1>
+    <p>Résidence Louise, Saint-Barnabé · du 23 novembre au 3 décembre 2026</p>
     <div class="kpis">
-      <div class="kpi hot"><b>10</b><span>rendez-vous qualifiés visés</span></div>
+      <div class="kpi hot"><b>3 déc.</b><span>pose de la première pierre</span></div>
       <div class="kpi"><b>500&nbsp;€</b><span>de publicité Instagram et Facebook</span></div>
       <div class="kpi"><b>8 jours</b><span>de diffusion, du 23 au 30 novembre</span></div>
-      <div class="kpi"><b>3 déc.</b><span>pose de la première pierre</span></div>
+      <div class="kpi"><b>20 km</b><span>autour de Saint-Barnabé</span></div>
     </div>
   </div>
 </header>
@@ -158,22 +174,22 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
 <section>
   <div class="wrap narrow">
     <h2>La stratégie</h2>
+    <p class="lead">On s’appuie sur la <b>pose de la première pierre, le 3 décembre</b>, pour événementialiser la commercialisation de la Résidence Louise.</p>
     <ol class="points">
-      <li><b>L’offre.</b> La cuisine est offerte pour toute réservation signée le 3 décembre.</li>
-      <li><b>La publicité.</b> 500&nbsp;€ sur Instagram et Facebook, dans un rayon de 20 km autour de la résidence.</li>
-      <li><b>Le filtre.</b> Un formulaire de cinq questions : projet, typologie, budget, financement, créneau de rappel.</li>
-      <li><b>Le rappel.</b> Chaque contact est rappelé par téléphone sous 24 heures.</li>
-      <li><b>L’invitation.</b> Seuls les profils avec un budget adapté et un financement engagé sont invités le 3 décembre.</li>
-      <li><b>En parallèle.</b> Relance des prospects déjà connus, publications sur Instagram et LinkedIn.</li>
+      <li><b>L’événement.</b> La première pierre donne une date limite et une raison d’inviter les acheteurs.</li>
+      <li><b>L’offre.</b> Jusqu’au 3 décembre, on offre la cuisine pour toute réservation.</li>
+      <li><b>La publicité.</b> 500&nbsp;€ sur Instagram et Facebook, dans un rayon de 20 km autour de Saint-Barnabé.</li>
+      <li><b>Le filtre.</b> Un formulaire de cinq questions, puis un rappel téléphonique sous 24 heures.</li>
+      <li><b>L’invitation.</b> Les profils avec un budget adapté et un financement engagé sont invités le 3 décembre.</li>
+      <li><b>L’organique.</b> Publications sur Instagram et LinkedIn, relance des prospects déjà connus.</li>
     </ol>
-    <p class="result">Résultat estimé avec 500&nbsp;€ : <b>7 rendez-vous qualifiés</b>, entre 4 et 15 selon le coût par contact. La relance des prospects déjà connus vise le complément.</p>
-    <p class="source">Estimation calculée sur les moyennes 2026 de l’immobilier en France : 18 à 45&nbsp;€ par contact, 35 à 55&nbsp;% de contacts qualifiés (source : RBP Group).</p>
+    <p class="estim">Estimation indicative pour 500&nbsp;€ de publicité : entre 4 et 15 rendez-vous qualifiés. Calcul : 18 à 45&nbsp;€ par contact et 35 à 55&nbsp;% de contacts qualifiés, moyennes 2026 de l’immobilier en France (source : RBP Group).</p>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
-    <h2>Les 3 créas de la publicité</h2>
+    <h2>Publicité Instagram et Facebook</h2>
 
     <div class="duo">
       <div class="block">
@@ -181,8 +197,8 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
         <p class="where">14 secondes · Reels et Stories</p>
         <div class="row">
           <figure class="f916">
-            <video controls muted playsinline preload="none" poster="/clients/palauma/img/reel-louise.jpg">
-              <source src="/clients/palauma/img/reel-louise.mp4" type="video/mp4" />
+            <video controls muted playsinline preload="none" poster="/clients/palauma/img/reel-louise.jpg?v=2">
+              <source src="/clients/palauma/img/reel-louise.mp4?v=2" type="video/mp4" />
             </video>
           </figure>
         </div>
@@ -191,59 +207,60 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
         <h3>2. Le visuel de l’offre</h3>
         <p class="where">Fil Instagram et Facebook · Stories</p>
         <div class="row" data-g>
-          <figure class="f45"><a class="zoom" href="/clients/palauma/creas/main.jpg"><img src="/clients/palauma/creas/main.jpg" alt="Visuel de l’offre, format fil : Votre cuisine offerte" width="1080" height="1350" /></a></figure>
-          <figure class="f916"><a class="zoom" href="/clients/palauma/creas/story-offre.jpg"><img src="/clients/palauma/creas/story-offre.jpg" alt="Visuel de l’offre, format story : Votre cuisine offerte" width="1080" height="1920" /></a></figure>
+          <figure class="f45"><a class="zoom" href="/clients/palauma/creas/main.jpg"><img src="/clients/palauma/creas/main.jpg" alt="Visuel de l’offre, format fil : jusqu’au 3 décembre, on vous offre la cuisine" width="1080" height="1350" /></a></figure>
+          <figure class="f916"><a class="zoom" href="/clients/palauma/creas/story-offre.jpg"><img src="/clients/palauma/creas/story-offre.jpg" alt="Visuel de l’offre, format story : jusqu’au 3 décembre, on vous offre la cuisine" width="1080" height="1920" /></a></figure>
         </div>
       </div>
     </div>
 
     <div class="block">
       <h3>3. Le carrousel</h3>
-      <p class="where">5 cartes · Fil Instagram et Facebook</p>
-      <div class="cards c5" data-g>
-        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-1.jpg"><img src="/clients/palauma/creas/carrousel-1.jpg" alt="Carrousel, carte 1 : jardin, terrasse ou rooftop" decoding="async" width="1080" height="1350" /></a></figure>
-        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-2.jpg"><img src="/clients/palauma/creas/carrousel-2.jpg" alt="Carrousel, carte 2 : rez-de-jardin" decoding="async" width="1080" height="1350" /></a></figure>
-        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-3.jpg"><img src="/clients/palauma/creas/carrousel-3.jpg" alt="Carrousel, carte 3 : terrasse" decoding="async" width="1080" height="1350" /></a></figure>
-        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-4.jpg"><img src="/clients/palauma/creas/carrousel-4.jpg" alt="Carrousel, carte 4 : rooftop" decoding="async" width="1080" height="1350" /></a></figure>
-        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-5.jpg"><img src="/clients/palauma/creas/carrousel-5.jpg" alt="Carrousel, carte 5 : prenez rendez-vous avant le 3 décembre" decoding="async" width="1080" height="1350" /></a></figure>
+      <p class="where">6 cartes · Fil Instagram et Facebook</p>
+      <div class="cards c6" data-g>
+        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-1.jpg"><img src="/clients/palauma/creas/carrousel-1.jpg" alt="Carrousel, carte 1 : jusqu’au 3 décembre, on vous offre la cuisine" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-2.jpg"><img src="/clients/palauma/creas/carrousel-2.jpg" alt="Carrousel, carte 2 : le 3 décembre, la Résidence Louise pose sa première pierre" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-3.jpg"><img src="/clients/palauma/creas/carrousel-3.jpg" alt="Carrousel, carte 3 : rez-de-jardin" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-4.jpg"><img src="/clients/palauma/creas/carrousel-4.jpg" alt="Carrousel, carte 4 : terrasse" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-5.jpg"><img src="/clients/palauma/creas/carrousel-5.jpg" alt="Carrousel, carte 5 : rooftop" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/carrousel-6.jpg"><img src="/clients/palauma/creas/carrousel-6.jpg" alt="Carrousel, carte 6 : prenez rendez-vous avant le 3 décembre" width="1080" height="1350" /></a></figure>
       </div>
     </div>
 
     <div class="adtext">
       <h3>Texte de l’annonce</h3>
       <p>Le 3 décembre, la Résidence Louise pose sa première pierre à Saint-Barnabé, Marseille 12<sup>e</sup>. Pour toute réservation signée ce jour-là, votre cuisine est offerte*. T2 dès 292&nbsp;000&nbsp;€, T3 dès 324&nbsp;000&nbsp;€. Prenez rendez-vous avec notre équipe avant le 3 décembre. *Offre soumise à conditions.</p>
-      <p>Titre : Votre cuisine offerte le 3 décembre* · Bouton : Profiter de l’offre</p>
+      <p class="meta">Titre : Cuisine offerte jusqu’au 3 décembre* · Bouton : Profiter de l’offre</p>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>Les publications Instagram et LinkedIn</h2>
+    <h2>Instagram, en organique</h2>
 
     <div class="block">
       <h3>Le carrousel de lancement</h3>
       <p class="where">6 cartes · publié lundi 23 novembre</p>
       <div class="cards c6" data-g>
-        <figure><a class="zoom" href="/clients/palauma/creas/organique-1.jpg"><img src="/clients/palauma/creas/organique-1.jpg" alt="Carrousel de lancement, carte 1 : la Résidence Louise pose sa première pierre" decoding="async" width="1080" height="1350" /></a></figure>
-        <figure><a class="zoom" href="/clients/palauma/creas/organique-2.jpg"><img src="/clients/palauma/creas/organique-2.jpg" alt="Carrousel de lancement, carte 2 : l’adresse, Saint-Barnabé" decoding="async" width="1080" height="1350" /></a></figure>
-        <figure><a class="zoom" href="/clients/palauma/creas/organique-3.jpg"><img src="/clients/palauma/creas/organique-3.jpg" alt="Carrousel de lancement, carte 3 : les chiffres du projet" decoding="async" width="1080" height="1350" /></a></figure>
-        <figure><a class="zoom" href="/clients/palauma/creas/organique-4.jpg"><img src="/clients/palauma/creas/organique-4.jpg" alt="Carrousel de lancement, carte 4 : chaque appartement a sa terrasse" decoding="async" width="1080" height="1350" /></a></figure>
-        <figure><a class="zoom" href="/clients/palauma/creas/organique-5.jpg"><img src="/clients/palauma/creas/organique-5.jpg" alt="Carrousel de lancement, carte 5 : ce jour-là, votre cuisine est offerte" decoding="async" width="1080" height="1350" /></a></figure>
-        <figure><a class="zoom" href="/clients/palauma/creas/organique-6.jpg"><img src="/clients/palauma/creas/organique-6.jpg" alt="Carrousel de lancement, carte 6 : prenez rendez-vous avant le 3 décembre" decoding="async" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/organique-1.jpg"><img src="/clients/palauma/creas/organique-1.jpg" alt="Carrousel de lancement, carte 1 : jusqu’au 3 décembre, on vous offre la cuisine" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/organique-2.jpg"><img src="/clients/palauma/creas/organique-2.jpg" alt="Carrousel de lancement, carte 2 : la Résidence Louise pose sa première pierre" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/organique-3.jpg"><img src="/clients/palauma/creas/organique-3.jpg" alt="Carrousel de lancement, carte 3 : l’adresse, Saint-Barnabé" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/organique-4.jpg"><img src="/clients/palauma/creas/organique-4.jpg" alt="Carrousel de lancement, carte 4 : les chiffres du projet" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/organique-5.jpg"><img src="/clients/palauma/creas/organique-5.jpg" alt="Carrousel de lancement, carte 5 : chaque appartement a sa terrasse" width="1080" height="1350" /></a></figure>
+        <figure><a class="zoom" href="/clients/palauma/creas/organique-6.jpg"><img src="/clients/palauma/creas/organique-6.jpg" alt="Carrousel de lancement, carte 6 : prenez rendez-vous avant le 3 décembre" width="1080" height="1350" /></a></figure>
       </div>
     </div>
 
     <div class="block">
       <h3>Les autres visuels</h3>
-      <p class="where">Publications et stories de la semaine · visuels en réserve pour la publicité</p>
+      <p class="where">Publications et stories de la semaine · visuels en réserve</p>
       <div class="mix" data-g>
-        <figure class="f45"><a class="zoom" href="/clients/palauma/creas/jardin.jpg"><img src="/clients/palauma/creas/jardin.jpg" alt="Visuel 3 147 m² d’espaces verts" decoding="async" width="1080" height="1350" /></a><figcaption>Lundi 30 novembre</figcaption></figure>
-        <figure class="f916"><a class="zoom" href="/clients/palauma/creas/story-date.jpg"><img src="/clients/palauma/creas/story-date.jpg" alt="Story 03.12" decoding="async" width="1080" height="1920" /></a><figcaption>Story, vendredi 27</figcaption></figure>
-        <figure class="f45"><a class="zoom" href="/clients/palauma/creas/invitation.jpg"><img src="/clients/palauma/creas/invitation.jpg" alt="Visuel Invitation à la pose de la première pierre" decoding="async" width="1080" height="1350" /></a><figcaption>Mercredi 2 décembre</figcaption></figure>
-        <figure class="f45"><a class="zoom" href="/clients/palauma/creas/rooftop.jpg"><img src="/clients/palauma/creas/rooftop.jpg" alt="Visuel Rooftop : vous choisissez la vue, nous offrons la cuisine" decoding="async" width="1080" height="1350" /></a><figcaption>En réserve</figcaption></figure>
-        <figure class="f45"><a class="zoom" href="/clients/palauma/creas/date.jpg"><img src="/clients/palauma/creas/date.jpg" alt="Visuel 03.12, ce jour-là votre cuisine est offerte" decoding="async" width="1080" height="1350" /></a><figcaption>En réserve</figcaption></figure>
-        <figure class="f916"><a class="zoom" href="/clients/palauma/creas/story-rooftop.jpg"><img src="/clients/palauma/creas/story-rooftop.jpg" alt="Story Rooftop" decoding="async" width="1080" height="1920" /></a><figcaption>En réserve</figcaption></figure>
+        <figure class="f45"><a class="zoom" href="/clients/palauma/creas/jardin.jpg"><img src="/clients/palauma/creas/jardin.jpg" alt="Visuel 3 147 m² d’espaces verts, à Saint-Barnabé" width="1080" height="1350" /></a><figcaption>Lundi 30 novembre</figcaption></figure>
+        <figure class="f916"><a class="zoom" href="/clients/palauma/creas/story-date.jpg"><img src="/clients/palauma/creas/story-date.jpg" alt="Story 03.12" width="1080" height="1920" /></a><figcaption>Story, vendredi 27</figcaption></figure>
+        <figure class="f45"><a class="zoom" href="/clients/palauma/creas/invitation.jpg"><img src="/clients/palauma/creas/invitation.jpg" alt="Visuel Invitation à la pose de la première pierre" width="1080" height="1350" /></a><figcaption>Mercredi 2 décembre</figcaption></figure>
+        <figure class="f45"><a class="zoom" href="/clients/palauma/creas/rooftop.jpg"><img src="/clients/palauma/creas/rooftop.jpg" alt="Visuel Rooftop : vous choisissez la vue, nous offrons la cuisine" width="1080" height="1350" /></a><figcaption>En réserve</figcaption></figure>
+        <figure class="f45"><a class="zoom" href="/clients/palauma/creas/date.jpg"><img src="/clients/palauma/creas/date.jpg" alt="Visuel 03.12 : jusqu’au 3 décembre, on vous offre la cuisine" width="1080" height="1350" /></a><figcaption>En réserve</figcaption></figure>
+        <figure class="f916"><a class="zoom" href="/clients/palauma/creas/story-rooftop.jpg"><img src="/clients/palauma/creas/story-rooftop.jpg" alt="Story Rooftop" width="1080" height="1920" /></a><figcaption>En réserve</figcaption></figure>
       </div>
     </div>
   </div>
@@ -251,21 +268,54 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
 
 <section class="alt">
   <div class="wrap narrow">
-    <h2>Le calendrier</h2>
-    <ul class="cal">
-      <li><b>Lun. 23 nov.</b><span>Lancement de la publicité. Carrousel publié. Relance des prospects déjà connus.</span></li>
-      <li><b>Mer. 25 nov.</b><span>Reel publié.</span></li>
-      <li><b>Jeu. 26 nov.</b><span>Point d’étape : coût par contact, décision sur une rallonge de budget.</span></li>
-      <li><b>Ven. 27 nov.</b><span>Story «&nbsp;03.12&nbsp;». Post d’un dirigeant sur LinkedIn.</span></li>
-      <li><b>Lun. 30 nov.</b><span>Dernier jour de publicité. Visuel «&nbsp;espaces verts&nbsp;».</span></li>
-      <li><b>Mar. 1<sup>er</sup> et mer. 2 déc.</b><span>Derniers rappels. Invitations confirmées. Story «&nbsp;Invitation&nbsp;» le 2.</span></li>
-      <li class="key"><b>Jeu. 3 déc.</b><span>Pose de la première pierre. Accueil des invités, signatures.</span></li>
-      <li><b>Ven. 4 déc.</b><span>Photos de l’événement publiées. Relance des invités non signataires.</span></li>
+    <h2>LinkedIn, en organique</h2>
+    <ul class="rules">
+      <li>Aucune publicité, uniquement des publications.</li>
+      <li>La page Palauma annonce l’offre et la première pierre.</li>
+      <li>Chaque dirigeant relaie sur son créneau habituel, avec son angle.</li>
     </ul>
+    <ul class="plan">
+      <li><b>Mar. 24 nov. · 9 h 15</b><span class="who">Page Palauma</span><span>Carrousel de lancement, en document PDF de 6 pages.</span></li>
+      <li><b>Mar. 24 nov. · 17 h 45</b><span class="who">Nicolas Ortollan</span><span>L’offre et la prise de rendez-vous, pour son réseau marseillais. Visuel de l’offre.</span></li>
+      <li><b>Jeu. 26 nov. · 7 h 45</b><span class="who">Philippe Bega</span><span>La première pierre, étape du projet. Visuel «&nbsp;03.12&nbsp;».</span></li>
+      <li><b>Jeu. 26 nov. · 12 h 30</b><span class="who">Clara Mosconi</span><span>La conception : le jardin, les terrasses. Visuel «&nbsp;espaces verts&nbsp;».</span></li>
+      <li><b>Ven. 27 nov. · 8 h 15</b><span class="who">Eyal Bompuis</span><span>La vue depuis les rooftops. Reel.</span></li>
+      <li><b>Mar. 1<sup>er</sup> déc. · 9 h 15</b><span class="who">Page Palauma</span><span>Rappel avant l’événement. Visuel «&nbsp;Vous choisissez la vue&nbsp;».</span></li>
+      <li><b>Ven. 4 déc.</b><span class="who">Page Palauma et dirigeants</span><span>Photos de la pose de la première pierre.</span></li>
+    </ul>
+    <a class="dl" href="/clients/palauma/docs/Residence-Louise_Carrousel-LinkedIn.pdf" download>Télécharger le carrousel LinkedIn (PDF, 6 pages)</a>
+
+    <div class="adtext">
+      <h3>Texte du post de la page Palauma, mardi 24 novembre</h3>
+      <p>Le 3 décembre, nous posons la première pierre de la Résidence Louise, à Saint-Barnabé, Marseille 12<sup>e</sup>.</p>
+      <p>Pour marquer cette étape, jusqu’au 3 décembre, nous offrons la cuisine pour toute réservation*.</p>
+      <p>La résidence : 3&nbsp;147&nbsp;m<sup>2</sup> d’espaces verts, 46 arbres, une terrasse pour chaque appartement, du studio au 5 pièces. Livraison prévue à l’automne 2028.</p>
+      <p>Notre équipe vous reçoit en rendez-vous avant le 3 décembre. Les acquéreurs rencontrés sont invités à la pose de la première pierre.</p>
+      <p>Prendre rendez-vous : [lien]</p>
+      <p class="meta">*Offre valable pour toute réservation signée jusqu’au 3 décembre 2026, sous conditions.</p>
+    </div>
   </div>
 </section>
 
 <section>
+  <div class="wrap narrow">
+    <h2>Le calendrier</h2>
+    <ul class="cal">
+      <li><b>Lun. 23 nov.</b><span><i class="ch">Publicité</i> : lancement. <i class="ch">Instagram</i> : carrousel. Relance des prospects déjà connus.</span></li>
+      <li><b>Mar. 24 nov.</b><span><i class="ch">LinkedIn</i> : carrousel sur la page Palauma, post de Nicolas Ortollan.</span></li>
+      <li><b>Mer. 25 nov.</b><span><i class="ch">Instagram</i> : reel.</span></li>
+      <li><b>Jeu. 26 nov.</b><span><i class="ch">LinkedIn</i> : posts de Philippe Bega et de Clara Mosconi. <i class="ch">Publicité</i> : point d’étape.</span></li>
+      <li><b>Ven. 27 nov.</b><span><i class="ch">Instagram</i> : story «&nbsp;03.12&nbsp;». <i class="ch">LinkedIn</i> : post d’Eyal Bompuis.</span></li>
+      <li><b>Lun. 30 nov.</b><span><i class="ch">Publicité</i> : dernier jour. <i class="ch">Instagram</i> : visuel «&nbsp;espaces verts&nbsp;».</span></li>
+      <li><b>Mar. 1<sup>er</sup> déc.</b><span><i class="ch">LinkedIn</i> : rappel sur la page Palauma. Derniers rappels téléphoniques.</span></li>
+      <li><b>Mer. 2 déc.</b><span><i class="ch">Instagram</i> : story «&nbsp;Invitation&nbsp;». Invitations confirmées.</span></li>
+      <li class="key"><b>Jeu. 3 déc.</b><span>Pose de la première pierre. Accueil des invités, signatures. <i class="ch">Instagram</i> : stories en direct.</span></li>
+      <li><b>Ven. 4 déc.</b><span><i class="ch">Instagram</i> et <i class="ch">LinkedIn</i> : photos de l’événement. Relance des invités non signataires.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="alt">
   <div class="wrap narrow">
     <h2>À valider avant le lancement</h2>
     <ul class="todo">
@@ -273,6 +323,8 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
       <li><b>Rappel des contacts</b><span>Qui appelle, à quel moment de la journée.</span></li>
       <li><b>Réception des contacts</b><span>Dans le CRM ou sur une boîte mail suivie.</span></li>
       <li><b>Pixel Meta</b><span>À installer sur la page de la Résidence Louise.</span></li>
+      <li><b>Posts LinkedIn des dirigeants</b><span>Accord de chacun sur son post et son créneau.</span></li>
+      <li><b>Lien de prise de rendez-vous</b><span>Celui à utiliser sur LinkedIn et en story Instagram.</span></li>
     </ul>
   </div>
 </section>
