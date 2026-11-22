@@ -98,6 +98,7 @@ section:not(.alt) .card:not(.dark) { background: #FAF7F1; }
 .creas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 24px; align-items: start; }
 .creas.six { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
 .creas.five { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.creas.three { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 820px; }
 figure { margin: 0; }
 figure img, figure video { width: 100%; height: auto; border-radius: 4px; box-shadow: 0 1px 0 var(--line), 0 10px 26px rgba(45, 55, 65, 0.12); background: var(--ink); }
 figcaption { margin-top: 10px; font-size: 14px; line-height: 1.35; }
@@ -134,6 +135,7 @@ footer img { height: 34px; width: auto; }
   .kpi { padding-bottom: 8px; }
   .creas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .creas.six, .creas.five { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .creas.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .copy { grid-template-columns: 1fr; }
   .copy .wide { grid-column: auto; }
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -175,8 +177,8 @@ footer img { height: 34px; width: auto; }
     <p class="lead">Budget, ciblage, créas et calendrier de l’opération «&nbsp;cuisine offerte&nbsp;», du lancement lundi 23 novembre à la pose de la première pierre.</p>
     <div class="kpis">
       <div class="kpi"><b>10</b><span>rendez-vous qualifiés visés</span></div>
-      <div class="kpi"><b>1&nbsp;300&nbsp;€</b><span>de budget média recommandé</span></div>
-      <div class="kpi"><b>10 jours</b><span>de diffusion, du 23 novembre au 2 décembre</span></div>
+      <div class="kpi"><b>500&nbsp;€</b><span>de budget média, en test</span></div>
+      <div class="kpi"><b>8 jours</b><span>de diffusion, du 23 au 30 novembre</span></div>
       <div class="kpi"><b>03.12</b><span>pose de la première pierre</span></div>
     </div>
   </div>
@@ -186,7 +188,7 @@ footer img { height: 34px; width: auto; }
   <div class="wrap mono">
     <a href="#budget">Budget</a>
     <a href="#ciblage">Ciblage</a>
-    <a href="#creas">Créas par campagne</a>
+    <a href="#creas">Créas</a>
     <a href="#organique">Organique</a>
     <a href="#calendrier">Calendrier</a>
     <a href="#a-confirmer">À confirmer</a>
@@ -198,41 +200,41 @@ footer img { height: 34px; width: auto; }
 <section id="budget">
   <div class="wrap">
     <div class="eyebrow mono"><span>01</span><span>Budget</span></div>
-    <h2>1&nbsp;300&nbsp;€ de média pour <em>dix rendez-vous</em>.</h2>
-    <p class="intro">Le budget se déduit de deux variables : le coût d’un lead et la part de leads qui deviennent un rendez-vous qualifié. Le scénario prudent est retenu, il se réajuste au point d’étape du jeudi 26 novembre.</p>
+    <h2>Un test à <em>500&nbsp;€</em> de média.</h2>
+    <p class="intro">Le résultat dépend de deux variables : le coût d’un lead et la part de leads qui deviennent un rendez-vous qualifié. À 500&nbsp;€, le scénario médian donne 7 rendez-vous qualifiés. Le complément vers l’objectif de 10 vient de la base existante.</p>
 
     <div class="table-box">
       <table>
         <thead>
-          <tr><th scope="col">Scénario</th><th scope="col" class="num">Coût par lead</th><th scope="col" class="num">Leads qualifiés</th><th scope="col" class="num">Leads nécessaires</th><th scope="col" class="num">Budget média</th></tr>
+          <tr><th scope="col">Scénario</th><th scope="col" class="num">Coût par lead</th><th scope="col" class="num">Leads qualifiés</th><th scope="col" class="num">Leads obtenus</th><th scope="col" class="num">RDV qualifiés</th></tr>
         </thead>
         <tbody>
-          <tr><td>Favorable</td><td class="num">18&nbsp;€</td><td class="num">55&nbsp;%</td><td class="num">19</td><td class="num">340&nbsp;€</td></tr>
-          <tr><td>Médian</td><td class="num">31,50&nbsp;€</td><td class="num">45&nbsp;%</td><td class="num">23</td><td class="num">720&nbsp;€</td></tr>
-          <tr class="keep"><td>Prudent <span class="tag">Retenu</span></td><td class="num">45&nbsp;€</td><td class="num">35&nbsp;%</td><td class="num">29</td><td class="num">1&nbsp;300&nbsp;€</td></tr>
+          <tr><td>Favorable</td><td class="num">18&nbsp;€</td><td class="num">55&nbsp;%</td><td class="num">28</td><td class="num">15</td></tr>
+          <tr class="keep"><td>Médian <span class="tag">Référence</span></td><td class="num">31,50&nbsp;€</td><td class="num">45&nbsp;%</td><td class="num">16</td><td class="num">7</td></tr>
+          <tr><td>Prudent</td><td class="num">45&nbsp;€</td><td class="num">35&nbsp;%</td><td class="num">11</td><td class="num">4</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note" style="margin-top:16px">Fourchettes 2026 des formulaires Facebook et Instagram en immobilier, en France : 18 à 45&nbsp;€ par lead, 35 à 55&nbsp;% de leads qualifiés (source : RBP Group). Les critères de qualification de l’opération sont plus stricts qu’une qualification standard, d’où le choix du scénario prudent.</p>
+    <p class="note" style="margin-top:16px">Fourchettes 2026 des formulaires Facebook et Instagram en immobilier, en France : 18 à 45&nbsp;€ par lead, 35 à 55&nbsp;% de leads qualifiés (source : RBP Group). Les critères de qualification de l’opération sont plus stricts qu’une qualification standard.</p>
 
     <div class="grid3">
       <div class="card">
-        <div class="mono">Campagne 1 · Prospection</div>
-        <div class="big">1&nbsp;080&nbsp;€</div>
-        <p>135&nbsp;€ par jour pendant 8 jours, du lundi 23 au lundi 30 novembre.</p>
+        <div class="mono">Campagne unique · Prospection</div>
+        <div class="big">500&nbsp;€</div>
+        <p>62,50&nbsp;€ par jour pendant 8 jours, du lundi 23 au lundi 30 novembre.</p>
       </div>
       <div class="card">
-        <div class="mono">Campagne 2 · Reciblage</div>
-        <div class="big">220&nbsp;€</div>
-        <p>22&nbsp;€ par jour pendant 10 jours, du lundi 23 novembre au mercredi 2 décembre.</p>
+        <div class="mono">Reciblage</div>
+        <div class="big">Intégré</div>
+        <p>Pas de campagne séparée à ce budget. Les audiences de reciblage sont ajoutées à la campagne unique.</p>
       </div>
       <div class="card">
         <div class="mono">Base existante</div>
         <div class="big">0&nbsp;€</div>
-        <p>Relance par email, SMS et téléphone des prospects déjà connus. Chaque rendez-vous obtenu ici allège le besoin média.</p>
+        <p>Relance par email, SMS et téléphone des prospects déjà connus. Elle fournit le complément vers l’objectif de 10.</p>
       </div>
     </div>
-    <p class="note" style="margin-top:22px">Point d’étape jeudi 26 novembre : si les résultats suivent le scénario médian, la prospection descend à 90&nbsp;€ par jour.</p>
+    <p class="note" style="margin-top:22px">Point d’étape jeudi 26 novembre : environ 190&nbsp;€ dépensés. Le coût par lead réel situe le scénario et fonde la décision d’une rallonge.</p>
   </div>
 </section>
 
@@ -244,7 +246,7 @@ footer img { height: 34px; width: auto; }
 
     <div class="grid2">
       <div class="card">
-        <div class="mono">Campagne 1 · Prospection</div>
+        <div class="mono">Campagne unique · Prospection</div>
         <ul>
           <li><b>Zone</b><span>20 km autour du 1 impasse du Muguet, Marseille 12<sup>e</sup>. Meta impose un rayon minimum de 15 à 17 km.</span></li>
           <li><b>Âge et genre</b><span>18 à 65 ans et plus, tous genres. Réglage imposé par Meta.</span></li>
@@ -254,7 +256,7 @@ footer img { height: 34px; width: auto; }
         </ul>
       </div>
       <div class="card">
-        <div class="mono">Campagne 2 · Reciblage</div>
+        <div class="mono">Audiences de reciblage ajoutées</div>
         <ul>
           <li><b>Visiteurs</b><span>Page Résidence Louise, 30 derniers jours. Le pixel Meta doit y être installé.</span></li>
           <li><b>Engagés</b><span>Interactions avec les comptes Instagram et Facebook, 90 derniers jours.</span></li>
@@ -290,16 +292,16 @@ footer img { height: 34px; width: auto; }
 
 <section id="creas">
   <div class="wrap">
-    <div class="eyebrow mono"><span>03</span><span>Créas par campagne</span></div>
-    <h2>Deux campagnes, <em>huit créas</em>.</h2>
-    <p class="intro">La prospection présente l’offre et le programme. Le reciblage rappelle la date et l’invitation aux personnes déjà touchées.</p>
+    <div class="eyebrow mono"><span>03</span><span>Créas de la campagne</span></div>
+    <h2>Une campagne, <em>trois créas</em>.</h2>
+    <p class="intro">Trois créas concentrent le budget : le reel, l’offre frontale et le carrousel. Les autres formats restent en réserve pour la rotation du jeudi 26 novembre.</p>
 
     <div class="campaign">
       <div class="campaign-head">
-        <h3 style="margin:0">Campagne 1 · Prospection</h3>
-        <div class="mono">Objectif Leads · 1 ensemble de publicités · 4 créas</div>
+        <h3 style="margin:0">Campagne unique · Prospection</h3>
+        <div class="mono">Objectif Leads · 1 ensemble de publicités · 3 créas</div>
       </div>
-      <div class="creas">
+      <div class="creas three">
         <figure>
           <video controls muted playsinline preload="none" poster="/clients/palauma/img/reel-louise.jpg">
             <source src="/clients/palauma/img/reel-louise.mp4" type="video/mp4" />
@@ -308,57 +310,39 @@ footer img { height: 34px; width: auto; }
         </figure>
         <figure>
           <img src="/clients/palauma/creas/main.jpg" alt="Créa Offre frontale : Votre cuisine offerte" loading="lazy" width="540" height="675" />
-          <figcaption><b>01 · Offre frontale</b><span>4:5 · fil Instagram et Facebook</span></figcaption>
+          <figcaption><b>01 · Offre frontale</b><span>4:5 · fil Instagram et Facebook, déclinée en 9:16 pour les Stories</span></figcaption>
         </figure>
         <figure>
           <img src="/clients/palauma/creas/carrousel-1.jpg" alt="Première carte du carrousel : Jardin, terrasse ou rooftop" loading="lazy" width="540" height="675" />
           <figcaption><b>07 · Carrousel</b><span>4:5 · 5 cartes · fil</span></figcaption>
-        </figure>
-        <figure>
-          <img src="/clients/palauma/creas/story-offre.jpg" alt="Story Offre : Votre cuisine offerte" loading="lazy" width="540" height="960" />
-          <figcaption><b>Story · Offre</b><span>9:16 · Stories</span></figcaption>
         </figure>
       </div>
       <div class="copy">
         <div class="wide"><div class="mono">Texte principal</div><p>Le 3 décembre, la Résidence Louise pose sa première pierre à Saint-Barnabé, Marseille 12<sup>e</sup>. Pour toute réservation signée ce jour-là, votre cuisine est offerte*. T2 dès 292&nbsp;000&nbsp;€, T3 dès 324&nbsp;000&nbsp;€. Prenez rendez-vous avec notre équipe avant le 3 décembre. *Offre soumise à conditions.</p></div>
         <div><div class="mono">Titre et bouton</div><p>Votre cuisine offerte le 3 décembre*<br />Bouton : Profiter de l’offre</p></div>
       </div>
-      <p class="note sub">En réserve pour la rotation du jeudi 26 novembre : 06 · Rooftop et 08 · Jardin.</p>
+
+      <p class="mono sub" style="color:var(--ink-soft)">Cartes 2 à 5 du carrousel et déclinaison Stories</p>
       <div class="creas five">
         <figure><img src="/clients/palauma/creas/carrousel-2.jpg" alt="Carrousel, carte 2 : rez-de-jardin" loading="lazy" width="540" height="675" /><figcaption><span>Carrousel 2/5</span></figcaption></figure>
         <figure><img src="/clients/palauma/creas/carrousel-3.jpg" alt="Carrousel, carte 3 : terrasse" loading="lazy" width="540" height="675" /><figcaption><span>Carrousel 3/5</span></figcaption></figure>
         <figure><img src="/clients/palauma/creas/carrousel-4.jpg" alt="Carrousel, carte 4 : rooftop" loading="lazy" width="540" height="675" /><figcaption><span>Carrousel 4/5</span></figcaption></figure>
         <figure><img src="/clients/palauma/creas/carrousel-5.jpg" alt="Carrousel, carte 5 : prenez rendez-vous avant le 3 décembre" loading="lazy" width="540" height="675" /><figcaption><span>Carrousel 5/5</span></figcaption></figure>
-        <figure><img src="/clients/palauma/creas/rooftop.jpg" alt="Créa Rooftop : Vous choisissez la vue, nous offrons la cuisine" loading="lazy" width="540" height="675" /><figcaption><span>06 · Rooftop, en réserve</span></figcaption></figure>
+        <figure><img src="/clients/palauma/creas/story-offre.jpg" alt="Story Offre : Votre cuisine offerte" loading="lazy" width="540" height="960" /><figcaption><span>Offre frontale en 9:16</span></figcaption></figure>
       </div>
     </div>
 
     <div class="campaign">
       <div class="campaign-head">
-        <h3 style="margin:0">Campagne 2 · Reciblage</h3>
-        <div class="mono">Objectif Leads · 1 ensemble de publicités · 4 créas</div>
+        <h3 style="margin:0">En réserve</h3>
+        <div class="mono">Rotation au point d’étape · organique</div>
       </div>
-      <div class="creas">
-        <figure>
-          <img src="/clients/palauma/creas/date.jpg" alt="Créa La date : 03.12, ce jour-là votre cuisine est offerte" loading="lazy" width="540" height="675" />
-          <figcaption><b>02 · La date</b><span>4:5 · fil</span></figcaption>
-        </figure>
-        <figure>
-          <img src="/clients/palauma/creas/invitation.jpg" alt="Créa Invitation à la pose de la première pierre" loading="lazy" width="540" height="675" />
-          <figcaption><b>10 · Invitation</b><span>4:5 · fil</span></figcaption>
-        </figure>
-        <figure>
-          <img src="/clients/palauma/creas/story-date.jpg" alt="Story La date : 03.12" loading="lazy" width="540" height="960" />
-          <figcaption><b>Story · La date</b><span>9:16 · Stories</span></figcaption>
-        </figure>
-        <figure>
-          <img src="/clients/palauma/creas/story-rooftop.jpg" alt="Story Rooftop : Vous choisissez la vue, nous offrons la cuisine" loading="lazy" width="540" height="960" />
-          <figcaption><b>Story · Rooftop</b><span>9:16 · Stories</span></figcaption>
-        </figure>
-      </div>
-      <div class="copy">
-        <div class="wide"><div class="mono">Texte principal</div><p>Jeudi 3 décembre, la Résidence Louise pose sa première pierre. Les acquéreurs reçus en rendez-vous avant cette date sont invités. Votre cuisine est offerte pour toute réservation signée ce jour-là*. *Offre soumise à conditions.</p></div>
-        <div><div class="mono">Titre et bouton</div><p>Recevez votre invitation<br />Bouton : Profiter de l’offre</p></div>
+      <div class="creas five">
+        <figure><img src="/clients/palauma/creas/rooftop.jpg" alt="Créa Rooftop : Vous choisissez la vue, nous offrons la cuisine" loading="lazy" width="540" height="675" /><figcaption><b>06 · Rooftop</b><span>4:5</span></figcaption></figure>
+        <figure><img src="/clients/palauma/creas/date.jpg" alt="Créa La date : 03.12, ce jour-là votre cuisine est offerte" loading="lazy" width="540" height="675" /><figcaption><b>02 · La date</b><span>4:5</span></figcaption></figure>
+        <figure><img src="/clients/palauma/creas/invitation.jpg" alt="Créa Invitation à la pose de la première pierre" loading="lazy" width="540" height="675" /><figcaption><b>10 · Invitation</b><span>4:5</span></figcaption></figure>
+        <figure><img src="/clients/palauma/creas/story-date.jpg" alt="Story La date : 03.12" loading="lazy" width="540" height="960" /><figcaption><b>Story · La date</b><span>9:16</span></figcaption></figure>
+        <figure><img src="/clients/palauma/creas/story-rooftop.jpg" alt="Story Rooftop : Vous choisissez la vue, nous offrons la cuisine" loading="lazy" width="540" height="960" /><figcaption><b>Story · Rooftop</b><span>9:16</span></figcaption></figure>
       </div>
     </div>
   </div>
@@ -396,7 +380,7 @@ footer img { height: 34px; width: auto; }
 
     <div class="grid3">
       <div class="card"><div class="mono">LinkedIn</div><p style="margin-top:0">Ton institutionnel. L’offre reste en carte 5 du carrousel. Les posts des dirigeants portent l’étape de chantier et invitent les prescripteurs : courtiers, conseillers en gestion de patrimoine, notaires.</p></div>
-      <div class="card"><div class="mono">Instagram</div><p style="margin-top:0">Lien de prise de rendez-vous en bio et en sticker de story. Les stories reprennent les formats 9:16 des campagnes.</p></div>
+      <div class="card"><div class="mono">Instagram</div><p style="margin-top:0">Lien de prise de rendez-vous en bio et en sticker de story. Les stories reprennent les formats 9:16 de la campagne.</p></div>
       <div class="card"><div class="mono">Messages privés</div><p style="margin-top:0">Réponse sous 24 heures. Chaque demande est transmise à l’équipe commerciale et suit le même parcours de qualification.</p></div>
     </div>
   </div>
@@ -406,7 +390,7 @@ footer img { height: 34px; width: auto; }
   <div class="wrap">
     <div class="eyebrow mono"><span>05</span><span>Calendrier</span></div>
     <h2>Du lancement à la <em>première pierre</em>.</h2>
-    <p class="intro">La prospection s’arrête le lundi 30 novembre. Les derniers leads gardent ainsi le temps d’être rappelés, qualifiés et invités.</p>
+    <p class="intro">La campagne s’arrête le lundi 30 novembre. Les derniers leads gardent ainsi le temps d’être rappelés, qualifiés et invités.</p>
 
     <div class="card dark" style="margin-top:36px">
       <div class="mono">De la demande à l’invitation : 48 à 72 heures</div>
@@ -416,7 +400,7 @@ footer img { height: 34px; width: auto; }
         <div><b>J+1 à J+2</b><span>Rendez-vous téléphonique de 20 minutes, envoi des plans et de la grille.</span></div>
         <div><b>J+2 à J+3</b><span>Option sur un lot, invitation nominative.</span></div>
       </div>
-      <p style="margin:22px 0 0; font-size:15px; color:rgba(244,239,230,0.8)">Charge estimée dans le scénario retenu : 3 à 4 leads par jour, soit environ deux heures quotidiennes pour l’équipe commerciale.</p>
+      <p style="margin:22px 0 0; font-size:15px; color:rgba(244,239,230,0.8)">Charge estimée dans le scénario médian : 2 leads par jour, soit environ une heure quotidienne pour l’équipe commerciale.</p>
     </div>
 
     <div class="table-box cal">
@@ -424,15 +408,15 @@ footer img { height: 34px; width: auto; }
         <thead><tr><th scope="col">Date</th><th scope="col">Média</th><th scope="col">Organique</th><th scope="col">Qualification</th></tr></thead>
         <tbody>
           <tr><td>Dim. 22<small>Préparation</small></td><td data-l="Média">Validation des créas, du formulaire et des conditions de l’offre</td><td class="none" data-l="Organique">·</td><td data-l="Qualification">Import de la base prospects, trame d’appel</td></tr>
-          <tr class="mark"><td>Lun. 23<small>Lancement</small></td><td data-l="Média">Mise en ligne des deux campagnes</td><td data-l="Organique">Carrousel de six cartes</td><td data-l="Qualification">Relance de la base existante</td></tr>
+          <tr class="mark"><td>Lun. 23<small>Lancement</small></td><td data-l="Média">Mise en ligne de la campagne</td><td data-l="Organique">Carrousel de six cartes</td><td data-l="Qualification">Relance de la base existante</td></tr>
           <tr><td>Mar. 24</td><td data-l="Média">Diffusion</td><td class="none" data-l="Organique">·</td><td data-l="Qualification">Rappel des premiers leads</td></tr>
           <tr><td>Mer. 25</td><td data-l="Média">Diffusion</td><td data-l="Organique">Reel</td><td data-l="Qualification">Rendez-vous téléphoniques</td></tr>
-          <tr class="mark"><td>Jeu. 26<small>Point d’étape</small></td><td data-l="Média">Coût par lead, taux de qualification, rotation des créas, ajustement du budget</td><td class="none" data-l="Organique">·</td><td data-l="Qualification">Envoi des plans, premières options</td></tr>
+          <tr class="mark"><td>Jeu. 26<small>Point d’étape</small></td><td data-l="Média">Coût par lead, taux de qualification, rotation des créas, décision sur une rallonge</td><td class="none" data-l="Organique">·</td><td data-l="Qualification">Envoi des plans, premières options</td></tr>
           <tr><td>Ven. 27</td><td data-l="Média">Diffusion</td><td data-l="Organique">Story «&nbsp;03.12&nbsp;», post d’un dirigeant</td><td data-l="Qualification">Rendez-vous téléphoniques</td></tr>
           <tr><td>Sam. 28 et dim. 29</td><td data-l="Média">Diffusion</td><td class="none" data-l="Organique">·</td><td data-l="Qualification">Leads du week-end rappelés lundi matin</td></tr>
-          <tr class="mark"><td>Lun. 30<small>Fin de la prospection</small></td><td data-l="Média">Dernier jour de la campagne 1</td><td data-l="Organique">Visuel «&nbsp;3&nbsp;147&nbsp;m²&nbsp;»</td><td data-l="Qualification">Rappels</td></tr>
-          <tr><td>Mar. 1<sup>er</sup></td><td data-l="Média">Reciblage seul</td><td class="none" data-l="Organique">·</td><td data-l="Qualification">Rappel des derniers leads, options posées</td></tr>
-          <tr><td>Mer. 2</td><td data-l="Média">Fin du reciblage</td><td data-l="Organique">Story «&nbsp;Invitation&nbsp;»</td><td data-l="Qualification">Clôture des rendez-vous à midi, confirmations, rappel de la veille</td></tr>
+          <tr class="mark"><td>Lun. 30<small>Fin de la campagne</small></td><td data-l="Média">Dernier jour de diffusion</td><td data-l="Organique">Visuel «&nbsp;3&nbsp;147&nbsp;m²&nbsp;»</td><td data-l="Qualification">Rappels</td></tr>
+          <tr><td>Mar. 1<sup>er</sup></td><td class="none" data-l="Média">·</td><td class="none" data-l="Organique">·</td><td data-l="Qualification">Rappel des derniers leads, options posées</td></tr>
+          <tr><td>Mer. 2</td><td class="none" data-l="Média">·</td><td data-l="Organique">Story «&nbsp;Invitation&nbsp;»</td><td data-l="Qualification">Clôture des rendez-vous à midi, confirmations, rappel de la veille</td></tr>
           <tr class="end"><td>Jeu. 3<small>Première pierre</small></td><td class="none" data-l="Média">·</td><td data-l="Organique">Stories en direct</td><td data-l="Qualification">Accueil des invités, signatures</td></tr>
           <tr><td>Ven. 4</td><td class="none" data-l="Média">·</td><td data-l="Organique">Carrousel photo</td><td data-l="Qualification">Relance des invités non signataires</td></tr>
         </tbody>
