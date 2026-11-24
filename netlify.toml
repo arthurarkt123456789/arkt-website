@@ -22,6 +22,12 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
+# Médias servis aux outils de publication (Buffer) : jamais indexés
+[[headers]]
+  for = "/medias/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # Bilans clients : jamais indexés, jamais mis en cache
 [[headers]]
   for = "/bilan/*"
