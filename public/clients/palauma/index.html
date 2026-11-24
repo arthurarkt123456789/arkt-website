@@ -103,6 +103,13 @@ figcaption { margin-top: 8px; font-size: 14px; color: var(--ink-mute); }
 .cal li.key { background: var(--ink); color: var(--paper); border-radius: 6px; padding: 12px 16px; border-top: 0; margin: 6px 0; }
 .cal li.key + li { border-top: 0; }
 
+/* Conditions de l'offre */
+.terms { margin: 0; padding: 0; list-style: none; }
+.terms li { display: grid; grid-template-columns: 200px 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
+.terms li:first-child { border-top: 0; padding-top: 0; }
+.terms b { font-weight: 600; }
+.terms .legal { padding: 12px 16px; background: var(--white); border: 1px solid var(--line); border-radius: 6px; }
+
 /* À valider */
 .todo { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .todo li { background: var(--white); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 4px; padding: 14px 18px; }
@@ -138,6 +145,7 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
   .points { grid-template-columns: 1fr; }
   .todo { grid-template-columns: 1fr; }
   .cal li { grid-template-columns: 1fr; gap: 2px; }
+  .terms li { grid-template-columns: 1fr; gap: 4px; }
   .rules { grid-template-columns: 1fr; }
   .plan li { grid-template-columns: 1fr; gap: 2px; }
   /* Les créas défilent au doigt, à la taille d'un écran de téléphone */
@@ -187,7 +195,22 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
   </div>
 </section>
 
-<section class="alt">
+<section class="alt" id="conditions">
+  <div class="wrap narrow">
+    <h2>Conditions générales de l’offre</h2>
+    <ul class="terms">
+      <li><b>L’offre</b><span>Nous offrons la cuisine pour toute réservation d’un appartement de la Résidence Louise.</span></li>
+      <li><b>Validité</b><span>Réservation signée jusqu’au 3 décembre 2026, jour de la pose de la première pierre.</span></li>
+      <li><b>Valeur de la cuisine</b><span>6&nbsp;000&nbsp;€, 8&nbsp;000&nbsp;€ ou 10&nbsp;000&nbsp;€ selon la typologie. 8&nbsp;000&nbsp;€ pour un T3, 10&nbsp;000&nbsp;€ pour un T4.</span></li>
+      <li><b>Partenaire</b><span>Aviva.</span></li>
+      <li><b>Prix d’appel</b><span>T2 dès 253&nbsp;000&nbsp;€ (appartement B15). T3 dès 334&nbsp;000&nbsp;€ (appartement A17). Prix hors stationnement.</span></li>
+      <li><b>Programme</b><span>Résidence Louise, 1 impasse du Muguet, Saint-Barnabé, Marseille 12<sup>e</sup>. Livraison prévue à l’automne 2028.</span></li>
+      <li><b>Mention à afficher</b><span class="legal">*Offre valable pour toute réservation signée jusqu’au 3 décembre 2026, sous conditions. Illustration non contractuelle.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
   <div class="wrap">
     <h2>Publicité Instagram et Facebook</h2>
 
@@ -236,7 +259,7 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
     <h2>Instagram, en organique</h2>
 
@@ -269,7 +292,7 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="wrap narrow">
     <h2>LinkedIn, en organique</h2>
     <ul class="rules">
@@ -297,7 +320,7 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap narrow">
     <h2>Le calendrier</h2>
     <ul class="cal">
@@ -315,11 +338,11 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="wrap narrow">
     <h2>À valider avant le lancement</h2>
     <ul class="todo">
-      <li><b>Conditions de l’offre</b><span>Valeurs indiquées : 6&nbsp;000&nbsp;€, 8&nbsp;000&nbsp;€ et 10&nbsp;000&nbsp;€ selon la typologie, partenaire Aviva. À confirmer par Clara.</span></li>
+      <li><b>Conditions de l’offre</b><span>Typologie de la cuisine à 6&nbsp;000&nbsp;€ : le mail indique T3 pour 6&nbsp;000&nbsp;€ et pour 8&nbsp;000&nbsp;€. Lots concernés, contenu de la cuisine, cumul avec d’autres offres. À confirmer par Clara.</span></li>
       <li><b>Rappel des contacts</b><span>Qui appelle, à quel moment de la journée.</span></li>
       <li><b>Réception des contacts</b><span>Dans le CRM ou sur une boîte mail suivie.</span></li>
       <li><b>Pixel Meta</b><span>À installer sur la page de la Résidence Louise.</span></li>
@@ -334,7 +357,7 @@ dialog.single .lb-prev, dialog.single .lb-next { display: none; }
 <footer>
   <div class="wrap narrow">
     <img src="/arkt/logo-arkt.png" alt="ARKT" />
-    <div>Document de travail · 22 novembre 2026</div>
+    <div>Document de travail · 24 novembre 2026</div>
   </div>
 </footer>
 
