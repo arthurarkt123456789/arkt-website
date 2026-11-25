@@ -6,12 +6,12 @@
   "client": {
     "societe": "Aixploreuse",
     "secteur": "Voyages et séjours outdoor pour femmes, séminaires entreprises",
-    "contact": "Émilie Robert, Fondatrice · Charlotte Duarte, Associée",
+    "contact": "Émilie Robert, Fondatrice · Charlotte Duarte et Christophe, Associés",
     "fonction": "",
     "email": ""
   },
   "accroche": "Faire passer Aixploreuse à l'étape suivante : une marque qui se porte à trois, une offre entreprises assumée, un site qui fait réserver et des canaux qui font revenir.",
-  "contexte": "Aixploreuse est née d'une conviction : les femmes ont besoin d'un espace d'évasion à elles, sans logique de performance. L'offre s'est construite par étapes : les demi-journées, puis les séjours et les voyages, puis les séminaires pour entreprises. 2027 est l'année où l'agence change de dimension, avec Charlotte au capital et l'objectif de tripler l'activité. Voici ce que nous avons compris de votre situation, et ce que nous proposons pour y arriver sans perdre ce qui fait Aixploreuse.",
+  "contexte": "Aixploreuse est née d'une conviction : les femmes ont besoin d'un espace d'évasion à elles, sans logique de performance. L'offre s'est construite par étapes : les demi-journées, puis les séjours et les voyages, puis les séminaires pour entreprises. 2027 est l'année où l'agence change de dimension, avec Charlotte et Christophe au capital et l'objectif de tripler l'activité. Voici ce que nous avons compris de votre situation, et ce que nous proposons pour y arriver sans perdre ce qui fait Aixploreuse.",
   "enjeux": [
     {
       "titre": "Vous avez déjà beaucoup construit",
@@ -27,7 +27,7 @@
     },
     {
       "titre": "L'offre entreprises cherche son nom",
-      "texte": "Elle existe, elle est mixte, et elle s'adresse à des acheteurs qui ne se reconnaissent pas dans « pour les femmes intrépides ». Marque à part, sous-marque ou déclinaison : on tranche ensemble, sur des critères concrets. Lisibilité pour un RH, crédibilité transférée depuis Aixploreuse, et ce que représente l'animation de deux marques pour une équipe de deux."
+      "texte": "Elle existe, elle est mixte, et elle s'adresse à des acheteurs qui ne se reconnaissent pas dans « pour les femmes intrépides ». Marque à part, sous-marque ou déclinaison : on tranche ensemble, sur des critères concrets. Lisibilité pour un RH, crédibilité transférée depuis Aixploreuse, et ce que représente l'animation de deux marques pour une équipe de trois."
     },
     {
       "titre": "Leur frein, c'est la peur",
@@ -50,9 +50,9 @@
     {
       "titre": "Plateforme de marque, architecture et transition",
       "tarif_id": "strategie-marque",
-      "description": "On commence par vous deux. Un atelier pour poser ce qui fait Aixploreuse au-delà d'Émilie : ce que les femmes viennent chercher, ce qu'elles racontent en rentrant, ce qui doit rester quand l'équipe s'élargit. Puis trois décisions. L'architecture : la place de Charlotte et du pilates, et le statut de l'offre entreprises, marque à part, sous-marque ou déclinaison, avec un nom si besoin. La transition : ce qu'on garde, ce qu'on fait évoluer, et comment on l'annonce à la communauté pour que la notoriété acquise suive le changement au lieu de s'y perdre. Le nouveau format : le séjour autour d'une personnalité, né de la participation de Laure Manaudou, cadré comme un produit à part entière.",
+      "description": "On commence par vous trois. Un atelier pour poser ce qui fait Aixploreuse au-delà d'Émilie : ce que les femmes viennent chercher, ce qu'elles racontent en rentrant, ce qui doit rester quand l'équipe s'élargit. Puis trois décisions. L'architecture : la place de Charlotte et du pilates, et le statut de l'offre entreprises, marque à part, sous-marque ou déclinaison, avec un nom si besoin. La transition : ce qu'on garde, ce qu'on fait évoluer, et comment on l'annonce à la communauté pour que la notoriété acquise suive le changement au lieu de s'y perdre. Le nouveau format : le séjour autour d'une personnalité, né de la participation de Laure Manaudou, cadré comme un produit à part entière.",
       "livrables": [
-        "Atelier fondatrices : ce que la marque transmet, et comment",
+        "Atelier associés : ce que la marque transmet, et comment",
         "Architecture : Aixploreuse, offre entreprises, passerelles pilates et hôtels",
         "Décision marque à part ou déclinaison pour l'offre entreprises, nom si besoin (pistes : Coévasion by Aixploreuse, Business Outdoor)",
         "Plan de transition : ce qui ne bouge pas, ce qui évolue, séquence d'annonce à la communauté, aux partenaires et à la presse",
